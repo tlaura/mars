@@ -11,23 +11,23 @@ import javax.validation.constraints.NotBlank;
 public class AddInstitutionForm {
     private String name;
 
-    @NotBlank(message = "{zipcode.empty}")
+    @NotBlank(message = "zipCode.empty")
     private String zipCode;
 
-    @NotBlank(message = "{city.empty}")
+    @NotBlank(message = "city.empty")
     private String city;
 
-    @NotBlank(message = "{address.empty}")
+    @NotBlank(message = "address.empty")
     private String address;
 
     @Column(unique = true)
-    @NotBlank(message = "{email.empty}")
-    @Email(message = "{email.format}")
+    @NotBlank(message = "email.empty")
+    @Email(message = "email.format")
     private String email;
 
     @Lob
-    @NotBlank(message = "{description.empty}")
-    @Length(min = 30, message = "{description.short}")
+    @NotBlank(message = "description.empty")
+    @Length(min = 30, message = "description.short")
     private String description;
 
     private Long creatorId;

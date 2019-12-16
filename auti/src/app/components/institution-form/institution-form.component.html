@@ -1,1 +1,95 @@
-<p>institution-form works!</p>
+<div class="container">
+  <h2>Register New Institution</h2>
+  <hr/>
+  <form (ngSubmit)="submit()" [formGroup]="institutionForm">
+
+    <div class="form-group">
+      <label for="from">Institution Name</label>
+      <input
+        class="form-control"
+        formControlName="name"
+        id="from"
+        name="from"
+        placeholder="Enter name for the institution"
+      />
+      <small *ngIf="institutionForm.get('name').errors?.serverError" class="text-danger">
+        {{institutionForm.get('name').errors['serverError']}}
+      </small>
+    </div>
+
+    <div class="form-group">
+      <label
+        for="zipCode">Zip code</label>
+      <input
+        class="form-control"
+        formControlName="zipCode"
+        id="zipCode"
+        placeholder="Enter the zip code of the institution"
+      />
+      <small *ngIf="institutionForm.get('zipCode').errors?.serverError" class="text-danger">
+        {{institutionForm.get('zipCode').errors['serverError']}}
+      </small>
+    </div>
+
+    <div class="form-group">
+      <label
+        for="city">City</label>
+      <input
+        class="form-control"
+        formControlName="city"
+        id="city"
+        placeholder="Enter the city of the institution"
+      />
+      <small *ngIf="institutionForm.get('city').errors?.serverError" class="text-danger">
+        {{institutionForm.get('city').errors['serverError']}}
+      </small>
+    </div>
+
+    <div class="form-group">
+      <label
+        for="address">Address</label>
+      <input
+        aria-multiline="true"
+        class="form-control"
+        formControlName="address"
+        id="address"
+        placeholder="Enter the address of the institution"
+      >
+      <small *ngIf="institutionForm.get('address').errors?.serverError" class="text-danger">
+        {{institutionForm.get('address').errors['serverError']}}
+      </small>
+    </div>
+
+    <div class="form-group">
+      <label
+        for="email">Email</label>
+      <input
+        class="form-control"
+        formControlName="email"
+        id="email"
+        placeholder="Enter the email address of the institution"
+        type="email"
+      />
+      <small *ngIf="institutionForm.get('email').errors?.serverError" class="text-danger">
+        {{institutionForm.get('email').errors['serverError']}}
+      </small>
+    </div>
+
+    <div class="form-group">
+      <label
+        for="description">Description</label>
+      <textarea
+        class="form-control"
+        formControlName="description"
+        id="description"
+        placeholder="Enter a brief description of the institution"
+        rows="3"
+      ></textarea>
+      <small *ngIf="institutionForm.get('description').errors?.serverError" class="text-danger">
+        {{institutionForm.get('description').errors['serverError']}}
+      </small>
+    </div>
+    <br/>
+    <button class="btn btn-primary my-buttons">Save Institution</button>
+  </form>
+</div>

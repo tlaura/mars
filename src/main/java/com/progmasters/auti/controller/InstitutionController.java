@@ -2,7 +2,7 @@ package com.progmasters.auti.controller;
 
 import com.progmasters.auti.dto.AddInstitutionForm;
 import com.progmasters.auti.dto.InstitutionDetails;
-import com.progmasters.auti.dto.InstitutionList;
+import com.progmasters.auti.dto.InstitutionListItem;
 import com.progmasters.auti.service.InstitutionService;
 import com.progmasters.auti.validation.AddInstitutionFormValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,16 +12,17 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/institutions")
-public class RoomController {
+public class InstitutionController {
 
     private InstitutionService institutionService;
     private AddInstitutionFormValidator addInstitutionFormValidator;
 
     @Autowired
-    public RoomController(InstitutionService institutionService, AddInstitutionFormValidator addInstitutionFormValidator) {
+    public InstitutionController(InstitutionService institutionService, AddInstitutionFormValidator addInstitutionFormValidator) {
         this.institutionService = institutionService;
         this.addInstitutionFormValidator = addInstitutionFormValidator;
     }
@@ -32,7 +33,7 @@ public class RoomController {
     }
 
     @GetMapping
-    public InstitutionList institutions() {
+    public List<InstitutionListItem> institutions() {
         return institutionService.getInstitutionList();
     }
 

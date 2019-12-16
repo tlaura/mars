@@ -1,31 +1,16 @@
 package com.progmasters.auti.dto;
 
 import com.progmasters.auti.domain.Institution;
-import org.hibernate.validator.constraints.Length;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Lob;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
 
 public class InstitutionDetails {
 
     private Long id;
-
     private String name;
-
     private String zipCode;
-
     private String city;
-
     private String address;
-
     private String email;
-
     private String description;
-
     private String creatorName;
 
     public InstitutionDetails() {
@@ -105,4 +90,5 @@ public class InstitutionDetails {
     public void setCreatorName(String creatorName) {
         this.creatorName = creatorName;
     }
+
 }

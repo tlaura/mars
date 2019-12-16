@@ -9,42 +9,33 @@
  * Any dispute or claim arising out of the breach of these provisions shall be governed by and construed in accordance with the laws of Hungary.
  */
 
-package com.progmasters.auti.dto;
+package com.progmasters.auti.exception;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ValidationErrorDto {
-    private String globalError;
-    private List<FieldErrorDto> fieldErrors = new ArrayList<>();
+public class ValidationError {
+    private List<CustomFieldError> fieldErrors = new ArrayList<>();
 
-    public void addFieldError(String path, String message) {
-        FieldErrorDto error = new FieldErrorDto(path, message);
+    public void addFieldError(String field, String message) {
+        CustomFieldError error = new CustomFieldError(field, message);
         fieldErrors.add(error);
     }
 
-    public List<FieldErrorDto> getFieldErrors() {
+    public List<CustomFieldError> getFieldErrors() {
         return fieldErrors;
     }
 
-    public void setFieldErrors(List<FieldErrorDto> fieldErrors) {
-        this.fieldErrors = fieldErrors;
+    public void setFieldErrors(List<CustomFieldError> customFieldErrors) {
+        this.fieldErrors = customFieldErrors;
     }
 
-    public String getGlobalError() {
-        return globalError;
-    }
-
-    public void setGlobalError(String globalError) {
-        this.globalError = globalError;
-    }
-
-    public static class FieldErrorDto {
+    private static class CustomFieldError {
 
         private String field;
         private String message;
 
-        public FieldErrorDto(String field, String message) {
+        CustomFieldError(String field, String message) {
             this.field = field;
             this.message = message;
         }

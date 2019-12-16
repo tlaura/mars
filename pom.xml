@@ -10,10 +10,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.progmasters</groupId>
-    <artifactId>auti</artifactId>
+    <artifactId>mars</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <name>auti</name>
-    <description>Helping autists</description>
+    <name>mars</name>
+    <description>Mars application</description>
 
     <properties>
         <java.version>11</java.version>

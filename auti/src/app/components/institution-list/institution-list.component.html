@@ -1,1 +1,15 @@
-<p>institution-list works!</p>
+<div class="container">
+  <div class="list-container">
+
+    <div *ngFor="let institution of institutionList">
+
+      <div class="row list-item-container">
+        <div class="col text-left">
+          <h3 (click)="details(institution.id)">{{institution.name}}</h3>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
