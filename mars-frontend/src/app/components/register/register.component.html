@@ -1,141 +1,166 @@
-<div class="container-fluid">
-<!--  TODO - magyar -->
-  <h1>Register</h1>
-  <form [formGroup]="registerForm">
+<div class="col-sm-1 col-md-8 offset-md-2 col-lg-4 offset-lg-4 text-center">
+  <h1 class="mb-sm-1 mb-md-3 mb-lg-4 ">Regisztráció</h1>
 
-    <div id="common-fields-div">
-      <div class="form-group">
-        <label for="lastname">Vezeteknev:</label>
-        <input class="form-control" formControlName="lastname" id="lastname" type="text">
-        <small *ngIf="registerForm.get('lastname').errors?.serverError && registerForm.get('lastname').touched" class="text-danger">
-          {{registerForm.get('lastname').errors['serverError']}}
-        </small> <small *ngIf="registerForm.get('lastname').invalid && registerForm.get('lastname').touched" class="text-danger">
-        Field must be filled!!!
-      </small>
+  <button autofocus class="user-option-chooser btn w-50 mb-0">Felhasználó</button>
+  <button class="user-option-chooser btn w-50 mb-0">Szolgáltatás</button>
+  <div class="register-div p-4  w-100 text-left">
+    <form [formGroup]="registerForm">
+
+      <div id="common-fields-div">
+        <div class="form-group">
+          <label for="lastname">Vezetéknév:</label>
+          <input class="form-control" formControlName="lastname" id="lastname" type="text">
+          <small *ngIf="registerForm.get('lastname').errors?.serverError && registerForm.get('lastname').touched"
+                 class="text-danger">
+            {{registerForm.get('lastname').errors['serverError']}}
+          </small> <small *ngIf="registerForm.get('lastname').invalid && registerForm.get('lastname').touched"
+                          class="text-danger">
+          A mező kitöltése közelező!
+        </small>
+        </div>
+
+
+        <div class="form-group">
+          <label for="firstname">Keresztnév:</label>
+          <input class="form-control" formControlName="firstname" id="firstname" type="text">
+          <small *ngIf="registerForm.get('firstname').errors?.serverError && registerForm.get('firstname').touched"
+                 class="text-danger">
+            {{registerForm.get('firstname').errors['serverError']}}
+          </small> <small *ngIf="registerForm.get('firstname').invalid && registerForm.get('firstname').touched"
+                          class="text-danger">
+          A mező kitöltése közelező!
+        </small>
+        </div>
+
+
+        <div class="form-group">
+          <label for="username">Felhasználó név:</label>
+          <input class="form-control" formControlName="username" id="username" type="text">
+          <small *ngIf="registerForm.get('username').errors?.serverError && registerForm.get('username').touched"
+                 class="text-danger">
+            {{registerForm.get('username').errors['serverError']}}
+          </small> <small *ngIf="registerForm.get('username').invalid && registerForm.get('username').touched"
+                          class="text-danger">
+          A mező kitöltése közelező!
+        </small>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email cím:</label>
+          <input class="form-control" formControlName="email" id="email" type="text">
+          <small *ngIf="registerForm.get('email').errors?.serverError && registerForm.get('email').touched"
+                 class="text-danger">
+            {{registerForm.get('email').errors['serverError']}}
+          </small> <small *ngIf="registerForm.get('email').invalid && registerForm.get('email').touched"
+                          class="text-danger">
+          A mező kitöltése közelező!
+        </small>
+        </div>
+
+        <div class="form-group">
+          <label for="password">Jelszó:</label>
+          <input class="form-control" formControlName="password" id="password" type="password">
+          <small *ngIf="registerForm.get('password').errors?.serverError && registerForm.get('password').touched"
+                 class="text-danger">
+            {{registerForm.get('password').errors['serverError']}}
+          </small> <small *ngIf="registerForm.get('password').invalid && registerForm.get('password').touched"
+                          class="text-danger">
+          A mező kitöltése közelező!
+        </small>
+        </div>
+
+        <div class="form-group">
+          <label for="phone">Telefonszám:</label>
+          <input class="form-control" formControlName="phone" id="phone" type="phone">
+          <small *ngIf="registerForm.get('phone').errors?.serverError && registerForm.get('phone').touched"
+                 class="text-danger">
+            {{registerForm.get('phone').errors['serverError']}}
+          </small> <small *ngIf="registerForm.get('phone').invalid && registerForm.get('phone').touched"
+                          class="text-danger">
+          A mező kitöltése közelező!
+        </small>
+        </div>
       </div>
 
+      <div id="normal-user-div">
+        <div class="form-group">
+          <label for="zipcode">Irányítószám:</label>
+          <input class="form-control" formControlName="zipcode" id="zipcode" type="zipcode">
+          <small *ngIf="registerForm.get('zipcode').errors?.serverError && registerForm.get('zipcode').touched"
+                 class="text-danger">
+            {{registerForm.get('zipcode').errors['serverError']}}
+          </small> <small *ngIf="registerForm.get('zipcode').invalid && registerForm.get('zipcode').touched"
+                          class="text-danger">
+          A mező kitöltése közelező!
+        </small>
+        </div>
 
-      <div class="form-group">
-        <label for="firstname">Keresztnev:</label>
-        <input class="form-control" formControlName="firstname" id="firstname" type="text">
-        <small *ngIf="registerForm.get('firstname').errors?.serverError && registerForm.get('firstname').touched" class="text-danger">
-          {{registerForm.get('firstname').errors['serverError']}}
-        </small> <small *ngIf="registerForm.get('firstname').invalid && registerForm.get('firstname').touched" class="text-danger">
-        Field must be filled!!!
-      </small>
+        <div class="form-group">
+          <label for="city">Település:</label>
+          <input class="form-control" formControlName="city" id="city" type="city">
+          <small *ngIf="registerForm.get('city').errors?.serverError && registerForm.get('city').touched"
+                 class="text-danger">
+            {{registerForm.get('city').errors['serverError']}}
+          </small> <small *ngIf="registerForm.get('city').invalid && registerForm.get('city').touched"
+                          class="text-danger">
+          A mező kitöltése közelező!
+        </small>
+        </div>
+
+        <div class="form-group">
+          <label for="address">Cím:</label>
+          <input class="form-control" formControlName="address" id="address" type="address">
+          <small *ngIf="registerForm.get('address').errors?.serverError && registerForm.get('address').touched"
+                 class="text-danger">
+            {{registerForm.get('address').errors['serverError']}}
+          </small> <small *ngIf="registerForm.get('address').invalid && registerForm.get('address').touched"
+                          class="text-danger">
+          A mező kitöltése közelező!
+        </small>
+        </div>
+
+        <div class="form-group">
+          <label for="birthyear">Születési év:</label>
+          <input class="form-control" formControlName="birthyear" id="birthyear" type="birthyear">
+          <small *ngIf="registerForm.get('birthyear').errors?.serverError && registerForm.get('birthyear').touched"
+                 class="text-danger">
+            {{registerForm.get('birthyear').errors['serverError']}}
+          </small> <small *ngIf="registerForm.get('birthyear').invalid && registerForm.get('birthyear').touched"
+                          class="text-danger">
+          A mező kitöltése közelező!
+        </small>
+        </div>
+
+        <div class="form-group">
+          <label for="newsletter">Hírlevél</label>
+          <input class="form-control" formControlName="newsletter" id="newsletter" type="newsletter">
+          <small *ngIf="registerForm.get('newsletter').errors?.serverError && registerForm.get('newsletter').touched"
+                 class="text-danger">
+            {{registerForm.get('newsletter').errors['serverError']}}
+          </small> <small *ngIf="registerForm.get('newsletter').invalid && registerForm.get('newsletter').touched"
+                          class="text-danger">
+          A mező kitöltése közelező!
+        </small>
+        </div>
+
+      </div>
+      <div id="service-provider">
+
+        <div class="form-group">
+          <button class="form-control btn btn-primary" formControlName="institution" id="institution">
+            Intézmény hozzáadása
+          </button>
+        </div>
+
+
       </div>
 
+      <button (click)="submit()" [disabled]="registerForm.invalid" class="btn btn-primary" type="submit">
+        Regisztráció
+      </button>
+    </form>
 
-      <div class="form-group">
-        <label for="username">Felhasznalo nev:</label>
-        <input class="form-control" formControlName="username" id="username" type="text">
-        <small *ngIf="registerForm.get('username').errors?.serverError && registerForm.get('username').touched" class="text-danger">
-          {{registerForm.get('username').errors['serverError']}}
-        </small> <small *ngIf="registerForm.get('username').invalid && registerForm.get('username').touched" class="text-danger">
-        Field must be filled!!!
-      </small>
-      </div>
+  </div>
 
-      <div class="form-group">
-        <label for="email">Email:</label>
-        <input class="form-control" formControlName="email" id="email" type="text">
-        <small *ngIf="registerForm.get('email').errors?.serverError && registerForm.get('email').touched" class="text-danger">
-          {{registerForm.get('email').errors['serverError']}}
-        </small> <small *ngIf="registerForm.get('email').invalid && registerForm.get('email').touched" class="text-danger">
-        Field must be filled!!!
-      </small>
-      </div>
-
-      <div class="form-group">
-        <label for="password">Jelszo:</label>
-        <input class="form-control" formControlName="password" id="password" type="password">
-        <small *ngIf="registerForm.get('password').errors?.serverError && registerForm.get('password').touched" class="text-danger">
-          {{registerForm.get('password').errors['serverError']}}
-        </small> <small *ngIf="registerForm.get('password').invalid && registerForm.get('password').touched" class="text-danger">
-        Field must be filled!!!
-      </small>
-      </div>
-
-      <div class="form-group">
-        <label for="phone">Telefonszam:</label>
-        <input class="form-control" formControlName="phone" id="phone" type="phone">
-        <small *ngIf="registerForm.get('phone').errors?.serverError && registerForm.get('phone').touched" class="text-danger">
-          {{registerForm.get('phone').errors['serverError']}}
-        </small> <small *ngIf="registerForm.get('phone').invalid && registerForm.get('phone').touched" class="text-danger">
-        Field must be filled!!!
-      </small>
-      </div>
-    </div>
-
-    <div id="normal-user-div">
-      <div class="form-group">
-        <label for="zipcode">Iranyitoszam:</label>
-        <input class="form-control" formControlName="zipcode" id="zipcode" type="zipcode">
-        <small *ngIf="registerForm.get('zipcode').errors?.serverError && registerForm.get('zipcode').touched" class="text-danger">
-          {{registerForm.get('zipcode').errors['serverError']}}
-        </small> <small *ngIf="registerForm.get('zipcode').invalid && registerForm.get('zipcode').touched" class="text-danger">
-        Field must be filled!!!
-      </small>
-      </div>
-
-      <div class="form-group">
-        <label for="city">Telepules:</label>
-        <input class="form-control" formControlName="city" id="city" type="city">
-        <small *ngIf="registerForm.get('city').errors?.serverError && registerForm.get('city').touched" class="text-danger">
-          {{registerForm.get('city').errors['serverError']}}
-        </small> <small *ngIf="registerForm.get('city').invalid && registerForm.get('city').touched" class="text-danger">
-        Field must be filled!!!
-      </small>
-      </div>
-
-      <div class="form-group">
-        <label for="address">Cim:</label>
-        <input class="form-control" formControlName="address" id="address" type="address">
-        <small *ngIf="registerForm.get('address').errors?.serverError && registerForm.get('address').touched" class="text-danger">
-          {{registerForm.get('address').errors['serverError']}}
-        </small> <small *ngIf="registerForm.get('address').invalid && registerForm.get('address').touched" class="text-danger">
-        Field must be filled!!!
-      </small>
-      </div>
-
-      <div class="form-group">
-        <label for="birthyear">Szuletesi ev:</label>
-        <input class="form-control" formControlName="birthyear" id="birthyear" type="birthyear">
-        <small *ngIf="registerForm.get('birthyear').errors?.serverError && registerForm.get('birthyear').touched" class="text-danger">
-          {{registerForm.get('birthyear').errors['serverError']}}
-        </small> <small *ngIf="registerForm.get('birthyear').invalid && registerForm.get('birthyear').touched" class="text-danger">
-        Field must be filled!!!
-      </small>
-      </div>
-
-      <div class="form-group">
-        <label for="newsletter">Hirlevel</label>
-        <input class="form-control" formControlName="newsletter" id="newsletter" type="newsletter">
-        <small *ngIf="registerForm.get('newsletter').errors?.serverError && registerForm.get('newsletter').touched" class="text-danger">
-          {{registerForm.get('newsletter').errors['serverError']}}
-        </small> <small *ngIf="registerForm.get('newsletter').invalid && registerForm.get('newsletter').touched" class="text-danger">
-        Field must be filled!!!
-      </small>
-      </div>
-
-    </div>
-    <div id="service-provider">
-
-      <div class="form-group">
-<!--        button -->
-        <label for="institution">Intezmeny hozzaadasa</label>
-        <input class="form-control" formControlName="institution" id="institution" type="institution">
-        <small *ngIf="registerForm.get('institution').errors?.serverError && registerForm.get('institution').touched" class="text-danger">
-          {{registerForm.get('institution').errors['serverError']}}
-        </small> <small *ngIf="registerForm.get('institution').invalid && registerForm.get('institution').touched" class="text-danger">
-        Field must be filled!!!
-      </small>
-      </div>
-
-
-    </div>
-
-    <button (click)="submit()" [disabled]="registerForm.invalid" class="btn btn-primary" type="submit">Regisztracio</button>
-  </form>
 </div>
 

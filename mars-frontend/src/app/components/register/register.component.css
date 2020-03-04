@@ -1,0 +1,36 @@
+.register-div {
+  border-right: 1px solid tomato;
+  border-left: 1px solid tomato;
+  border-bottom: 1px solid tomato;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+
+.user-option-chooser {
+  background-color: rgba(255, 99, 71, 0.8);
+  color: white;
+  border-radius: 20px 20px 0px 0px;
+  border-right: 1px solid tomato;
+  border-left: 1px solid tomato;
+  border-top: 1px solid tomato;
+}
+
+.user-option-chooser:hover {
+  background-color: rgba(255, 99, 71, 1);
+  color: white;
+}
+
+.user-option-chooser:active {
+  outline: 0;
+  box-shadow: none !important;
+  background-color: white;
+  color: tomato;
+}
+
+.user-option-chooser:focus {
+  outline: 0;
+  box-shadow: none !important;
+  background-color: white;
+  color: tomato;
+}
+
