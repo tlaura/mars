@@ -10,6 +10,7 @@ import {UserFormComponent} from './components/user-form/user-form.component';
 import {NavbarComponent} from "./components/navbar/navbar.component";
 import {ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
+import { RegisterComponent } from './components/register/register.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import {HttpClientModule} from "@angular/common/http";
     InstitutionFormComponent,
     InstitutionListComponent,
     InstitutionDetailsComponent,
-    UserFormComponent
+    UserFormComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
