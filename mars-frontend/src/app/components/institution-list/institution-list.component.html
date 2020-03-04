@@ -1,15 +1,15 @@
 <div class="container">
-  <div class="list-container">
+  <div class="list-container h-25">
+  </div>
+  <div *ngFor="let institution of institutionList">
 
-    <div *ngFor="let institution of institutionList">
-
-      <div class="row list-item-container">
-        <div class="col text-left">
-          <h3 (click)="details(institution.id)">{{institution.name}}</h3>
-        </div>
+    <div class="row list-item-container">
+      <div class="col text-left">
+        <h3 (click)="details(institution.id)">{{institution.name}}</h3>
       </div>
     </div>
-
   </div>
 
 </div>
+
+

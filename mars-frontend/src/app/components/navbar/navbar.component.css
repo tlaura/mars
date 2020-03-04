@@ -1,0 +1,12 @@
+.navbar {
+  background: #ff0000;
+}
+
+.navbar a {
+  color: floralwhite;
+  letter-spacing: 0.1em;
+}
+
+.navbar a.navbar-brand {
+  font-weight: bold;
+}
