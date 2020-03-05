@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserService {
+public class IndividualUserService {
 
     private final UserRepository userRepository;
     private final EmailService emailService;
@@ -15,7 +15,7 @@ public class UserService {
     @Value("${email.send.text}")
     private String text;
 
-    public UserService(UserRepository userRepository, EmailService emailService) {
+    public IndividualUserService(UserRepository userRepository, EmailService emailService) {
         this.userRepository = userRepository;
         this.emailService = emailService;
     }
