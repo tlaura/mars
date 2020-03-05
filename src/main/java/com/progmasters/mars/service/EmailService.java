@@ -1,4 +1,4 @@
-package com.progmasters.mars.email;
+package com.progmasters.mars.service;
 
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
