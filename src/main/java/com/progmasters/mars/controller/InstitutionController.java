@@ -27,6 +27,11 @@ public class InstitutionController {
         this.addInstitutionFormValidator = addInstitutionFormValidator;
     }
 
+    @GetMapping("/test")
+    public ResponseEntity testMail() {
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
     @InitBinder("addInstitutionForm")
     protected void initBinder(WebDataBinder binder) {
         binder.addValidators(addInstitutionFormValidator);
