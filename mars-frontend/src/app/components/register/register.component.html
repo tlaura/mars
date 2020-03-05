@@ -14,25 +14,45 @@
         <div class="form-group col-sm-1 col-md-6">
           <label for="lastname">Vezetéknév:</label>
           <input class="form-control" formControlName="lastname" id="lastname" type="text">
+          <div *ngIf="registerForm.get('lastname').invalid && registerForm.get('lastname').touched">
+            <small *ngIf="registerForm.get('lastname').errors.pattern"
+                   class="text-danger">
+              Érvénytelen név!
+            </small>
+          </div>
         </div>
 
 
         <div class="form-group col-sm-1 col-md-6">
           <label class="" for="firstname">Keresztnév:</label>
           <input class="form-control" formControlName="firstname" id="firstname" type="text">
+          <div *ngIf="registerForm.get('firstname').invalid && registerForm.get('firstname').touched">
+            <small *ngIf="registerForm.get('firstname').errors.pattern"
+                   class="text-danger">
+              Érvénytelen név!
+            </small>
+          </div>
         </div>
 
 
         <div class="form-group col-sm-1 col-md-5">
-          <label for="username">Felhasználó név:</label>
+          <label for="username">Felhasználónév:</label>
           <input class="form-control" formControlName="username" id="username" type="text">
           <small *ngIf="registerForm.get('username').errors?.serverError && registerForm.get('username').touched"
                  class="text-danger">
             {{registerForm.get('username').errors['serverError']}}
-          </small> <small *ngIf="registerForm.get('username').invalid && registerForm.get('username').touched"
-                          class="text-danger">
-          A mező kitöltése közelező!
-        </small>
+          </small>
+          <div *ngIf="registerForm.get('username').invalid && registerForm.get('username').touched">
+            <small *ngIf="registerForm.get('username').errors.required"
+                   class="text-danger">
+              A mező kitöltése közelező!
+            </small>
+            <small *ngIf="registerForm.get('username').errors.pattern"
+                   class="text-danger">
+              A felhasználónév csak betűket és számokat tartalmazhat, legalább 5 és legfeljebb 15 karakterből állhat!
+            </small>
+          </div>
+
         </div>
 
         <div class="form-group col-sm-1 col-md-7">
@@ -41,35 +61,50 @@
           <small *ngIf="registerForm.get('email').errors?.serverError && registerForm.get('email').touched"
                  class="text-danger">
             {{registerForm.get('email').errors['serverError']}}
-          </small> <small *ngIf="registerForm.get('email').invalid && registerForm.get('email').touched"
-                          class="text-danger">
-          A mező kitöltése közelező!
-        </small>
-          <!-- TODO: valid email base on pattern -->
+          </small>
+          <div *ngIf="registerForm.get('email').invalid && registerForm.get('email').touched">
+            <small *ngIf="registerForm.get('email').errors.required"
+                   class="text-danger">
+              A mező kitöltése közelező!
+            </small>
+            <small *ngIf="registerForm.get('email').errors.pattern"
+                   class="text-danger">
+              Érvénytelen email cím!
+            </small>
+          </div>
+
         </div>
 
         <div class="form-group col-sm-1 col-md-6">
           <label for="password">Jelszó:</label>
           <input class="form-control" formControlName="password" id="password" type="password">
+          <div *ngIf="registerForm.get('password').invalid && registerForm.get('password').touched ">
+            <small *ngIf="registerForm.get('password').errors.required"
+                   class="text-danger">
+              A mező kitöltése közelező!
+            </small>
+            <small *ngIf="registerForm.get('password').errors.pattern"
+                   class="text-danger">
+              A jelszónak legalább 6, legfeljebb 15 karakterből kell állnia! Tartalmaznia kell legalább egy betűt és egy
+              számot!
+            </small>
+          </div>
+
         </div>
         <div class="form-group col-sm-1 col-md-6">
           <label for="passwordAgain">Jelszó megerősítése:</label>
           <input class="form-control" id="passwordAgain" name="passwordAgain" type="password">
         </div>
-        <small *ngIf="registerForm.get('password').errors?.serverError && registerForm.get('password').touched"
-               class="text-danger">
-          {{registerForm.get('password').errors['serverError']}}
-        </small> <small *ngIf="registerForm.get('password').invalid && registerForm.get('password').touched"
-                        class="text-danger">
-        A mező kitöltése közelező!
-      </small>
 
         <div class="form-group col-sm-1 col-md-5 ">
           <label for="phone">Telefonszám:</label>
-          <input class="form-control" formControlName="phone" id="phone" type="number">
+          <input class="form-control"
+                 formControlName="phone"
+                 id="phone" placeholder="+36-00-000-0000"
+                 type="text">
           <small *ngIf="registerForm.get('phone').invalid && registerForm.get('phone').touched"
                  class="text-danger">
-            Érvénytelen telefonszám formátum!
+            Érvénytelen telefonszám!
           </small>
         </div>
       </div>
@@ -78,17 +113,26 @@
         <div class="form-group col-sm-1 col-md-3">
           <label for="zipcode">Irányítószám:</label>
           <input class="form-control" formControlName="zipcode" id="zipcode" type="number">
-          <small *ngIf="registerForm.get('zipcode').invalid && registerForm.get('zipcode').touched"
-                 class="text-danger">
-            Érvénytelen irányítószám!
-          </small>
+          <div *ngIf="registerForm.get('zipcode').invalid && registerForm.get('zipcode').touched">
+            <small *ngIf="registerForm.get('zipcode').errors.required"
+                   class="text-danger">
+              A mező kitöltése közelező!
+            </small>
+            <small *ngIf="registerForm.get('zipcode').errors.pattern"
+                   class="text-danger">
+              Érvénytelen irányítószám!
+            </small>
+          </div>
+
         </div>
 
         <div class="form-group col-sm-1 col-md-6">
           <label for="city">Település:</label>
           <input class="form-control" formControlName="city" id="city" type="text">
           <!-- TODO: autofill base on zipcode -->
+
         </div>
+
 
         <div class="form-group col-sm-1 col-md-9">
           <label for="address">Cím:</label>
@@ -98,11 +142,16 @@
         <div class="form-group col-sm-1 col-md-12">
           <label for="birthyear">Érintett családtag születési éve:</label>
           <input class="form-control col-md-3" formControlName="birthyear" id="birthyear" type="number">
-          <small *ngIf="registerForm.get('birthyear').invalid && registerForm.get('birthyear').touched"
-                 class="text-danger">
-            A mező kitöltése közelező!
-          </small>
-          <!-- TODO: valid year-->
+          <div *ngIf="registerForm.get('birthyear').invalid && registerForm.get('birthyear').touched">
+            <small *ngIf="registerForm.get('birthyear').errors.required"
+                   class="text-danger">
+              A mező kitöltése közelező!
+            </small>
+            <small *ngIf="registerForm.get('birthyear').errors.min || registerForm.get('birthyear').errors.max"
+                   class="text-danger">
+              Érvénytelen születési év!
+            </small>
+          </div>
         </div>
 
 
@@ -116,13 +165,14 @@
             <input class="form-check-input mt-0" formControlName="termsAndConditions" id="termsAndConditions"
                    type="checkbox">
             <label class="mb-1" for="termsAndConditions">Elolvastam és elfogadom az
-              <a class="nav-link d-inline p-0" href="">Adatvédelmi Nyilatkozatot.</a> </label>
-            <small
-              *ngIf="registerForm.get('termsAndConditions').invalid && registerForm.get('termsAndConditions').touched"
-              class="text-danger">
-              A mező kitöltése közelező!
-            </small>
+              <a class="nav-link d-inline p-0" href="">Adatvédelmi Nyilatkozatot.</a></label>
           </div>
+          <!-- TODO: remove danger text at init -->
+          <small
+            *ngIf="registerForm.get('termsAndConditions').invalid"
+            class="text-danger col-sm-1 col-md-12">
+            A mező kitöltése közelező!
+          </small>
         </div>
 
 
