@@ -1,5 +1,5 @@
 <div class="col-sm-1 col-md-8 offset-md-2 col-lg-6 offset-lg-3 text-center">
-  <h1 class="mb-sm-1 mb-md-3 mb-lg-6 ">Regisztráció</h1>
+  <h1 class="">Regisztráció</h1>
 
   <button (click)="isNormalUser=true" [ngClass]="isNormalUser ? 'active' : 'inactive'"
           class="user-option-chooser btn w-50 mb-0">Felhasználó
@@ -13,7 +13,7 @@
       <div class="row m-0" id="common-fields-div">
         <div class="form-group col-sm-1 col-md-6">
           <label for="lastname">Vezetéknév:</label>
-          <input class="form-control" formControlName="lastname" id="lastname" type="text">
+          <input class="form-control rounded-pill" formControlName="lastname" id="lastname" type="text">
           <div *ngIf="registerForm.get('lastname').invalid && registerForm.get('lastname').touched">
             <small *ngIf="registerForm.get('lastname').errors.pattern"
                    class="text-danger">
@@ -25,7 +25,7 @@
 
         <div class="form-group col-sm-1 col-md-6">
           <label class="" for="firstname">Keresztnév:</label>
-          <input class="form-control" formControlName="firstname" id="firstname" type="text">
+          <input class="form-control rounded-pill" formControlName="firstname" id="firstname" type="text">
           <div *ngIf="registerForm.get('firstname').invalid && registerForm.get('firstname').touched">
             <small *ngIf="registerForm.get('firstname').errors.pattern"
                    class="text-danger">
@@ -37,7 +37,7 @@
 
         <div class="form-group col-sm-1 col-md-5">
           <label for="username">Felhasználónév:</label>
-          <input class="form-control" formControlName="username" id="username" type="text">
+          <input class="form-control rounded-pill" formControlName="username" id="username" type="text">
           <small *ngIf="registerForm.get('username').errors?.serverError && registerForm.get('username').touched"
                  class="text-danger">
             {{registerForm.get('username').errors['serverError']}}
@@ -57,7 +57,7 @@
 
         <div class="form-group col-sm-1 col-md-7">
           <label for="email">Email cím:</label>
-          <input class="form-control" formControlName="email" id="email" type="text">
+          <input class="form-control rounded-pill" formControlName="email" id="email" type="text">
           <small *ngIf="registerForm.get('email').errors?.serverError && registerForm.get('email').touched"
                  class="text-danger">
             {{registerForm.get('email').errors['serverError']}}
@@ -77,7 +77,7 @@
 
         <div class="form-group col-sm-1 col-md-6">
           <label for="password">Jelszó:</label>
-          <input class="form-control" formControlName="password" id="password" type="password">
+          <input class="form-control rounded-pill" formControlName="password" id="password" type="password">
           <div *ngIf="registerForm.get('password').invalid && registerForm.get('password').touched ">
             <small *ngIf="registerForm.get('password').errors.required"
                    class="text-danger">
@@ -93,12 +93,12 @@
         </div>
         <div class="form-group col-sm-1 col-md-6">
           <label for="passwordAgain">Jelszó megerősítése:</label>
-          <input class="form-control" id="passwordAgain" name="passwordAgain" type="password">
+          <input class="form-control rounded-pill" id="passwordAgain" name="passwordAgain" type="password">
         </div>
 
         <div class="form-group col-sm-1 col-md-5 ">
           <label for="phone">Telefonszám:</label>
-          <input class="form-control"
+          <input class="form-control rounded-pill"
                  formControlName="phone"
                  id="phone" placeholder="+36-XX-XXX-XXXX"
                  type="text">
@@ -112,7 +112,7 @@
       <div class="row m-0" id="normal-user-div">
         <div class="form-group col-sm-1 col-md-3">
           <label for="zipcode">Irányítószám:</label>
-          <input class="form-control" formControlName="zipcode" id="zipcode" type="number">
+          <input class="form-control rounded-pill" formControlName="zipcode" id="zipcode" type="number">
           <div *ngIf="registerForm.get('zipcode').invalid && registerForm.get('zipcode').touched">
             <small *ngIf="registerForm.get('zipcode').errors.required"
                    class="text-danger">
@@ -128,7 +128,7 @@
 
         <div class="form-group col-sm-1 col-md-6">
           <label for="city">Település:</label>
-          <input class="form-control" formControlName="city" id="city" type="text">
+          <input class="form-control rounded-pill" formControlName="city" id="city" type="text">
           <!-- TODO: autofill base on zipcode -->
 
         </div>
@@ -136,12 +136,12 @@
 
         <div class="form-group col-sm-1 col-md-9">
           <label for="address">Cím:</label>
-          <input class="form-control" formControlName="address" id="address" type="address">
+          <input class="form-control rounded-pill" formControlName="address" id="address" type="address">
         </div>
 
         <div class="form-group col-sm-1 col-md-12">
           <label for="birthyear">Érintett családtag születési éve:</label>
-          <input class="form-control col-md-3" formControlName="birthyear" id="birthyear" type="number">
+          <input class="form-control col-md-3 rounded-pill" formControlName="birthyear" id="birthyear" type="number">
           <div *ngIf="registerForm.get('birthyear').invalid && registerForm.get('birthyear').touched">
             <small *ngIf="registerForm.get('birthyear').errors.required"
                    class="text-danger">
@@ -187,7 +187,8 @@
 
       </div>
       <div class="form-group pl-sm-1 pl-md-3">
-        <button (click)="submit()" [disabled]="registerForm.invalid" class="submit btn btn-primary" type="submit">
+        <button (click)="submit()" [disabled]="registerForm.invalid" class="submit btn btn-primary rounded-pill"
+                type="submit">
           Regisztráció
         </button>
       </div>
