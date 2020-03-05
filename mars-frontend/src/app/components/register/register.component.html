@@ -1,7 +1,9 @@
 <div class="col-sm-1 col-md-8 offset-md-2 col-lg-6 offset-lg-3 text-center">
   <h1 class="mb-sm-1 mb-md-3 mb-lg-6 ">Regisztráció</h1>
 
-  <button autofocus class="user-option-chooser btn w-50 mb-0">Felhasználó</button>
+  <button [ngClass]="{ 'active' : }" autofocus
+          class="user-option-chooser btn w-50 mb-0">Felhasználó
+  </button>
   <button class="user-option-chooser btn w-50 mb-0">Szolgáltatás</button>
   <div class="register-div text-left p-sm-3 p-md-3">
     <form [formGroup]="registerForm">

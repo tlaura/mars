@@ -11,9 +11,6 @@
   background-color: rgba(255, 99, 71, 0.9);
   color: white;
   border-radius: 20px 20px 0px 0px;
-  border-right: 1px solid tomato;
-  border-left: 1px solid tomato;
-  border-top: 1px solid tomato;
 }
 
 .user-option-chooser:hover {
@@ -26,6 +23,9 @@
   box-shadow: none !important;
   background-color: white;
   color: tomato;
+  border-right: 1px solid tomato;
+  border-left: 1px solid tomato;
+  border-top: 1px solid tomato;
 }
 
 .user-option-chooser:focus {
@@ -33,6 +33,9 @@
   box-shadow: none !important;
   background-color: white;
   color: tomato;
+  border-right: 1px solid tomato;
+  border-left: 1px solid tomato;
+  border-top: 1px solid tomato;
 }
 
 .submit.btn {
