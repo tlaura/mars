@@ -100,7 +100,7 @@
           <label for="phone">Telefonszám:</label>
           <input class="form-control"
                  formControlName="phone"
-                 id="phone" placeholder="+36-00-000-0000"
+                 id="phone" placeholder="+36-XX-XXX-XXXX"
                  type="text">
           <small *ngIf="registerForm.get('phone').invalid && registerForm.get('phone').touched"
                  class="text-danger">
@@ -167,9 +167,8 @@
             <label class="mb-1" for="termsAndConditions">Elolvastam és elfogadom az
               <a class="nav-link d-inline p-0" href="">Adatvédelmi Nyilatkozatot.</a></label>
           </div>
-          <!-- TODO: remove danger text at init -->
           <small
-            *ngIf="registerForm.get('termsAndConditions').invalid"
+            *ngIf="registerForm.get('termsAndConditions').invalid && registerForm.get('termsAndConditions').dirty"
             class="text-danger col-sm-1 col-md-12">
             A mező kitöltése közelező!
           </small>

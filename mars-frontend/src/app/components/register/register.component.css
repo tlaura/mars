@@ -44,3 +44,6 @@
   background-color: cornflowerblue;
 }
 
+input::placeholder {
+  color: lightgrey;
+}
