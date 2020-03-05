@@ -5,6 +5,7 @@ import {InstitutionFormComponent} from "./components/institution-form/institutio
 import {InstitutionDetailsComponent} from "./components/institution-details/institution-details.component";
 import {UserFormComponent} from "./components/user-form/user-form.component";
 import {RegisterComponent} from "./components/register/register.component";
+import {LoginFormComponent} from "./components/login-form/login-form.component";
 
 
 const routes: Routes = [
@@ -13,7 +14,8 @@ const routes: Routes = [
   {path: "institution-form", component: InstitutionFormComponent},
   {path: "institution-details/:id", component: InstitutionDetailsComponent},
   {path: "user-form", component: UserFormComponent},
-  {path: "register", component: RegisterComponent}
+  {path: "register", component: RegisterComponent},
+  {path: "login", component: LoginFormComponent}
 ];
 
 @NgModule({

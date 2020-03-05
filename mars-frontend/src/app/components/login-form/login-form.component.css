@@ -1,0 +1,10 @@
+.login-div {
+  border-top: 1px solid tomato;
+  border-right: 1px solid tomato;
+  border-left: 1px solid tomato;
+  border-bottom: 1px solid tomato;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  border-top-right-radius: 20px;
+  border-top-left-radius: 20px;
+}

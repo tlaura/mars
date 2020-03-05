@@ -1,0 +1,29 @@
+<div class="col-sm-1 col-md-8 offset-md-2 col-lg-4 offset-lg-4 text-center">
+  <h1 class="mb-sm-1 mb-md-3 mb-lg-4 ">Bejelentkezes</h1>
+  <div class="login-div p-4  w-100 text-left">
+    <form [formGroup]="loginForm">
+
+      <div class="form-group">
+        <label for="email">Email cim:</label>
+        <input class="form-control" formControlName="email" id="email" placeholder="Email" type="email">
+        <small *ngIf="loginForm.get('email').invalid && loginForm.get('email').touched"
+               class="text-danger">
+        A mező kitöltése közelező!
+      </small>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Jelszo:</label>
+        <input class="form-control" formControlName="password" placeholder="Jelszo" id="password" type="password">
+        <small *ngIf="loginForm.get('password').invalid && loginForm.get('password').touched"
+               class="text-danger">
+        A mező kitöltése közelező!
+      </small>
+      </div>
+      <button (click)="login()" [disabled]="loginForm.invalid" class="btn btn-primary" type="submit">
+        Bejelentkezes
+      </button>
+    </form>
+
+  </div>
+</div>
