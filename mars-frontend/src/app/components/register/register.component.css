@@ -34,3 +34,7 @@
   color: tomato;
 }
 
+.submit.btn {
+  border-color: cornflowerblue;
+  background-color: cornflowerblue;
+}
