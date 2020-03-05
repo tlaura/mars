@@ -23,7 +23,7 @@ export class RegisterComponent implements OnInit {
         'zipcode': new FormControl('', Validators.required),
         'city': new FormControl(''),
         'address': new FormControl(''),
-        'year': new FormControl('', Validators.required),
+        'birthyear': new FormControl('', Validators.required),
         'newsletter': new FormControl(''),
         'termsAndConditions': new FormControl('', Validators.required)
       }

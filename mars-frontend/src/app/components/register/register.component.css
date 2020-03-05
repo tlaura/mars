@@ -11,6 +11,7 @@
   background-color: rgba(255, 99, 71, 0.9);
   color: white;
   border-radius: 20px 20px 0px 0px;
+  appearance: none;
 }
 
 .user-option-chooser:hover {
@@ -18,7 +19,7 @@
   color: white;
 }
 
-.user-option-chooser:active {
+.user-option-chooser.active {
   outline: 0;
   box-shadow: none !important;
   background-color: white;
