@@ -20,10 +20,9 @@ public class IndividualUserService {
         this.emailService = emailService;
     }
 
-    public void saveUser() {
+    public void sendConfirmationEmail() {
 
         //TODO get mail from parameter, add hash
         emailService.sendMsg("", subject, text);
-
     }
 }
