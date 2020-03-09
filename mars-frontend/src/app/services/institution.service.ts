@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {InstitutionFormDataModel} from "../models/institutionFormData.model";
-import {InstitutionListItemModel} from "../models/institutionListItem.model";
 import {Observable} from "rxjs";
+import {InstitutionListModel} from "../models/institutionList.model";
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +17,7 @@ export class InstitutionService {
     return this.http.post(this.baseUrl, formData);
   }
 
-  loadInstitutions(): Observable<Array<InstitutionListItemModel>> {
-    return this.http.get<Array<InstitutionListItemModel>>(this.baseUrl);
+  getInstitutionList(): Observable<Array<InstitutionListModel>> {
+    return this.http.get<Array<InstitutionListModel>>(this.baseUrl);
   }
 }

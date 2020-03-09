@@ -17,7 +17,7 @@ public class ConfirmationToken {
     private String token = UUID.randomUUID().toString();
 
     @Column(name = "creation_date")
-    private LocalDateTime date =LocalDateTime.now();;
+    private LocalDateTime date = LocalDateTime.now();
 
     @JoinColumn(name = "user_id")
     @OneToOne
@@ -30,13 +30,13 @@ public class ConfirmationToken {
     public ConfirmationToken() {
     }
 
-    public ConfirmationToken(IndividualUser individualUser) {
-        this.individualUser = individualUser;
-    }
-
-    public ConfirmationToken(InstitutionalUser institutionalUser)
-    {
-        this.institutionalUser=institutionalUser;
+    public ConfirmationToken(User user) {
+        //todo refactor
+        if (user instanceof InstitutionalUser) {
+            this.institutionalUser = (InstitutionalUser) user;
+        } else {
+            this.individualUser = (IndividualUser) user;
+        }
     }
 
     //----------------------

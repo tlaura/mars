@@ -1,8 +1,8 @@
 package com.progmasters.mars.controller;
 
-import com.progmasters.mars.dto.AddInstitutionForm;
+import com.progmasters.mars.dto.InstitutionCreationForm;
 import com.progmasters.mars.dto.InstitutionDetails;
-import com.progmasters.mars.dto.InstitutionListItem;
+import com.progmasters.mars.dto.InstitutionListData;
 import com.progmasters.mars.service.InstitutionService;
 import com.progmasters.mars.validation.AddInstitutionFormValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,29 +27,32 @@ public class InstitutionController {
         this.addInstitutionFormValidator = addInstitutionFormValidator;
     }
 
-    @GetMapping("/test")
-    public ResponseEntity testMail() {
-        return new ResponseEntity(HttpStatus.OK);
-    }
 
     @InitBinder("addInstitutionForm")
     protected void initBinder(WebDataBinder binder) {
         binder.addValidators(addInstitutionFormValidator);
     }
 
+    @GetMapping("/test")
+    public ResponseEntity testMail() {
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
     @GetMapping
-    public List<InstitutionListItem> institutions() {
+    public List<InstitutionListData> institutions() {
+        //todo handle sorting
         return institutionService.getInstitutionList();
     }
 
+
     @GetMapping("/{id}")
-    public InstitutionDetails institutionDetails(@PathVariable("id") Long id) {
+    public InstitutionDetails getInstitutionDetails(@PathVariable("id") Long id) {
         return institutionService.getInstitutionDetails(id);
     }
 
     @PostMapping
-    public ResponseEntity createInstitution(@RequestBody @Valid AddInstitutionForm addInstitutionForm) {
-        institutionService.createInstitution(addInstitutionForm);
-        return new ResponseEntity(HttpStatus.CREATED);
+    public ResponseEntity<Void> createInstitution(@RequestBody @Valid InstitutionCreationForm institutionCreationForm) {
+        institutionService.createInstitution(institutionCreationForm);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 }

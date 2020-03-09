@@ -1,15 +1,21 @@
 <div class="container">
+  <input [(ngModel)]="searchText" placeholder="keresés név vagy cím alapján" type="text">
   <div class="list-container h-25">
   </div>
-  <div *ngFor="let institution of institutionList">
+  <div *ngFor="let institution of institutionList |filter:searchText |paginate:{itemsPerPage:size,currentPage:page}">
 
     <div class="row list-item-container">
-      <div class="col text-left">
-        <h3 (click)="details(institution.id)">{{institution.name}}</h3>
+      <div (click)="details(institution.id)" class="col text-left">
+        <h3>{{institution.name}}</h3>
+        <h6>{{institution.zipCode}} {{institution.city}} {{institution.address}}</h6>
       </div>
     </div>
   </div>
-
+  <select (change)="setSize($event.target.value)" id="size" name="size">
+    <option *ngFor="let size of sizeArray" value="{{size}}">{{size}}</option>
+  </select>
+  <pagination-controls (pageChange)="page = $event" nextLabel="Következő oldal"
+                       previousLabel="Előző oldal"></pagination-controls>
 </div>
 
 

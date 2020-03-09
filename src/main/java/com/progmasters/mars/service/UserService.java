@@ -2,6 +2,7 @@ package com.progmasters.mars.service;
 
 import com.progmasters.mars.domain.ConfirmationToken;
 import com.progmasters.mars.domain.IndividualUser;
+import com.progmasters.mars.domain.User;
 import com.progmasters.mars.repository.ConfirmationTokenRepository;
 import com.progmasters.mars.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,12 +28,12 @@ public class UserService {
         this.confirmationTokenRepository = confirmationTokenRepository;
     }
 
-    private void sendConfirmationEmail(IndividualUser individualUser) {
+    private void sendConfirmationEmail(User user) {
         //TODO get mail from parameter, add hash
-        ConfirmationToken userToken= new ConfirmationToken(individualUser);
+        ConfirmationToken userToken = new ConfirmationToken(user);
         confirmationTokenRepository.save(userToken);
 
-        emailService.sendMsg(individualUser.getEmail(), subject, text+"\n"+confirmationUrl+userToken.getToken());
+        emailService.sendMsg(user.getEmail(), subject, text + "\n" + confirmationUrl + userToken.getToken());
     }
 
     public void confirmUser(String token)

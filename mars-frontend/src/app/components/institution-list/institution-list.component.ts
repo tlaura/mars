@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {InstitutionListItemModel} from "../../models/institutionListItem.model";
 import {InstitutionService} from "../../services/institution.service";
 import {Router} from "@angular/router";
+import {InstitutionListModel} from "../../models/institutionList.model";
 
 @Component({
   selector: 'app-institution-list',
@@ -10,19 +10,36 @@ import {Router} from "@angular/router";
 })
 export class InstitutionListComponent implements OnInit {
 
-  institutionList: Array<InstitutionListItemModel>;
+  institutionList: Array<InstitutionListModel>;
+  searchText: string;
+  page: number = 1;
+  size: number = 10;
+
+  sizeArray: Array<number> = [10, 50, 100];
 
   constructor(private institutionService: InstitutionService,
               private router: Router) {
   }
 
+  setSize = (size: number) => {
+    this.size = size;
+    this.page = 1;
+    this.getInstitutions();
+  };
+
   ngOnInit() {
-    this.institutionService.loadInstitutions().subscribe(
-      institutionList => this.institutionList = institutionList
-    );
+    this.getInstitutions();
   }
 
-  details(id: number) {
+  getInstitutions = () => {
+    this.institutionService.getInstitutionList().subscribe(
+      institutionList => this.institutionList = institutionList,
+      error => console.warn(error)
+    );
+  };
+
+
+  details = (id: number) => {
     this.router.navigate(["institution-details", id]);
-  }
+  };
 }

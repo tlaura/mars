@@ -1,31 +1,39 @@
 package com.progmasters.mars.domain;
 
+import com.progmasters.mars.dto.InstitutionCreationForm;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.PositiveOrZero;
 
 @Entity
+@Table(name = "institution")
 public class Institution {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
-    @Column(unique = true)
+    @Column(unique = true, name = "name")
     @NotBlank
     private String name;
 
-    @NotBlank
-    private String zipCode;
+    @PositiveOrZero
+    @Column(name = "zip_code")
+    private Integer zipCode;
 
     @NotBlank
+    @Column(name = "city")
     private String city;
 
     @NotBlank
+    @Column(name = "address")
     private String address;
 
-    @Column(unique = true)
+    @Column(unique = true, name = "email")
     @NotBlank
     @Email
     private String email;
@@ -33,10 +41,24 @@ public class Institution {
     @Lob
     @NotBlank
     @Length(min = 30)
+    @Column(name = "description")
     private String description;
 
     @ManyToOne
     private InstitutionalUser creator;
+
+    public Institution() {
+    }
+
+    public Institution(InstitutionCreationForm institutionCreationForm) {
+        this.name = institutionCreationForm.getName();
+        this.zipCode = institutionCreationForm.getZipCode();
+        this.city = institutionCreationForm.getCity();
+        this.address = institutionCreationForm.getAddress();
+        this.email = institutionCreationForm.getEmail();
+        this.description = institutionCreationForm.getDescription();
+
+    }
 
     public Long getId() {
         return id;
@@ -54,11 +76,11 @@ public class Institution {
         this.name = name;
     }
 
-    public String getZipCode() {
+    public Integer getZipCode() {
         return zipCode;
     }
 
-    public void setZipCode(String zipCode) {
+    public void setZipCode(Integer zipCode) {
         this.zipCode = zipCode;
     }
 

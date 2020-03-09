@@ -1,36 +1,50 @@
 package com.progmasters.mars.dto;
 
 import com.progmasters.mars.domain.Institution;
+import org.hibernate.validator.constraints.Length;
 
-public class InstitutionDetails {
+import javax.persistence.Column;
+import javax.persistence.Lob;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.PositiveOrZero;
 
-    private Long id;
+public class InstitutionCreationForm {
     private String name;
-    private Integer zipCode;
-    private String city;
-    private String address;
-    private String email;
-    private String description;
-    private String creatorName;
 
-    public InstitutionDetails() {
+    @PositiveOrZero()
+    private Integer zipCode;
+
+    @NotBlank()
+    private String city;
+
+    @NotBlank()
+    private String address;
+
+    @Column(unique = true)
+    @NotBlank()
+    @Email()
+    private String email;
+
+    @Lob
+    @NotBlank()
+    @Length(min = 30)
+    private String description;
+
+    private Long creatorId;
+
+    public InstitutionCreationForm() {
     }
 
-    public InstitutionDetails(Institution institution) {
-        this.id = institution.getId();
+    public InstitutionCreationForm(Institution institution) {
         this.name = institution.getName();
         this.zipCode = institution.getZipCode();
         this.city = institution.getCity();
         this.address = institution.getAddress();
         this.email = institution.getEmail();
         this.description = institution.getDescription();
-        this.creatorName = institution.getCreator().getFirstName() + " " + institution.getCreator().getLastName();
+        this.creatorId = institution.getCreator().getId();
     }
-
-    public Long getId() {
-        return id;
-    }
-
 
     public String getName() {
         return name;
@@ -62,7 +76,8 @@ public class InstitutionDetails {
     }
 
 
-    public String getCreatorName() {
-        return creatorName;
+    public Long getCreatorId() {
+        return creatorId;
     }
+
 }
