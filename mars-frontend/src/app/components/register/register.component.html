@@ -1,42 +1,32 @@
 <div class="col-sm-1 col-md-8 offset-md-2 col-lg-6 offset-lg-3 text-center">
   <h1 class="">Regisztráció</h1>
 
-  <button (click)="isNormalUser=true" [ngClass]="isNormalUser ? 'active' : 'inactive'"
+  <button (click)="renderNormalAccountRegisterForm()" [ngClass]="isNormalUser ? 'active' : 'inactive'"
           class="user-option-chooser btn w-50 mb-0">Felhasználó
   </button>
-  <button (click)="isNormalUser=false" [ngClass]="!isNormalUser ? 'active' : 'inactive'"
+  <button (click)="renderProviderAccountRegisterForm()" [ngClass]="!isNormalUser ? 'active' : 'inactive'"
           class="user-option-chooser btn w-50 mb-0">Szolgáltatás
   </button>
   <div class="register-div text-left p-sm-3 p-md-3">
     <form [formGroup]="registerForm">
 
-      <div class="row m-0" id="common-fields-div">
-        <div class="form-group col-sm-1 col-md-6">
-          <label for="lastname">Vezetéknév:</label>
-          <input class="form-control rounded-pill" formControlName="lastname" id="lastname" type="text">
-          <div *ngIf="registerForm.get('lastname').invalid && registerForm.get('lastname').touched">
-            <small *ngIf="registerForm.get('lastname').errors.pattern"
+      <!-- COMMON START FIELDS DIV -->
+
+      <div class="row m-0" id="common-start-fields-div">
+        <div class="form-group col-sm-1 col-md-8">
+          <label *ngIf="isNormalUser" for="name">Név:</label>
+          <label *ngIf="!isNormalUser" for="name">Szolgáltató neve*:</label>
+          <input class="form-control rounded-pill" formControlName="name" id="name" type="text">
+          <div *ngIf="registerForm.get('name').invalid && registerForm.get('name').touched">
+            <small *ngIf="registerForm.get('name').errors.pattern"
                    class="text-danger">
               Érvénytelen név!
             </small>
           </div>
         </div>
-
-
-        <div class="form-group col-sm-1 col-md-6">
-          <label class="" for="firstname">Keresztnév:</label>
-          <input class="form-control rounded-pill" formControlName="firstname" id="firstname" type="text">
-          <div *ngIf="registerForm.get('firstname').invalid && registerForm.get('firstname').touched">
-            <small *ngIf="registerForm.get('firstname').errors.pattern"
-                   class="text-danger">
-              Érvénytelen név!
-            </small>
-          </div>
-        </div>
-
-
+        <div class="col-sm-1 col-md-12"></div>
         <div class="form-group col-sm-1 col-md-5">
-          <label for="username">Felhasználónév:</label>
+          <label for="username">Felhasználónév*:</label>
           <input class="form-control rounded-pill" formControlName="username" id="username" type="text">
           <small *ngIf="registerForm.get('username').errors?.serverError && registerForm.get('username').touched"
                  class="text-danger">
@@ -56,7 +46,7 @@
         </div>
 
         <div class="form-group col-sm-1 col-md-7">
-          <label for="email">Email cím:</label>
+          <label for="email">Email cím*:</label>
           <input class="form-control rounded-pill" formControlName="email" id="email" type="text">
           <small *ngIf="registerForm.get('email').errors?.serverError && registerForm.get('email').touched"
                  class="text-danger">
@@ -76,7 +66,7 @@
         </div>
 
         <div class="form-group col-sm-1 col-md-6">
-          <label for="password">Jelszó:</label>
+          <label for="password">Jelszó*:</label>
           <input class="form-control rounded-pill" formControlName="password" id="password" type="password">
           <div *ngIf="registerForm.get('password').invalid && registerForm.get('password').touched ">
             <small *ngIf="registerForm.get('password').errors.required"
@@ -97,21 +87,43 @@
         </div>
 
         <div class="form-group col-sm-1 col-md-5 ">
-          <label for="phone">Telefonszám:</label>
+          <label *ngIf="isNormalUser" for="phone">Telefonszám:</label>
+          <label *ngIf="!isNormalUser" for="phone">Telefonszám*:</label>
           <input class="form-control rounded-pill"
                  formControlName="phone"
                  id="phone" placeholder="+36-XX-XXX-XXXX"
                  type="text">
-          <small *ngIf="registerForm.get('phone').invalid && registerForm.get('phone').touched"
-                 class="text-danger">
-            Érvénytelen telefonszám!
-          </small>
+          <div *ngIf="registerForm.get('phone').invalid && registerForm.get('phone').touched">
+            <small *ngIf="registerForm.get('phone').errors.required"
+                   class="text-danger">
+              A mező kitöltése közelező!
+            </small>
+            <small *ngIf="registerForm.get('phone').errors.pattern"
+                   class="text-danger">
+              Érvénytelen telefonszám!
+            </small>
+          </div>
         </div>
       </div>
 
-      <div class="row m-0" id="normal-user-div">
+      <!-- CUSTOM ADDRESS CHECK DIV -->
+
+      <div *ngIf="!isNormalUser" id="custom-address-check-div">
+        <div class="row m-0">
+          <div class="form-group col-sm-1 col-md-12">
+            <label for="customAddress">Cím hozzáadása a szolgáltatáshoz:</label>
+            <input (change)="haveProviderCustomAddress=!haveProviderCustomAddress" class="form-check-input m-1"
+                   id="customAddress"
+                   type="checkbox">
+          </div>
+        </div>
+      </div>
+
+      <!-- ADDRESS DIV -->
+
+      <div *ngIf="isNormalUser || haveProviderCustomAddress" class="row m-0" id="address-div">
         <div class="form-group col-sm-1 col-md-3">
-          <label for="zipcode">Irányítószám:</label>
+          <label for="zipcode">Irányítószám*:</label>
           <input class="form-control rounded-pill" formControlName="zipcode" id="zipcode" type="number">
           <div *ngIf="registerForm.get('zipcode').invalid && registerForm.get('zipcode').touched">
             <small *ngIf="registerForm.get('zipcode').errors.required"
@@ -139,22 +151,73 @@
           <input class="form-control rounded-pill" formControlName="address" id="address" type="address">
         </div>
 
-        <div class="form-group col-sm-1 col-md-12">
-          <label for="birthyear">Érintett családtag születési éve:</label>
-          <input class="form-control col-md-3 rounded-pill" formControlName="birthyear" id="birthyear" type="number">
-          <div *ngIf="registerForm.get('birthyear').invalid && registerForm.get('birthyear').touched">
-            <small *ngIf="registerForm.get('birthyear').errors.required"
-                   class="text-danger">
-              A mező kitöltése közelező!
-            </small>
-            <small *ngIf="registerForm.get('birthyear').errors.min || registerForm.get('birthyear').errors.max"
-                   class="text-danger">
-              Érvénytelen születési év!
-            </small>
+      </div>
+
+      <!-- PROVIDER USER FIELDS-->
+
+      <div *ngIf="!isNormalUser" id="provider-user-fields-div">
+
+        <div class="row m-0">
+          <div class="form-group col-sm-1 col-md-6">
+            <label for="openingHours">Nyitvatartás*:</label>
+            <input class="form-control rounded-pill" id="openingHours" name="openingHours" type="text">
+          </div>
+        </div>
+
+        <div class="row m-0">
+          <div class="form-group col-sm-1 col-md-4">
+            <label for="ageGroup">Korosztály*:</label>
+            <select class="form-control rounded-pill col-md-6" id="ageGroup" name="ageGroup">
+              <option *ngFor="let age of getAgesArray(100), let i = index" value="{{i}}">{{i}}</option>
+            </select>
+          </div>
+          <div class="form-group col-sm-1 col-md-4">
+            <label>-</label>
+            <select class="form-control rounded-pill col-md-6" id="ageGroupMax" name="ageGroupMax">
+              <option *ngFor="let age of getAgesArray(100), let i = index" value="{{i}}">{{i}}</option>
+            </select>
           </div>
         </div>
 
 
+        <div class="form-group col-sm-1 col-md-6">
+          <label for="type">Szolgáltatás típusa*:</label>
+          <select class="form-control rounded-pill" id="type" name="type">
+            <option *ngFor="let type of getAllType()" value="{{type}}">{{type}}</option>
+          </select>
+        </div>
+
+        <button class="form-control btn btn-primary" id="add-institution">
+          Intézmény hozzáadása
+        </button>
+
+        <div class="form-group col-sm-1 col-md-6">
+          <label for="institution">Intézmény:</label>
+          <input class="form-control rounded-pill" id="institution" name="institution" type="text">
+        </div>
+
+      </div>
+
+      <!-- NORMAL USER FIELDS DIV -->
+
+      <div *ngIf="isNormalUser" class="form-group col-sm-1 col-md-12" id="normal-user-fields-div">
+        <label for="birthyear">Érintett családtag születési éve*:</label>
+        <input class="form-control col-md-3 rounded-pill" formControlName="birthyear" id="birthyear" type="number">
+        <div *ngIf="registerForm.get('birthyear').invalid && registerForm.get('birthyear').touched">
+          <small *ngIf="registerForm.get('birthyear').errors.required"
+                 class="text-danger">
+            A mező kitöltése közelező!
+          </small>
+          <small *ngIf="registerForm.get('birthyear').errors.min || registerForm.get('birthyear').errors.max"
+                 class="text-danger">
+            Érvénytelen születési év!
+          </small>
+        </div>
+      </div>
+
+      <!-- COMMON END FIELDS DIV -->
+
+      <div id="common-end-fields-div">
         <div class="pl-sm-1 pl-md-3 mb-sm-1 mb-md-3">
           <div class="form-group col-sm-1 col-md-12 my-0 small">
             <input class="form-check-input mt-0" formControlName="newsletter" id="newsletter" type="checkbox">
@@ -165,7 +228,7 @@
             <input class="form-check-input mt-0" formControlName="termsAndConditions" id="termsAndConditions"
                    type="checkbox">
             <label class="mb-1" for="termsAndConditions">Elolvastam és elfogadom az
-              <a class="nav-link d-inline p-0" href="">Adatvédelmi Nyilatkozatot.</a></label>
+              <a class="nav-link d-inline p-0" href="">Adatvédelmi Nyilatkozatot</a>*.</label>
           </div>
           <small
             *ngIf="registerForm.get('termsAndConditions').invalid && registerForm.get('termsAndConditions').dirty"
@@ -174,24 +237,14 @@
           </small>
         </div>
 
-
-      </div>
-      <div id="service-provider">
-
-        <div *ngIf="!isNormalUser" class="form-group">
-          <button class="form-control btn btn-primary" formControlName="institution" id="institution">
-            Intézmény hozzáadása
+        <div class="form-group pl-sm-1 pl-md-3">
+          <button (click)="submit()" [disabled]="registerForm.invalid" class="submit btn btn-primary rounded-pill"
+                  type="submit">
+            Regisztráció
           </button>
         </div>
-
-
       </div>
-      <div class="form-group pl-sm-1 pl-md-3">
-        <button (click)="submit()" [disabled]="registerForm.invalid" class="submit btn btn-primary rounded-pill"
-                type="submit">
-          Regisztráció
-        </button>
-      </div>
+
     </form>
 
   </div>

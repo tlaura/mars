@@ -54,6 +54,12 @@ input {
   box-shadow: none !important;
 }
 
+select {
+  border: 1px solid tomato;
+  outline: 0;
+  box-shadow: none !important;
+}
+
 h1 {
   color: tomato;
   margin-top: 5rem;

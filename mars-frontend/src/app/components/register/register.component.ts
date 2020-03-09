@@ -1,5 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {ProviderAccountRegisterModel} from "../../models/providerAccountRegisterModel";
+import {AccountService} from "../../services/account.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-register',
@@ -12,41 +15,98 @@ export class RegisterComponent implements OnInit {
   PASSWORD_REGEX = '(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{6,15})$';
   ZIPCODE_REGEX = '^[1-9][0-9]{3}$';
   PHONE_REGEX = '^\\+(\\d{1,2})\\D*(\\d{1,3})\\D*(\\d{3})\\D*(\\d{3,4})$';
-  NAME_REGEX = '^[A-Z][a-z]{2,15}$';
+  NAME_REGEX = '^[A-ZÁÉÚÓÜŰÖŐÍ][a-záéúóüűöőí]{2,15}$'; // TODO: space
+  PROVIDER_NAME_REGEX = '^[A-ZÁÉÚÓÜŰÖŐÍ][a-záéúóüűöőí]{2,15}$'; //TODO: longer name
   CURRENT_YEAR = new Date().getFullYear().valueOf();
-
   isNormalUser: boolean = true;
+  haveProviderCustomAddress: boolean = false;
   registerForm: FormGroup;
 
-  constructor() {
-    this.registerForm = new FormGroup(
-      {
-        'lastname': new FormControl('', Validators.pattern(this.NAME_REGEX)),
-        'firstname': new FormControl('', Validators.pattern(this.NAME_REGEX)),
-        'username': new FormControl('',
-          [Validators.required, Validators.pattern(this.USERNAME_REGEX)]),
-        'password': new FormControl('',
-          [Validators.required, Validators.pattern(this.PASSWORD_REGEX)]),
-        'email': new FormControl('',
-          [Validators.required, Validators.pattern(this.EMAIL_REGEX)]),
-        'phone': new FormControl('', Validators.pattern(this.PHONE_REGEX)),
-        'zipcode': new FormControl('',
-          [Validators.required, Validators.pattern(this.ZIPCODE_REGEX)]),
-        'city': new FormControl(''),
-        'address': new FormControl(''),
-        'birthyear': new FormControl('',
-          [Validators.required, Validators.min(this.CURRENT_YEAR - 50), Validators.max(this.CURRENT_YEAR)]),
-        'newsletter': new FormControl(''),
-        'termsAndConditions': new FormControl('', Validators.requiredTrue)
-      }
-    )
+  commonFieldsFormGroup = new FormGroup(
+    {
+      'name': new FormControl('',
+        [Validators.required, Validators.pattern(this.PROVIDER_NAME_REGEX)]),
+      'username': new FormControl('',
+        [Validators.required, Validators.pattern(this.USERNAME_REGEX)]),
+      'password': new FormControl('',
+        [Validators.required, Validators.pattern(this.PASSWORD_REGEX)]),
+      'email': new FormControl('',
+        [Validators.required, Validators.pattern(this.EMAIL_REGEX)]),
+      'phone': new FormControl('',
+        [Validators.required, Validators.pattern(this.PHONE_REGEX)]),
+
+      'zipcode': new FormControl('',
+        [Validators.required, Validators.pattern(this.ZIPCODE_REGEX)]),
+      'city': new FormControl(''),
+      'address': new FormControl(''),
+
+      'newsletter': new FormControl(''),
+      'termsAndConditions': new FormControl('', Validators.requiredTrue)
+    }
+  )
+
+  normalAccountRegisterFormGroup = new FormGroup(
+    {
+      'birthyear': new FormControl('',
+        [Validators.required, Validators.min(this.CURRENT_YEAR - 50), Validators.max(this.CURRENT_YEAR)]),
+    })
+
+  providerAccountRegisterFormGroup = new FormGroup(
+    {
+      'type': new FormControl('',
+        [Validators.required]),
+
+      'openingHours': new FormControl('',
+        [Validators.required]),
+      'ageGroup': new FormControl('',
+        [Validators.required]),
+      'institution': new FormControl(''),
+    })
+
+  // TODO: refactor -> new component?
+
+  constructor(private accountService: AccountService, private router: Router) {
+    this.isNormalUser = true;
+    this.registerForm = this.commonFieldsFormGroup;
+    this.addFormGroup(this.normalAccountRegisterFormGroup);
   }
 
   ngOnInit() {
   }
 
   submit() {
+    const formData: ProviderAccountRegisterModel = this.registerForm.value;
+    this.accountService.saveProviderAccount(formData).subscribe(
+      () => {
+        // TODO: register email...
+        this.router.navigate(['registration-complete']);
+      },
+    );
   }
 
+  renderNormalAccountRegisterForm() {
+    this.isNormalUser = true;
+    this.registerForm = this.commonFieldsFormGroup;
+    this.addFormGroup(this.normalAccountRegisterFormGroup);
+  }
 
+  renderProviderAccountRegisterForm() {
+    this.isNormalUser = false;
+    this.registerForm = this.commonFieldsFormGroup;
+    this.addFormGroup(this.providerAccountRegisterFormGroup);
+  }
+
+  addFormGroup(formGroupToAdd: FormGroup) {
+    for (let controlsKey in formGroupToAdd.controls) {
+      this.registerForm.addControl(controlsKey, formGroupToAdd.get(controlsKey));
+    }
+  }
+
+  getAgesArray(n: number) {
+    return Array(n);
+  }
+
+  getAllType() {
+    return ['diagnózis központ', ' terápia', 'fejlesztő hely', 'óvoda', 'általános iskola', 'középiskola', 'kollégium', 'munkahely', 'bentlakásos felnőtt ellátó', 'nappali foglalkoztató', 'egyéb'];
+  }
 }
