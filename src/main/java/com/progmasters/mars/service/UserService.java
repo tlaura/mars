@@ -1,5 +1,8 @@
 package com.progmasters.mars.service;
 
+import com.progmasters.mars.domain.IndividualUser;
+import com.progmasters.mars.repository.IndividualUserRepository;
+import com.progmasters.mars.repository.InstitutionalUserRepository;
 import com.progmasters.mars.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -10,13 +13,13 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class UserService {
 
-    private UserRepository userRepository;
-    private BCryptPasswordEncoder passwordEncoder;
+    private IndividualUserRepository userRepository;
+    private InstitutionalUserRepository institutionalUserRepository;
 
     @Autowired
-    public UserService(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder) {
+    public UserService(IndividualUserRepository userRepository, InstitutionalUserRepository institutionalUserRepository) {
         this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
+        this.institutionalUserRepository = institutionalUserRepository;
     }
 
 }

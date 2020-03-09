@@ -15,7 +15,6 @@ export class LoginService {
     const headers = new HttpHeaders(
       credentials ? {authorization: 'Basic' + btoa(credentials.userName + ':' + credentials.password),
       } : {});
-
     return this.http.get(BASE_URL + '/login', {headers: headers});
   }
 }

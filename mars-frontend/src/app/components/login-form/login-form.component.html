@@ -4,9 +4,9 @@
     <form [formGroup]="loginForm">
 
       <div class="form-group">
-        <label for="email">Email cím:</label>
-        <input class="form-control" formControlName="email" id="email" placeholder="Email" type="email">
-        <small *ngIf="loginForm.get('email').invalid && loginForm.get('email').touched"
+        <label for="userName">Email cím:</label>
+        <input class="form-control" formControlName="userName" id="userName" placeholder="Email" type="email">
+        <small *ngIf="loginForm.get('userName').invalid && loginForm.get('userName').touched"
                class="text-danger">
         A mező kitöltése közelező!
       </small>

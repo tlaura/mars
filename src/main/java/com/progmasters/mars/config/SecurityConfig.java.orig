@@ -9,12 +9,12 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-
-import java.util.Arrays;
+<<<<<<< HEAD
+=======
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+>>>>>>> db refactor
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.web.cors.CorsConfiguration;
@@ -27,6 +27,7 @@ import java.util.Arrays;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+<<<<<<< HEAD
     private JPAUserDetailsService jpaUserDetailsService;
     private PasswordEncoder passwordEncoder;
 
@@ -36,6 +37,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         this.jpaUserDetailsService = jpaUserDetailsService;
         this.passwordEncoder = passwordEncoder;
     }
+=======
+    @Autowired
+    private JPAUserDetailsService userDetailsService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+//    @Autowired
+//    public SecurityConfig(UserDetailsService userDetailsService) {
+//        super();
+//        this.userDetailsService = userDetailsService;
+//    }
+>>>>>>> db refactor
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -48,7 +62,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .cors().and()
                 .csrf().disable()
                 .authorizeRequests()
+<<<<<<< HEAD
                 .antMatchers("/api/user/login").permitAll()
+=======
+                .antMatchers(HttpMethod.GET, "/api/user/login").permitAll()
+>>>>>>> db refactor
                 .anyRequest().authenticated()
 //                .antMatchers("/api/*").hasRole("ADMIN")
                 .and().logout().deleteCookies("JSESSIONID")
