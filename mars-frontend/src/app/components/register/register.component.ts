@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
 import {ProviderAccountRegisterModel} from "../../models/providerAccountRegisterModel";
 import {AccountService} from "../../services/account.service";
 import {Router} from "@angular/router";
@@ -20,9 +20,8 @@ export class RegisterComponent implements OnInit {
   isNormalUser: boolean = true;
   haveProviderCustomAddress: boolean = false;
   types: string[] = ['diagnózis központ', ' terápia', 'fejlesztő hely', 'óvoda', 'általános iskola', 'középiskola', 'kollégium', 'munkahely', 'bentlakásos felnőtt ellátó', 'nappali foglalkoztató', 'egyéb'];
-
+  weekDays: string[] = ['Hétfő', 'Kedd', 'Szerda', 'Csütörtök', 'Péntek', 'Szombat', 'Vasárnap'];
   registerForm: FormGroup;
-
   // TODO: refactor -> new component?
 
   constructor(private accountService: AccountService, private router: Router) {
@@ -36,7 +35,6 @@ export class RegisterComponent implements OnInit {
 
   submit() {
     const formData: ProviderAccountRegisterModel = this.registerForm.value;
-    formData.ageGroup = this.setAgeGroup();
     this.accountService.saveProviderAccount(formData).subscribe(
       () => {
         // TODO: register email...
@@ -92,16 +90,7 @@ export class RegisterComponent implements OnInit {
     )
   }
 
-  getProviderAccountRegisterFormGroup(): FormGroup {
-    return new FormGroup(
-      {
-        'type': new FormControl(this.types[0]),
-        'openingHours': new FormControl(''),
-        'ageGroupMin': new FormControl(0),
-        'ageGroupMax': new FormControl(99),
-        'institution': new FormControl(''),
-      })
-  }
+  openingHours = new FormArray([]);
 
   getNormalAccountRegisterFormGroup(): FormGroup {
     return new FormGroup(
@@ -111,17 +100,24 @@ export class RegisterComponent implements OnInit {
       })
   }
 
-  private setAgeGroup(): number[] {
-    let ageGroup: number[] = [];
-    let min = parseInt(this.registerForm.value.ageGroupMin);
-    let max = parseInt(this.registerForm.value.ageGroupMax);
-    if (min > max) {
-      ageGroup[0] = max;
-      ageGroup[1] = min;
-    } else {
-      ageGroup[0] = min;
-      ageGroup[1] = max;
-    }
-    return ageGroup;
+  getProviderAccountRegisterFormGroup(): FormGroup {
+    return new FormGroup(
+      {
+        'type': new FormControl(this.types[0]),
+        'openingHours': this.openingHours,
+        'ageGroupMin': new FormControl(0),
+        'ageGroupMax': new FormControl(99),
+        'institution': new FormControl(''),
+      })
+  }
+
+  addNewOpeningHours() {
+    const group = new FormGroup({
+      weekDay: new FormControl(''),
+      openingTime: new FormControl(''),
+      closingTime: new FormControl(''),
+    });
+
+    this.openingHours.push(group);
   }
 }

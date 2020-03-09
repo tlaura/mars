@@ -156,32 +156,43 @@
       <!-- PROVIDER USER FIELDS-->
 
       <div *ngIf="!isNormalUser" id="provider-user-fields-div">
-
-        <div class="row m-0">
+        <div *ngFor="let group of openingHours.controls; index as i " [formGroup]="group" class="row m-0">
           <div class="form-group col-sm-1 col-md-6">
-            <label for="openingHours">Nyitvatartás*:</label>
-            <input class="form-control rounded-pill" formControlName="openingHours" id="openingHours"
-                   name="openingHours" type="text">
+            <label for="weekDay">Nyitvatartás*:</label>
+            <select class="form-control rounded-pill" formControlName="weekDay" id="weekDay" name="weekDay">
+              <option *ngFor="let day of weekDays" value="{{day}}">{{day}}</option>
+            </select>
+          </div>
+          <div class="form-group col-sm-1 col-md-3">
+            <label for="openingTime">Nyitás*:</label>
+            <input class="form-control rounded-pill " formControlName="openingTime" id="openingTime"
+                   name="openingTime" type="Time">
+          </div>
+          <div class="form-group col-sm-1 col-md-3">
+            <label for="closingTime">Zárás*:</label>
+            <input class="form-control rounded-pill" formControlName="closingTime" id="closingTime"
+                   name="closingTime" type="Time">
           </div>
         </div>
+        <button (click)="addNewOpeningHours()">Új időpont</button>
+
 
         <div class="row m-0">
-          <div class="form-group col-sm-1 col-md-4">
-            <label for="ageGroupMin">Korosztály*:</label>
-            <select class="form-control rounded-pill col-md-6" formControlName="ageGroupMin" id="ageGroupMin"
+          <div class="form-group col-sm-1 col-md-3">
+            <label for="ageGroupMin">Minimum kor*:</label>
+            <select class="form-control rounded-pill " formControlName="ageGroupMin" id="ageGroupMin"
                     name="ageGroupMin">
               <option *ngFor="let age of getAgesArray(100), let i = index" value="{{i}}">{{i}}</option>
             </select>
           </div>
-          <div class="form-group col-sm-1 col-md-4">
-            <label>-</label>
-            <select class="form-control rounded-pill col-md-6" formControlName="ageGroupMax" id="ageGroupMax"
+          <div class="form-group col-sm-1 col-md-3">
+            <label for="ageGroupMax">Maximum kor*:</label>
+            <select class="form-control rounded-pill" formControlName="ageGroupMax" id="ageGroupMax"
                     name="ageGroupMax">
               <option *ngFor="let age of getAgesArray(100), let i = index" value="{{i}}">{{i}}</option>
             </select>
           </div>
         </div>
-
 
         <div class="form-group col-sm-1 col-md-6">
           <label for="type">Szolgáltatás típusa*:</label>

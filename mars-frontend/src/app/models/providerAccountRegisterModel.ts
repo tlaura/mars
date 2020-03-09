@@ -1,3 +1,5 @@
+import {OpeningHour} from "../utils/openingHour";
+
 export interface ProviderAccountRegisterModel {
   name: string,
 
@@ -12,8 +14,9 @@ export interface ProviderAccountRegisterModel {
 
   type: string,
 
-  openingHours: string[],
-  ageGroup: number[],
+  openingHours: OpeningHour[],
+  ageGroupMin: number,
+  ageGroupMax: number,
   institution: string[],
 
   newsletter: boolean,
