@@ -36,13 +36,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
     }
 
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .cors().and()
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/api/orcs").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/user").permitAll()
 //                .antMatchers("/api/*").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and().logout().deleteCookies("JSESSIONID")
