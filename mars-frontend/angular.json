@@ -123,6 +123,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "auti"
+    }
+  },
+  "defaultProject": "auti",
+  "cli": {
+    "analytics": "9522ff17-ee5b-47d8-b8b7-5ee1fc2929c6"
+  }
 }
