@@ -1,6 +1,5 @@
 package com.progmasters.mars.dto;
 
-import com.progmasters.mars.domain.Institution;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.Column;
@@ -31,19 +30,11 @@ public class InstitutionCreationForm {
     @Length(min = 30)
     private String description;
 
+    private String institutionType;
+
     private Long creatorId;
 
     public InstitutionCreationForm() {
-    }
-
-    public InstitutionCreationForm(Institution institution) {
-        this.name = institution.getName();
-        this.zipCode = institution.getZipCode();
-        this.city = institution.getCity();
-        this.address = institution.getAddress();
-        this.email = institution.getEmail();
-        this.description = institution.getDescription();
-        this.creatorId = institution.getCreator().getId();
     }
 
     public String getName() {
@@ -80,4 +71,7 @@ public class InstitutionCreationForm {
         return creatorId;
     }
 
+    public String getInstitutionType() {
+        return institutionType;
+    }
 }

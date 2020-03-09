@@ -1,5 +1,10 @@
 <div class="container">
   <input [(ngModel)]="searchText" placeholder="keresés név vagy cím alapján" type="text">
+  <select (change)="narrowByType($event.target.value)" id="institution-type" name="institution-type">
+    <option selected value="all">Minden</option>
+    <option *ngFor="let institutionType of institutionTypeList"
+            value="{{institutionType.name}}">{{institutionType.displayName}}</option>
+  </select>
   <div class="list-container h-25">
   </div>
   <div *ngFor="let institution of institutionList |filter:searchText |paginate:{itemsPerPage:size,currentPage:page}">
@@ -7,7 +12,8 @@
     <div class="row list-item-container">
       <div (click)="details(institution.id)" class="col text-left">
         <h3>{{institution.name}}</h3>
-        <h6>{{institution.zipCode}} {{institution.city}} {{institution.address}}</h6>
+        <h5>{{institution.zipCode}} {{institution.city}} {{institution.address}}</h5>
+        <h6>{{institution.type}}</h6>
       </div>
     </div>
   </div>

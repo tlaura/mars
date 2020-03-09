@@ -44,6 +44,9 @@ public class Institution {
     @Column(name = "description")
     private String description;
 
+    @Enumerated(EnumType.STRING)
+    private InstitutionType institutionType;
+
     @ManyToOne
     private InstitutionalUser creator;
 
@@ -57,6 +60,8 @@ public class Institution {
         this.address = institutionCreationForm.getAddress();
         this.email = institutionCreationForm.getEmail();
         this.description = institutionCreationForm.getDescription();
+        String institutionType = institutionCreationForm.getInstitutionType();
+        this.institutionType = InstitutionType.getTypeByName(institutionType);
 
     }
 
@@ -122,5 +127,13 @@ public class Institution {
 
     public void setCreator(InstitutionalUser creator) {
         this.creator = creator;
+    }
+
+    public InstitutionType getInstitutionType() {
+        return institutionType;
+    }
+
+    public void setInstitutionType(InstitutionType institutionType) {
+        this.institutionType = institutionType;
     }
 }

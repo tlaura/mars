@@ -1,6 +1,7 @@
 package com.progmasters.mars.service;
 
 import com.progmasters.mars.domain.Institution;
+import com.progmasters.mars.domain.InstitutionType;
 import com.progmasters.mars.dto.InstitutionCreationForm;
 import com.progmasters.mars.dto.InstitutionDetails;
 import com.progmasters.mars.dto.InstitutionListData;
@@ -52,5 +53,9 @@ public class InstitutionService {
         Institution institution = new Institution(institutionCreationForm);
         //todo get user id
         institutionRepository.save(institution);
+    }
+
+    public List<InstitutionListData> getInstitutionsByType(InstitutionType institutionType) {
+        return institutionRepository.findAllByInstitutionType(institutionType).stream().map(InstitutionListData::new).collect(Collectors.toList());
     }
 }

@@ -1,8 +1,10 @@
 package com.progmasters.mars.controller;
 
+import com.progmasters.mars.domain.InstitutionType;
 import com.progmasters.mars.dto.InstitutionCreationForm;
 import com.progmasters.mars.dto.InstitutionDetails;
 import com.progmasters.mars.dto.InstitutionListData;
+import com.progmasters.mars.dto.InstitutionTypeData;
 import com.progmasters.mars.service.InstitutionService;
 import com.progmasters.mars.validation.AddInstitutionFormValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +14,9 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/institutions")
@@ -39,15 +43,31 @@ public class InstitutionController {
     }
 
     @GetMapping
-    public List<InstitutionListData> institutions() {
+    public ResponseEntity<List<InstitutionListData>> institutions() {
         //todo handle sorting
-        return institutionService.getInstitutionList();
+        return new ResponseEntity<>(institutionService.getInstitutionList(), HttpStatus.OK);
+    }
+
+    @GetMapping("/institutionType")
+    public ResponseEntity<List<InstitutionTypeData>> getInstitutionType() {
+        List<InstitutionTypeData> institutionTypeDataList = Arrays.stream(InstitutionType.values()).map(InstitutionTypeData::new).collect(Collectors.toList());
+
+        return new ResponseEntity<>(institutionTypeDataList, HttpStatus.OK);
+    }
+
+    @GetMapping("/getInstitutionsByType")
+    public ResponseEntity<List<InstitutionListData>> getInstitutionByType(@RequestParam("type") String type) {
+
+        InstitutionType institutionType = InstitutionType.getTypeByName(type);
+        List<InstitutionListData> institutionListData = institutionService.getInstitutionsByType(institutionType);
+
+        return new ResponseEntity<>(institutionListData, HttpStatus.OK);
     }
 
 
     @GetMapping("/{id}")
-    public InstitutionDetails getInstitutionDetails(@PathVariable("id") Long id) {
-        return institutionService.getInstitutionDetails(id);
+    public ResponseEntity<InstitutionDetails> getInstitutionDetails(@PathVariable("id") Long id) {
+        return new ResponseEntity<>(institutionService.getInstitutionDetails(id), HttpStatus.OK);
     }
 
     @PostMapping

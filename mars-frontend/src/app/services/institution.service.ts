@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {InstitutionFormDataModel} from "../models/institutionFormData.model";
 import {Observable} from "rxjs";
 import {InstitutionListModel} from "../models/institutionList.model";
+import {InstitutionTypeModel} from "../models/InstitutionType.model";
 
 @Injectable({
   providedIn: 'root'
@@ -13,11 +14,19 @@ export class InstitutionService {
   constructor(private http: HttpClient) {
   }
 
-  saveInstitution(formData: InstitutionFormDataModel) {
+  saveInstitution = (formData: InstitutionFormDataModel) => {
     return this.http.post(this.baseUrl, formData);
-  }
+  };
 
-  getInstitutionList(): Observable<Array<InstitutionListModel>> {
+  getInstitutionList = (): Observable<Array<InstitutionListModel>> => {
     return this.http.get<Array<InstitutionListModel>>(this.baseUrl);
-  }
+  };
+
+  getInstitutionTypes = (): Observable<Array<InstitutionTypeModel>> => {
+    return this.http.get<Array<InstitutionTypeModel>>(this.baseUrl + "/institutionType");
+  };
+
+  getInstitutionByType = (name: string): Observable<Array<InstitutionListModel>> => {
+    return this.http.get<Array<InstitutionListModel>>(this.baseUrl + "/getInstitutionsByType?type=" + name);
+  };
 }

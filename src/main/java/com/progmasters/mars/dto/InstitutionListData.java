@@ -9,6 +9,7 @@ public class InstitutionListData {
     private Integer zipCode;
     private String city;
     private String address;
+    private String type;
 
 
     public InstitutionListData() {
@@ -20,6 +21,7 @@ public class InstitutionListData {
         this.zipCode = institution.getZipCode();
         this.city = institution.getCity();
         this.address = institution.getAddress();
+        this.type = institution.getInstitutionType().getHungarianName();
     }
 
     public Long getId() {
@@ -40,5 +42,9 @@ public class InstitutionListData {
 
     public String getAddress() {
         return address;
+    }
+
+    public String getType() {
+        return type;
     }
 }

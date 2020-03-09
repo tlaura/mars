@@ -4,4 +4,5 @@ export interface InstitutionListModel {
   zipCode: number,
   city: string,
   address: string,
+  type: string
 }
