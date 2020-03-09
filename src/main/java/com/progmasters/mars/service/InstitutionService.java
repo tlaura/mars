@@ -1,9 +1,10 @@
 package com.progmasters.mars.service;
 
 import com.progmasters.mars.domain.Institution;
-import com.progmasters.mars.dto.AddInstitutionForm;
+import com.progmasters.mars.domain.InstitutionType;
+import com.progmasters.mars.dto.InstitutionCreationForm;
 import com.progmasters.mars.dto.InstitutionDetails;
-import com.progmasters.mars.dto.InstitutionListItem;
+import com.progmasters.mars.dto.InstitutionListData;
 import com.progmasters.mars.repository.InstitutionRepository;
 import com.progmasters.mars.repository.InstitutionalUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,10 +26,11 @@ public class InstitutionService {
         this.institutionalUserRepository = institutionalUserRepository;
     }
 
-    public List<InstitutionListItem> getInstitutionList() {
+    public List<InstitutionListData> getInstitutionList() {
+        //  Pageable pageable= PageRequest.of(page,size);
         return institutionRepository.findAll()
                 .stream()
-                .map(InstitutionListItem::new)
+                .map(InstitutionListData::new)
                 .collect(Collectors.toList());
     }
 
@@ -39,25 +41,21 @@ public class InstitutionService {
         return new InstitutionDetails(institution.get());
     }
 
-    public List<InstitutionListItem> getInstitutionsBySearchKeyword(String keyword) {
+    public List<InstitutionListData> getInstitutionsBySearchKeyword(String keyword) {
         return institutionRepository.findByNameContainsIgnoreCase(keyword)
                 .stream()
-                .map(InstitutionListItem::new)
+                .map(InstitutionListData::new)
                 .collect(Collectors.toList());
     }
 
-    public void createInstitution(AddInstitutionForm form) {
-//        Optional<InstitutionalUser> creator = institutionalUserRepository.findById(form.getCreatorId());
-//        if (creator.isEmpty())
-//            throw new IllegalArgumentException("There is no institutional user for this id:" + form.getCreatorId());
-        Institution institution = new Institution();
-        institution.setName(form.getName());
-        institution.setEmail(form.getEmail());
-        institution.setZipCode(form.getZipCode());
-        institution.setCity(form.getCity());
-        institution.setAddress(form.getAddress());
-        institution.setDescription(form.getDescription());
-//        institution.setCreator(creator.get());
+    public void createInstitution(InstitutionCreationForm institutionCreationForm) {
+
+        Institution institution = new Institution(institutionCreationForm);
+        //todo get user id
         institutionRepository.save(institution);
+    }
+
+    public List<InstitutionListData> getInstitutionsByType(InstitutionType institutionType) {
+        return institutionRepository.findAllByInstitutionType(institutionType).stream().map(InstitutionListData::new).collect(Collectors.toList());
     }
 }

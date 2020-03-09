@@ -2,67 +2,49 @@ package com.progmasters.mars.dto;
 
 import com.progmasters.mars.domain.Institution;
 
-public class InstitutionDetails {
+public class InstitutionListData {
 
     private Long id;
     private String name;
     private Integer zipCode;
     private String city;
     private String address;
-    private String email;
-    private String description;
-    private String creatorName;
+    private String type;
 
-    public InstitutionDetails() {
+
+    public InstitutionListData() {
     }
 
-    public InstitutionDetails(Institution institution) {
+    public InstitutionListData(Institution institution) {
         this.id = institution.getId();
         this.name = institution.getName();
         this.zipCode = institution.getZipCode();
         this.city = institution.getCity();
         this.address = institution.getAddress();
-        this.email = institution.getEmail();
-        this.description = institution.getDescription();
-        this.creatorName = institution.getCreator().getFirstName() + " " + institution.getCreator().getLastName();
+        this.type = institution.getInstitutionType().getHungarianName();
     }
 
     public Long getId() {
         return id;
     }
 
-
     public String getName() {
         return name;
     }
-
 
     public Integer getZipCode() {
         return zipCode;
     }
 
-
     public String getCity() {
         return city;
     }
-
 
     public String getAddress() {
         return address;
     }
 
-
-    public String getEmail() {
-        return email;
-    }
-
-
-    public String getDescription() {
-        return description;
-    }
-
-
-    public String getCreatorName() {
-        return creatorName;
+    public String getType() {
+        return type;
     }
 }

@@ -19,6 +19,19 @@ spring:
       charset: UTF-8
       enabled: true
       force: true
+  mail:
+    host: smtp.gmail.com
+    port: 465
+    username: callbackcats@gmail.com
+    password: PwKQNNSs2yv94pLG
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+          ssl.enable: true
 
 logging:
   level:
@@ -27,3 +40,11 @@ logging:
     org.hibernate: error
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+
+
+
+email:
+  send:
+    subject: Regisztráció megerősítése
+    text: Az alábbi linkre kattintva aktiválhatja fiókját
+    confirmation: http://localhost:8080/confirmation/

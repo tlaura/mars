@@ -8,9 +8,11 @@ import {InstitutionListComponent} from './components/institution-list/institutio
 import {InstitutionDetailsComponent} from './components/institution-details/institution-details.component';
 import {UserFormComponent} from './components/user-form/user-form.component';
 import {NavbarComponent} from "./components/navbar/navbar.component";
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
-import { RegisterComponent } from './components/register/register.component';
+import {RegisterComponent} from './components/register/register.component';
+import {Ng2SearchPipeModule} from "ng2-search-filter";
+import {NgxPaginationModule} from "ngx-pagination";
 
 @NgModule({
   declarations: [
@@ -20,13 +22,16 @@ import { RegisterComponent } from './components/register/register.component';
     InstitutionListComponent,
     InstitutionDetailsComponent,
     UserFormComponent,
-    RegisterComponent
+    RegisterComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    Ng2SearchPipeModule,
+    FormsModule,
+    NgxPaginationModule
   ],
   providers: [],
   bootstrap: [AppComponent]
