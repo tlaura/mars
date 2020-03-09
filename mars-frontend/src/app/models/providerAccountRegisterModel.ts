@@ -13,7 +13,7 @@ export interface ProviderAccountRegisterModel {
   type: string,
 
   openingHours: string[],
-  ageGroup: string,
+  ageGroup: number[],
   institution: string[],
 
   newsletter: boolean,

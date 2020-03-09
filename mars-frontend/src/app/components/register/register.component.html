@@ -160,20 +160,23 @@
         <div class="row m-0">
           <div class="form-group col-sm-1 col-md-6">
             <label for="openingHours">Nyitvatartás*:</label>
-            <input class="form-control rounded-pill" id="openingHours" name="openingHours" type="text">
+            <input class="form-control rounded-pill" formControlName="openingHours" id="openingHours"
+                   name="openingHours" type="text">
           </div>
         </div>
 
         <div class="row m-0">
           <div class="form-group col-sm-1 col-md-4">
-            <label for="ageGroup">Korosztály*:</label>
-            <select class="form-control rounded-pill col-md-6" id="ageGroup" name="ageGroup">
+            <label for="ageGroupMin">Korosztály*:</label>
+            <select class="form-control rounded-pill col-md-6" formControlName="ageGroupMin" id="ageGroupMin"
+                    name="ageGroupMin">
               <option *ngFor="let age of getAgesArray(100), let i = index" value="{{i}}">{{i}}</option>
             </select>
           </div>
           <div class="form-group col-sm-1 col-md-4">
             <label>-</label>
-            <select class="form-control rounded-pill col-md-6" id="ageGroupMax" name="ageGroupMax">
+            <select class="form-control rounded-pill col-md-6" formControlName="ageGroupMax" id="ageGroupMax"
+                    name="ageGroupMax">
               <option *ngFor="let age of getAgesArray(100), let i = index" value="{{i}}">{{i}}</option>
             </select>
           </div>
@@ -182,8 +185,8 @@
 
         <div class="form-group col-sm-1 col-md-6">
           <label for="type">Szolgáltatás típusa*:</label>
-          <select class="form-control rounded-pill" id="type" name="type">
-            <option *ngFor="let type of getAllType()" value="{{type}}">{{type}}</option>
+          <select class="form-control rounded-pill" formControlName="type" id="type" name="type">
+            <option *ngFor="let type of types" value="{{type}}">{{type}}</option>
           </select>
         </div>
 
