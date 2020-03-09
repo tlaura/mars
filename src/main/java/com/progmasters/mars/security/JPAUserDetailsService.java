@@ -1,17 +1,19 @@
 package com.progmasters.mars.security;
 
-import com.progmasters.mars.domain.User;
 import com.progmasters.mars.repository.IndividualUserRepository;
 import com.progmasters.mars.repository.InstitutionalUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class JPAUserDetailsService implements UserDetailsService {
 
     private InstitutionalUserRepository institutionalUserRepository;
@@ -25,7 +27,7 @@ public class JPAUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = individualUserRepository.findByUserName(username);
+        com.progmasters.mars.domain.User user = individualUserRepository.findByUserName(username);
 
         if (user == null) {
             user = institutionalUserRepository.findByUserName(username);
@@ -36,9 +38,14 @@ public class JPAUserDetailsService implements UserDetailsService {
         }
 
         // TODO - set roles for inst and individual users at registration
-        List<GrantedAuthority> authorities = AuthorityUtils.createAuthorityList(user.getRole().toString());
+        List<GrantedAuthority> authorities = AuthorityUtils
+                .createAuthorityList(user.getRole().toString());
 
-        UserDetails principal = org.springframework.security.core.userdetails.User.withUsername(username).authorities(authorities).password(user.getPassword()).build();
+        UserDetails principal = User
+                .withUsername(username)
+                .authorities(authorities)
+                .password(user.getPassword())
+                .build();
         return principal;
     }
 }
