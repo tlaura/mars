@@ -37,6 +37,11 @@ public class InstitutionController {
         return institutionService.getInstitutionList();
     }
 
+    @GetMapping("/details")
+    public List<InstitutionDetails> institutionsDetails() {
+        return institutionService.getInstitutionDetailsList();
+    }
+
     @GetMapping("/{id}")
     public InstitutionDetails institutionDetails(@PathVariable("id") Long id) {
         return institutionService.getInstitutionDetails(id);

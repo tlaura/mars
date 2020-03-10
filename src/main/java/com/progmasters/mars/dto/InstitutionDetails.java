@@ -6,7 +6,7 @@ public class InstitutionDetails {
 
     private Long id;
     private String name;
-    private String zipCode;
+    private String zipcode;
     private String city;
     private String address;
     private String email;
@@ -19,7 +19,7 @@ public class InstitutionDetails {
     public InstitutionDetails(Institution institution) {
         this.id = institution.getId();
         this.name = institution.getName();
-        this.zipCode = institution.getZipCode();
+        this.zipcode = institution.getZipCode();
         this.city = institution.getCity();
         this.address = institution.getAddress();
         this.email = institution.getEmail();
@@ -43,12 +43,12 @@ public class InstitutionDetails {
         this.name = name;
     }
 
-    public String getZipCode() {
-        return zipCode;
+    public String getZipcode() {
+        return zipcode;
     }
 
-    public void setZipCode(String zipCode) {
-        this.zipCode = zipCode;
+    public void setZipcode(String zipcode) {
+        this.zipcode = zipcode;
     }
 
     public String getCity() {

@@ -60,4 +60,11 @@ public class InstitutionService {
 //        institution.setCreator(creator.get());
         institutionRepository.save(institution);
     }
+
+    public List<InstitutionDetails> getInstitutionDetailsList() {
+        return institutionRepository.findAll()
+                .stream()
+                .map(InstitutionDetails::new)
+                .collect(Collectors.toList());
+    }
 }

@@ -32,15 +32,9 @@ export class RegisterComponent implements OnInit {
     address: '',
     description: ''
   },
-    {
-      name: 'kórház1',
-      zipcode: 1180,
-      city: 'Budapest',
-      address: 'Csontváry K. T. utca 13.',
-      description: 'Itt lakom látod, ez az a ház...'
-    }];
+  ];
 
-  // TODO: refactor -> new component?
+  // TODO: refactor ?
 
   constructor(private accountService: AccountService, private router: Router) {
     this.isNormalUser = true;
@@ -50,11 +44,15 @@ export class RegisterComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.accountService.fetchInstitutions().subscribe(
+      institutions => this.allInstitution = this.allInstitution.concat(institutions)
+    )
   }
 
   submit() {
     this.registerForm.markAllAsTouched();
     const formData: ProviderAccountRegisterModel = this.registerForm.value;
+    //TODO: send institution id to backend...
     this.accountService.saveProviderAccount(formData).subscribe(
       () => {
         // TODO: register email...
