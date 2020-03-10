@@ -11,7 +11,7 @@ import {InstitutionDetailModel} from "../models/institutionDetail.model";
   providedIn: 'root'
 })
 export class InstitutionService {
-  private BASE_URL = "http://localhost:8080/api/institutions/";
+  private BASE_URL = "http://localhost:8080/api/institutions";
 
   constructor(private http: HttpClient) {
   }
