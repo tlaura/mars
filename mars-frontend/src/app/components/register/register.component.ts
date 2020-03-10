@@ -147,7 +147,8 @@ export class RegisterComponent implements OnInit {
   addNewInstitution() {
     const group = new FormGroup({
       institution: new FormControl(this.allInstitution[0].name),
-      name: new FormControl('', Validators.required),
+      name: new FormControl('',
+        [Validators.required]),
       zipcode: new FormControl('',
         [Validators.pattern(this.ZIPCODE_REGEX), Validators.required]),
       city: new FormControl('', Validators.required),
@@ -175,6 +176,16 @@ export class RegisterComponent implements OnInit {
         address: currentInstitution.address,
         description: currentInstitution.description
       });
+      for (let controlsKey in group.controls) {
+        if (controlsKey != 'institution') {
+          group.get(controlsKey).disable();
+        }
+      }
+    } else {
+      group.reset();
+      group.enable();
     }
   }
+
+
 }

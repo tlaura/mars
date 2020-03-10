@@ -244,11 +244,31 @@
             <div class="form-group col-sm-1 col-md-10">
               <label>Név*:</label>
               <input class="form-control rounded-pill" formControlName="name" type="text">
+              <div *ngIf="group.get('name').invalid && group.get('name').touched">
+                <small *ngIf="group.get('name').errors.required"
+                       class="text-danger">
+                  A mező kitöltése közelező!
+                </small>
+                <small *ngIf="registerForm.get('name').errors.pattern"
+                       class="text-danger">
+                  Érvénytelen név!
+                </small>
+              </div>
             </div>
 
             <div class="form-group col-sm-1 col-md-3">
               <label>Irányítószám*:</label>
               <input class="form-control rounded-pill" formControlName="zipcode" type="number">
+              <div *ngIf="group.get('zipcode').invalid && group.get('zipcode').touched">
+                <small *ngIf="group.get('zipcode').errors.required"
+                       class="text-danger">
+                  A mező kitöltése közelező!
+                </small>
+                <small *ngIf="group.get('zipcode').errors.pattern"
+                       class="text-danger">
+                  Érvénytelen irányítószám!
+                </small>
+              </div>
             </div>
 
             <div class="form-group col-sm-1 col-md-6">
