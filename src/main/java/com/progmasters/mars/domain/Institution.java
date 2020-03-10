@@ -47,6 +47,12 @@ public class Institution {
     @Enumerated(EnumType.STRING)
     private InstitutionType institutionType;
 
+    @Column(name = "longitude")
+    private Double longitude;
+
+    @Column(name = "latitude")
+    private Double latitude;
+
     @ManyToOne
     private InstitutionalUser creator;
 
@@ -62,6 +68,8 @@ public class Institution {
         this.description = institutionCreationForm.getDescription();
         String institutionType = institutionCreationForm.getInstitutionType();
         this.institutionType = InstitutionType.getTypeByName(institutionType);
+        this.longitude = institutionCreationForm.getLongitude();
+        this.latitude = institutionCreationForm.getLatitude();
 
     }
 
@@ -135,5 +143,21 @@ public class Institution {
 
     public void setInstitutionType(InstitutionType institutionType) {
         this.institutionType = institutionType;
+    }
+
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
+    }
+
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
     }
 }

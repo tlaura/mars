@@ -10,6 +10,8 @@ public class InstitutionListData {
     private String city;
     private String address;
     private String type;
+    private Double longitude;
+    private Double latitude;
 
 
     public InstitutionListData() {
@@ -22,6 +24,8 @@ public class InstitutionListData {
         this.city = institution.getCity();
         this.address = institution.getAddress();
         this.type = institution.getInstitutionType().getHungarianName();
+        this.longitude = institution.getLongitude();
+        this.latitude = institution.getLatitude();
     }
 
     public Long getId() {
@@ -46,5 +50,13 @@ public class InstitutionListData {
 
     public String getType() {
         return type;
+    }
+
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public Double getLatitude() {
+        return latitude;
     }
 }

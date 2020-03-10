@@ -15,6 +15,7 @@ import {Ng2SearchPipeModule} from "ng2-search-filter";
 import {NgxPaginationModule} from "ngx-pagination";
 import {AgmCoreModule} from "@agm/core";
 import {environment} from "../environments/environment.local";
+import {MapComponent} from './components/map/map.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import {environment} from "../environments/environment.local";
     InstitutionDetailsComponent,
     UserFormComponent,
     RegisterComponent,
+    MapComponent,
   ],
   imports: [
     BrowserModule,

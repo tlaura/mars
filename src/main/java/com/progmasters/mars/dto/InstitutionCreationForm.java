@@ -32,6 +32,10 @@ public class InstitutionCreationForm {
 
     private String institutionType;
 
+    private Double longitude;
+
+    private Double latitude;
+
     private Long creatorId;
 
     public InstitutionCreationForm() {
@@ -73,5 +77,13 @@ public class InstitutionCreationForm {
 
     public String getInstitutionType() {
         return institutionType;
+    }
+
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public Double getLatitude() {
+        return latitude;
     }
 }

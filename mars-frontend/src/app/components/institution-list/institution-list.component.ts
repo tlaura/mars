@@ -4,6 +4,8 @@ import {Router} from "@angular/router";
 import {InstitutionListModel} from "../../models/institutionList.model";
 import {InstitutionTypeModel} from "../../models/InstitutionType.model";
 import {institutionListIndex} from "../../../environments/institutionListIndex.prod";
+import {GeocodeService} from "../../services/geocode.service";
+import {GeoLocationModel} from "../../models/geoLocation.model";
 
 @Component({
   selector: 'app-institution-list',
@@ -14,17 +16,16 @@ export class InstitutionListComponent implements OnInit {
 
   institutionList: Array<InstitutionListModel>;
   institutionTypeList: Array<InstitutionTypeModel>;
-  latitude: number = institutionListIndex.mapLatitude;
-  longitude: number = institutionListIndex.mapLongitude;
-  zoom: number = institutionListIndex.mapZoom;
   page: number = institutionListIndex.startPageIndex;
   size: number = institutionListIndex.numberOfItemPerPage;
   searchText: string;
+  locations: Array<GeoLocationModel> = [];
 
   sizeArray: Array<number> = institutionListIndex.itemsPerPageArray;
 
   constructor(private institutionService: InstitutionService,
-              private router: Router) {
+              private router: Router,
+              private geocodeService: GeocodeService) {
   }
 
   setSize = (size: number) => {
@@ -60,8 +61,36 @@ export class InstitutionListComponent implements OnInit {
   private getInstitutions = () => {
     this.institutionService.getInstitutionList().subscribe(
       institutionList => this.institutionList = institutionList,
-      error => console.warn(error)
+      error => console.warn(error),
+      () => this.institutionList.forEach(this.getGeoCode)
     );
+  };
+
+  private getGeoCode = (listItem: InstitutionListModel): void => {
+    if (listItem.longitude === null || listItem.latitude === null) {
+      let address: string = listItem.zipCode + " " + listItem.city + " " + listItem.address;
+      this.geocodeService.getLocations(address).subscribe(
+        value => {
+          listItem.latitude = value.results[0].geometry.location.lat;
+          listItem.longitude = value.results[0].geometry.location.lng;
+        },
+        error => console.warn(error),
+        () => this.initGeoArray(listItem)
+      );
+    } else {
+      this.initGeoArray(listItem);
+    }
+  };
+
+  private initGeoArray = (listItem: InstitutionListModel): void => {
+    let location: GeoLocationModel = {
+      latitude: listItem.latitude,
+      longitude: listItem.longitude
+    };
+    console.log("location:    " + location);
+    this.locations.push(location);
+    console.log("geo: ");
+    console.log(this.locations);
   };
 
   details = (id: number) => {
