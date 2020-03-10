@@ -44,7 +44,11 @@ export class InstitutionListComponent implements OnInit {
     if (type !== "all") {
       this.institutionService.getInstitutionByType(type).subscribe(
         institutionList => this.institutionList = institutionList,
-        error => console.warn(error)
+        error => console.warn(error),
+        () => {
+          this.locations = [];
+          this.institutionList.forEach(this.initGeoArray);
+        }
       );
     } else {
       this.getInstitutions();
@@ -75,22 +79,31 @@ export class InstitutionListComponent implements OnInit {
           listItem.longitude = value.results[0].geometry.location.lng;
         },
         error => console.warn(error),
-        () => this.initGeoArray(listItem)
+        () => {
+          this.updateInstitutionLocation(listItem);
+          this.initGeoArray(listItem);
+
+        }
       );
     } else {
       this.initGeoArray(listItem);
     }
   };
 
+  private updateInstitutionLocation(listItem: InstitutionListModel) {
+    let geoLocation: GeoLocationModel = {
+      latitude: listItem.latitude,
+      longitude: listItem.longitude
+    };
+    this.institutionService.updateInstitutionLocation(geoLocation, listItem.id).subscribe();
+  }
+
   private initGeoArray = (listItem: InstitutionListModel): void => {
     let location: GeoLocationModel = {
       latitude: listItem.latitude,
       longitude: listItem.longitude
     };
-    console.log("location:    " + location);
     this.locations.push(location);
-    console.log("geo: ");
-    console.log(this.locations);
   };
 
   details = (id: number) => {
