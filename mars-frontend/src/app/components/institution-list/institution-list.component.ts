@@ -92,6 +92,7 @@ export class InstitutionListComponent implements OnInit {
 
   private updateInstitutionLocation(listItem: InstitutionListModel) {
     let geoLocation: GeoLocationModel = {
+      id: listItem.id,
       latitude: listItem.latitude,
       longitude: listItem.longitude
     };
@@ -100,6 +101,7 @@ export class InstitutionListComponent implements OnInit {
 
   private initGeoArray = (listItem: InstitutionListModel): void => {
     let location: GeoLocationModel = {
+      id: listItem.id,
       latitude: listItem.latitude,
       longitude: listItem.longitude
     };

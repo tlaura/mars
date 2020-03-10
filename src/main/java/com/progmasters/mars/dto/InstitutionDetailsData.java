@@ -2,7 +2,7 @@ package com.progmasters.mars.dto;
 
 import com.progmasters.mars.domain.Institution;
 
-public class InstitutionDetails {
+public class InstitutionDetailsData {
 
     private Long id;
     private String name;
@@ -11,12 +11,13 @@ public class InstitutionDetails {
     private String address;
     private String email;
     private String description;
+    private String institutionType;
     private String creatorName;
 
-    public InstitutionDetails() {
+    public InstitutionDetailsData() {
     }
 
-    public InstitutionDetails(Institution institution) {
+    public InstitutionDetailsData(Institution institution) {
         this.id = institution.getId();
         this.name = institution.getName();
         this.zipCode = institution.getZipCode();
@@ -24,6 +25,7 @@ public class InstitutionDetails {
         this.address = institution.getAddress();
         this.email = institution.getEmail();
         this.description = institution.getDescription();
+        this.institutionType = institution.getInstitutionType().getHungarianName();
         this.creatorName = institution.getCreator().getFirstName() + " " + institution.getCreator().getLastName();
     }
 
@@ -64,5 +66,9 @@ public class InstitutionDetails {
 
     public String getCreatorName() {
         return creatorName;
+    }
+
+    public String getInstitutionType() {
+        return institutionType;
     }
 }

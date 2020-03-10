@@ -5,33 +5,38 @@ import {Observable} from "rxjs";
 import {InstitutionListModel} from "../models/institutionList.model";
 import {InstitutionTypeModel} from "../models/InstitutionType.model";
 import {GeoLocationModel} from "../models/geoLocation.model";
+import {InstitutionDetailModel} from "../models/institutionDetail.model";
 
 @Injectable({
   providedIn: 'root'
 })
 export class InstitutionService {
-  baseUrl = "http://localhost:8080/api/institutions/";
+  private BASE_URL = "http://localhost:8080/api/institutions/";
 
   constructor(private http: HttpClient) {
   }
 
   saveInstitution = (formData: InstitutionFormDataModel) => {
-    return this.http.post(this.baseUrl, formData);
+    return this.http.post(this.BASE_URL, formData);
   };
 
   getInstitutionList = (): Observable<Array<InstitutionListModel>> => {
-    return this.http.get<Array<InstitutionListModel>>(this.baseUrl);
+    return this.http.get<Array<InstitutionListModel>>(this.BASE_URL);
   };
 
   getInstitutionTypes = (): Observable<Array<InstitutionTypeModel>> => {
-    return this.http.get<Array<InstitutionTypeModel>>(this.baseUrl + "/institutionType");
+    return this.http.get<Array<InstitutionTypeModel>>(this.BASE_URL + "/institutionType");
   };
 
   getInstitutionByType = (name: string): Observable<Array<InstitutionListModel>> => {
-    return this.http.get<Array<InstitutionListModel>>(this.baseUrl + "/getInstitutionsByType?type=" + name);
+    return this.http.get<Array<InstitutionListModel>>(this.BASE_URL + "/getInstitutionsByType?type=" + name);
   };
 
   updateInstitutionLocation = (geoLocationModel: GeoLocationModel, id: number): Observable<void> => {
-    return this.http.put<void>(this.baseUrl + "locationUpdate/" + id, geoLocationModel);
+    return this.http.put<void>(this.BASE_URL + "locationUpdate/" + id, geoLocationModel);
+  };
+
+  getInstitutionDetail = (id: number): Observable<InstitutionDetailModel> => {
+    return this.http.get<InstitutionDetailModel>(this.BASE_URL + id);
   };
 }

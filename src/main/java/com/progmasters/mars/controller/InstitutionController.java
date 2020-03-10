@@ -63,7 +63,7 @@ public class InstitutionController {
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<InstitutionDetails> getInstitutionDetails(@PathVariable("id") Long id) {
+    public ResponseEntity<InstitutionDetailsData> getInstitutionDetails(@PathVariable("id") Long id) {
         return new ResponseEntity<>(institutionService.getInstitutionDetails(id), HttpStatus.OK);
     }
 
