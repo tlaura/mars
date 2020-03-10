@@ -15,25 +15,28 @@ export class RegisterComponent implements OnInit {
   PASSWORD_REGEX = '(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{6,15})$';
   ZIPCODE_REGEX = '^[1-9][0-9]{3}$';
   PHONE_REGEX = '^\\+(\\d{1,2})\\D*(\\d{1,3})\\D*(\\d{3})\\D*(\\d{3,4})$';
-  NAME_REGEX = '^[A-ZÁÉÚÓÜŰÖŐÍ][a-záéúóüűöőí]{2,15}$'; // TODO: space
+  NAME_REGEX = '^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.\'-]+$';
   CURRENT_YEAR = new Date().getFullYear().valueOf();
   isNormalUser: boolean = true;
   haveProviderCustomAddress: boolean = false;
   types: string[] = ['diagnózis központ', ' terápia', 'fejlesztő hely', 'óvoda', 'általános iskola', 'középiskola', 'kollégium', 'munkahely', 'bentlakásos felnőtt ellátó', 'nappali foglalkoztató', 'egyéb'];
   weekDays: string[] = ['Hétfő', 'Kedd', 'Szerda', 'Csütörtök', 'Péntek', 'Szombat', 'Vasárnap'];
   registerForm: FormGroup;
+  openingHours = new FormArray([], Validators.minLength(1));
   // TODO: refactor -> new component?
 
   constructor(private accountService: AccountService, private router: Router) {
     this.isNormalUser = true;
     this.registerForm = this.getCommonFieldsFormGroup();
     this.addFormGroup(this.getNormalAccountRegisterFormGroup());
+    this.addNewOpeningHours();
   }
 
   ngOnInit() {
   }
 
   submit() {
+    this.registerForm.markAllAsTouched();
     const formData: ProviderAccountRegisterModel = this.registerForm.value;
     this.accountService.saveProviderAccount(formData).subscribe(
       () => {
@@ -90,8 +93,6 @@ export class RegisterComponent implements OnInit {
     )
   }
 
-  openingHours = new FormArray([]);
-
   getNormalAccountRegisterFormGroup(): FormGroup {
     return new FormGroup(
       {
@@ -104,7 +105,7 @@ export class RegisterComponent implements OnInit {
     return new FormGroup(
       {
         'type': new FormControl(this.types[0]),
-        'openingHours': this.openingHours,
+        'openingHours': this.openingHours, //TODO: remove openingHours elements?
         'ageGroupMin': new FormControl(0),
         'ageGroupMax': new FormControl(99),
         'institution': new FormControl(''),
@@ -113,11 +114,16 @@ export class RegisterComponent implements OnInit {
 
   addNewOpeningHours() {
     const group = new FormGroup({
-      weekDay: new FormControl(''),
-      openingTime: new FormControl(''),
-      closingTime: new FormControl(''),
+      weekDay: new FormControl(this.weekDays[0]),
+      openingTime: new FormControl('', Validators.required),
+      closingTime: new FormControl('', Validators.required),
     });
 
     this.openingHours.push(group);
+  }
+
+  removeOpeningHours(i: number) {
+    this.openingHours.controls.pop();
+    this.registerForm.setControl('openingHours', this.openingHours);
   }
 }

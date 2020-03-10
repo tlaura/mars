@@ -156,25 +156,40 @@
       <!-- PROVIDER USER FIELDS-->
 
       <div *ngIf="!isNormalUser" id="provider-user-fields-div">
-        <div *ngFor="let group of openingHours.controls; index as i " [formGroup]="group" class="row m-0">
-          <div class="form-group col-sm-1 col-md-6">
-            <label for="weekDay">Nyitvatartás*:</label>
+
+        <div class="form-group col-sm-1 col-md-12">
+          <label>Nyitvatartás*:</label>
+          <button (click)="addNewOpeningHours()" class="btn rounded-pill btn-light btn-sm mx-sm-1 mx-sm-2">Nyitvatartási
+            időpont hozzáadása
+          </button>
+          <small
+            *ngIf="registerForm.get('openingHours').invalid && registerForm.get('openingHours').touched"
+            class="text-danger col-sm-1 col-md-12">
+            Érvénytelen időpont!
+          </small>
+        </div>
+        <div *ngFor="let group of openingHours.controls;let i = index; let last = last" [formGroup]="group"
+             class="row m-0">
+          <div class="form-group col-sm-1 col-md-4">
             <select class="form-control rounded-pill" formControlName="weekDay" id="weekDay" name="weekDay">
               <option *ngFor="let day of weekDays" value="{{day}}">{{day}}</option>
             </select>
           </div>
           <div class="form-group col-sm-1 col-md-3">
-            <label for="openingTime">Nyitás*:</label>
+
             <input class="form-control rounded-pill " formControlName="openingTime" id="openingTime"
                    name="openingTime" type="Time">
           </div>
           <div class="form-group col-sm-1 col-md-3">
-            <label for="closingTime">Zárás*:</label>
+
             <input class="form-control rounded-pill" formControlName="closingTime" id="closingTime"
                    name="closingTime" type="Time">
           </div>
+          <div class="form-group col-sm-1 col-md-1">
+            <button (click)="removeOpeningHours(i)" *ngIf="last && i!=0" class="btn btn-outline-danger rounded-pill">X
+            </button>
+          </div>
         </div>
-        <button (click)="addNewOpeningHours()">Új időpont</button>
 
 
         <div class="row m-0">
