@@ -27,3 +27,4 @@ yarn-debug.log*
 yarn-error.log*
 /src/main/resources/application-local.yaml
 /target/classes/
+/mars-frontend/src/environments/environment.local.ts

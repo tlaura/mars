@@ -5,4 +5,6 @@ export interface InstitutionListModel {
   city: string,
   address: string,
   type: string
+  latitude: number,
+  longitude: number
 }
