@@ -28,7 +28,7 @@ import {HttpRequestInterceptor} from "./utils/httpRequestInterceptor";
     InstitutionDetailsComponent,
     UserFormComponent,
     RegisterComponent,
-    LoginFormComponent
+    LoginFormComponent,
     MapComponent,
   ],
   imports: [
