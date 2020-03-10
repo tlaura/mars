@@ -1,4 +1,7 @@
 <div class="container">
+  <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom">
+
+  </agm-map>
   <input [(ngModel)]="searchText" placeholder="keresés név vagy cím alapján" type="text">
   <select (change)="narrowByType($event.target.value)" id="institution-type" name="institution-type">
     <option selected value="all">Minden</option>

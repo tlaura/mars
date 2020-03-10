@@ -3,6 +3,7 @@ import {InstitutionService} from "../../services/institution.service";
 import {Router} from "@angular/router";
 import {InstitutionListModel} from "../../models/institutionList.model";
 import {InstitutionTypeModel} from "../../models/InstitutionType.model";
+import {institutionListIndex} from "../../../environments/institutionListIndex.prod";
 
 @Component({
   selector: 'app-institution-list',
@@ -13,11 +14,14 @@ export class InstitutionListComponent implements OnInit {
 
   institutionList: Array<InstitutionListModel>;
   institutionTypeList: Array<InstitutionTypeModel>;
+  latitude: number = institutionListIndex.mapLatitude;
+  longitude: number = institutionListIndex.mapLongitude;
+  zoom: number = institutionListIndex.mapZoom;
+  page: number = institutionListIndex.startPageIndex;
+  size: number = institutionListIndex.numberOfItemPerPage;
   searchText: string;
-  page: number = 1;
-  size: number = 10;
 
-  sizeArray: Array<number> = [10, 50, 100];
+  sizeArray: Array<number> = institutionListIndex.itemsPerPageArray;
 
   constructor(private institutionService: InstitutionService,
               private router: Router) {
@@ -25,7 +29,7 @@ export class InstitutionListComponent implements OnInit {
 
   setSize = (size: number) => {
     this.size = size;
-    this.page = 1;
+    this.page = institutionListIndex.startPageIndex;
     this.getInstitutions();
   };
 
@@ -35,6 +39,7 @@ export class InstitutionListComponent implements OnInit {
   }
 
   narrowByType = (type: string) => {
+    //todo refactor magic string
     if (type !== "all") {
       this.institutionService.getInstitutionByType(type).subscribe(
         institutionList => this.institutionList = institutionList,

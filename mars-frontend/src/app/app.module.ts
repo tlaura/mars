@@ -13,6 +13,8 @@ import {HttpClientModule} from "@angular/common/http";
 import {RegisterComponent} from './components/register/register.component';
 import {Ng2SearchPipeModule} from "ng2-search-filter";
 import {NgxPaginationModule} from "ngx-pagination";
+import {AgmCoreModule} from "@agm/core";
+import {environment} from "../environments/environment.local";
 
 @NgModule({
   declarations: [
@@ -31,7 +33,11 @@ import {NgxPaginationModule} from "ngx-pagination";
     ReactiveFormsModule,
     Ng2SearchPipeModule,
     FormsModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    AgmCoreModule.forRoot({
+      apiKey: environment.apiKey,
+      libraries: ["places", "geometry"]
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]
