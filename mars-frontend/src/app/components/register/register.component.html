@@ -230,7 +230,7 @@
             <select (change)="updateValues(group)" class="form-control rounded-pill" formControlName="institution"
                     id="institution"
                     name="institution">
-              <option *ngFor="let institution of allInstitution" value="{{institution}}">
+              <option *ngFor="let institution of allInstitution" value="{{institution.name}}">
                 {{institution.name}}</option>
             </select>
           </div>

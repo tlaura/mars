@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {AbstractControl, FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
 import {ProviderAccountRegisterModel} from "../../models/providerAccountRegisterModel";
 import {AccountService} from "../../services/account.service";
 import {Router} from "@angular/router";
@@ -146,7 +146,7 @@ export class RegisterComponent implements OnInit {
 
   addNewInstitution() {
     const group = new FormGroup({
-      institution: new FormControl(this.allInstitution[0]),
+      institution: new FormControl(this.allInstitution[0].name),
       name: new FormControl('', Validators.required),
       zipcode: new FormControl('',
         [Validators.pattern(this.ZIPCODE_REGEX), Validators.required]),
@@ -163,19 +163,18 @@ export class RegisterComponent implements OnInit {
     this.registerForm.setControl('institutions', this.institutions);
   }
 
-  updateValues(group: AbstractControl) {
-    const currentInstitution = group.get('institution').value;
-    const currentGroup = new FormGroup({
-      institution: new FormControl(currentInstitution),
-      name: new FormControl(currentInstitution.name),
-      zipcode: new FormControl(currentInstitution.zipcode),
-      city: new FormControl(currentInstitution.city),
-      address: new FormControl(currentInstitution.address),
-      description: new FormControl(currentInstitution.description)
-    });
-    debugger;
+  updateValues(group: FormGroup) {
+    const currentInstitutionName = group.get('institution').value;
+    const currentInstitution = this.allInstitution.find(institution => institution.name == currentInstitutionName);
     if (this.allInstitution[0].name != currentInstitution.name) {
-      group.setValue(currentGroup);
+      group.setValue({
+        institution: currentInstitution.name,
+        name: currentInstitution.name,
+        zipcode: currentInstitution.zipcode,
+        city: currentInstitution.city,
+        address: currentInstitution.address,
+        description: currentInstitution.description
+      });
     }
   }
 }
