@@ -14,4 +14,35 @@ public class OpeningHours {
     private String weekDay; //TODO: enum
     private LocalDateTime openingTime;
     private LocalDateTime closingTime;
+
+    public OpeningHours() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getWeekDay() {
+        return weekDay;
+    }
+
+    public void setWeekDay(String weekDay) {
+        this.weekDay = weekDay;
+    }
+
+    public LocalDateTime getOpeningTime() {
+        return openingTime;
+    }
+
+    public void setOpeningTime(LocalDateTime openingTime) {
+        this.openingTime = openingTime;
+    }
+
+    public LocalDateTime getClosingTime() {
+        return closingTime;
+    }
+
+    public void setClosingTime(LocalDateTime closingTime) {
+        this.closingTime = closingTime;
+    }
 }
