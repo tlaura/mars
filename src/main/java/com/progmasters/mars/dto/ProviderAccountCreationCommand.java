@@ -12,7 +12,7 @@ public class ProviderAccountCreationCommand {
     private String city;
     private String address;
     private String type; //TODO: enum
-    private List<OpeningHour> openingHours;
+    private List<OpeningHoursCreationCommand> openingHours;
     private Integer ageGroupMin;
     private Integer ageGroupMax;
     private List<InstitutionDetails> institutions;
@@ -57,10 +57,6 @@ public class ProviderAccountCreationCommand {
         return type;
     }
 
-    public List<OpeningHour> getOpeningHours() {
-        return openingHours;
-    }
-
     public Integer getAgeGroupMin() {
         return ageGroupMin;
     }
@@ -75,5 +71,9 @@ public class ProviderAccountCreationCommand {
 
     public Boolean getNewsletter() {
         return newsletter;
+    }
+
+    public List<OpeningHoursCreationCommand> getOpeningHours() {
+        return openingHours;
     }
 }
