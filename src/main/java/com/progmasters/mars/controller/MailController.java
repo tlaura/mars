@@ -18,12 +18,6 @@ public class MailController {
         this.emailService = emailService;
     }
 
-    @GetMapping
-    public ResponseEntity<Void> sendConfirmationMail() {
-        emailService.sendConfirmationEmail();
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
     @GetMapping("/{token}")
     public ResponseEntity<Void> succeedRegister(@PathVariable String token) {
         emailService.confirmUser(token);

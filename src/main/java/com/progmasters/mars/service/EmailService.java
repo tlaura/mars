@@ -4,7 +4,6 @@ import com.progmasters.mars.domain.ConfirmationToken;
 import com.progmasters.mars.domain.IndividualUser;
 import com.progmasters.mars.domain.User;
 import com.progmasters.mars.repository.ConfirmationTokenRepository;
-import com.progmasters.mars.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -15,7 +14,6 @@ public class EmailService {
 
     private final JavaMailSender javaMailSender;
     private final ConfirmationTokenRepository confirmationTokenRepository;
-    private final UserRepository userRepository;
 
     @Value("${email.send.subject}")
     private String subject;
@@ -24,10 +22,9 @@ public class EmailService {
     @Value("${email.send.confirmation}")
     private String confirmationUrl;
 
-    public EmailService(JavaMailSender javaMailSender, ConfirmationTokenRepository confirmationTokenRepository, UserRepository userRepository) {
+    public EmailService(JavaMailSender javaMailSender, ConfirmationTokenRepository confirmationTokenRepository) {
         this.javaMailSender = javaMailSender;
         this.confirmationTokenRepository = confirmationTokenRepository;
-        this.userRepository = userRepository;
     }
 
 
@@ -42,9 +39,9 @@ public class EmailService {
     }
 
 
-    public void sendConfirmationEmail() {
+    public void sendConfirmationEmail(User user) {
         //TODO get mail from parameter, add hash
-        User user = userRepository.findById(1l).get();
+        //    User user = userRepository.findById(1l).get();
 
         ConfirmationToken userToken = new ConfirmationToken(user);
         confirmationTokenRepository.save(userToken);
@@ -56,7 +53,8 @@ public class EmailService {
         ConfirmationToken userToken = confirmationTokenRepository.findByToken(token);
 
         if (userToken != null) {
-            confirmationTokenRepository.deleteById(userToken.getId());
+            //  confirmationTokenRepository.deleteById(userToken.getId());
+
         }
     }
 
