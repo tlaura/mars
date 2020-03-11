@@ -1,5 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import {FormGroup} from "@angular/forms";
+import {Component, OnInit} from '@angular/core';
+import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
+import {Institution} from "../../models/institution";
+import {AccountService} from "../../services/account.service";
+import {Router} from "@angular/router";
+import {ProviderAccountRegisterModel} from "../../models/providerAccountRegisterModel";
 
 @Component({
   selector: 'app-register',
@@ -22,8 +26,9 @@ export class RegisterComponent implements OnInit {
   openingHours = new FormArray([], Validators.minLength(1));
   institutions = new FormArray([]);
   allInstitution: Institution[] = [{
+    id: null,
     name: 'Új intézmény hozzáadása',
-    zipcode: 0,
+    zipCode: 0,
     city: '',
     address: '',
     description: ''
@@ -93,7 +98,7 @@ export class RegisterComponent implements OnInit {
         'phone': new FormControl('',
           [Validators.required, Validators.pattern(this.PHONE_REGEX)]),
 
-        'zipcode': new FormControl('',
+        'zipCode': new FormControl('',
           [Validators.pattern(this.ZIPCODE_REGEX)]),
         'city': new FormControl(''),
         'address': new FormControl(''),
@@ -140,10 +145,10 @@ export class RegisterComponent implements OnInit {
 
   addNewInstitution() {
     const group = new FormGroup({
-      institution: new FormControl(this.allInstitution[0].name),
+      id: new FormControl(null),
       name: new FormControl('',
         [Validators.required]),
-      zipcode: new FormControl('',
+      zipCode: new FormControl('',
         [Validators.pattern(this.ZIPCODE_REGEX), Validators.required]),
       city: new FormControl('', Validators.required),
       address: new FormControl('', Validators.required),
@@ -159,19 +164,19 @@ export class RegisterComponent implements OnInit {
   }
 
   updateValues(group: FormGroup) {
-    const currentInstitutionName = group.get('institution').value;
-    const currentInstitution = this.allInstitution.find(institution => institution.name == currentInstitutionName);
-    if (this.allInstitution[0].name != currentInstitution.name) {
+    const currentInstitutionId = group.get('id').value;
+    if (currentInstitutionId) {
+      const currentInstitution = this.allInstitution.find(item => item.id == currentInstitutionId);
       group.setValue({
-        institution: currentInstitution.name,
+        id: currentInstitution.id,
         name: currentInstitution.name,
-        zipcode: currentInstitution.zipcode,
+        zipCode: currentInstitution.zipCode,
         city: currentInstitution.city,
         address: currentInstitution.address,
         description: currentInstitution.description
       });
       for (let controlsKey in group.controls) {
-        if (controlsKey != 'institution') {
+        if (controlsKey != 'id') {
           group.get(controlsKey).disable();
         }
       }

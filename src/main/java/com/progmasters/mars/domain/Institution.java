@@ -2,6 +2,7 @@ package com.progmasters.mars.domain;
 
 import com.progmasters.mars.dto.GeoLocation;
 import com.progmasters.mars.dto.InstitutionCreationForm;
+import com.progmasters.mars.dto.InstitutionDetailsData;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
@@ -35,13 +36,13 @@ public class Institution {
     private String address;
 
     @Column(unique = true, name = "email")
-    @NotBlank
+    //@NotBlank
     @Email
     private String email;
 
     @Lob
     @NotBlank
-    @Length(min = 30)
+    @Length(min = 10)
     @Column(name = "description")
     private String description;
 
@@ -58,6 +59,14 @@ public class Institution {
     private InstitutionalUser creator;
 
     public Institution() {
+    }
+
+    public Institution(InstitutionDetailsData institutionDetailsData) {
+        this.name = institutionDetailsData.getName();
+        this.zipCode = institutionDetailsData.getZipCode();
+        this.city = institutionDetailsData.getCity();
+        this.address = institutionDetailsData.getAddress();
+        this.description = institutionDetailsData.getDescription();
     }
 
     public Institution(InstitutionCreationForm institutionCreationForm, GeoLocation geoLocation) {

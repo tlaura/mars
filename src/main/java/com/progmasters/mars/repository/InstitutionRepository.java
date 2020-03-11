@@ -12,4 +12,5 @@ public interface InstitutionRepository extends JpaRepository<Institution, Long> 
     List<Institution> findByNameContainsIgnoreCase(String name);
 
     List<Institution> findAllByInstitutionType(InstitutionType institutionType);
+
 }

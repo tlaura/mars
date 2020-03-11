@@ -90,10 +90,10 @@ public class InstitutionService {
         return institutionRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("no such entity found"));
     }
 
-    public List<InstitutionDetails> getInstitutionDetailsList() {
+    public List<InstitutionDetailsData> getInstitutionDetailsDataList() {
         return institutionRepository.findAll()
                 .stream()
-                .map(InstitutionDetails::new)
+                .map(InstitutionDetailsData::new)
                 .collect(Collectors.toList());
     }
 }

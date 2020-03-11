@@ -1,6 +1,7 @@
 export interface Institution {
+  id: number,
   name: string,
-  zipcode: number,
+  zipCode: number,
   city: string,
   address: string,
   description: string

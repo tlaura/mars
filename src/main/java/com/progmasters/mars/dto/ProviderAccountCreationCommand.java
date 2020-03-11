@@ -15,7 +15,7 @@ public class ProviderAccountCreationCommand {
     private List<OpeningHoursCreationCommand> openingHours;
     private Integer ageGroupMin;
     private Integer ageGroupMax;
-    private List<InstitutionDetails> institutions;
+    private List<InstitutionDetailsData> institutions;
     private Boolean newsletter;
 
     public ProviderAccountCreationCommand() {
@@ -65,7 +65,7 @@ public class ProviderAccountCreationCommand {
         return ageGroupMax;
     }
 
-    public List<InstitutionDetails> getInstitutions() {
+    public List<InstitutionDetailsData> getInstitutions() {
         return institutions;
     }
 

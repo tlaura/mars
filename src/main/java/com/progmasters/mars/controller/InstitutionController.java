@@ -68,8 +68,8 @@ public class InstitutionController {
 
 
     @GetMapping("/details")
-    public List<InstitutionDetails> institutionsDetails() {
-        return institutionService.getInstitutionDetailsList();
+    public List<InstitutionDetailsData> institutionsDetails() {
+        return institutionService.getInstitutionDetailsDataList();
     }
 
     @GetMapping("/{id}")

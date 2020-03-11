@@ -9,7 +9,7 @@ export interface ProviderAccountRegisterModel {
   email: string,
   phone: string,
 
-  zipcode: number,
+  zipCode: number,
   city: string,
   address: string,
 

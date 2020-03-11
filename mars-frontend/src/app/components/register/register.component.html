@@ -123,14 +123,14 @@
 
       <div *ngIf="isNormalUser || haveProviderCustomAddress" class="row m-0" id="address-div">
         <div class="form-group col-sm-1 col-md-3">
-          <label for="zipcode">Irányítószám*:</label>
-          <input class="form-control rounded-pill" formControlName="zipcode" id="zipcode" type="number">
-          <div *ngIf="registerForm.get('zipcode').invalid && registerForm.get('zipcode').touched">
-            <small *ngIf="registerForm.get('zipcode').errors.required"
+          <label for="zipCode">Irányítószám*:</label>
+          <input class="form-control rounded-pill" formControlName="zipCode" id="zipCode" type="number">
+          <div *ngIf="registerForm.get('zipCode').invalid && registerForm.get('zipCode').touched">
+            <small *ngIf="registerForm.get('zipCode').errors.required"
                    class="text-danger">
               A mező kitöltése közelező!
             </small>
-            <small *ngIf="registerForm.get('zipcode').errors.pattern"
+            <small *ngIf="registerForm.get('zipCode').errors.pattern"
                    class="text-danger">
               Érvénytelen irányítószám!
             </small>
@@ -141,7 +141,7 @@
         <div class="form-group col-sm-1 col-md-6">
           <label for="city">Település:</label>
           <input class="form-control rounded-pill" formControlName="city" id="city" type="text">
-          <!-- TODO: autofill base on zipcode -->
+          <!-- TODO: autofill base on zipCode -->
 
         </div>
 
@@ -227,10 +227,10 @@
              class="row m-0">
 
           <div class="form-group col-sm-1 col-md-10">
-            <select (change)="updateValues(group)" class="form-control rounded-pill" formControlName="institution"
-                    id="institution"
+            <select (change)="updateValues(group)" class="form-control rounded-pill" formControlName="id"
+                    id="id"
                     name="institution">
-              <option *ngFor="let institution of allInstitution" value="{{institution.name}}">
+              <option *ngFor="let institution of allInstitution" value="{{institution.id}}">
                 {{institution.name}}</option>
             </select>
           </div>
@@ -258,13 +258,13 @@
 
             <div class="form-group col-sm-1 col-md-3">
               <label>Irányítószám*:</label>
-              <input class="form-control rounded-pill" formControlName="zipcode" type="number">
-              <div *ngIf="group.get('zipcode').invalid && group.get('zipcode').touched">
-                <small *ngIf="group.get('zipcode').errors.required"
+              <input class="form-control rounded-pill" formControlName="zipCode" type="number">
+              <div *ngIf="group.get('zipCode').invalid && group.get('zipCode').touched">
+                <small *ngIf="group.get('zipCode').errors.required"
                        class="text-danger">
                   A mező kitöltése közelező!
                 </small>
-                <small *ngIf="group.get('zipcode').errors.pattern"
+                <small *ngIf="group.get('zipCode').errors.pattern"
                        class="text-danger">
                   Érvénytelen irányítószám!
                 </small>
@@ -274,7 +274,7 @@
             <div class="form-group col-sm-1 col-md-6">
               <label>Település*:</label>
               <input class="form-control rounded-pill" formControlName="city" type="text">
-              <!-- TODO: autofill base on zipcode -->
+              <!-- TODO: autofill base on zipCode -->
             </div>
 
             <div class="form-group col-sm-1 col-md-9">
