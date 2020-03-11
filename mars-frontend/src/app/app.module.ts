@@ -18,6 +18,7 @@ import {environment} from "../environments/environment.local";
 import {MapComponent} from './components/map/map.component';
 import {LoginFormComponent} from "./components/login-form/login-form.component";
 import {HttpRequestInterceptor} from "./utils/httpRequestInterceptor";
+import {RegisterSuccessComponent} from './components/register-success/register-success.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import {HttpRequestInterceptor} from "./utils/httpRequestInterceptor";
     RegisterComponent,
     LoginFormComponent,
     MapComponent,
+    RegisterSuccessComponent,
   ],
   imports: [
     BrowserModule,

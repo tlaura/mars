@@ -27,6 +27,8 @@ public class ConfirmationToken {
     @OneToOne
     private InstitutionalUser institutionalUser;
 
+    private boolean confirmed = false;
+
     public ConfirmationToken() {
     }
 
@@ -79,5 +81,13 @@ public class ConfirmationToken {
 
     public void setInstitutionalUser(InstitutionalUser institutionalUser) {
         this.institutionalUser = institutionalUser;
+    }
+
+    public boolean isConfirmed() {
+        return confirmed;
+    }
+
+    public void setConfirmed(boolean confirmed) {
+        this.confirmed = confirmed;
     }
 }
