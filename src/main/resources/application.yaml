@@ -41,7 +41,8 @@ logging:
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
 
-
+google:
+  apikey: AIzaSyAeQEHjfxVD8584aJATT0pSNBf3DuCr1h0
 
 email:
   send:

@@ -1,5 +1,6 @@
 package com.progmasters.mars.domain;
 
+import com.progmasters.mars.dto.GeoLocation;
 import com.progmasters.mars.dto.InstitutionCreationForm;
 import org.hibernate.validator.constraints.Length;
 
@@ -59,7 +60,7 @@ public class Institution {
     public Institution() {
     }
 
-    public Institution(InstitutionCreationForm institutionCreationForm) {
+    public Institution(InstitutionCreationForm institutionCreationForm, GeoLocation geoLocation) {
         this.name = institutionCreationForm.getName();
         this.zipCode = institutionCreationForm.getZipCode();
         this.city = institutionCreationForm.getCity();
@@ -68,8 +69,8 @@ public class Institution {
         this.description = institutionCreationForm.getDescription();
         String institutionType = institutionCreationForm.getInstitutionType();
         this.institutionType = InstitutionType.getTypeByName(institutionType);
-        this.longitude = institutionCreationForm.getLongitude();
-        this.latitude = institutionCreationForm.getLatitude();
+        this.longitude = geoLocation.getLongitude();
+        this.latitude = geoLocation.getLatitude();
 
     }
 

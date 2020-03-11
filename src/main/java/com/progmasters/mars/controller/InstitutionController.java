@@ -36,13 +36,17 @@ public class InstitutionController {
 
     @GetMapping("/test")
     public ResponseEntity testMail() {
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping
     public ResponseEntity<List<InstitutionListData>> institutions() {
         //todo handle sorting
-        return new ResponseEntity<>(institutionService.getInstitutionList(), HttpStatus.OK);
+
+        //todo switch in the future
+        // List<InstitutionListData> institutionList = institutionService.getInstitutionList();
+        List<InstitutionListData> institutionList = institutionService.tempInstitutionList();
+        return new ResponseEntity<>(institutionList, HttpStatus.OK);
     }
 
     @GetMapping("/institutionType")
@@ -56,8 +60,9 @@ public class InstitutionController {
     public ResponseEntity<List<InstitutionListData>> getInstitutionByType(@RequestParam("type") String type) {
 
         InstitutionType institutionType = InstitutionType.getTypeByName(type);
-        List<InstitutionListData> institutionListData = institutionService.getInstitutionsByType(institutionType);
-
+        //todo switch in the future
+        //   List<InstitutionListData> institutionListData = institutionService.getInstitutionsByType(institutionType);
+        List<InstitutionListData> institutionListData = institutionService.tempByType(institutionType);
         return new ResponseEntity<>(institutionListData, HttpStatus.OK);
     }
 

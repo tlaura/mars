@@ -13,7 +13,7 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {RegisterComponent} from './components/register/register.component';
 import {Ng2SearchPipeModule} from "ng2-search-filter";
 import {NgxPaginationModule} from "ngx-pagination";
-import {AgmCoreModule} from "@agm/core";
+import {AgmCoreModule, GoogleMapsAPIWrapper} from "@agm/core";
 import {environment} from "../environments/environment.local";
 import {MapComponent} from './components/map/map.component';
 import {LoginFormComponent} from "./components/login-form/login-form.component";
@@ -45,8 +45,9 @@ import {HttpRequestInterceptor} from "./utils/httpRequestInterceptor";
     })
   ],
   providers: [
+    GoogleMapsAPIWrapper,
     [
-      { provide: HTTP_INTERCEPTORS, useClass: HttpRequestInterceptor, multi: true }
+      {provide: HTTP_INTERCEPTORS, useClass: HttpRequestInterceptor, multi: true}
     ],
   ],
   bootstrap: [AppComponent]

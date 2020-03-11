@@ -59,4 +59,14 @@ public class InstitutionListData {
     public Double getLatitude() {
         return latitude;
     }
+
+    //todo remove
+
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
+    }
+
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
 }

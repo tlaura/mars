@@ -1,6 +1,5 @@
 <div class="container">
-<app-map [locations]="locations"></app-map>
-
+<app-map [locations]="institutionList"></app-map>
 
   <input [(ngModel)]="searchText" placeholder="keresés név vagy cím alapján" type="text">
   <select (change)="narrowByType($event.target.value)" id="institution-type" name="institution-type">

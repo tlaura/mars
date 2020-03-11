@@ -1,5 +1,5 @@
 export interface GeoLocationModel {
   id: number,
-  latitude: number,
-  longitude: number
+  longitude: number,
+  latitude: number
 }

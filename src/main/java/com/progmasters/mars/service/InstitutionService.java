@@ -1,13 +1,10 @@
 package com.progmasters.mars.service;
 
+import com.progmasters.mars.Geocode.GeocodeService;
 import com.progmasters.mars.domain.Institution;
 import com.progmasters.mars.domain.InstitutionType;
-import com.progmasters.mars.dto.GeoLocationData;
-import com.progmasters.mars.dto.InstitutionCreationForm;
-import com.progmasters.mars.dto.InstitutionDetailsData;
-import com.progmasters.mars.dto.InstitutionListData;
+import com.progmasters.mars.dto.*;
 import com.progmasters.mars.repository.InstitutionRepository;
-import com.progmasters.mars.repository.InstitutionalUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,14 +14,14 @@ import java.util.stream.Collectors;
 
 @Service
 public class InstitutionService {
-    private InstitutionRepository institutionRepository;
 
-    private InstitutionalUserRepository institutionalUserRepository;
+    private final InstitutionRepository institutionRepository;
+    private final GeocodeService geocodeService;
 
     @Autowired
-    public InstitutionService(InstitutionRepository institutionRepository, InstitutionalUserRepository institutionalUserRepository) {
+    public InstitutionService(InstitutionRepository institutionRepository, GeocodeService geocodeService) {
         this.institutionRepository = institutionRepository;
-        this.institutionalUserRepository = institutionalUserRepository;
+        this.geocodeService = geocodeService;
     }
 
     public List<InstitutionListData> getInstitutionList() {
@@ -47,8 +44,9 @@ public class InstitutionService {
 //    }
 
     public void createInstitution(InstitutionCreationForm institutionCreationForm) {
-
-        Institution institution = new Institution(institutionCreationForm);
+        String address = institutionCreationForm.getZipCode() + " " + institutionCreationForm.getCity() + " " + institutionCreationForm.getAddress();
+        GeoLocation geoLocation = geocodeService.getGeoLocation(address);
+        Institution institution = new Institution(institutionCreationForm, geoLocation);
         //todo get user id
         institutionRepository.save(institution);
     }
@@ -56,6 +54,35 @@ public class InstitutionService {
     public List<InstitutionListData> getInstitutionsByType(InstitutionType institutionType) {
         return institutionRepository.findAllByInstitutionType(institutionType).stream().map(InstitutionListData::new).collect(Collectors.toList());
     }
+
+    //todo remove in the future
+    public List<InstitutionListData> tempByType(InstitutionType institutionType) {
+        List<InstitutionListData> listByType = institutionRepository.findAllByInstitutionType(institutionType).stream().map(InstitutionListData::new).collect(Collectors.toList());
+        setLocation(listByType);
+        return listByType;
+    }
+
+    public List<InstitutionListData> tempInstitutionList() {
+        List<InstitutionListData> collect = institutionRepository.findAll()
+                .stream()
+                .map(InstitutionListData::new)
+                .collect(Collectors.toList());
+        setLocation(collect);
+
+        return collect;
+    }
+
+    private void setLocation(List<InstitutionListData> collect) {
+        for (InstitutionListData institution : collect) {
+            String address = institution.getZipCode() + " " + institution.getCity() + " " + institution.getAddress();
+            GeoLocation geoLocation = geocodeService.getGeoLocation(address);
+            institution.setLatitude(geoLocation.getLatitude());
+            institution.setLongitude(geoLocation.getLongitude());
+            System.out.println("lat:  " + geoLocation.getLatitude());
+            System.out.println("long:  " + geoLocation.getLongitude());
+        }
+    }
+
 
     public void updateInstitutionLocation(GeoLocationData geoLocationData, Long id) {
         Institution institution = findById(id);

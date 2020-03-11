@@ -1,7 +1,6 @@
 <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom">
-  <agm-marker *ngFor="let location of locations" [latitude]="location?.latitude"
-              (markerClick)="markerClick(infoWindow, location.id)" [longitude]="location?.longitude"
-              [openInfoWindow]="showDetails">
+  <agm-marker (markerClick)="markerClick(infoWindow, location.id)" *ngFor="let location of locations"
+              [latitude]="location.latitude" [longitude]="location.longitude">
     <agm-info-window #infoWindow>
       <app-institution-details [institution]="institutionDetail"></app-institution-details>
     </agm-info-window>
