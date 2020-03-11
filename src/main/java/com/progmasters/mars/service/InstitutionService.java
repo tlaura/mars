@@ -89,4 +89,11 @@ public class InstitutionService {
     private Institution findById(Long id) {
         return institutionRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("no such entity found"));
     }
+
+    public List<InstitutionDetails> getInstitutionDetailsList() {
+        return institutionRepository.findAll()
+                .stream()
+                .map(InstitutionDetails::new)
+                .collect(Collectors.toList());
+    }
 }

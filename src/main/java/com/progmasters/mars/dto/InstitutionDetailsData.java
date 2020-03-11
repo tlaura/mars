@@ -6,7 +6,7 @@ public class InstitutionDetailsData {
 
     private Long id;
     private String name;
-    private Integer zipCode;
+    private String zipCode;
     private String city;
     private String address;
     private String email;
@@ -71,4 +71,5 @@ public class InstitutionDetailsData {
     public String getInstitutionType() {
         return institutionType;
     }
+
 }

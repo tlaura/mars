@@ -29,7 +29,6 @@ public class InstitutionController {
         this.addInstitutionFormValidator = addInstitutionFormValidator;
     }
 
-
     @InitBinder("addInstitutionForm")
     protected void initBinder(WebDataBinder binder) {
         binder.addValidators(addInstitutionFormValidator);
@@ -67,6 +66,11 @@ public class InstitutionController {
         return new ResponseEntity<>(institutionListData, HttpStatus.OK);
     }
 
+
+    @GetMapping("/details")
+    public List<InstitutionDetails> institutionsDetails() {
+        return institutionService.getInstitutionDetailsList();
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<InstitutionDetailsData> getInstitutionDetails(@PathVariable("id") Long id) {
