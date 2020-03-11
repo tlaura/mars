@@ -1,4 +1,4 @@
-package com.progmasters.mars.Geocode;
+package com.progmasters.mars.service;
 
 import com.google.maps.GeoApiContext;
 import com.google.maps.GeocodingApi;

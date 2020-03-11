@@ -19,8 +19,9 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/institutions")
 public class InstitutionController {
 
-    private InstitutionService institutionService;
-    private AddInstitutionFormValidator addInstitutionFormValidator;
+    private final InstitutionService institutionService;
+    private final AddInstitutionFormValidator addInstitutionFormValidator;
+
 
     @Autowired
     public InstitutionController(InstitutionService institutionService, AddInstitutionFormValidator addInstitutionFormValidator) {
@@ -35,7 +36,7 @@ public class InstitutionController {
     }
 
     @GetMapping("/test")
-    public ResponseEntity testMail() {
+    public ResponseEntity test() {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

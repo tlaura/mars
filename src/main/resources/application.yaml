@@ -48,4 +48,4 @@ email:
   send:
     subject: Regisztráció megerősítése
     text: Az alábbi linkre kattintva aktiválhatja fiókját
-    confirmation: http://localhost:8080/confirmation/
+    confirmation: http://localhost:8080/api/confirmations/

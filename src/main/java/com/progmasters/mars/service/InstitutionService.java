@@ -1,6 +1,5 @@
 package com.progmasters.mars.service;
 
-import com.progmasters.mars.Geocode.GeocodeService;
 import com.progmasters.mars.domain.Institution;
 import com.progmasters.mars.domain.InstitutionType;
 import com.progmasters.mars.dto.*;
@@ -36,12 +35,6 @@ public class InstitutionService {
         return new InstitutionDetailsData(findById(id));
     }
 
-//    public List<InstitutionListData> getInstitutionsBySearchKeyword(String keyword) {
-//        return institutionRepository.findByNameContainsIgnoreCase(keyword)
-//                .stream()
-//                .map(InstitutionListData::new)
-//                .collect(Collectors.toList());
-//    }
 
     public void createInstitution(InstitutionCreationForm institutionCreationForm) {
         String address = institutionCreationForm.getZipCode() + " " + institutionCreationForm.getCity() + " " + institutionCreationForm.getAddress();
@@ -78,8 +71,6 @@ public class InstitutionService {
             GeoLocation geoLocation = geocodeService.getGeoLocation(address);
             institution.setLatitude(geoLocation.getLatitude());
             institution.setLongitude(geoLocation.getLongitude());
-            System.out.println("lat:  " + geoLocation.getLatitude());
-            System.out.println("long:  " + geoLocation.getLongitude());
         }
     }
 
