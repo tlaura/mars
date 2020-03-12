@@ -53,7 +53,6 @@ export class RegisterComponent implements OnInit {
   submit() {
     this.registerForm.markAllAsTouched();
     const formData: ProviderAccountRegisterModel = this.registerForm.value;
-    //TODO: send institution id to backend...
     this.accountService.saveProviderAccount(formData).subscribe(
       () => {
         // TODO: register email...
@@ -84,30 +83,7 @@ export class RegisterComponent implements OnInit {
     return Array(n);
   }
 
-  getCommonFieldsFormGroup(): FormGroup {
-    return new FormGroup(
-      {
-        'name': new FormControl('',
-          [Validators.required, Validators.pattern(this.NAME_REGEX)]),
-        'username': new FormControl('',
-          [Validators.required, Validators.pattern(this.USERNAME_REGEX)]),
-        'password': new FormControl('',
-          [Validators.required, Validators.pattern(this.PASSWORD_REGEX)]),
-        'email': new FormControl('',
-          [Validators.required, Validators.pattern(this.EMAIL_REGEX)]),
-        'phone': new FormControl('',
-          [Validators.required, Validators.pattern(this.PHONE_REGEX)]),
-
-        'zipCode': new FormControl('',
-          [Validators.pattern(this.ZIPCODE_REGEX)]),
-        'city': new FormControl(''),
-        'address': new FormControl(''),
-
-        'newsletter': new FormControl(''),
-        'termsAndConditions': new FormControl('', Validators.requiredTrue)
-      }
-    )
-  }
+  currentPasswordAgain: string = '';
 
   getNormalAccountRegisterFormGroup(): FormGroup {
     return new FormGroup(
@@ -143,6 +119,38 @@ export class RegisterComponent implements OnInit {
     this.registerForm.setControl('openingHours', this.openingHours);
   }
 
+  getCommonFieldsFormGroup(): FormGroup {
+    return new FormGroup(
+      {
+        'name': new FormControl('',
+          [Validators.required, Validators.pattern(this.NAME_REGEX)]),
+        'username': new FormControl('',
+          [Validators.required, Validators.pattern(this.USERNAME_REGEX)]),
+        'password': new FormControl('',
+          [Validators.required, Validators.pattern(this.PASSWORD_REGEX)]),
+        'passwordAgain': new FormControl('',
+          [Validators.required, Validators.pattern(this.PASSWORD_REGEX)]),
+        'email': new FormControl('',
+          [Validators.required, Validators.pattern(this.EMAIL_REGEX)]),
+        'phone': new FormControl('',
+          [Validators.required, Validators.pattern(this.PHONE_REGEX)]),
+
+        'zipCode': new FormControl('',
+          [Validators.pattern(this.ZIPCODE_REGEX)]),
+        'city': new FormControl(''),
+        'address': new FormControl(''),
+
+        'newsletter': new FormControl(''),
+        'termsAndConditions': new FormControl('', Validators.requiredTrue)
+      }
+    )
+  }
+
+  removeInstitution() {
+    this.institutions.controls.pop();
+    this.registerForm.setControl('institutions', this.institutions);
+  }
+
   addNewInstitution() {
     const group = new FormGroup({
       id: new FormControl(null),
@@ -152,18 +160,14 @@ export class RegisterComponent implements OnInit {
         [Validators.pattern(this.ZIPCODE_REGEX), Validators.required]),
       city: new FormControl('', Validators.required),
       address: new FormControl('', Validators.required),
-      description: new FormControl('', Validators.required)
+      description: new FormControl('',
+        [Validators.required, Validators.minLength(30), Validators.maxLength(200)])
     });
 
     this.institutions.push(group);
   }
 
-  removeInstitution() {
-    this.institutions.controls.pop();
-    this.registerForm.setControl('institutions', this.institutions);
-  }
-
-  updateValues(group: FormGroup) {
+  updateValues = (group: FormGroup) => {
     const currentInstitutionId = group.get('id').value;
     if (currentInstitutionId) {
       const currentInstitution = this.allInstitution.find(item => item.id == currentInstitutionId);
@@ -186,5 +190,16 @@ export class RegisterComponent implements OnInit {
     }
   }
 
+  checkPasswords = () => {
+    this.currentPasswordAgain = this.registerForm.get('passwordAgain').value;
+    this.registerForm.get('password').setValidators([Validators.required, Validators.pattern(this.PASSWORD_REGEX), this.passwordMatchValidator])
+    this.registerForm.get('password').updateValueAndValidity();
+  }
 
+  passwordMatchValidator = (control: FormControl) => {
+    if (control.value != this.currentPasswordAgain) {
+      return {passwordMismatch: true};
+    }
+    return null;
+  }
 }
