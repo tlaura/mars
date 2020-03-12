@@ -35,10 +35,9 @@ public class ProviderAccount {
     private String zipCode;
     private String city;
     private String address;
-    @NotBlank
-    @NotEmpty
     @NotNull
-    private String type; //TODO: enum
+    @Enumerated(EnumType.STRING)
+    private InstitutionType type;
     @OneToMany
     @NotNull
     @Size(min = 1)
@@ -63,7 +62,7 @@ public class ProviderAccount {
         this.phone = providerAccountCreationCommand.getPhone();
         this.ageGroupMin = providerAccountCreationCommand.getAgeGroupMin();
         this.ageGroupMax = providerAccountCreationCommand.getAgeGroupMax();
-        this.type = providerAccountCreationCommand.getType();
+        this.type = InstitutionType.getTypeByHungarianName(providerAccountCreationCommand.getType());
         this.newsletter = providerAccountCreationCommand.getNewsletter();
     }
 
@@ -118,7 +117,7 @@ public class ProviderAccount {
         return address;
     }
 
-    public String getType() {
+    public InstitutionType getType() {
         return type;
     }
 

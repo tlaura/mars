@@ -2,10 +2,7 @@ package com.progmasters.mars.domain;
 
 import com.progmasters.mars.dto.OpeningHoursCreationCommand;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalTime;
 
@@ -14,7 +11,9 @@ public class OpeningHours {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String weekDay; //TODO: enum
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private WeekDays weekDay;
     @NotNull
     private LocalTime openingTime;
     @NotNull
@@ -24,7 +23,7 @@ public class OpeningHours {
     }
 
     public OpeningHours(OpeningHoursCreationCommand openingHoursCreationCommand) {
-        this.weekDay = openingHoursCreationCommand.getWeekDay();
+        this.weekDay = WeekDays.getWeekDayByHungarianName(openingHoursCreationCommand.getWeekDay());
         this.openingTime = openingHoursCreationCommand.getOpeningTime();
         this.closingTime = openingHoursCreationCommand.getClosingTime();
     }
@@ -33,11 +32,11 @@ public class OpeningHours {
         return id;
     }
 
-    public String getWeekDay() {
+    public WeekDays getWeekDay() {
         return weekDay;
     }
 
-    public void setWeekDay(String weekDay) {
+    public void setWeekDay(WeekDays weekDay) {
         this.weekDay = weekDay;
     }
 

@@ -11,7 +11,7 @@ public class ProviderAccountCreationCommand {
     private String zipcode;
     private String city;
     private String address;
-    private String type; //TODO: enum
+    private String type;
     private List<OpeningHoursCreationCommand> openingHours;
     private Integer ageGroupMin;
     private Integer ageGroupMax;

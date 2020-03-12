@@ -8,7 +8,7 @@ public enum InstitutionType {
     DEVELOPMENT_INSTITUTION("Development institution", "Fejlesztő hely"),
     KINDERGARTEN("Kindergarten", "Óvoda"),
     ELEMENTARY_SCHOOL("Elementary school", "Általános iskola"),
-    HIGH_SCHOOL("High school", "Közép iskola"),
+    HIGH_SCHOOL("High school", "Középiskola"),
     DORM("Dorm", "Kollégium"),
     WORKPLACE("Workplace", "Munkahely"),
     RESIDENTIAL_ADULT_PROVIDER("Residental adult provider", "Bentlakásos felnőtt ellátó"),
@@ -27,6 +27,16 @@ public enum InstitutionType {
         InstitutionType foundType = null;
         for (InstitutionType value : InstitutionType.values()) {
             if (value.toString().equals(name)) {
+                foundType = value;
+            }
+        }
+        return foundType;
+    }
+
+    public static InstitutionType getTypeByHungarianName(String hungarianName) {
+        InstitutionType foundType = null;
+        for (InstitutionType value : InstitutionType.values()) {
+            if (value.hungarianName.equalsIgnoreCase(hungarianName)) {
                 foundType = value;
             }
         }

@@ -191,14 +191,15 @@
             <button (click)="removeOpeningHours()" *ngIf="last && i!=0" class="btn btn-outline-danger rounded-pill">X
             </button>
           </div>
-          <div class="col-sm-1 col-md-12 form-group row mx-0">
-            <small
-              *ngIf="registerForm.get('openingHours').invalid && registerForm.get('openingHours').touched"
-              class="text-danger">
-              Érvénytelen időpont!
-            </small>
-          </div>
         </div>
+        <div class="col-sm-1 col-md-12 form-group row mx-0">
+          <small
+            *ngIf="registerForm.get('openingHours').invalid && registerForm.get('openingHours').touched"
+            class="text-danger">
+            Érvénytelen időpont!
+          </small>
+        </div>
+
 
         <div class="row m-0">
           <div class="form-group col-sm-1 col-md-3">
