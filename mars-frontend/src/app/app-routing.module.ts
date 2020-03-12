@@ -7,6 +7,7 @@ import {UserFormComponent} from "./components/user-form/user-form.component";
 import {RegisterComponent} from "./components/register/register.component";
 import {LoginFormComponent} from "./components/login-form/login-form.component";
 import {RegistrationCompleteComponent} from "./components/registration-complete/registration-complete.component";
+import {RegisterSuccessComponent} from "./components/register-success/register-success.component";
 
 
 const routes: Routes = [
@@ -19,6 +20,8 @@ const routes: Routes = [
   {path: "register", component: RegisterComponent},
   {path: "registration-complete", component: RegistrationCompleteComponent}
 
+  {path: "login", component: LoginFormComponent},
+  {path: "register-success/:token", component: RegisterSuccessComponent}
 ];
 
 @NgModule({
