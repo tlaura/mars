@@ -18,9 +18,7 @@ const routes: Routes = [
   {path: "user-form", component: UserFormComponent},
   {path: "login", component: LoginFormComponent},
   {path: "register", component: RegisterComponent},
-  {path: "registration-complete", component: RegistrationCompleteComponent}
-
-  {path: "login", component: LoginFormComponent},
+  {path: "registration-complete", component: RegistrationCompleteComponent},
   {path: "register-success/:token", component: RegisterSuccessComponent}
 ];
 
