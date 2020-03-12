@@ -8,19 +8,28 @@
 
   <div class="navbar-collapse collapse" id="myNavbar">
     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-
-      <li class="nav-item font-weight-lighter mx-3"><a class="nav-link" routerLink="login" routerLinkActive="active">
-        Bejelentkezés</a>
-      </li>
-      <li class="nav-item font-weight-lighter mx-3"><a class="nav-link" routerLink="institution-list">Intézmények</a>
-      </li>
-      <li class="nav-item font-weight-lighter mx-3"><a class="nav-link" routerLink="institution-form">Intézmény
-        hozzáadása</a>
-      </li>
-      <li class="nav-item font-weight-lighter mx-3"><a class="nav-link" routerLink="register">
+      <li *ngIf="!(loginService.loggedIn$ | async)" class="nav-item font-weight-lighter mx-3">
+        <a class="nav-link" routerLink="register">
         Regisztráció
       </a>
       </li>
+      <li *ngIf="!(loginService.loggedIn$ | async)" class="nav-item font-weight-lighter mx-3">
+        <a class="nav-link" routerLink="login" routerLinkActive="active">
+        Bejelentkezés</a>
+      </li>
+
+      <li *ngIf="loginService.loggedIn$ | async" class="nav-item font-weight-lighter mx-3">
+        <a class="nav-link" style="cursor:pointer" (click)="logout()" routerLinkActive="active">
+        Kijelentkezés</a>
+      </li>
+
+      <li class="nav-item font-weight-lighter mx-3"><a class="nav-link" routerLink="institution-list" routerLinkActive="active">Intézmények</a>
+      </li>
+
+      <li class="nav-item font-weight-lighter mx-3"><a class="nav-link" routerLink="institution-form" routerLinkActive="active">Intézmény
+        hozzáadása</a>
+      </li>
+
     </ul>
     </div>
 </nav>
