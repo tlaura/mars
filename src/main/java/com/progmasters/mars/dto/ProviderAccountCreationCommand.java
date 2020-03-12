@@ -76,4 +76,5 @@ public class ProviderAccountCreationCommand {
     public List<OpeningHoursCreationCommand> getOpeningHours() {
         return openingHours;
     }
+
 }

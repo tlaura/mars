@@ -1,7 +1,7 @@
 package com.progmasters.mars.validation;
 
 import com.progmasters.mars.dto.ProviderAccountCreationCommand;
-import com.progmasters.mars.repository.ProviderAccountRepository;
+import com.progmasters.mars.service.ProviderAccountValidatorService;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
@@ -9,10 +9,10 @@ import org.springframework.validation.Validator;
 @Component
 public class ProviderAccountValidator implements Validator {
 
-    private ProviderAccountRepository providerAccountRepository;
+    private final ProviderAccountValidatorService validatorService;
 
-    public ProviderAccountValidator(ProviderAccountRepository providerAccountRepository) {
-        this.providerAccountRepository = providerAccountRepository;
+    public ProviderAccountValidator(ProviderAccountValidatorService validatorService) {
+        this.validatorService = validatorService;
     }
 
     @Override
@@ -22,11 +22,20 @@ public class ProviderAccountValidator implements Validator {
 
     @Override
     public void validate(Object o, Errors errors) {
-//        AddInstitutionForm form = (AddInstitutionForm) o;
-//        Optional<InstitutionalUser> creator = institutionalUserRepository.findById(form.getCreatorId());
-//        if (creator.isEmpty()) {
-//            errors.rejectValue("creatorId", "institution.creatorNotExists");
-//        }
+        if (o != null) {
+            ProviderAccountCreationCommand providerAccount = (ProviderAccountCreationCommand) o;
+            validatorService.validateFields(providerAccount, errors);
+            if (providerAccount.getUsername() != null) {
+                if (validatorService.usernameIsTaken(providerAccount.getUsername())) {
+                    errors.rejectValue("username", "username.mustBeUnique");
+                }
+            }
+            if (providerAccount.getEmail() != null) {
+                if (validatorService.emailIsTaken(providerAccount.getEmail())) {
+                    errors.rejectValue("email", "email.mustBeUnique");
+                }
+            }
+        }
     }
-
 }
+

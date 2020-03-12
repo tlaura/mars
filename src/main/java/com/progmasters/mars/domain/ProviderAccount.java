@@ -3,6 +3,7 @@ package com.progmasters.mars.domain;
 import com.progmasters.mars.dto.ProviderAccountCreationCommand;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import java.util.List;
 
 @Entity
@@ -11,18 +12,42 @@ public class ProviderAccount {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank
+    @NotEmpty
+    @NotNull
     private String name;
+    @NotBlank
+    @NotEmpty
+    @NotNull
     private String username;
+    @NotBlank
+    @NotEmpty
+    @NotNull
     private String password;
+    @NotBlank
+    @NotEmpty
+    @NotNull
     private String email;
+    @NotBlank
+    @NotEmpty
+    @NotNull
     private String phone;
     private String zipCode;
     private String city;
     private String address;
+    @NotBlank
+    @NotEmpty
+    @NotNull
     private String type; //TODO: enum
     @OneToMany
+    @NotNull
+    @Size(min = 1)
     private List<OpeningHours> openingHours;
+    @NotNull
+    @PositiveOrZero
     private Integer ageGroupMin;
+    @NotNull
+    @PositiveOrZero
     private Integer ageGroupMax;
     @OneToMany
     private List<Institution> institutions;

@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
+import java.time.LocalTime;
 
 @Entity
 public class OpeningHours {
@@ -13,8 +15,10 @@ public class OpeningHours {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String weekDay; //TODO: enum
-    private String openingTime;
-    private String closingTime;
+    @NotNull
+    private LocalTime openingTime;
+    @NotNull
+    private LocalTime closingTime;
 
     public OpeningHours() {
     }
@@ -37,19 +41,19 @@ public class OpeningHours {
         this.weekDay = weekDay;
     }
 
-    public String getOpeningTime() {
+    public LocalTime getOpeningTime() {
         return openingTime;
     }
 
-    public void setOpeningTime(String openingTime) {
+    public void setOpeningTime(LocalTime openingTime) {
         this.openingTime = openingTime;
     }
 
-    public String getClosingTime() {
+    public LocalTime getClosingTime() {
         return closingTime;
     }
 
-    public void setClosingTime(String closingTime) {
+    public void setClosingTime(LocalTime closingTime) {
         this.closingTime = closingTime;
     }
 }

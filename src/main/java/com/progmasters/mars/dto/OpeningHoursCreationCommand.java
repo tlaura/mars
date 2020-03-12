@@ -1,9 +1,11 @@
 package com.progmasters.mars.dto;
 
+import java.time.LocalTime;
+
 public class OpeningHoursCreationCommand {
     private String weekDay; //TODO: enum
-    private String openingTime;
-    private String closingTime;
+    private LocalTime openingTime;
+    private LocalTime closingTime;
 
     public OpeningHoursCreationCommand() {
     }
@@ -12,11 +14,11 @@ public class OpeningHoursCreationCommand {
         return weekDay;
     }
 
-    public String getOpeningTime() {
+    public LocalTime getOpeningTime() {
         return openingTime;
     }
 
-    public String getClosingTime() {
+    public LocalTime getClosingTime() {
         return closingTime;
     }
 }
