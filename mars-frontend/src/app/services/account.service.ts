@@ -24,6 +24,6 @@ export class AccountService {
   }
 
   fetchProviderAccountDetails = (username: string): Observable<ProviderUserProfileDetailsModel> => {
-    return this.http.get<ProviderUserProfileDetailsModel>(this.BASE_URL + '/' + 'username');
+    return this.http.get<ProviderUserProfileDetailsModel>(this.BASE_URL + '/providers/' + username);
   }
 }

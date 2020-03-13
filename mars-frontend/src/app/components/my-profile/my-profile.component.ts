@@ -16,11 +16,10 @@ export class MyProfileComponent implements OnInit {
   constructor(private loginService: LoginService, private providerService: AccountService) { }
 
   ngOnInit(): void {
-    this.loggedInUser = this.loginService.getCurrentUser().username;
+    this.loggedInUser = this.loginService.getCurrentUser()['name'];
     this.providerService.fetchProviderAccountDetails(this.loggedInUser).subscribe(
       (providerDetails: ProviderUserProfileDetailsModel) => {
         this.providerAccount = providerDetails;
-        console.log(this.providerAccount);
       }, error => {
         console.warn(error)
       //  TODO - write unauthorized validation
