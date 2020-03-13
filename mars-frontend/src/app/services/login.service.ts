@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {BehaviorSubject, Observable} from "rxjs";
+import {LoggedInUserDetailsModel} from "../models/loggedInUserDetails.model";
 
 const BASE_URL: string = 'http://localhost:8080/api/user';
 
@@ -22,5 +23,9 @@ export class LoginService {
   logout(): Observable<any> {
     console.log('logout');
     return this.http.get( 'http://localhost:8080/logout');
+  }
+
+  getCurrentUser(): LoggedInUserDetailsModel {
+    return JSON.parse(localStorage.getItem('user'));
   }
 }

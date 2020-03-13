@@ -21,4 +21,6 @@ export class AccountService {
   fetchInstitutions = (): Observable<Array<Institution>> => {
     return this.http.get<Array<Institution>>(this.BASE_URL + '/institutions/details');
   }
+
+
 }
