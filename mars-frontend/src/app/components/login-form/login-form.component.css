@@ -1,10 +1,45 @@
 .login-div {
+  font-size: small;
   border-top: 1px solid tomato;
   border-right: 1px solid tomato;
   border-left: 1px solid tomato;
   border-bottom: 1px solid tomato;
-  border-bottom-left-radius: 20px;
-  border-bottom-right-radius: 20px;
-  border-top-right-radius: 20px;
-  border-top-left-radius: 20px;
+  border-bottom-left-radius: 2rem;
+  border-bottom-right-radius: 2rem;
+  border-top-right-radius: 2rem;
+  border-top-left-radius: 2rem;
+}
+
+h1 {
+  color: tomato;
+  margin-top: 5rem;
+  margin-bottom: 2rem;
+}
+
+label {
+  color: tomato;
+}
+
+a {
+  color: cornflowerblue;
+}
+
+p {
+  color: tomato;
+}
+
+input {
+  border: 1px solid tomato;
+  outline: 0;
+  box-shadow: none !important;
+}
+
+input::placeholder {
+  font-size: small;
+  color: lightgrey;
+}
+
+.submit.btn {
+  border-color: cornflowerblue;
+  background-color: cornflowerblue;
 }

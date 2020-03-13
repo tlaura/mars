@@ -21,22 +21,16 @@ public class ConfirmationToken {
 
     @JoinColumn(name = "user_id")
     @OneToOne
-    private IndividualUser individualUser;
+    private ProviderAccount user;
 
-    @JoinColumn(name = "institution_id")
-    @OneToOne
-    private InstitutionalUser institutionalUser;
+    private boolean confirmed = false;
 
     public ConfirmationToken() {
     }
 
-    public ConfirmationToken(User user) {
+    public ConfirmationToken(ProviderAccount user) {
         //todo refactor
-        if (user instanceof InstitutionalUser) {
-            this.institutionalUser = (InstitutionalUser) user;
-        } else {
-            this.individualUser = (IndividualUser) user;
-        }
+        this.user = user;
     }
 
     //----------------------
@@ -65,19 +59,20 @@ public class ConfirmationToken {
         this.date = date;
     }
 
-    public IndividualUser getIndividualUser() {
-        return individualUser;
+
+    public boolean isConfirmed() {
+        return confirmed;
     }
 
-    public void setIndividualUser(IndividualUser user) {
-        this.individualUser = user;
+    public void setConfirmed(boolean confirmed) {
+        this.confirmed = confirmed;
     }
 
-    public InstitutionalUser getInstitutionalUser() {
-        return institutionalUser;
+    public ProviderAccount getUser() {
+        return user;
     }
 
-    public void setInstitutionalUser(InstitutionalUser institutionalUser) {
-        this.institutionalUser = institutionalUser;
+    public void setUser(ProviderAccount user) {
+        this.user = user;
     }
 }

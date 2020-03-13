@@ -28,11 +28,9 @@ public class JPAUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         com.progmasters.mars.domain.User user = individualUserRepository.findByUserName(username);
-
         if (user == null) {
             user = institutionalUserRepository.findByUserName(username);
         }
-
         if (user == null) {
             throw new UsernameNotFoundException("No account was found with given name");
         }

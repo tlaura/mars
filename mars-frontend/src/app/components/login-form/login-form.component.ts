@@ -11,6 +11,7 @@ import {Router} from "@angular/router";
 })
 export class LoginFormComponent implements OnInit {
   loginForm: FormGroup;
+  showErrorMessage = false;
 
   constructor(private loginService: LoginService, private formBuilder: FormBuilder, private router: Router) { }
 
@@ -26,13 +27,15 @@ export class LoginFormComponent implements OnInit {
     const loginData = {...this.loginForm.value};
     console.log(loginData);
 
-    this.loginService.authenticate(loginData).subscribe(
+    this.loginService.login(loginData).subscribe(
       response => {
         localStorage.setItem('user', JSON.stringify(response));
         this.router.navigate(['']);
+        this.loginService.loggedIn$.next(true);
       },
       error => {
-        console.warn(error)
+        console.warn(error);
+        this.showErrorMessage = true;
       }
     )
   }

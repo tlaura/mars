@@ -2,18 +2,21 @@ package com.progmasters.mars.service;
 
 import com.progmasters.mars.domain.ConfirmationToken;
 import com.progmasters.mars.domain.IndividualUser;
-import com.progmasters.mars.domain.User;
+import com.progmasters.mars.domain.ProviderAccount;
 import com.progmasters.mars.repository.ConfirmationTokenRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
+
 @Service
 public class EmailService {
 
     private final JavaMailSender javaMailSender;
     private final ConfirmationTokenRepository confirmationTokenRepository;
+
 
     @Value("${email.send.subject}")
     private String subject;
@@ -39,9 +42,8 @@ public class EmailService {
     }
 
 
-    public void sendConfirmationEmail(User user) {
-        //TODO get mail from parameter, add hash
-        //    User user = userRepository.findById(1l).get();
+    public void sendConfirmationEmail(ProviderAccount user) {
+        //   User user = userRepository.findById(1l).get();
 
         ConfirmationToken userToken = new ConfirmationToken(user);
         confirmationTokenRepository.save(userToken);
@@ -53,8 +55,11 @@ public class EmailService {
         ConfirmationToken userToken = confirmationTokenRepository.findByToken(token);
 
         if (userToken != null) {
+            userToken.setConfirmed(true);
+            confirmationTokenRepository.save(userToken);
             //  confirmationTokenRepository.deleteById(userToken.getId());
-
+        } else {
+            throw new EntityNotFoundException("not valid confirmation link");
         }
     }
 
