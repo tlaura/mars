@@ -9,7 +9,7 @@
   <div class="navbar-collapse collapse" id="myNavbar">
     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
       <li *ngIf="!(loginService.loggedIn$ | async)" class="nav-item font-weight-lighter mx-3">
-        <a class="nav-link" routerLink="register">
+        <a class="nav-link" routerLink="register" routerLinkActive="active">
         Regisztráció
       </a>
       </li>
@@ -29,7 +29,12 @@
       <li class="nav-item font-weight-lighter mx-3"><a class="nav-link" routerLink="institution-form" routerLinkActive="active">Intézmény
         hozzáadása</a>
       </li>
+    </ul>
 
+    <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+      <li class="nav-item font-weight-lighter mx-3"><a class="nav-link" routerLink="my-profile" routerLinkActive="active">
+        Profilom</a>
+      </li>
     </ul>
     </div>
 </nav>

@@ -8,10 +8,11 @@ import {RegisterComponent} from "./components/register/register.component";
 import {LoginFormComponent} from "./components/login-form/login-form.component";
 import {RegistrationCompleteComponent} from "./components/registration-complete/registration-complete.component";
 import {RegisterSuccessComponent} from "./components/register-success/register-success.component";
+import {MyProfileComponent} from "./components/my-profile/my-profile.component";
 
 
 const routes: Routes = [
-  {path: "", component: InstitutionListComponent},
+
   {path: "institution-list", component: InstitutionListComponent},
   {path: "institution-form", component: InstitutionFormComponent},
   {path: "institution-details/:id", component: InstitutionDetailsComponent},
@@ -19,7 +20,9 @@ const routes: Routes = [
   {path: "login", component: LoginFormComponent},
   {path: "register", component: RegisterComponent},
   {path: "registration-complete", component: RegistrationCompleteComponent},
-  {path: "register-success/:token", component: RegisterSuccessComponent}
+  {path: "register-success/:token", component: RegisterSuccessComponent},
+  {path: "my-profile", component: MyProfileComponent},
+  {path: "", component: InstitutionListComponent},
 ];
 
 @NgModule({
