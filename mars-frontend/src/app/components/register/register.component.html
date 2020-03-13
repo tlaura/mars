@@ -28,7 +28,7 @@
         <div class="form-group col-sm-1 col-md-5">
           <label for="username">Felhasználónév*:</label>
           <input class="form-control rounded-pill" formControlName="username" id="username" type="text">
-          <small *ngIf="registerForm.get('username').errors?.serverError && registerForm.get('username').touched"
+          <small *ngIf="registerForm.get('username').errors?.serverError"
                  class="text-danger">
             {{registerForm.get('username').errors['serverError']}}
           </small>

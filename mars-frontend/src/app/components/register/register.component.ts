@@ -4,6 +4,8 @@ import {Institution} from "../../models/institution";
 import {AccountService} from "../../services/account.service";
 import {Router} from "@angular/router";
 import {ProviderAccountRegisterModel} from "../../models/providerAccountRegisterModel";
+import {validationHandler} from "../../utils/validationHandler";
+
 
 @Component({
   selector: 'app-register',
@@ -59,6 +61,7 @@ export class RegisterComponent implements OnInit {
         // TODO: register email...
         this.router.navigate(['registration-complete']);
       },
+      error => validationHandler(error, this.registerForm)
     );
   }
 
