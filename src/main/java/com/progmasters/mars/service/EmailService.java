@@ -2,7 +2,7 @@ package com.progmasters.mars.service;
 
 import com.progmasters.mars.domain.ConfirmationToken;
 import com.progmasters.mars.domain.IndividualUser;
-import com.progmasters.mars.domain.User;
+import com.progmasters.mars.domain.ProviderAccount;
 import com.progmasters.mars.repository.ConfirmationTokenRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
@@ -42,7 +42,7 @@ public class EmailService {
     }
 
 
-    public void sendConfirmationEmail(User user) {
+    public void sendConfirmationEmail(ProviderAccount user) {
         //   User user = userRepository.findById(1l).get();
 
         ConfirmationToken userToken = new ConfirmationToken(user);
