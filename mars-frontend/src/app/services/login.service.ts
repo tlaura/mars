@@ -20,12 +20,12 @@ export class LoginService {
     return this.http.get(BASE_URL + '/login', {headers: headers});
   }
 
-  logout(): Observable<any> {
+  logout = (): Observable<any> => {
     console.log('logout');
     return this.http.get( 'http://localhost:8080/logout');
   }
 
-  getCurrentUser(): LoggedInUserDetailsModel {
+  getCurrentUser = (): LoggedInUserDetailsModel => {
     return JSON.parse(localStorage.getItem('user'));
   }
 }
