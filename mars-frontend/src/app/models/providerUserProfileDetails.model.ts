@@ -1,3 +1,5 @@
+import {InstitutionListModel} from "./institutionList.model";
+
 export interface ProviderUserProfileDetailsModel {
   id?: number;
   name: string;
@@ -8,6 +10,6 @@ export interface ProviderUserProfileDetailsModel {
   zipcode: string;
   city: string;
   address: string;
+  institutionList: InstitutionListModel[];
   // openinghours: OpeningHours[];
-  // institutions: InstitutionDetails[];
 }

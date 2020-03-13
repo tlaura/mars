@@ -2,6 +2,9 @@ package com.progmasters.mars.dto;
 
 import com.progmasters.mars.domain.ProviderAccount;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class ProviderUserDetails {
 
     private Long id;
@@ -13,6 +16,7 @@ public class ProviderUserDetails {
     private String zipcode;
     private String city;
     private String address;
+    private List<InstitutionListData> institutionList;
 
     public ProviderUserDetails(ProviderAccount providerAccount) {
         this.id = providerAccount.getId();
@@ -24,6 +28,12 @@ public class ProviderUserDetails {
         this.zipcode = providerAccount.getZipCode();
         this.city = providerAccount.getCity();
         this.address = providerAccount.getAddress();
+        this.institutionList = providerAccount.getInstitutions().stream().map(InstitutionListData::new).collect(Collectors.toList());
+    }
+
+
+    public List<InstitutionListData> getInstitutionList() {
+        return institutionList;
     }
 
     public String getPassword() {
