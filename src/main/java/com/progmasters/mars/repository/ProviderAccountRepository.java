@@ -8,8 +8,9 @@ import java.util.List;
 
 @Repository
 public interface ProviderAccountRepository extends JpaRepository<ProviderAccount, Long> {
-
     List<ProviderAccount> findAllByUsername(String username);
 
     List<ProviderAccount> findAllByEmail(String email);
+
+    ProviderAccount findByUsername(String username);
 }

@@ -5,6 +5,7 @@ import com.progmasters.mars.domain.OpeningHours;
 import com.progmasters.mars.domain.ProviderAccount;
 import com.progmasters.mars.dto.InstitutionDetailsData;
 import com.progmasters.mars.dto.ProviderAccountCreationCommand;
+import com.progmasters.mars.dto.ProviderUserDetails;
 import com.progmasters.mars.repository.InstitutionRepository;
 import com.progmasters.mars.repository.OpeningHoursRepository;
 import com.progmasters.mars.repository.ProviderAccountRepository;
@@ -71,5 +72,8 @@ public class AccountService {
         providerAccountRepository.deleteById(id);
     }
 
-
+    public ProviderUserDetails getProviderUser(String username) {
+        ProviderAccount providerAccount = providerAccountRepository.findByUsername(username);
+        return new ProviderUserDetails(providerAccount);
+    }
 }
