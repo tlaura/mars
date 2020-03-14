@@ -49,3 +49,4 @@ email:
     subject: Regisztráció megerősítése
     text: Az alábbi linkre kattintva aktiválhatja fiókját
     confirmation: http://localhost:4200/register-success/
+  elapsed-hours: 72

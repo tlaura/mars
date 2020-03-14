@@ -3,6 +3,7 @@ package com.progmasters.mars.service;
 import com.progmasters.mars.domain.ConfirmationToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +14,8 @@ import java.util.List;
 @Service
 public class ExpirationService {
 
-    private static final Integer MAX_ELAPSED_DAY = 72;
+    @Value("${email.elapsed-hours}")
+    private static Integer MAX_ELAPSED_HOURS;
     private final Logger logger = LoggerFactory.getLogger(ExpirationService.class);
     private final EmailService emailService;
     private final AccountService accountService;
@@ -34,7 +36,7 @@ public class ExpirationService {
         for (ConfirmationToken confirmationToken : confirmationTokens) {
             Duration elapsedTime = Duration.between(confirmationToken.getDate(), LocalDateTime.now());
             long difference = Math.abs(elapsedTime.toHours());
-            if (!confirmationToken.isConfirmed() && difference >= MAX_ELAPSED_DAY) {
+            if (!confirmationToken.isConfirmed() && difference >= MAX_ELAPSED_HOURS) {
                 emailService.removeConfirmationToken(confirmationToken.getId());
                 Long userId = confirmationToken.getUser().getId();
                 accountService.removeById(userId);
