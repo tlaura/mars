@@ -23,9 +23,12 @@ public class ExpirationService {
         this.accountService = accountService;
     }
 
-
-    @Scheduled(cron = "0 0 0 * * 1/3")
+    //Every 3 days
+    //@Scheduled(cron = "0 0 0 * * 1/3")
+    //Every 3 minutes
     // @Scheduled(cron = "0 1/3 * * * *")
+    //Daily
+    @Scheduled(cron = "0 0 0 * * *")
     private void removeUnconfirmedUsers() {
         List<ConfirmationToken> confirmationTokens = emailService.findAllConfirmationToken();
         for (ConfirmationToken confirmationToken : confirmationTokens) {
@@ -35,7 +38,7 @@ public class ExpirationService {
                 emailService.removeConfirmationToken(confirmationToken.getId());
                 Long userId = confirmationToken.getUser().getId();
                 accountService.removeById(userId);
-                logger.info("Account removed from db:\t" + userId + "\tElapsed time:\t" + difference);
+                logger.info("Account ID removed from db:\t" + userId + "\tElapsed time:\t" + difference);
             }
         }
     }
