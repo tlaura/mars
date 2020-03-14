@@ -75,4 +75,5 @@ public class ConfirmationToken {
     public void setUser(ProviderAccount user) {
         this.user = user;
     }
+
 }

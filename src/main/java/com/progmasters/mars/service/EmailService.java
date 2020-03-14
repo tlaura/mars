@@ -10,6 +10,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.List;
 
 @Service
 public class EmailService {
@@ -30,7 +31,6 @@ public class EmailService {
         this.confirmationTokenRepository = confirmationTokenRepository;
     }
 
-
     private void sendMsg(String toEmail, String subject, String text) {
         SimpleMailMessage message = new SimpleMailMessage();
 
@@ -41,9 +41,7 @@ public class EmailService {
         javaMailSender.send(message);
     }
 
-
     public void sendConfirmationEmail(ProviderAccount user) {
-        //   User user = userRepository.findById(1l).get();
 
         ConfirmationToken userToken = new ConfirmationToken(user);
         confirmationTokenRepository.save(userToken);
@@ -61,6 +59,14 @@ public class EmailService {
         } else {
             throw new EntityNotFoundException("not valid confirmation link");
         }
+    }
+
+    public void removeConfirmationToken(Long id) {
+        confirmationTokenRepository.deleteById(id);
+    }
+
+    public List<ConfirmationToken> findAllConfirmationToken() {
+        return confirmationTokenRepository.findAll();
     }
 
     private boolean isRegistrationConfirmed(IndividualUser individualUser) {

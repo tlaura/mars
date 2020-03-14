@@ -19,6 +19,7 @@ public class MailController {
         this.emailService = emailService;
     }
 
+
     @GetMapping("/{token}")
     public ResponseEntity<Void> succeedRegister(@PathVariable String token) {
         emailService.confirmUser(token);

@@ -1,1 +1,2 @@
 <p *ngIf="confirmed">Confirmation Success</p>
+<p *ngIf="form.get('confirmed').errors?.serverError">{{form.get('confirmed').errors.serverError}}</p>

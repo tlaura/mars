@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {MailService} from "../../services/mail.service";
+import {FormControl, FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'app-register-success',
@@ -10,8 +11,12 @@ import {MailService} from "../../services/mail.service";
 export class RegisterSuccessComponent implements OnInit {
 
   confirmed: boolean = false;
+  form: FormGroup;
 
   constructor(private activatedRoute: ActivatedRoute, private mailService: MailService) {
+    this.form = new FormGroup({
+      confirmed: new FormControl('')
+    });
   }
 
   ngOnInit(): void {

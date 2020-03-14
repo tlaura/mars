@@ -67,4 +67,8 @@ public class AccountService {
         return institution;
     }
 
+    public void removeById(Long id) {
+        providerAccountRepository.deleteById(id);
+    }
+
 }
