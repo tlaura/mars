@@ -1,7 +1,6 @@
 package com.progmasters.mars.service;
 
 import com.progmasters.mars.domain.ConfirmationToken;
-import com.progmasters.mars.domain.IndividualUser;
 import com.progmasters.mars.domain.ProviderAccount;
 import com.progmasters.mars.repository.ConfirmationTokenRepository;
 import org.springframework.beans.factory.annotation.Value;
@@ -67,9 +66,5 @@ public class EmailService {
 
     public List<ConfirmationToken> findAllConfirmationToken() {
         return confirmationTokenRepository.findAll();
-    }
-
-    private boolean isRegistrationConfirmed(IndividualUser individualUser) {
-        return false;
     }
 }
