@@ -75,4 +75,35 @@ public class InstitutionCreationForm {
         return institutionType;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setZipCode(Integer zipCode) {
+        this.zipCode = zipCode;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setInstitutionType(String institutionType) {
+        this.institutionType = institutionType;
+    }
+
+    public void setCreatorId(Long creatorId) {
+        this.creatorId = creatorId;
+    }
 }

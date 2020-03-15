@@ -1,0 +1,8 @@
+<form [formGroup]="importForm" enctype="multipart/form-data">
+  <input (change)="uploadFile($event)"
+         accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+         formControlName="file"
+         id="file"
+         type="file">
+  <button (click)="import()">Importálás</button>
+</form>

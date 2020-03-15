@@ -9,8 +9,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -88,5 +90,15 @@ public class InstitutionController {
         institutionService.updateInstitutionLocation(geoLocationData, id);
 
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("/import")
+    public ResponseEntity<Void> importInstitutions(@RequestParam("file") MultipartFile excelDataFile) {
+        try {
+            institutionService.importInstitutions(excelDataFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return new ResponseEntity<>(HttpStatus.I_AM_A_TEAPOT);
     }
 }

@@ -34,4 +34,8 @@ export class InstitutionService {
   getInstitutionDetail = (id: number): Observable<InstitutionDetailModel> => {
     return this.http.get<InstitutionDetailModel>(this.BASE_URL + id);
   };
+
+  import = (importData: any) => {
+    return this.http.post(this.BASE_URL + 'import', importData)
+  };
 }

@@ -4,11 +4,16 @@ import com.progmasters.mars.domain.Institution;
 import com.progmasters.mars.domain.InstitutionType;
 import com.progmasters.mars.dto.*;
 import com.progmasters.mars.repository.InstitutionRepository;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityNotFoundException;
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -95,5 +100,59 @@ public class InstitutionService {
                 .stream()
                 .map(InstitutionDetailsData::new)
                 .collect(Collectors.toList());
+    }
+
+    public void importInstitutions(MultipartFile excelDataFile) throws IOException {
+        XSSFWorkbook workbook = new XSSFWorkbook(excelDataFile.getInputStream());
+        XSSFSheet worksheet = workbook.getSheetAt(0);
+
+        // TODO: fit mandatory fields
+
+        for (int i = 2; i < worksheet.getPhysicalNumberOfRows(); i++) { //first row is a "header"
+            InstitutionCreationForm institution = new InstitutionCreationForm();
+
+            XSSFRow row = worksheet.getRow(i);
+            if (isValidRow(row)) {
+                institution.setName(row.getCell(0).getStringCellValue());
+                institution.setZipCode(parseZipCodeFromAddress(row.getCell(1).getStringCellValue()));
+                institution.setCity(parseCityFromAddress(row.getCell(1).getStringCellValue()));
+                institution.setAddress(parseAddressFromAddress(row.getCell(1).getStringCellValue()));
+                institution.setEmail(parseEmail(row.getCell(3).getStringCellValue()));
+                institution.setDescription(row.getCell(5).getStringCellValue());
+
+                createInstitution(institution);
+            }
+        }
+    }
+
+    private boolean isValidRow(XSSFRow row) {
+        for (int i = 0; i < 6; i++) {
+            if (row.getCell(i) == null) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private String parseEmail(String stringCellValue) { // TODO: email list
+        String[] stringCellValueArray = stringCellValue.split(", ");
+        return stringCellValueArray[0];
+    }
+
+    //TODO: refactor !!
+
+    private String parseAddressFromAddress(String stringCellValue) {
+        String[] stringCellValueArray = stringCellValue.split(", ");
+        return stringCellValueArray[1];
+    }
+
+    private String parseCityFromAddress(String stringCellValue) {
+        String[] stringCellValueArray = stringCellValue.split(", ");
+        return stringCellValueArray[0];
+    }
+
+    private Integer parseZipCodeFromAddress(String stringCellValue) {
+        String[] stringCellValueArray = stringCellValue.split(", ");
+        return Integer.parseInt(stringCellValueArray[2].split(" ")[0]);
     }
 }

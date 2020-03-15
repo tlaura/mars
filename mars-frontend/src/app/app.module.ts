@@ -20,7 +20,8 @@ import {LoginFormComponent} from "./components/login-form/login-form.component";
 import {HttpRequestInterceptor} from "./utils/httpRequestInterceptor";
 import {RegistrationCompleteComponent} from './components/registration-complete/registration-complete.component';
 import {RegisterSuccessComponent} from './components/register-success/register-success.component';
-import { MyProfileComponent } from './components/my-profile/my-profile.component';
+import {MyProfileComponent} from './components/my-profile/my-profile.component';
+import {InstitutionImportComponent} from './components/institution-import/institution-import.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { MyProfileComponent } from './components/my-profile/my-profile.component
     MapComponent,
     RegisterSuccessComponent,
     RegistrationCompleteComponent,
-    MyProfileComponent
+    MyProfileComponent,
+    InstitutionImportComponent
   ],
   imports: [
     BrowserModule,

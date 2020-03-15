@@ -9,12 +9,14 @@ import {LoginFormComponent} from "./components/login-form/login-form.component";
 import {RegistrationCompleteComponent} from "./components/registration-complete/registration-complete.component";
 import {RegisterSuccessComponent} from "./components/register-success/register-success.component";
 import {MyProfileComponent} from "./components/my-profile/my-profile.component";
+import {InstitutionImportComponent} from "./components/institution-import/institution-import.component";
 
 
 const routes: Routes = [
 
   {path: "institution-list", component: InstitutionListComponent},
   {path: "institution-form", component: InstitutionFormComponent},
+  {path: "institution-import", component: InstitutionImportComponent},
   {path: "institution-details/:id", component: InstitutionDetailsComponent},
   {path: "user-form", component: UserFormComponent},
   {path: "login", component: LoginFormComponent},
