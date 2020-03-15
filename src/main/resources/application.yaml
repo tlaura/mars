@@ -21,7 +21,7 @@ spring:
       force: true
   mail:
     host: smtp.gmail.com
-    port: 465
+    port: 587
     username: callbackcats@gmail.com
     password: PwKQNNSs2yv94pLG
     properties:
@@ -31,7 +31,7 @@ spring:
           starttls:
             enable: true
             required: true
-          ssl.enable: true
+          ssl.enable: false
 
 logging:
   level:
