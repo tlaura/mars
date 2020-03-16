@@ -2,6 +2,7 @@ package com.progmasters.mars.service;
 
 import com.progmasters.mars.domain.ConfirmationToken;
 import com.progmasters.mars.domain.ProviderAccount;
+import com.progmasters.mars.dto.MailData;
 import com.progmasters.mars.repository.ConfirmationTokenRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
@@ -38,6 +39,11 @@ public class EmailService {
         message.setText(text);
 
         javaMailSender.send(message);
+    }
+
+    public void sendEmailToGivenEmail(MailData mailData) {
+        //todo refactor
+        sendMsg(mailData.getToEmail(), mailData.getName() + "(" + mailData.getFromEmail() + ")" + "-" + mailData.getSubject(), mailData.getText());
     }
 
     public void sendConfirmationEmail(ProviderAccount user) {

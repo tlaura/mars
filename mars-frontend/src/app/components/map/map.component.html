@@ -1,8 +1,18 @@
 <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom">
-  <agm-marker (markerClick)="markerClick(infoWindow, location.id)" *ngFor="let location of locations"
+  <agm-marker (markerClick)="markerClick(location.id)" *ngFor="let location of locations"
               [latitude]="location.latitude" [longitude]="location.longitude">
-    <agm-info-window #infoWindow>
-      <app-institution-details [institution]="institutionDetail"></app-institution-details>
-    </agm-info-window>
+    <agm-snazzy-info-window #infoWindow
+                            [closeWhenOthersOpen]="true"
+                            [isOpen]="show"
+                            maxHeight="1500"
+                            maxWidth="1500" placement="right"
+    >
+      <ng-template>
+        <app-institution-details [institution]="institutionDetail"></app-institution-details>
+      </ng-template>
+    </agm-snazzy-info-window>
+    <!--    <agm-info-window #infoWindow>-->
+    <!--      <app-institution-details [institution]="institutionDetail"></app-institution-details>-->
+    <!--    </agm-info-window>-->
   </agm-marker>
 </agm-map>
