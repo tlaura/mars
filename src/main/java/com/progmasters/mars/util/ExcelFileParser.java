@@ -10,6 +10,11 @@ import java.util.List;
 
 public class ExcelFileParser {
 
+    private static int ADDRESS_POS = 0;
+    private static int CITY_POS = 1;
+    private static int ZIPCODE_POS = 2;
+    //TODO: customize... or check
+
     private static int name_col;
     private static int address_col;
     private static int email_col;
@@ -41,8 +46,8 @@ public class ExcelFileParser {
         email = parseEmail(row.getCell(email_col).getStringCellValue());
         description = row.getCell(description_col).getStringCellValue();
         institutionType = row.getCell(institutionType_col).getStringCellValue();
-        phone = row.getCell(phone_col).getStringCellValue(); // TODO: VALID?
-        website = row.getCell(website_col).getStringCellValue();
+        phone = row.getCell(phone_col).getStringCellValue(); // TODO: VALID? more phone?
+        website = row.getCell(website_col).getStringCellValue(); // TODO: VALID? more phone?
     }
 
     public static List<ExcelFileParser> getParsedList(XSSFWorkbook workbook) {
@@ -102,18 +107,19 @@ public class ExcelFileParser {
     }
 
     private String parseAddressFromAddress(String stringCellValue) {
-        String[] stringCellValueArray = stringCellValue.split(", ");
-        return stringCellValueArray[1];
+        String[] stringCellValueArray = stringCellValue.split(", "); //TODO: check splitter
+        return stringCellValueArray[ADDRESS_POS];
     }
 
     private String parseCityFromAddress(String stringCellValue) {
         String[] stringCellValueArray = stringCellValue.split(", ");
-        return stringCellValueArray[0];
+        return stringCellValueArray[CITY_POS];
     }
+
 
     private Integer parseZipCodeFromAddress(String stringCellValue) {
         String[] stringCellValueArray = stringCellValue.split(", ");
-        return Integer.parseInt(stringCellValueArray[2].split(" ")[0]);
+        return Integer.parseInt(stringCellValueArray[ZIPCODE_POS].split(" ")[0]);
     }
 
     private String parseEmail(String stringCellValue) { // TODO: email list
