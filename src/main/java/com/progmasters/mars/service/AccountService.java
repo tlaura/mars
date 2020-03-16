@@ -42,7 +42,6 @@ public class AccountService {
 
         providerAccountRepository.save(providerAccount);
         emailService.sendConfirmationEmail(providerAccount);
-
     }
 
     private List<OpeningHours> createOpeningHoursList(ProviderAccountCreationCommand providerAccountCreationCommand) {

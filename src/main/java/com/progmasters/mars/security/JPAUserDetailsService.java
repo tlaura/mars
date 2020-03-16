@@ -27,15 +27,14 @@ public class JPAUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        com.progmasters.mars.domain.User user = individualUserRepository.findByUserName(username);
+        com.progmasters.mars.domain.User user = individualUserRepository.findByEmail(username);
         if (user == null) {
-            user = institutionalUserRepository.findByUserName(username);
+            user = institutionalUserRepository.findByEmail(username);
         }
         if (user == null) {
             throw new UsernameNotFoundException("No account was found with given name");
         }
 
-        // TODO - set roles for inst and individual users at registration
         List<GrantedAuthority> authorities = AuthorityUtils
                 .createAuthorityList(user.getRole().toString());
 
