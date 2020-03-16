@@ -3,6 +3,7 @@ import {ProviderAccountRegisterModel} from "../models/providerAccountRegisterMod
 import {Observable} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {Institution} from "../models/institution";
+import {ProviderUserProfileDetailsModel} from "../models/providerUserProfileDetails.model";
 
 @Injectable({
   providedIn: 'root'
@@ -20,5 +21,9 @@ export class AccountService {
 
   fetchInstitutions = (): Observable<Array<Institution>> => {
     return this.http.get<Array<Institution>>(this.BASE_URL + '/institutions/details');
+  }
+
+  fetchProviderAccountDetails = (username: string): Observable<ProviderUserProfileDetailsModel> => {
+    return this.http.get<ProviderUserProfileDetailsModel>(this.BASE_URL + '/providers/' + username);
   }
 }

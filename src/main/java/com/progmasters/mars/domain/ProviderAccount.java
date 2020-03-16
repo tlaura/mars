@@ -7,6 +7,7 @@ import javax.validation.constraints.*;
 import java.util.List;
 
 @Entity
+@Table(name = "provider_account")
 public class ProviderAccount {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,7 +33,10 @@ public class ProviderAccount {
     @NotEmpty
     @NotNull
     private String phone;
+
+    @Column(name = "zipcode")
     private String zipCode;
+
     private String city;
     private String address;
     @NotNull

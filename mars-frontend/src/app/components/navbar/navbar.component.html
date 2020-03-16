@@ -41,8 +41,8 @@
     </ul>
 
     <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
-      <li class="nav-item font-weight-lighter mx-3"><a class="nav-link" routerLink="my-profile" routerLinkActive="active">
-        Profilom</a>
+      <li *ngIf="loginService.loggedIn$ | async" class="nav-item font-weight-lighter mx-3"><a class="nav-link" routerLink="my-profile" routerLinkActive="active">
+        Profil</a>
       </li>
     </ul>
     </div>

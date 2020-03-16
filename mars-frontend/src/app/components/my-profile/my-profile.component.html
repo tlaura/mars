@@ -1,1 +1,49 @@
-<p>my-profile works!</p>
+<section class="container" *ngIf="loggedInUser">
+  <h1>Profil</h1>
+  <section>
+    <h4 class="display-4">{{providerAccount.name}}</h4>
+    <hr>
+  </section>
+
+    <section class="row">
+      <section class="col-6 mb-4">
+        <dl class="row">
+          <dt class="col-sm-3">
+            <p class="text-dark">Email:</p>
+          </dt>
+          <dd class="col-sm-9">
+            <p class="text-dark">{{providerAccount.email}}</p>
+          </dd>
+
+          <dt class="col-sm-3">
+            <p class="text-dark">Telefon:</p>
+          </dt>
+          <dd class="col-sm-9">
+            <p class="text-dark">{{providerAccount.phone}}</p>
+          </dd>
+
+          <dt class="col-sm-3">Cím:</dt>
+          <dd class="col-sm-9">
+            <p class="text-dark">{{providerAccount.zipcode}}, {{providerAccount.city}}, {{providerAccount.address}}</p>
+          </dd>
+        </dl>
+      </section>
+
+      <section class="m-4">
+          Intézmények:
+        <div class="card bg-light m-4"
+          *ngFor="let insitution of providerAccount.institutionList">
+          <div class="card-header">
+            {{insitution.name}}
+          </div>
+          <div class="card-body">
+            {{insitution.type}}<br>
+            {{insitution.address}}
+          </div>
+        </div>
+      </section>
+  </section>
+  <button class="submit btn btn-primary rounded-pill" type="submit">
+    Edit Profile
+  </button>
+</section>
