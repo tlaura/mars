@@ -25,8 +25,13 @@ public class InstitutionDetailsData {
         this.address = institution.getAddress();
         this.email = institution.getEmail();
         this.description = institution.getDescription();
-        this.institutionType = institution.getInstitutionType().getHungarianName();
-        this.creatorName = institution.getCreator().getFirstName() + " " + institution.getCreator().getLastName();
+        //TODO: fields...
+        if (institution.getInstitutionType() != null) {
+            this.institutionType = institution.getInstitutionType().getHungarianName();
+        }
+        if (institution.getCreator() != null) {
+            this.creatorName = institution.getCreator().getFirstName() + " " + institution.getCreator().getLastName();
+        }
     }
 
     public Long getId() {

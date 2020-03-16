@@ -3,6 +3,7 @@ package com.progmasters.mars.domain;
 import com.progmasters.mars.dto.GeoLocation;
 import com.progmasters.mars.dto.InstitutionCreationForm;
 import com.progmasters.mars.dto.InstitutionDetailsData;
+import com.progmasters.mars.util.ExcelFileParser;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
@@ -36,7 +37,7 @@ public class Institution {
     private String address;
 
     @Column(unique = true, name = "email")
-    //@NotBlank
+    @NotBlank
     @Email
     private String email;
 
@@ -80,6 +81,18 @@ public class Institution {
         this.institutionType = InstitutionType.getTypeByName(institutionType);
         this.longitude = geoLocation.getLongitude();
         this.latitude = geoLocation.getLatitude();
+
+    }
+
+    public Institution(ExcelFileParser parsedFile) {
+        this.name = parsedFile.getName();
+        this.zipCode = parsedFile.getZipCode();
+        this.city = parsedFile.getCity();
+        this.address = parsedFile.getAddress();
+        this.email = parsedFile.getEmail();
+        this.description = parsedFile.getDescription();
+        String institutionType = parsedFile.getInstitutionType();
+        this.institutionType = InstitutionType.getTypeByName(institutionType);
 
     }
 

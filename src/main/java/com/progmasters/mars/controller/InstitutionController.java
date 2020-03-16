@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -94,11 +93,7 @@ public class InstitutionController {
 
     @PostMapping("/import")
     public ResponseEntity<Void> importInstitutions(@RequestParam("file") MultipartFile excelDataFile) {
-        try {
-            institutionService.importInstitutions(excelDataFile);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return new ResponseEntity<>(HttpStatus.I_AM_A_TEAPOT);
+        institutionService.importInstitutions(excelDataFile);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

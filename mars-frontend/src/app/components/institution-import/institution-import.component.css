@@ -1,0 +1,34 @@
+
+h2 {
+  color: tomato;
+  margin-top: 5rem;
+  margin-bottom: 2rem;
+}
+
+label {
+  color: tomato;
+}
+
+a {
+  color: cornflowerblue;
+}
+
+p {
+  color: tomato;
+}
+
+input {
+  border: 1px solid tomato;
+  outline: 0;
+  box-shadow: none !important;
+}
+
+input::placeholder {
+  font-size: small;
+  color: lightgrey;
+}
+
+.submit.btn {
+  border-color: cornflowerblue;
+  background-color: cornflowerblue;
+}

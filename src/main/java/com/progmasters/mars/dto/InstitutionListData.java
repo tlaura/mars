@@ -23,7 +23,9 @@ public class InstitutionListData {
         this.zipCode = institution.getZipCode();
         this.city = institution.getCity();
         this.address = institution.getAddress();
-        this.type = institution.getInstitutionType().getHungarianName();
+        if (institution.getInstitutionType() != null) {
+            this.type = institution.getInstitutionType().getHungarianName();
+        }
         this.longitude = institution.getLongitude();
         this.latitude = institution.getLatitude();
     }

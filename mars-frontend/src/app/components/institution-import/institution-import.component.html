@@ -1,8 +1,17 @@
-<form [formGroup]="importForm" enctype="multipart/form-data">
-  <input (change)="uploadFile($event)"
-         accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
-         formControlName="file"
-         id="file"
-         type="file">
-  <button (click)="import()">Importálás</button>
-</form>
+<div class="container-fluid">
+  <form [formGroup]="importForm" enctype="multipart/form-data">
+    <h2>Intézmények importálása</h2>
+    <div class="custom-file col-sm-1 col-md-3 form-group">
+      <input (change)="uploadFile($event)"
+             accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+             class="custom-file-input"
+             formControlName="file"
+             id="file"
+             type="file">
+      <label class="custom-file-label" for="file">Fájl kiválasztása...</label>
+    </div>
+    <div class="form-group">
+      <button (click)="import()" class="btn btn-outline-primary rounded-pill mt-2">Importálás</button>
+    </div>
+  </form>
+</div>
