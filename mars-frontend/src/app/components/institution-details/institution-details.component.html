@@ -5,4 +5,5 @@
   <h6>Név: {{institution?.creatorName}}</h6>
   <h6 (click)="openMailSend()">Elérhetőség: {{institution?.email}}</h6>
   <app-send-mail (sent)="closeMailSender()" *ngIf="mailSender" [toEmail]="institution?.email"></app-send-mail>
+  <facebook-share-button [share]="shareObj"></facebook-share-button>
 </div>

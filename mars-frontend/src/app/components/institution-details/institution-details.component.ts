@@ -12,6 +12,11 @@ export class InstitutionDetailsComponent implements OnInit {
 
   @Input() institution: InstitutionDetailModel;
   @Input() mailSender: boolean = false;
+  shareUrl: string;
+  shareObj = {
+    href: this.shareUrl,
+    hashtag: "#NONE"
+  };
 
   constructor(private activatedRoute: ActivatedRoute, private institutionService: InstitutionService) {
   }
@@ -23,11 +28,16 @@ export class InstitutionDetailsComponent implements OnInit {
         if (id) {
           this.institutionService.getInstitutionDetail(id).subscribe(
             institutionDetail => this.institution = institutionDetail,
-            error => console.warn(error)
+            error => console.warn(error),
+            () => {
+              this.shareUrl = "http://localhost/4200/institution-details/" + this.institution.id;
+              console.log(this.shareUrl);
+            }
           )
         }
       }
-    )
+    );
+
   }
 
   openMailSend = () => {
