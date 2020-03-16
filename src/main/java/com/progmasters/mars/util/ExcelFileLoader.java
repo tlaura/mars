@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ExcelFileParser {
+public class ExcelFileLoader {
 
     private static int ADDRESS_POS = 0;
     private static int CITY_POS = 1;
@@ -35,10 +35,10 @@ public class ExcelFileParser {
     private String description;
     private String institutionType;
 
-    private ExcelFileParser() {
+    private ExcelFileLoader() {
     }
 
-    private ExcelFileParser(XSSFRow row) {
+    private ExcelFileLoader(XSSFRow row) {
         name = row.getCell(name_col).getStringCellValue();
         zipCode = parseZipCodeFromAddress(row.getCell(address_col).getStringCellValue());
         city = parseCityFromAddress(row.getCell(address_col).getStringCellValue());
@@ -50,15 +50,15 @@ public class ExcelFileParser {
         website = row.getCell(website_col).getStringCellValue(); // TODO: VALID? more site?
     }
 
-    public static List<ExcelFileParser> getParsedList(XSSFWorkbook workbook) {
-        List<ExcelFileParser> parsedList = new ArrayList<>();
+    public static List<ExcelFileLoader> getRowList(XSSFWorkbook workbook) {
+        List<ExcelFileLoader> parsedList = new ArrayList<>();
         XSSFSheet worksheet = workbook.getSheetAt(0); //TODO: more sheets?
         setCols(worksheet);
 
         for (int i = 1; i < worksheet.getPhysicalNumberOfRows(); i++) { //first row is maybe a "header"
             XSSFRow row = worksheet.getRow(i);
             if (isValidRow(row)) {
-                parsedList.add(new ExcelFileParser(row));
+                parsedList.add(new ExcelFileLoader(row));
             }
         }
         return parsedList;
@@ -115,7 +115,6 @@ public class ExcelFileParser {
         String[] stringCellValueArray = stringCellValue.split(", ");
         return stringCellValueArray[CITY_POS];
     }
-
 
     private Integer parseZipCodeFromAddress(String stringCellValue) {
         String[] stringCellValueArray = stringCellValue.split(", ");

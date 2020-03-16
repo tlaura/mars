@@ -3,7 +3,7 @@ package com.progmasters.mars.domain;
 import com.progmasters.mars.dto.GeoLocation;
 import com.progmasters.mars.dto.InstitutionCreationForm;
 import com.progmasters.mars.dto.InstitutionDetailsData;
-import com.progmasters.mars.util.ExcelFileParser;
+import com.progmasters.mars.util.ExcelFileLoader;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
@@ -84,7 +84,7 @@ public class Institution {
 
     }
 
-    public Institution(ExcelFileParser parsedFile) {
+    public Institution(ExcelFileLoader parsedFile) {
         this.name = parsedFile.getName();
         this.zipCode = parsedFile.getZipCode();
         this.city = parsedFile.getCity();

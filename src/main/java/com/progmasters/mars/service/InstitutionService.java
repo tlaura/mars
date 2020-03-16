@@ -4,7 +4,7 @@ import com.progmasters.mars.domain.Institution;
 import com.progmasters.mars.domain.InstitutionType;
 import com.progmasters.mars.dto.*;
 import com.progmasters.mars.repository.InstitutionRepository;
-import com.progmasters.mars.util.ExcelFileParser;
+import com.progmasters.mars.util.ExcelFileLoader;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -104,8 +104,8 @@ public class InstitutionService {
     public void importInstitutions(MultipartFile excelDataFile) {
         try {
             XSSFWorkbook workbook = new XSSFWorkbook(excelDataFile.getInputStream());
-            List<ExcelFileParser> parsedFile = ExcelFileParser.getParsedList(workbook);
-            parsedFile.stream().map(Institution::new).forEach(institutionRepository::save);
+            List<ExcelFileLoader> rows = ExcelFileLoader.getRowList(workbook);
+            rows.stream().map(Institution::new).forEach(institutionRepository::save);
         } catch (IOException e) {
             e.printStackTrace();
         }
