@@ -22,6 +22,8 @@ import {RegistrationCompleteComponent} from './components/registration-complete/
 import {RegisterSuccessComponent} from './components/register-success/register-success.component';
 import {MyProfileComponent} from './components/my-profile/my-profile.component';
 import {InstitutionImportComponent} from './components/institution-import/institution-import.component';
+import {SendMailComponent} from './components/send-mail/send-mail.component';
+import {AgmSnazzyInfoWindowModule} from "@agm/snazzy-info-window";
 
 @NgModule({
   declarations: [
@@ -37,6 +39,8 @@ import {InstitutionImportComponent} from './components/institution-import/instit
     RegisterSuccessComponent,
     RegistrationCompleteComponent,
     MyProfileComponent,
+    SendMailComponent,
+    MyProfileComponent,
     InstitutionImportComponent
   ],
   imports: [
@@ -50,7 +54,8 @@ import {InstitutionImportComponent} from './components/institution-import/instit
     AgmCoreModule.forRoot({
       apiKey: environment.apiKey,
       libraries: ["places", "geometry"]
-    })
+    }),
+    AgmSnazzyInfoWindowModule
   ],
   providers: [
     GoogleMapsAPIWrapper,

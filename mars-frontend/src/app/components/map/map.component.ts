@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {institutionListIndex} from "../../../environments/institutionListIndex.prod";
-import {AgmInfoWindow, MapsAPILoader} from "@agm/core";
+import {MapsAPILoader} from "@agm/core";
 import {InstitutionService} from "../../services/institution.service";
 import {InstitutionDetailModel} from "../../models/institutionDetail.model";
 import {InstitutionListModel} from "../../models/institutionList.model";
@@ -16,8 +16,7 @@ export class MapComponent implements OnInit {
   latitude: number = institutionListIndex.mapLatitude;
   longitude: number = institutionListIndex.mapLongitude;
   zoom: number = institutionListIndex.mapZoom;
-  infoWindow: AgmInfoWindow;
-
+  show: boolean = false;
   @Input() locations: Array<InstitutionListModel>;
   institutionDetail: InstitutionDetailModel;
 
@@ -39,16 +38,12 @@ export class MapComponent implements OnInit {
     }
   };
 
-  markerClick = (infoWindow: AgmInfoWindow, id: number) => {
-    if (this.infoWindow) {
-      this.infoWindow.close();
-    }
+  markerClick = (id: number) => {
     this.institutionService.getInstitutionDetail(id).subscribe(
       institutionDetail => this.institutionDetail = institutionDetail,
       error => console.warn(error),
       () => {
-        this.infoWindow = infoWindow;
-        infoWindow.open();
+        this.show = true;
       }
     );
 
