@@ -34,6 +34,9 @@ public class ProviderAccount {
     @NotNull
     private String phone;
 
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
     @Column(name = "zipcode")
     private String zipCode;
 
@@ -149,5 +152,12 @@ public class ProviderAccount {
 
     public Boolean getNewsletter() {
         return newsletter;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+    public void setRole(Role role) {
+        this.role = role;
     }
 }

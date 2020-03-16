@@ -1,8 +1,8 @@
 INSERT INTO mars.institutional_user (id, email, first_name, last_name, phone, user_name, password, role)
-    VALUES (1, 'pecske92@gmail.com', 'Teszt', 'Elek', '1234 567', 'tesztelek','$2y$10$HssVEkgvwfRehsw7Dl9nfek5PNwdWfiSkF7A2TaNiAeCRFH8691/m','ROLE_INST');
+    VALUES (1, 'pecske92@gmail.com', 'Teszt', 'Elek', '1234 567', 'tesztelek','$2y$10$HssVEkgvwfRehsw7Dl9nfek5PNwdWfiSkF7A2TaNiAeCRFH8691/m','ROLE_PROVIDER');
 
-INSERT INTO mars.provider_account (id, name, username, password, email, phone, zipcode, city, address, type, age_group_min, age_group_max)
-    VALUES (1, 'test', 'tesztelek', '$2y$10$HssVEkgvwfRehsw7Dl9nfek5PNwdWfiSkF7A2TaNiAeCRFH8691/m', 'pecske92@gmail.com', '1234 567', '9500', 'pest', 'asd', 'DIAGNOSTIC_CENTER', 0, 79);
+INSERT INTO mars.provider_account (id, name, username, password, email, phone, role, zipcode, city, address, type, age_group_min, age_group_max)
+    VALUES (1, 'test', 'tesztelek', '$2y$10$HssVEkgvwfRehsw7Dl9nfek5PNwdWfiSkF7A2TaNiAeCRFH8691/m', 'pecske92@gmail.com', '1234 567', 'ROLE_PROVIDER', '9500', 'pest', 'asd', 'DIAGNOSTIC_CENTER', 0, 79);
 
 INSERT INTO mars.institution (id, name, email, zip_code, city, address, description, creator_id, institution_type)
     VALUES (1, 'Kutya', 'info1@teszt.hu', 1056, 'Budapest',
