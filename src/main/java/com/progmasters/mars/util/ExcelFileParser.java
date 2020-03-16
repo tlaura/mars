@@ -47,7 +47,7 @@ public class ExcelFileParser {
         description = row.getCell(description_col).getStringCellValue();
         institutionType = row.getCell(institutionType_col).getStringCellValue();
         phone = row.getCell(phone_col).getStringCellValue(); // TODO: VALID? more phone?
-        website = row.getCell(website_col).getStringCellValue(); // TODO: VALID? more phone?
+        website = row.getCell(website_col).getStringCellValue(); // TODO: VALID? more site?
     }
 
     public static List<ExcelFileParser> getParsedList(XSSFWorkbook workbook) {
@@ -126,7 +126,6 @@ public class ExcelFileParser {
         String[] stringCellValueArray = stringCellValue.split(", ");
         return stringCellValueArray[0];
     }
-
 
     public String getName() {
         return name;
