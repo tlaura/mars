@@ -39,19 +39,25 @@ public class ProviderAccount {
 
     private String city;
     private String address;
+
     @NotNull
     @Enumerated(EnumType.STRING)
     private InstitutionType type;
+
+
+//    @NotNull
     @OneToMany
-    @NotNull
     @Size(min = 1)
     private List<OpeningHours> openingHours;
+
     @NotNull
     @PositiveOrZero
     private Integer ageGroupMin;
+
     @NotNull
     @PositiveOrZero
     private Integer ageGroupMax;
+
     @OneToMany
     private List<Institution> institutions;
     private Boolean newsletter;
