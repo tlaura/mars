@@ -10,7 +10,6 @@ import java.util.List;
 
 public class ExcelFileParser {
 
-    private static List<ExcelFileParser> parsedList;
     private static int name_col;
     private static int address_col;
     private static int email_col;
@@ -20,6 +19,7 @@ public class ExcelFileParser {
     private static int institutionType_col;
     private static int all_col;
     // TODO: fix mandatory fields
+
     private String name;
     private Integer zipCode;
     private String city;
@@ -46,7 +46,7 @@ public class ExcelFileParser {
     }
 
     public static List<ExcelFileParser> getParsedList(XSSFWorkbook workbook) {
-        parsedList = new ArrayList<>();
+        List<ExcelFileParser> parsedList = new ArrayList<>();
         XSSFSheet worksheet = workbook.getSheetAt(0); //TODO: more sheets?
         setCols(worksheet);
 
