@@ -33,5 +33,4 @@ public class UserController {
         UserDetails user = (UserDetails) authentication.getPrincipal();
         return new ResponseEntity<>(new AuthenticatedUserDetails(user), HttpStatus.OK);
     }
-
 }

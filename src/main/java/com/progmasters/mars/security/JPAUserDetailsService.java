@@ -1,7 +1,8 @@
 package com.progmasters.mars.security;
 
+import com.progmasters.mars.domain.ProviderAccount;
 import com.progmasters.mars.repository.IndividualUserRepository;
-import com.progmasters.mars.repository.InstitutionalUserRepository;
+import com.progmasters.mars.repository.ProviderAccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -16,32 +17,31 @@ import java.util.List;
 @Service
 public class JPAUserDetailsService implements UserDetailsService {
 
-    private InstitutionalUserRepository institutionalUserRepository;
-    private IndividualUserRepository individualUserRepository;
+    private ProviderAccountRepository providerAccountRepository;
+//    private IndividualUserRepository individualUserRepository;
 
     @Autowired
-    public JPAUserDetailsService(IndividualUserRepository userRepository, InstitutionalUserRepository institutionalUserRepository) {
-        this.institutionalUserRepository = institutionalUserRepository;
-        this.individualUserRepository = userRepository;
+    public JPAUserDetailsService(ProviderAccountRepository providerAccountRepository) {
+        this.providerAccountRepository = providerAccountRepository;
+//        this.individualUserRepository = userRepository;
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        com.progmasters.mars.domain.User user = individualUserRepository.findByEmail(username);
-        if (user == null) {
-            user = institutionalUserRepository.findByEmail(username);
-        }
-        if (user == null) {
+//        com.progmasters.mars.domain.User user = individualUserRepository.findByEmail(username);
+        ProviderAccount providerAccount = providerAccountRepository.findByEmail(username);
+
+        if (providerAccount == null) {
             throw new UsernameNotFoundException("No account was found with given name");
         }
 
         List<GrantedAuthority> authorities = AuthorityUtils
-                .createAuthorityList(user.getRole().toString());
+                .createAuthorityList(providerAccount.getRole().toString());
 
         UserDetails principal = User
                 .withUsername(username)
                 .authorities(authorities)
-                .password(user.getPassword())
+                .password(providerAccount.getPassword())
                 .build();
         return principal;
     }
