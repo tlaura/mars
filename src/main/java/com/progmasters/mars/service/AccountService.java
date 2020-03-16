@@ -71,8 +71,8 @@ public class AccountService {
         providerAccountRepository.deleteById(id);
     }
 
-    public ProviderUserDetails getProviderUser(String username) {
-        ProviderAccount providerAccount = providerAccountRepository.findByUsername(username);
+    public ProviderUserDetails getProviderUser(String email) {
+        ProviderAccount providerAccount = providerAccountRepository.findByEmail(email);
         return new ProviderUserDetails(providerAccount);
     }
 }

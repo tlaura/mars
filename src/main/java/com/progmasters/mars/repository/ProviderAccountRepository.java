@@ -12,7 +12,5 @@ public interface ProviderAccountRepository extends JpaRepository<ProviderAccount
 
     List<ProviderAccount> findAllByEmail(String email);
 
-    ProviderAccount findByUsername(String username);
-
     ProviderAccount findByEmail(String username);
 }
