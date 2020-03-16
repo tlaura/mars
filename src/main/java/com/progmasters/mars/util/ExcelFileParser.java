@@ -68,7 +68,7 @@ public class ExcelFileParser {
         XSSFRow row = worksheet.getRow(0);
         int i = 0;
         while (row.getCell(i) != null) {
-            switch (row.getCell(i).getStringCellValue()) {
+            switch (row.getCell(i).getStringCellValue()) { //TODO: header check
                 case "name":
                     name_col = i;
                     break;
