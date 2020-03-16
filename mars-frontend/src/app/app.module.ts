@@ -20,7 +20,9 @@ import {LoginFormComponent} from "./components/login-form/login-form.component";
 import {HttpRequestInterceptor} from "./utils/httpRequestInterceptor";
 import {RegistrationCompleteComponent} from './components/registration-complete/registration-complete.component';
 import {RegisterSuccessComponent} from './components/register-success/register-success.component';
-import { MyProfileComponent } from './components/my-profile/my-profile.component';
+import {MyProfileComponent} from './components/my-profile/my-profile.component';
+import {SendMailComponent} from './components/send-mail/send-mail.component';
+import {AgmSnazzyInfoWindowModule} from "@agm/snazzy-info-window";
 
 @NgModule({
   declarations: [
@@ -35,7 +37,8 @@ import { MyProfileComponent } from './components/my-profile/my-profile.component
     MapComponent,
     RegisterSuccessComponent,
     RegistrationCompleteComponent,
-    MyProfileComponent
+    MyProfileComponent,
+    SendMailComponent
   ],
   imports: [
     BrowserModule,
@@ -48,7 +51,8 @@ import { MyProfileComponent } from './components/my-profile/my-profile.component
     AgmCoreModule.forRoot({
       apiKey: environment.apiKey,
       libraries: ["places", "geometry"]
-    })
+    }),
+    AgmSnazzyInfoWindowModule
   ],
   providers: [
     GoogleMapsAPIWrapper,
