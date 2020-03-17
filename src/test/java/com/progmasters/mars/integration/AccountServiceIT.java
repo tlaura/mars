@@ -23,6 +23,6 @@ public class AccountServiceIT {
     @Test
     public void accountTest() {
 
-        Assertions.assertThrows(NullPointerException.class, () -> accountService.getProviderUser("none"));
+        Assertions.assertThrows(NullPointerException.class, () -> accountService.getProviderAccount("none"));
     }
 }

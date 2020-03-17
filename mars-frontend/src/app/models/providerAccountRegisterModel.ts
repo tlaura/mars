@@ -1,25 +1,21 @@
-import {OpeningHours} from "./openingHours";
 import {Institution} from "./institution";
 
 export interface ProviderAccountRegisterModel {
+  providerServiceName: string,
   name: string,
-
-  username: string,
   password: string,
   email: string,
   phone: string,
 
-  zipCode: number,
+  zipcode: number,
   city: string,
   address: string,
 
-  type: string,
+  type: Array<string>,
 
-  openingHours: OpeningHours[],
   ageGroupMin: number,
   ageGroupMax: number,
-  institutions: Institution[],
+  institutions: Array<Institution>,
 
   newsletter: boolean,
-  termsAndConditions: boolean
 }

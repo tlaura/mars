@@ -26,7 +26,7 @@ export class RegisterComponent implements OnInit {
   types: string[] = ['diagnózis központ', ' terápia', 'fejlesztő hely', 'óvoda', 'általános iskola', 'középiskola', 'kollégium', 'munkahely', 'bentlakásos felnőtt ellátó', 'nappali foglalkoztató', 'egyéb'];
   weekDays: string[] = ['Hétfő', 'Kedd', 'Szerda', 'Csütörtök', 'Péntek', 'Szombat', 'Vasárnap'];
   registerForm: FormGroup;
-  openingHours = new FormArray([], Validators.minLength(1));
+  openingHours = new FormArray([]);
   institutions = new FormArray([]);
   allInstitution: Institution[] = [{
     id: null,
@@ -100,9 +100,8 @@ export class RegisterComponent implements OnInit {
   getProviderAccountRegisterFormGroup(): FormGroup {
     return new FormGroup(
       {
-        'type': new FormControl(this.types[0]),
-        'openingHours': this.openingHours,
-        'ageGroupMin': new FormControl(0),
+        'type': new FormControl(null),
+        'ageGroupMin': new FormControl(1),
         'ageGroupMax': new FormControl(99),
         'institutions': this.institutions,
       })
@@ -118,6 +117,7 @@ export class RegisterComponent implements OnInit {
     this.openingHours.push(group);
   }
 
+  // TODO - opening hours
   removeOpeningHours() {
     this.openingHours.controls.pop();
     this.registerForm.setControl('openingHours', this.openingHours);
@@ -126,10 +126,10 @@ export class RegisterComponent implements OnInit {
   getCommonFieldsFormGroup(): FormGroup {
     return new FormGroup(
       {
+        'providerServiceName': new FormControl('',
+          [Validators.required, Validators.pattern(this.NAME_REGEX)]),
         'name': new FormControl('',
           [Validators.required, Validators.pattern(this.NAME_REGEX)]),
-        'username': new FormControl('',
-          [Validators.required, Validators.pattern(this.USERNAME_REGEX)]),
         'password': new FormControl('',
           [Validators.required, Validators.pattern(this.PASSWORD_REGEX)]),
         'passwordAgain': new FormControl('',
@@ -145,7 +145,6 @@ export class RegisterComponent implements OnInit {
         'address': new FormControl(''),
 
         'newsletter': new FormControl(''),
-        'termsAndConditions': new FormControl('', Validators.requiredTrue)
       }
     )
   }
@@ -165,7 +164,8 @@ export class RegisterComponent implements OnInit {
       city: new FormControl('', Validators.required),
       address: new FormControl('', Validators.required),
       description: new FormControl('',
-        [Validators.required, Validators.minLength(30), Validators.maxLength(200)])
+        [Validators.required, Validators.minLength(30), Validators.maxLength(200)]),
+      openingHours: this.openingHours
     });
 
     this.institutions.push(group);
@@ -192,13 +192,13 @@ export class RegisterComponent implements OnInit {
       group.reset();
       group.enable();
     }
-  }
+  };
 
   checkPasswords = () => {
     this.currentPasswordAgain = this.registerForm.get('passwordAgain').value;
-    this.registerForm.get('password').setValidators([Validators.required, Validators.pattern(this.PASSWORD_REGEX), this.passwordMatchValidator])
+    this.registerForm.get('password').setValidators([Validators.required, Validators.pattern(this.PASSWORD_REGEX), this.passwordMatchValidator]);
     this.registerForm.get('password').updateValueAndValidity();
-  }
+  };
 
   passwordMatchValidator = (control: FormControl) => {
     if (control.value != this.currentPasswordAgain) {

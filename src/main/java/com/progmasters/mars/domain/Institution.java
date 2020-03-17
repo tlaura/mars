@@ -1,15 +1,13 @@
 package com.progmasters.mars.domain;
 
 import com.progmasters.mars.dto.GeoLocation;
-import com.progmasters.mars.dto.InstitutionCreationForm;
-import com.progmasters.mars.dto.InstitutionDetailsData;
+import com.progmasters.mars.dto.InstitutionCreationCommand;
 import com.progmasters.mars.util.ExcelFileLoader;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.PositiveOrZero;
+import javax.validation.constraints.*;
+import java.util.List;
 
 @Entity
 @Table(name = "institution")
@@ -26,7 +24,7 @@ public class Institution {
 
     @PositiveOrZero
     @Column(name = "zip_code")
-    private Integer zipCode;
+    private Integer zipcode;
 
     @NotBlank
     @Column(name = "city")
@@ -39,6 +37,8 @@ public class Institution {
     @Column(unique = true, name = "email")
     @NotBlank
     @Email
+    @NotNull
+    @NotEmpty
     private String email;
 
     @Lob
@@ -47,38 +47,38 @@ public class Institution {
     @Column(name = "description")
     private String description;
 
-    @Enumerated(EnumType.STRING)
-    private InstitutionType institutionType;
-
     @Column(name = "longitude")
     private Double longitude;
 
     @Column(name = "latitude")
     private Double latitude;
 
+    @OneToMany
+    private List<OpeningHours> openingHours;
+
     @ManyToOne
-    private InstitutionalUser creator;
+    private ProviderAccount providerAccount;
+
+    private String website;
+
+    private String phone;
 
     public Institution() {
     }
 
-    public Institution(InstitutionDetailsData institutionDetailsData) {
-        this.name = institutionDetailsData.getName();
-        this.zipCode = institutionDetailsData.getZipCode();
-        this.city = institutionDetailsData.getCity();
-        this.address = institutionDetailsData.getAddress();
-        this.description = institutionDetailsData.getDescription();
+    public Institution(InstitutionCreationCommand institutionCreationCommand) {
+        this.name = institutionCreationCommand.getName();
+        this.zipcode = institutionCreationCommand.getZipcode();
+        this.city = institutionCreationCommand.getCity();
+        this.email = institutionCreationCommand.getEmail();
+        this.address = institutionCreationCommand.getAddress();
+        this.description = institutionCreationCommand.getDescription();
+        this.phone = institutionCreationCommand.getPhone();
+        this.website = institutionCreationCommand.getWebsite();
     }
 
-    public Institution(InstitutionCreationForm institutionCreationForm, GeoLocation geoLocation) {
-        this.name = institutionCreationForm.getName();
-        this.zipCode = institutionCreationForm.getZipCode();
-        this.city = institutionCreationForm.getCity();
-        this.address = institutionCreationForm.getAddress();
-        this.email = institutionCreationForm.getEmail();
-        this.description = institutionCreationForm.getDescription();
-        String institutionType = institutionCreationForm.getInstitutionType();
-        this.institutionType = InstitutionType.getTypeByName(institutionType);
+    public Institution(InstitutionCreationCommand institutionCreationCommand, GeoLocation geoLocation) {
+        this(institutionCreationCommand);
         this.longitude = geoLocation.getLongitude();
         this.latitude = geoLocation.getLatitude();
 
@@ -86,14 +86,13 @@ public class Institution {
 
     public Institution(ExcelFileLoader parsedFile) {
         this.name = parsedFile.getName();
-        this.zipCode = parsedFile.getZipCode();
+        this.zipcode = parsedFile.getZipCode();
         this.city = parsedFile.getCity();
         this.address = parsedFile.getAddress();
         this.email = parsedFile.getEmail();
+        this.phone = parsedFile.getPhone();
+        this.website = parsedFile.getWebsite();
         this.description = parsedFile.getDescription();
-        String institutionType = parsedFile.getInstitutionType();
-        this.institutionType = InstitutionType.getTypeByName(institutionType);
-
     }
 
     public Long getId() {
@@ -112,12 +111,12 @@ public class Institution {
         this.name = name;
     }
 
-    public Integer getZipCode() {
-        return zipCode;
+    public Integer getZipcode() {
+        return zipcode;
     }
 
-    public void setZipCode(Integer zipCode) {
-        this.zipCode = zipCode;
+    public void setZipcode(Integer zipcode) {
+        this.zipcode = zipcode;
     }
 
     public String getCity() {
@@ -152,22 +151,6 @@ public class Institution {
         this.description = description;
     }
 
-    public InstitutionalUser getCreator() {
-        return creator;
-    }
-
-    public void setCreator(InstitutionalUser creator) {
-        this.creator = creator;
-    }
-
-    public InstitutionType getInstitutionType() {
-        return institutionType;
-    }
-
-    public void setInstitutionType(InstitutionType institutionType) {
-        this.institutionType = institutionType;
-    }
-
     public Double getLongitude() {
         return longitude;
     }
@@ -182,5 +165,38 @@ public class Institution {
 
     public void setLatitude(Double latitude) {
         this.latitude = latitude;
+    }
+
+    public List<OpeningHours> getOpeningHours() {
+        return openingHours;
+    }
+
+    public void setOpeningHours(List<OpeningHours> openingHours) {
+        this.openingHours = openingHours;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+
+    public ProviderAccount getProviderAccount() {
+        return providerAccount;
+    }
+
+    public void setProviderAccount(ProviderAccount providerAccount) {
+        this.providerAccount = providerAccount;
+    }
+
+    public String getWebsite() {
+        return website;
+    }
+
+    public void setWebsite(String website) {
+        this.website = website;
     }
 }

@@ -1,7 +1,10 @@
 package com.progmasters.mars.controller;
 
 import com.progmasters.mars.domain.InstitutionType;
-import com.progmasters.mars.dto.*;
+import com.progmasters.mars.dto.GeoLocationData;
+import com.progmasters.mars.dto.InstitutionCreationCommand;
+import com.progmasters.mars.dto.InstitutionListData;
+import com.progmasters.mars.dto.InstitutionTypeData;
 import com.progmasters.mars.service.InstitutionService;
 import com.progmasters.mars.validation.AddInstitutionFormValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,12 +72,12 @@ public class InstitutionController {
 
 
     @GetMapping("/details")
-    public List<InstitutionDetailsData> institutionsDetails() {
+    public List<InstitutionCreationCommand> institutionsDetails() {
         return institutionService.getInstitutionDetailsDataList();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<InstitutionDetailsData> getInstitutionDetails(@PathVariable("id") Long id) {
+    public ResponseEntity<InstitutionCreationCommand> getInstitutionDetails(@PathVariable("id") Long id) {
         return new ResponseEntity<>(institutionService.getInstitutionDetails(id), HttpStatus.OK);
     }
 

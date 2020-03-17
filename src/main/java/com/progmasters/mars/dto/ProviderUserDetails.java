@@ -21,7 +21,7 @@ public class ProviderUserDetails {
     public ProviderUserDetails(ProviderAccount providerAccount) {
         this.id = providerAccount.getId();
         this.name = providerAccount.getName();
-        this.username = providerAccount.getUsername();
+        this.username = providerAccount.getName();
         this.password = providerAccount.getPassword();
         this.email = providerAccount.getEmail();
         this.phone = providerAccount.getPhone();

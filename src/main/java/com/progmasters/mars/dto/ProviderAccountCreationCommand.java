@@ -3,30 +3,29 @@ package com.progmasters.mars.dto;
 import java.util.List;
 
 public class ProviderAccountCreationCommand {
+    private String providerServiceName;
     private String name;
-    private String username;
     private String password;
     private String email;
     private String phone;
     private String zipcode;
     private String city;
     private String address;
-    private String type;
-    private List<OpeningHoursCreationCommand> openingHours;
+    private List<String> type;
     private Integer ageGroupMin;
     private Integer ageGroupMax;
-    private List<InstitutionDetailsData> institutions;
+    private List<InstitutionCreationCommand> institutions;
     private Boolean newsletter;
 
     public ProviderAccountCreationCommand() {
     }
 
-    public String getName() {
-        return name;
+    public String getProvidedServiceName() {
+        return providerServiceName;
     }
 
-    public String getUsername() {
-        return username;
+    public String getName() {
+        return name;
     }
 
     public String getPassword() {
@@ -53,7 +52,7 @@ public class ProviderAccountCreationCommand {
         return address;
     }
 
-    public String getType() {
+    public List<String> getType() {
         return type;
     }
 
@@ -65,16 +64,11 @@ public class ProviderAccountCreationCommand {
         return ageGroupMax;
     }
 
-    public List<InstitutionDetailsData> getInstitutions() {
+    public List<InstitutionCreationCommand> getInstitutions() {
         return institutions;
     }
 
     public Boolean getNewsletter() {
         return newsletter;
     }
-
-    public List<OpeningHoursCreationCommand> getOpeningHours() {
-        return openingHours;
-    }
-
 }

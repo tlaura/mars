@@ -9,7 +9,6 @@ import org.springframework.validation.Errors;
 public class ProviderAccountValidatorService {
 
     private static final String NAME_REGEX = "^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.\'-]+$";
-    private static final String USERNAME_REGEX = "[a-zA-Z0-9]{5,15}$";
     private static final String PASSWORD_REGEX = "(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{6,15})$";
     private static final String EMAIL_REGEX = "^[\\w!#$%&’*+/=?`{|}~^-]+(?:\\.[\\w!#$%&’*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
     private static final String PHONE_REGEX = "^\\+(\\d{1,2})\\D*(\\d{1,3})\\D*(\\d{3})\\D*(\\d{3,4})$";
@@ -21,16 +20,17 @@ public class ProviderAccountValidatorService {
         this.providerAccountRepository = providerAccountRepository;
     }
 
+    //    TODO more validators
     public void validateFields(ProviderAccountCreationCommand providerAccount, Errors errors) {
         if (providerAccount.getName() == null) {
             errors.rejectValue("name", "name.mustGive");
         } else if (!providerAccount.getName().matches(NAME_REGEX)) {
             errors.rejectValue("name", "name.invalidFormat");
         }
-        if (providerAccount.getUsername() == null) {
-            errors.rejectValue("username", "username.mustGive");
-        } else if (!providerAccount.getUsername().matches(USERNAME_REGEX)) {
-            errors.rejectValue("username", "username.invalidFormat");
+        if (providerAccount.getProvidedServiceName() == null) {
+            errors.rejectValue("providerServiceName", "providerServiceName.mustGive");
+        } else if (!providerAccount.getProvidedServiceName().matches(NAME_REGEX)) {
+            errors.rejectValue("providerServiceName", "providerServiceName.invalidFormat");
         }
         if (providerAccount.getPassword() == null) {
             errors.rejectValue("password", "password.mustGive");
@@ -49,9 +49,6 @@ public class ProviderAccountValidatorService {
         }
         if (providerAccount.getZipcode() != null && !providerAccount.getZipcode().matches(ZIPCODE_REGEX)) {
             errors.rejectValue("zipcode", "zipcode.invalidFormat");
-        }
-        if (providerAccount.getOpeningHours() == null && providerAccount.getOpeningHours().size() < 1) {
-            errors.rejectValue("openingHours", "openingHours.mustGive");
         }
         if (providerAccount.getAgeGroupMin() == null || providerAccount.getAgeGroupMin() < 0) {
             errors.rejectValue("ageGroupMin", "ageGroupMin.mustGive");

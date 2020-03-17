@@ -37,6 +37,6 @@ public class AccountController {
 
     @GetMapping("/{username}")
     public ResponseEntity<ProviderUserDetails> getProviderUser(@PathVariable String username) {
-        return new ResponseEntity<>(accountService.getProviderUser(username), HttpStatus.OK);
+        return new ResponseEntity<>(accountService.getProviderAccount(username), HttpStatus.OK);
     }
 }

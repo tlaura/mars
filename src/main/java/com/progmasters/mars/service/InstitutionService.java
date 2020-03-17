@@ -42,8 +42,8 @@ public class InstitutionService {
     }
 
 
-    public void createInstitution(InstitutionCreationForm institutionCreationForm) {
-        String address = institutionCreationForm.getZipCode() + " " + institutionCreationForm.getCity() + " " + institutionCreationForm.getAddress();
+    public void createInstitution(InstitutionCreationCommand institutionCreationForm) {
+        String address = institutionCreationForm.getZipcode() + " " + institutionCreationForm.getCity() + " " + institutionCreationForm.getAddress();
         GeoLocation geoLocation = geocodeService.getGeoLocation(address);
         Institution institution = new Institution(institutionCreationForm, geoLocation);
         //todo get user id
@@ -94,7 +94,7 @@ public class InstitutionService {
         return institutionRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("no such entity found"));
     }
 
-    public List<InstitutionDetailsData> getInstitutionDetailsDataList() {
+    public List<InstitutionCreationCommand> getInstitutionDetailsDataList() {
         return institutionRepository.findAll()
                 .stream()
                 .map(InstitutionDetailsData::new)

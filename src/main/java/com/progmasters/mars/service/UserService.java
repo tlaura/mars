@@ -1,7 +1,6 @@
 package com.progmasters.mars.service;
 
 import com.progmasters.mars.repository.IndividualUserRepository;
-import com.progmasters.mars.repository.InstitutionalUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

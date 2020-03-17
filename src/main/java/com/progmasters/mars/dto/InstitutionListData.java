@@ -9,7 +9,6 @@ public class InstitutionListData {
     private Integer zipCode;
     private String city;
     private String address;
-    private String type;
     private Double longitude;
     private Double latitude;
 
@@ -20,12 +19,9 @@ public class InstitutionListData {
     public InstitutionListData(Institution institution) {
         this.id = institution.getId();
         this.name = institution.getName();
-        this.zipCode = institution.getZipCode();
+        this.zipCode = institution.getZipcode();
         this.city = institution.getCity();
         this.address = institution.getAddress();
-        if (institution.getInstitutionType() != null) {
-            this.type = institution.getInstitutionType().getHungarianName();
-        }
         this.longitude = institution.getLongitude();
         this.latitude = institution.getLatitude();
     }
@@ -48,10 +44,6 @@ public class InstitutionListData {
 
     public String getAddress() {
         return address;
-    }
-
-    public String getType() {
-        return type;
     }
 
     public Double getLongitude() {
