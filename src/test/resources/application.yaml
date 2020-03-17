@@ -1,0 +1,40 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: callbackcats@gmail.com
+    password: PwKQNNSs2yv94pLG
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+          ssl.enable: false
+
+logging:
+  level:
+    com.progmasters: debug
+    org.springframework: info
+    org.hibernate: error
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+
+email:
+  send:
+    subject: Regisztráció megerősítése
+    text: Az alábbi linkre kattintva aktiválhatja fiókját
+    confirmation: http://localhost:4200/register-success/
+  elapsed-hours: 72
+google:
+  apikey: AIzaSyAeQEHjfxVD8584aJATT0pSNBf3DuCr1h0
