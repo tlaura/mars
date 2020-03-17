@@ -316,7 +316,8 @@
                        name="closingTime" type="Time">
               </div>
               <div class="form-group col-sm-12 col-md-1">
-                <button (click)="removeOpeningHours()" *ngIf="last && i!=0" class="btn btn-outline-danger rounded-pill">
+                <button (click)="removeOpeningHours(group)" *ngIf="last && i!=0"
+                        class="btn btn-outline-danger rounded-pill">
                   X
                 </button>
               </div>

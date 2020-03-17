@@ -25,9 +25,9 @@ public class ProviderAccountValidator implements Validator {
         if (o != null) {
             ProviderAccountCreationCommand providerAccount = (ProviderAccountCreationCommand) o;
             validatorService.validateFields(providerAccount, errors);
-            if (providerAccount.getUsername() != null) {
-                if (validatorService.usernameIsTaken(providerAccount.getUsername())) {
-                    errors.rejectValue("username", "username.mustBeUnique");
+            if (providerAccount.getName() != null) {
+                if (validatorService.nameIsTaken(providerAccount.getName())) {
+                    errors.rejectValue("name", "name.mustBeUnique");
                 }
             }
             if (providerAccount.getEmail() != null) {

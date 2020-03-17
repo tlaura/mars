@@ -1,16 +1,11 @@
 package com.progmasters.mars.controller;
 
 import com.progmasters.mars.domain.InstitutionType;
-import com.progmasters.mars.dto.GeoLocationData;
-import com.progmasters.mars.dto.InstitutionCreationCommand;
-import com.progmasters.mars.dto.InstitutionListData;
-import com.progmasters.mars.dto.InstitutionTypeData;
+import com.progmasters.mars.dto.*;
 import com.progmasters.mars.service.InstitutionService;
-import com.progmasters.mars.validation.AddInstitutionFormValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -24,18 +19,12 @@ import java.util.stream.Collectors;
 public class InstitutionController {
 
     private final InstitutionService institutionService;
-    private final AddInstitutionFormValidator addInstitutionFormValidator;
 
 
     @Autowired
-    public InstitutionController(InstitutionService institutionService, AddInstitutionFormValidator addInstitutionFormValidator) {
+    public InstitutionController(InstitutionService institutionService) {
         this.institutionService = institutionService;
-        this.addInstitutionFormValidator = addInstitutionFormValidator;
-    }
 
-    @InitBinder("addInstitutionForm")
-    protected void initBinder(WebDataBinder binder) {
-        binder.addValidators(addInstitutionFormValidator);
     }
 
     @GetMapping("/test")
@@ -72,18 +61,18 @@ public class InstitutionController {
 
 
     @GetMapping("/details")
-    public List<InstitutionCreationCommand> institutionsDetails() {
+    public List<InstitutionDetailsData> institutionsDetails() {
         return institutionService.getInstitutionDetailsDataList();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<InstitutionCreationCommand> getInstitutionDetails(@PathVariable("id") Long id) {
+    public ResponseEntity<InstitutionDetailsData> getInstitutionDetails(@PathVariable("id") Long id) {
         return new ResponseEntity<>(institutionService.getInstitutionDetails(id), HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<Void> createInstitution(@RequestBody @Valid InstitutionCreationForm institutionCreationForm) {
-        institutionService.createInstitution(institutionCreationForm);
+    public ResponseEntity<Void> createInstitution(@RequestBody @Valid InstitutionCreationCommand institutionCreationCommand) {
+        institutionService.createInstitution(institutionCreationCommand);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
