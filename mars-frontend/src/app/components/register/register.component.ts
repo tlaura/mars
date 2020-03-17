@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
+import {AbstractControl, FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Institution} from "../../models/institution";
 import {AccountService} from "../../services/account.service";
 import {Router} from "@angular/router";
@@ -25,12 +25,11 @@ export class RegisterComponent implements OnInit {
   types: string[] = ['diagnózis központ', ' terápia', 'fejlesztő hely', 'óvoda', 'általános iskola', 'középiskola', 'kollégium', 'munkahely', 'bentlakásos felnőtt ellátó', 'nappali foglalkoztató', 'egyéb'];
   weekDays: string[] = ['Hétfő', 'Kedd', 'Szerda', 'Csütörtök', 'Péntek', 'Szombat', 'Vasárnap'];
   registerForm: FormGroup;
-  openingHours = new FormArray([]);
   institutions = new FormArray([]);
   allInstitution: Institution[] = [{
     id: null,
     name: 'Új intézmény hozzáadása',
-    zipCode: 0,
+    zipcode: 0,
     city: '',
     address: '',
     description: ''
@@ -43,7 +42,6 @@ export class RegisterComponent implements OnInit {
     this.isNormalUser = true;
     this.registerForm = this.getCommonFieldsFormGroup();
     this.addFormGroup(this.getNormalAccountRegisterFormGroup());
-    this.addNewOpeningHours();
   }
 
   ngOnInit() {
@@ -106,20 +104,20 @@ export class RegisterComponent implements OnInit {
       })
   }
 
-  addNewOpeningHours() {
+  addNewOpeningHours(control: AbstractControl) {
+
     const group = new FormGroup({
       weekDay: new FormControl(this.weekDays[0]),
       openingTime: new FormControl('', Validators.required),
       closingTime: new FormControl('', Validators.required),
     });
 
-    this.openingHours.push(group);
+    (control as FormArray).push(group);
   }
 
   // TODO - opening hours
-  removeOpeningHours(group: FormGroup) {
-    this.openingHours.controls.pop();
-    group.setControl('openingHours', this.openingHours);
+  removeOpeningHours(control: AbstractControl, targetIndex: number) {
+    (control as FormArray).removeAt(targetIndex);
   }
 
   getCommonFieldsFormGroup(): FormGroup {
@@ -159,15 +157,15 @@ export class RegisterComponent implements OnInit {
       id: new FormControl(null),
       name: new FormControl('',
         [Validators.required]),
-      zipCode: new FormControl('',
+      zipcode: new FormControl('',
         [Validators.pattern(this.ZIPCODE_REGEX), Validators.required]),
       city: new FormControl('', Validators.required),
       address: new FormControl('', Validators.required),
       description: new FormControl('',
         [Validators.required, Validators.minLength(30), Validators.maxLength(200)]),
-      openingHours: this.openingHours
+      openingHours: new FormArray([])
     });
-
+    this.addNewOpeningHours(group.get('openingHours'));
     this.institutions.push(group);
   }
 
@@ -178,7 +176,7 @@ export class RegisterComponent implements OnInit {
       group.setValue({
         id: currentInstitution.id,
         name: currentInstitution.name,
-        zipCode: currentInstitution.zipCode,
+        zipcode: currentInstitution.zipcode,
         city: currentInstitution.city,
         address: currentInstitution.address,
         description: currentInstitution.description

@@ -161,44 +161,6 @@
 
       <div *ngIf="!isNormalUser" id="provider-user-fields-div">
 
-        <!--        <div class="form-group col-sm-12 col-md-12">-->
-        <!--          <label>Nyitvatartás*:</label>-->
-        <!--          <button (click)="addNewOpeningHours()" class="btn rounded-pill btn-light btn-sm mx-sm-1 mx-sm-2">Nyitvatartási-->
-        <!--            időpont hozzáadása-->
-        <!--          </button>-->
-        <!--        </div>-->
-
-        <!--        <div *ngFor="let group of openingHours.controls;let i = index; let last = last" [formGroup]="group"-->
-        <!--             class="row m-0">-->
-        <!--          <div class="form-group col-sm-12 col-md-4">-->
-        <!--            <select class="form-control rounded-pill" formControlName="weekDay" id="weekDay" name="weekDay">-->
-        <!--              <option *ngFor="let day of weekDays" value="{{day}}">{{day}}</option>-->
-        <!--            </select>-->
-        <!--          </div>-->
-        <!--          <div class="form-group col-sm-12 col-md-3">-->
-
-        <!--            <input class="form-control rounded-pill " formControlName="openingTime" id="openingTime"-->
-        <!--                   name="openingTime" type="Time">-->
-        <!--          </div>-->
-        <!--          <div class="form-group col-sm-12 col-md-3">-->
-
-        <!--            <input class="form-control rounded-pill" formControlName="closingTime" id="closingTime"-->
-        <!--                   name="closingTime" type="Time">-->
-        <!--          </div>-->
-        <!--          <div class="form-group col-sm-12 col-md-1">-->
-        <!--            <button (click)="removeOpeningHours()" *ngIf="last && i!=0" class="btn btn-outline-danger rounded-pill">X-->
-        <!--            </button>-->
-        <!--          </div>-->
-        <!--        </div>-->
-        <!--        <div class="col-sm-12 col-md-12 form-group row mx-0">-->
-        <!--          <small-->
-        <!--            *ngIf="registerForm.get('openingHours').invalid && registerForm.get('openingHours').touched"-->
-        <!--            class="text-danger">-->
-        <!--            Érvénytelen időpont!-->
-        <!--          </small>-->
-        <!--        </div>-->
-
-
         <div class="row m-0">
           <div class="form-group col-sm-12 col-md-3">
             <label for="ageGroupMin">Minimum kor*:</label>
@@ -229,11 +191,13 @@
             hozzáadása
           </button>
         </div>
-        <div *ngFor="let group of institutions.controls;let i = index; let last = last" [formGroup]="group"
+
+        <div *ngFor="let institutionGroup of institutions.controls;let i = index; let last = last"
+             [formGroup]="institutionGroup"
              class="row m-0">
 
           <div class="form-group col-sm-12 col-md-10">
-            <select (change)="updateValues(group)" class="form-control rounded-pill" formControlName="id"
+            <select (change)="updateValues(institutionGroup)" class="form-control rounded-pill" formControlName="id"
                     id="id"
                     name="institution">
               <option *ngFor="let institution of allInstitution" value="{{institution.id}}">
@@ -250,12 +214,12 @@
             <div class="form-group col-sm-12 col-md-10">
               <label>Név*:</label>
               <input class="form-control rounded-pill" formControlName="name" type="text">
-              <div *ngIf="group.get('name').invalid && group.get('name').touched">
-                <small *ngIf="group.get('name').errors.required"
+              <div *ngIf="institutionGroup.get('name').invalid && institutionGroup.get('name').touched">
+                <small *ngIf="institutionGroup.get('name').errors.required"
                        class="text-danger">
                   A mező kitöltése közelező!
                 </small>
-                <small *ngIf="registerForm.get('name').errors.pattern"
+                <small *ngIf="institutionGroup.get('name').errors.pattern"
                        class="text-danger">
                   Érvénytelen név!
                 </small>
@@ -273,13 +237,13 @@
               <!-- TODO: autofill base on zipcode -->
             </div>
 
-            <div *ngIf="group.get('zipcode').invalid && group.get('zipcode').touched"
+            <div *ngIf="institutionGroup.get('zipcode').invalid && institutionGroup.get('zipcode').touched"
                  class="row mx-0 col-md-12 col-sm-12 form-group">
-              <small *ngIf="group.get('zipcode').errors.required"
+              <small *ngIf="institutionGroup.get('zipcode').errors.required"
                      class="text-danger">
                 A mező kitöltése közelező!
               </small>
-              <small *ngIf="group.get('zipcode').errors.pattern"
+              <small *ngIf="institutionGroup.get('zipcode').errors.pattern"
                      class="text-danger">
                 Érvénytelen irányítószám!
               </small>
@@ -292,14 +256,17 @@
 
             <div class="form-group col-sm-12 col-md-12">
               <label>Nyitvatartás*:</label>
-              <button (click)="addNewOpeningHours()" class="btn rounded-pill btn-light btn-sm mx-sm-1 mx-sm-2">
+
+            </div>
+
+            <div *ngFor="let array of institutionGroup.get('openingHours').controls;let i = index; let last = last"
+                 [formGroup]="array"
+                 class="row m-0">
+              <button (click)="addNewOpeningHours(institutionGroup.get('openingHours'))"
+                      class="btn rounded-pill btn-light btn-sm mx-sm-1 mx-sm-2">
                 Nyitvatartási
                 időpont hozzáadása
               </button>
-            </div>
-
-            <div *ngFor="let group of openingHours.controls;let i = index; let last = last" [formGroup]="group"
-                 class="row m-0">
               <div class="form-group col-sm-12 col-md-4">
                 <select class="form-control rounded-pill" formControlName="weekDay" id="weekDay" name="weekDay">
                   <option *ngFor="let day of weekDays" value="{{day}}">{{day}}</option>
@@ -316,7 +283,7 @@
                        name="closingTime" type="Time">
               </div>
               <div class="form-group col-sm-12 col-md-1">
-                <button (click)="removeOpeningHours(group)" *ngIf="last && i!=0"
+                <button (click)="removeOpeningHours(institutionGroup.get('openingHours'),i)" *ngIf="last && i!=0"
                         class="btn btn-outline-danger rounded-pill">
                   X
                 </button>
@@ -324,7 +291,7 @@
             </div>
             <div class="col-sm-12 col-md-12 form-group row mx-0">
               <small
-                *ngIf="group.get('openingHours').invalid && group.get('openingHours').touched"
+                *ngIf="institutionGroup.get('openingHours').invalid && institutionGroup.get('openingHours').touched"
                 class="text-danger">
                 Érvénytelen időpont!
               </small>
@@ -333,13 +300,13 @@
             <div class="form-group col-sm-12 col-md-12">
               <label>Rövid leírás*:</label>
               <textarea class="form-control rounded-pill" formControlName="description" rows="2"></textarea>
-              <div *ngIf="group.get('description').invalid && group.get('description').touched">
-                <small *ngIf="group.get('description').errors.required"
+              <div *ngIf="institutionGroup.get('description').invalid && institutionGroup.get('description').touched">
+                <small *ngIf="institutionGroup.get('description').errors.required"
                        class="text-danger">
                   A mező kitöltése közelező!
                 </small>
                 <small
-                  *ngIf="group.get('description').errors?.minlength || registerForm.get('description').errors?.maxlength"
+                  *ngIf="institutionGroup.get('description').errors?.minlength || registerForm.get('description').errors?.maxlength"
                   class="text-danger">
                   A leírásnak legalább 30 és legfeljebb 200 karakter hosszúnak kell lennie!
                 </small>
