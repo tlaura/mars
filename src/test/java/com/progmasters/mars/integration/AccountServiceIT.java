@@ -1,7 +1,6 @@
 package com.progmasters.mars.integration;
 
-import com.progmasters.mars.dto.GeoLocation;
-import com.progmasters.mars.service.GeocodeService;
+import com.progmasters.mars.service.AccountService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,19 +13,16 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @Rollback
 @AutoConfigureTestDatabase
-public class GeoLocationIT {
+public class AccountServiceIT {
+
 
     @Autowired
-    private GeocodeService geocodeService;
+    private AccountService accountService;
 
 
     @Test
-    public void getGeoLocationTest() {
-        String address = "1089 Budapest Orczy út 43";
+    public void accountTest() {
 
-        GeoLocation geoLocation = geocodeService.getGeoLocation(address);
-
-        Assertions.assertNotNull(geoLocation);
+        Assertions.assertThrows(NullPointerException.class, () -> accountService.getProviderUser("none"));
     }
-
 }
