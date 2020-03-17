@@ -1,4 +1,4 @@
-<div class="col-sm-1 col-md-8 offset-md-2 col-lg-6 offset-lg-3 text-center">
+<div class="col-sm-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3 text-center">
   <h1 class="">Regisztráció</h1>
 
   <button (click)="renderNormalAccountRegisterForm()" [ngClass]="isNormalUser ? 'active' : 'inactive'"
@@ -13,7 +13,7 @@
       <!-- COMMON START FIELDS DIV -->
 
       <div class="row m-0" id="common-start-fields-div">
-        <div class="form-group col-sm-1 col-md-8">
+        <div class="form-group col-sm-12 col-md-8">
           <label *ngIf="isNormalUser" for="name">Név:</label>
           <label *ngIf="!isNormalUser" for="name">Szolgáltató neve*:</label>
           <input class="form-control rounded-pill" formControlName="name" id="name" type="text">
@@ -24,8 +24,8 @@
             </small>
           </div>
         </div>
-        <div class="col-sm-1 col-md-12"></div>
-        <div class="form-group col-sm-1 col-md-5">
+        <div class="col-sm-12 col-md-12"></div>
+        <div class="form-group col-sm-12 col-md-5">
           <label for="username">Felhasználónév*:</label>
           <input class="form-control rounded-pill" formControlName="username" id="username" type="text">
           <small *ngIf="registerForm.get('username').errors?.serverError"
@@ -45,7 +45,7 @@
 
         </div>
 
-        <div class="form-group col-sm-1 col-md-7">
+        <div class="form-group col-sm-12 col-md-7">
           <label for="email">Email cím*:</label>
           <input class="form-control rounded-pill" formControlName="email" id="email" type="text">
           <small *ngIf="registerForm.get('email').errors?.serverError && registerForm.get('email').touched"
@@ -65,19 +65,19 @@
 
         </div>
 
-        <div class="form-group col-sm-1 col-md-6">
+        <div class="form-group col-sm-12 col-md-6">
           <label for="password">Jelszó*:</label>
           <input (change)="checkPasswords()" class="form-control rounded-pill" formControlName="password" id="password"
                  type="password">
         </div>
-        <div class="form-group col-sm-1 col-md-6">
+        <div class="form-group col-sm-12 col-md-6">
           <label for="passwordAgain">Jelszó megerősítése:</label>
           <input (change)="checkPasswords()" class="form-control rounded-pill" formControlName="passwordAgain"
                  id="passwordAgain" name="passwordAgain" type="password">
         </div>
 
         <div *ngIf="registerForm.get('password').invalid && registerForm.get('password').touched "
-             class="row form-group col-sm-1 col-md-12 mx-0">
+             class="row form-group col-sm-12 col-md-12 mx-0">
           <small *ngIf="registerForm.get('password').errors.required"
                  class="text-danger">
             A mező kitöltése közelező!
@@ -93,7 +93,7 @@
           </small>
         </div>
 
-        <div class="form-group col-sm-1 col-md-5 ">
+        <div class="form-group col-sm-12 col-md-5 ">
           <label *ngIf="isNormalUser" for="phone">Telefonszám:</label>
           <label *ngIf="!isNormalUser" for="phone">Telefonszám*:</label>
           <input class="form-control rounded-pill"
@@ -117,7 +117,7 @@
 
       <div *ngIf="!isNormalUser" id="custom-address-check-div">
         <div class="row m-0">
-          <div class="form-group col-sm-1 col-md-12">
+          <div class="form-group col-sm-12 col-md-12">
             <label for="customAddress">Cím hozzáadása a szolgáltatáshoz:</label>
             <input (change)="haveProviderCustomAddress=!haveProviderCustomAddress" class="form-check-input m-1"
                    id="customAddress"
@@ -129,19 +129,19 @@
       <!-- ADDRESS DIV -->
 
       <div *ngIf="isNormalUser || haveProviderCustomAddress" class="row m-0" id="address-div">
-        <div class="form-group col-sm-1 col-md-3">
+        <div class="form-group col-sm-12 col-md-3">
           <label for="zipCode">Irányítószám*:</label>
           <input class="form-control rounded-pill" formControlName="zipCode" id="zipCode" type="number">
         </div>
 
-        <div class="form-group col-sm-1 col-md-6">
+        <div class="form-group col-sm-12 col-md-6">
           <label for="city">Település:</label>
           <input class="form-control rounded-pill" formControlName="city" id="city" type="text">
           <!-- TODO: autofill base on zipCode -->
         </div>
 
         <div *ngIf="registerForm.get('zipCode').invalid && registerForm.get('zipCode').touched"
-             class="form-group col-sm-1 col-md-12 row mx-0">
+             class="form-group col-sm-12 col-md-12 row mx-0">
           <small *ngIf="registerForm.get('zipCode').errors.required"
                  class="text-danger">
             A mező kitöltése közelező!
@@ -152,7 +152,7 @@
           </small>
         </div>
 
-        <div class="form-group col-sm-1 col-md-9">
+        <div class="form-group col-sm-12 col-md-9">
           <label for="address">Cím:</label>
           <input class="form-control rounded-pill" formControlName="address" id="address" type="text">
         </div>
@@ -163,7 +163,7 @@
 
       <div *ngIf="!isNormalUser" id="provider-user-fields-div">
 
-        <div class="form-group col-sm-1 col-md-12">
+        <div class="form-group col-sm-12 col-md-12">
           <label>Nyitvatartás*:</label>
           <button (click)="addNewOpeningHours()" class="btn rounded-pill btn-light btn-sm mx-sm-1 mx-sm-2">Nyitvatartási
             időpont hozzáadása
@@ -172,27 +172,27 @@
 
         <div *ngFor="let group of openingHours.controls;let i = index; let last = last" [formGroup]="group"
              class="row m-0">
-          <div class="form-group col-sm-1 col-md-4">
+          <div class="form-group col-sm-12 col-md-4">
             <select class="form-control rounded-pill" formControlName="weekDay" id="weekDay" name="weekDay">
               <option *ngFor="let day of weekDays" value="{{day}}">{{day}}</option>
             </select>
           </div>
-          <div class="form-group col-sm-1 col-md-3">
+          <div class="form-group col-sm-12 col-md-3">
 
             <input class="form-control rounded-pill " formControlName="openingTime" id="openingTime"
                    name="openingTime" type="Time">
           </div>
-          <div class="form-group col-sm-1 col-md-3">
+          <div class="form-group col-sm-12 col-md-3">
 
             <input class="form-control rounded-pill" formControlName="closingTime" id="closingTime"
                    name="closingTime" type="Time">
           </div>
-          <div class="form-group col-sm-1 col-md-1">
+          <div class="form-group col-sm-12 col-md-1">
             <button (click)="removeOpeningHours()" *ngIf="last && i!=0" class="btn btn-outline-danger rounded-pill">X
             </button>
           </div>
         </div>
-        <div class="col-sm-1 col-md-12 form-group row mx-0">
+        <div class="col-sm-12 col-md-12 form-group row mx-0">
           <small
             *ngIf="registerForm.get('openingHours').invalid && registerForm.get('openingHours').touched"
             class="text-danger">
@@ -202,14 +202,14 @@
 
 
         <div class="row m-0">
-          <div class="form-group col-sm-1 col-md-3">
+          <div class="form-group col-sm-12 col-md-3">
             <label for="ageGroupMin">Minimum kor*:</label>
             <select class="form-control rounded-pill " formControlName="ageGroupMin" id="ageGroupMin"
                     name="ageGroupMin">
               <option *ngFor="let age of getAgesArray(100), let i = index" value="{{i}}">{{i}}</option>
             </select>
           </div>
-          <div class="form-group col-sm-1 col-md-3">
+          <div class="form-group col-sm-12 col-md-3">
             <label for="ageGroupMax">Maximum kor*:</label>
             <select class="form-control rounded-pill" formControlName="ageGroupMax" id="ageGroupMax"
                     name="ageGroupMax">
@@ -218,14 +218,14 @@
           </div>
         </div>
 
-        <div class="form-group col-sm-1 col-md-6">
+        <div class="form-group col-sm-12 col-md-6">
           <label for="type">Szolgáltatás típusa*:</label>
           <select class="form-control rounded-pill" formControlName="type" id="type" name="type">
             <option *ngFor="let type of types" value="{{type}}">{{type}}</option>
           </select>
         </div>
 
-        <div class="form-group col-sm-1 col-md-12">
+        <div class="form-group col-sm-12 col-md-12">
           <label>Intézmények:</label>
           <button (click)="addNewInstitution()" class="btn rounded-pill btn-light btn-sm mx-sm-1 mx-sm-2">Intézmény
             hozzáadása
@@ -234,7 +234,7 @@
         <div *ngFor="let group of institutions.controls;let i = index; let last = last" [formGroup]="group"
              class="row m-0">
 
-          <div class="form-group col-sm-1 col-md-10">
+          <div class="form-group col-sm-12 col-md-10">
             <select (change)="updateValues(group)" class="form-control rounded-pill" formControlName="id"
                     id="id"
                     name="institution">
@@ -243,13 +243,13 @@
             </select>
           </div>
 
-          <div class="form-group col-sm-1 col-md-1">
+          <div class="form-group col-sm-12 col-md-1">
             <button (click)="removeInstitution()" *ngIf="last" class="btn btn-outline-danger rounded-pill">X
             </button>
           </div>
 
           <div class="row m-0">
-            <div class="form-group col-sm-1 col-md-10">
+            <div class="form-group col-sm-12 col-md-10">
               <label>Név*:</label>
               <input class="form-control rounded-pill" formControlName="name" type="text">
               <div *ngIf="group.get('name').invalid && group.get('name').touched">
@@ -264,19 +264,19 @@
               </div>
             </div>
 
-            <div class="form-group col-sm-1 col-md-3">
+            <div class="form-group col-sm-12 col-md-3">
               <label>Irányítószám*:</label>
               <input class="form-control rounded-pill" formControlName="zipCode" type="number">
             </div>
 
-            <div class="form-group col-sm-1 col-md-6">
+            <div class="form-group col-sm-12 col-md-6">
               <label>Település*:</label>
               <input class="form-control rounded-pill" formControlName="city" type="text">
               <!-- TODO: autofill base on zipCode -->
             </div>
 
             <div *ngIf="group.get('zipCode').invalid && group.get('zipCode').touched"
-                 class="row mx-0 col-md-12 col-sm-1 form-group">
+                 class="row mx-0 col-md-12 col-sm-12 form-group">
               <small *ngIf="group.get('zipCode').errors.required"
                      class="text-danger">
                 A mező kitöltése közelező!
@@ -287,12 +287,12 @@
               </small>
             </div>
 
-            <div class="form-group col-sm-1 col-md-9">
+            <div class="form-group col-sm-12 col-md-9">
               <label>Cím*:</label>
               <input class="form-control rounded-pill" formControlName="address" type="text">
             </div>
 
-            <div class="form-group col-sm-1 col-md-12">
+            <div class="form-group col-sm-12 col-md-12">
               <label>Rövid leírás*:</label>
               <textarea class="form-control rounded-pill" formControlName="description" rows="2"></textarea>
               <div *ngIf="group.get('description').invalid && group.get('description').touched">
@@ -314,7 +314,7 @@
 
       <!-- NORMAL USER FIELDS DIV -->
 
-      <div *ngIf="isNormalUser" class="form-group col-sm-1 col-md-12" id="normal-user-fields-div">
+      <div *ngIf="isNormalUser" class="form-group col-sm-12 col-md-12" id="normal-user-fields-div">
         <label for="birthyear">Érintett családtag születési éve*:</label>
         <input class="form-control col-md-3 rounded-pill" formControlName="birthyear" id="birthyear" type="number">
         <div *ngIf="registerForm.get('birthyear').invalid && registerForm.get('birthyear').touched">
@@ -333,12 +333,12 @@
 
       <div id="common-end-fields-div">
         <div class="pl-sm-1 pl-md-3 mb-sm-1 mb-md-3">
-          <div class="form-group col-sm-1 col-md-12 my-0 small">
+          <div class="form-group col-sm-12 col-md-12 my-0 small">
             <input class="form-check-input mt-0" formControlName="newsletter" id="newsletter" type="checkbox">
             <label class="mb-1" for="newsletter">Feliratkozom a hírlevélre. </label>
           </div>
 
-          <div class="form-group col-sm-1 col-md-12 my-0 small">
+          <div class="form-group col-sm-12 col-md-12 my-0 small">
             <input class="form-check-input mt-0" formControlName="termsAndConditions" id="termsAndConditions"
                    type="checkbox">
             <label class="mb-1" for="termsAndConditions">Elolvastam és elfogadom az
@@ -346,7 +346,7 @@
           </div>
           <small
             *ngIf="registerForm.get('termsAndConditions').invalid && registerForm.get('termsAndConditions').dirty"
-            class="text-danger col-sm-1 col-md-12">
+            class="text-danger col-sm-12 col-md-12">
             A mező kitöltése közelező!
           </small>
         </div>
