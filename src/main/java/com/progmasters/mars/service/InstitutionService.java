@@ -1,7 +1,6 @@
 package com.progmasters.mars.service;
 
 import com.progmasters.mars.domain.Institution;
-import com.progmasters.mars.domain.InstitutionType;
 import com.progmasters.mars.dto.*;
 import com.progmasters.mars.repository.InstitutionRepository;
 import com.progmasters.mars.util.ExcelFileLoader;
@@ -50,16 +49,18 @@ public class InstitutionService {
         institutionRepository.save(institution);
     }
 
+/*
     public List<InstitutionListData> getInstitutionsByType(InstitutionType institutionType) {
         return institutionRepository.findAllByInstitutionType(institutionType).stream().map(InstitutionListData::new).collect(Collectors.toList());
     }
 
-    //todo remove in the future
+    //todo institution has no type anymore
     public List<InstitutionListData> tempByType(InstitutionType institutionType) {
         List<InstitutionListData> listByType = institutionRepository.findAllByInstitutionType(institutionType).stream().map(InstitutionListData::new).collect(Collectors.toList());
         setLocation(listByType);
         return listByType;
     }
+*/
 
     public List<InstitutionListData> tempInstitutionList() {
         List<InstitutionListData> collect = institutionRepository.findAll()
