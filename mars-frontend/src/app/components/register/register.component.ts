@@ -60,15 +60,13 @@ export class RegisterComponent implements OnInit {
     }
   }
 
-
-  removeInstitution() {
-
+  removeInstitution(index) {
+    (this.registerForm.get('institutions') as FormArray).removeAt(index);
   }
 
   addNewInstitution() {
-    (this.registerForm.get('institutions') as FormArray).push();
+    (this.registerForm.get('institutions') as FormArray).push(new FormGroup({}));
   }
-
 
   chooseProviderUser() {
     this.isNormalUser = false;
@@ -135,4 +133,11 @@ export class RegisterComponent implements OnInit {
     this.registerForm.get('types').setValue(types);
   }
 
+  getInstitutions() {
+    return this.registerForm.get('institutions') as FormArray;
+  }
+
+  setInstitutions(institution: FormGroup, index: number) {
+    (this.registerForm.get('institutions') as FormArray)[index] = institution;
+  }
 }

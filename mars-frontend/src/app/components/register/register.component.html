@@ -62,14 +62,16 @@
         </button>
       </div>
 
-      <app-institution *ngIf="!isNormalUser">
-      </app-institution>
+      <div *ngFor="let array of getInstitutions().controls;let i = index;"
+           class="row m-0">
+        <app-institution (institutionsEmitter)="setInstitutions($event,i)" *ngIf="!isNormalUser">
+        </app-institution>
 
-      <div class="form-group col-sm-12 col-md-1">
-        <button (click)="removeInstitution()" class="btn btn-outline-danger rounded-pill">X
-        </button>
+        <div class="form-group col-sm-12 col-md-1">
+          <button (click)="removeInstitution(i)" class="btn btn-outline-danger rounded-pill">X
+          </button>
+        </div>
       </div>
-
 
       <!-- COMMON END FIELDS DIV -->
 

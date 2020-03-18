@@ -7,32 +7,36 @@
   </select>
 </div-->
 <!-- TODO: fetch at parent and send to child-->
-<form>
+<form (change)="emitInstitutions()" [formGroup]="institutionForm">
 
-  <app-contacts>
-
+  <app-contacts
+    (emailEmitter)="setEmail($event)"
+    (nameEmitter)="setName($event)"
+    (phoneEmitter)="setPhone($event)"
+    (websiteEmitter)="setWebsite($event)"
+  >
   </app-contacts>
 
-  <app-address>
-
+  <app-address
+    (addressEmitter)="setAddress($event)"
+    (cityEmitter)="setCity($event)"
+    (zipcodeEmitter)="setZipcode($event)"
+  >
   </app-address>
 
   <div class="form-group col-sm-12 col-md-12">
     <label>Nyitvatartás:</label>
-</div>
-<div class="form-group col-sm-12 col-md-1">
-  <button (click)="addNewOpeningHours()"
-          class="btn rounded-circle ">+
-  </button>
-</div>
+  </div>
 
-  <div *ngFor="let group of getOpeningHours().controls;let i = index;"
-       [formGroup]="group"
+  <div class="form-group col-sm-12 col-md-1">
+    <button (click)="addNewOpeningHours()"
+            class="btn rounded-circle ">+
+    </button>
+  </div>
+
+  <div *ngFor="let array of getOpeningHours().controls;let i = index;"
        class="row m-0">
-    <app-opening-hours
-      (weekDayEmitter)="setWeekDay($event,group)"
-      (openingTimeEmitter)="setOpeningTime($event,group)"
-      (closingTimeEmitter)="setClosing($event,group)"
+    <app-opening-hours (openingHoursEmitter)="setOpeningHours($event,i)"
     >
     </app-opening-hours>
 
@@ -47,17 +51,17 @@
 
   <div class="form-group col-sm-12 col-md-12">
     <label>Rövid leírás:</label>
-    <textarea [formControl]="description"
+    <textarea formControlName="description"
               class="form-control rounded-pill"
               rows="2">
   </textarea>
-    <div *ngIf="institutions.get('description').invalid && institutions.get('description').touched">
-      <small *ngIf="institutions.get('description').errors?.required"
+    <div *ngIf="institutionForm.get('description').invalid && institutionForm.get('description').touched">
+      <small *ngIf="institutionForm.get('description').errors?.required"
              class="text-danger">
         A mező kitöltése közelező!
       </small>
       <small
-        *ngIf="institutions.get('description').errors?.minlength || institutions.get('description').errors?.maxlength"
+        *ngIf="institutionForm.get('description').errors?.minlength || institutionForm.get('description').errors?.maxlength"
         class="text-danger">
         A leírásnak legalább 30 és legfeljebb 200 karakter hosszúnak kell lennie!
       </small>

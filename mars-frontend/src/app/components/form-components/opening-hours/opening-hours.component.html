@@ -1,28 +1,28 @@
-<div class="form-group col-sm-12 col-md-4">
-  <select class="form-control rounded-pill"
-          (focusout)="emitWeekDay()"
-          [formControl]="weekDay"
-          id="weekDay"
-          name="weekDay">
-    <option *ngFor="let day of weekDays" value="{{day}}">{{day}}</option>
-  </select>
-</div>
+<form (change)="emitOpeningHours()" [formGroup]="openingHours">
+  <div class="form-group col-sm-12 col-md-4">
+    <select class="form-control rounded-pill"
+            formControlName="weekDay"
+            id="weekDay"
+            name="weekDay">
+      <option *ngFor="let day of weekDays" value="{{day}}">{{day}}</option>
+    </select>
+  </div>
 
-<div class="form-group col-sm-12 col-md-3">
-  <input class="form-control rounded-pill "
-         (focusout)="emitOpeningTime()"
-         [formControl]="openingTime"
-         id="openingTime"
-         name="openingTime"
-         type="Time">
-</div>
+  <div class="form-group col-sm-12 col-md-3">
+    <input class="form-control rounded-pill "
+           formControlName="openingTime"
+           id="openingTime"
+           name="openingTime"
+           type="Time">
+  </div>
 
-<div class="form-group col-sm-12 col-md-3">
-  <input class="form-control rounded-pill"
-         (focusout)="emitClosingTime()"
-         [formControl]="closingTime"
-         id="closingTime"
-         name="closingTime"
-         type="Time">
-</div>
+  <div class="form-group col-sm-12 col-md-3">
+    <input class="form-control rounded-pill"
+           formControlName="closingTime"
+           id="closingTime"
+           name="closingTime"
+           type="Time">
+  </div>
+</form>
+
 
