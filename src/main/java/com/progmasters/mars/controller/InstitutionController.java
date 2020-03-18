@@ -49,15 +49,15 @@ public class InstitutionController {
         return new ResponseEntity<>(institutionTypeDataList, HttpStatus.OK);
     }
 
-/*    @GetMapping("/getInstitutionsByType")
-    public ResponseEntity<List<InstitutionListData>> getInstitutionByType(@RequestParam("type") String type) {
-
-        InstitutionType institutionType = InstitutionType.getTypeByName(type);
-        //todo switch in the future
-        //   List<InstitutionListData> institutionListData = institutionService.getInstitutionsByType(institutionType);
-        List<InstitutionListData> institutionListData = institutionService.tempByType(institutionType);
-        return new ResponseEntity<>(institutionListData, HttpStatus.OK);
-    }*/
+//    @GetMapping("/getInstitutionsByType")
+//    public ResponseEntity<List<InstitutionListData>> getInstitutionByType(@RequestParam("type") String type) {
+//
+//        InstitutionType institutionType = InstitutionType.getTypeByName(type);
+//        //todo switch in the future
+//          List<InstitutionListData> institutionListData = institutionService.getInstitutionsByType(institutionType);
+//       // List<InstitutionListData> institutionListData = institutionService.tempByType(institutionType);
+//        return new ResponseEntity<>(institutionListData, HttpStatus.OK);
+//    }
 
 
     @GetMapping("/details")

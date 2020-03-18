@@ -41,12 +41,13 @@ public class InstitutionService {
     }
 
 
-    public void createInstitution(InstitutionCreationCommand institutionCreationForm) {
+    public Institution createInstitution(InstitutionCreationCommand institutionCreationForm) {
         String address = institutionCreationForm.getZipcode() + " " + institutionCreationForm.getCity() + " " + institutionCreationForm.getAddress();
         GeoLocation geoLocation = geocodeService.getGeoLocation(address);
         Institution institution = new Institution(institutionCreationForm, geoLocation);
-        //todo get user id
         institutionRepository.save(institution);
+
+        return institution;
     }
 
 /*
@@ -91,7 +92,7 @@ public class InstitutionService {
         institutionRepository.save(institution);
     }
 
-    private Institution findById(Long id) {
+    public Institution findById(Long id) {
         return institutionRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("no such entity found"));
     }
 

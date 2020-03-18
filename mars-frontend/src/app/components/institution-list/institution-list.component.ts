@@ -4,6 +4,7 @@ import {Router} from "@angular/router";
 import {InstitutionListModel} from "../../models/institutionList.model";
 import {InstitutionTypeModel} from "../../models/InstitutionType.model";
 import {institutionListIndex} from "../../../environments/institutionListIndex.prod";
+import {AccountService} from "../../services/account.service";
 
 @Component({
   selector: 'app-institution-list',
@@ -21,6 +22,7 @@ export class InstitutionListComponent implements OnInit {
   sizeArray: Array<number> = institutionListIndex.itemsPerPageArray;
 
   constructor(private institutionService: InstitutionService,
+              private accountService: AccountService,
               private router: Router) {
   }
 
@@ -52,7 +54,7 @@ export class InstitutionListComponent implements OnInit {
   };
 
   private getInstitutionsByType = (type: string) => {
-    this.institutionService.getInstitutionByType(type).subscribe(
+    this.accountService.getInstitutionByType(type).subscribe(
       institutionList => this.institutionList = institutionList,
       error => console.warn(error),
     );

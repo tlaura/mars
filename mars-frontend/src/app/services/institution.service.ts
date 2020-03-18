@@ -27,9 +27,6 @@ export class InstitutionService {
     return this.http.get<Array<InstitutionTypeModel>>(this.BASE_URL + "institutionType");
   };
 
-  getInstitutionByType = (name: string): Observable<Array<InstitutionListModel>> => {
-    return this.http.get<Array<InstitutionListModel>>(this.BASE_URL + "getInstitutionsByType?type=" + name);
-  };
 
   getInstitutionDetail = (id: number): Observable<InstitutionDetailModel> => {
     return this.http.get<InstitutionDetailModel>(this.BASE_URL + id);
