@@ -1,0 +1,61 @@
+<!--div class="form-group col-sm-12 col-md-10">
+  <select (change)="updateValues(institutionGroup)" class="form-control rounded-pill" formControlName="id"
+          id="id"
+          name="institution">
+    <option *ngFor="let institution of allInstitution" value="{{institution.id}}">
+      {{institution.name}}</option>
+  </select>
+</div-->
+<!-- TODO: fetch at parent and send to child-->
+
+<app-contacts>
+
+</app-contacts>
+
+<app-address>
+
+</app-address>
+
+<div class="form-group col-sm-12 col-md-12">
+  <label>Nyitvatartás:</label>
+</div>
+<div class="form-group col-sm-12 col-md-1">
+  <button (click)="addNewOpeningHours()"
+          class="btn rounded-circle ">+
+  </button>
+</div>
+
+<div *ngFor="let group of getOpeningHours().controls;let i = index;"
+     [formGroup]="group"
+     class="row m-0">
+  <app-opening-hours
+    (weekDayEmitter)="setWeekDay($event,group)"
+    (openingTimeEmitter)="setOpeningTime($event,group)"
+    (closingTimeEmitter)="setClosing($event,group)"
+  >
+  </app-opening-hours>
+
+  <div class="form-group col-sm-12 col-md-1">
+    <button (click)="removeOpeningHours(i)"
+            class="btn btn-outline-danger rounded-pill">
+      X
+    </button>
+  </div>
+
+</div>
+
+<div class="form-group col-sm-12 col-md-12">
+  <label>Rövid leírás:</label>
+  <textarea class="form-control rounded-pill" formControlName="description" rows="2"></textarea>
+  <div *ngIf="institutions.get('description').invalid && institutions.get('description').touched">
+    <small *ngIf="institutions.get('description').errors?.required"
+           class="text-danger">
+      A mező kitöltése közelező!
+    </small>
+    <small
+      *ngIf="institutions.get('description').errors?.minlength || institutions.get('description').errors?.maxlength"
+      class="text-danger">
+      A leírásnak legalább 30 és legfeljebb 200 karakter hosszúnak kell lennie!
+    </small>
+  </div>
+</div>

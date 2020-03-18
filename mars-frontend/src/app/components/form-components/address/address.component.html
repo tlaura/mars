@@ -1,0 +1,36 @@
+<div class="row m-0">
+  <div class="form-group col-sm-12 col-md-3">
+    <label for="zipcode">Irányítószám:</label>
+    <input class="form-control rounded-pill"
+           (focusout)="emitZipcode()"
+           [formControl]="zipcode"
+           id="zipcode"
+           type="number">
+  </div>
+
+  <div class="form-group col-sm-12 col-md-6">
+    <label for="city">Település:</label>
+    <input class="form-control rounded-pill"
+           (focusout)="emitCity()"
+           [formControl]="city"
+           id="city"
+           type="text">
+  </div>
+
+  <div  *ngIf="zipcode.errors?.pattern"
+       class="form-group col-sm-12 col-md-12 row mx-0">
+    <small class="text-danger">
+      Érvénytelen irányítószám!
+    </small>
+  </div>
+
+  <div class="form-group col-sm-12 col-md-9">
+    <label for="address">Cím:</label>
+    <input class="form-control rounded-pill"
+           (focusout)="emitAddress()"
+           [formControl]="address"
+           id="address"
+           type="text">
+  </div>
+
+</div>

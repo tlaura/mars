@@ -1,0 +1,41 @@
+<div class="form-group col-sm-12 col-md-5">
+  <label for="name">Név:</label>
+  <input class="form-control rounded-pill"
+         (focusout)="emitName()"
+         [formControl]="name"
+         id="name"
+         type="text">
+  <div *ngIf="name.errors?.pattern">
+    <small class="text-danger">
+      Érvénytelen név!
+    </small>
+  </div>
+</div>
+<app-email (emailEmitter)="emitEmail($event)"></app-email>
+<div class="form-group col-sm-12 col-md-5 ">
+  <label for="phone">Telefonszám:</label>
+  <input class="form-control rounded-pill"
+         (focusout)="emitPhone()"
+         [formControl]="phone"
+         id="phone" placeholder="+36-XX-XXX-XXXX"
+         type="text">
+  <div *ngIf="phone.errors?.pattern">
+    <small class="text-danger">
+      Érvénytelen telefonszám!
+    </small>
+  </div>
+</div>
+<div class="form-group col-sm-12 col-md-5 ">
+  <label for="website">Weboldal:</label>
+  <input class="form-control rounded-pill"
+         (focusout)="emitWebsite()"
+         [formControl]="website"
+         id="website"
+         type="text">
+  <div *ngIf="website.errors?.pattern">
+    <small class="text-danger">
+      Érvénytelen weboldal!
+    </small>
+  </div>
+</div>
+
