@@ -33,4 +33,8 @@ export class AccountService {
   getInstitutionByType = (name: string): Observable<Array<InstitutionListModel>> => {
     return this.http.get<Array<InstitutionListModel>>(this.BASE_URL + "/providers/getInstitutionsByType?type=" + name);
   };
+
+  fetchProviderAccountEditDetails = (loggedInUser: string) => {
+    return this.http.get(this.BASE_URL + '/providers/edit/' + loggedInUser);
+  };
 }

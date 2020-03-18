@@ -6,6 +6,7 @@ import com.progmasters.mars.domain.ProviderAccount;
 import com.progmasters.mars.dto.InstitutionListData;
 import com.progmasters.mars.dto.ProviderAccountCreationCommand;
 import com.progmasters.mars.dto.ProviderUserDetails;
+import com.progmasters.mars.dto.ProviderUserDetailsEdit;
 import com.progmasters.mars.repository.ProviderAccountRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -46,8 +47,8 @@ public class AccountService {
         providerAccountRepository.deleteById(id);
     }
 
-    public ProviderUserDetails getProviderAccount(String email) {
-        ProviderAccount providerAccount = providerAccountRepository.findByEmail(email);
+    public ProviderUserDetails getProviderAccount(String loggedInUser) {
+        ProviderAccount providerAccount = providerAccountRepository.findByEmail(loggedInUser);
         return new ProviderUserDetails(providerAccount);
     }
 
@@ -62,7 +63,14 @@ public class AccountService {
         return institutionListData;
     }
 
+
     public ProviderAccount findById(Long id) {
         return providerAccountRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("No account found by given id"));
+    }
+
+
+    public ProviderUserDetailsEdit getProviderAccountEditDetails(String loggedInUser) {
+        ProviderAccount providerAccount = providerAccountRepository.findByEmail(loggedInUser);
+        return new ProviderUserDetailsEdit(providerAccount);
     }
 }

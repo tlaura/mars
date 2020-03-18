@@ -1,5 +1,7 @@
 <section class="container" *ngIf="loggedInUser">
-  <h1>Profil</h1>
+  <div class="row align-items-left justify-content-center">
+    <h1>Profil</h1>
+  </div>
   <section>
     <h4 class="display-4">{{providerAccount.name}}</h4>
     <hr>
@@ -45,7 +47,7 @@
         </div>
       </section>
   </section>
-  <button class="submit btn btn-primary rounded-pill" type="submit">
+  <button class="submit btn btn-primary rounded-pill" routerLink="edit-profile">
     Edit Profile
   </button>
 </section>

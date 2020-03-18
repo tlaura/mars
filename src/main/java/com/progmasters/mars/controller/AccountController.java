@@ -5,6 +5,7 @@ import com.progmasters.mars.dto.InstitutionListData;
 import com.progmasters.mars.dto.ProviderAccountCreationCommand;
 import com.progmasters.mars.dto.ProviderUserDetails;
 import com.progmasters.mars.service.AccountInstitutionService;
+import com.progmasters.mars.dto.ProviderUserDetailsEdit;
 import com.progmasters.mars.service.AccountService;
 import com.progmasters.mars.validation.ProviderAccountValidator;
 import org.slf4j.Logger;
@@ -26,6 +27,7 @@ public class AccountController {
     private final AccountInstitutionService accountInstitutionService;
     private final AccountService accountService;
     private final Logger logger = LoggerFactory.getLogger(AccountController.class);
+
 
     @Autowired
     public AccountController(ProviderAccountValidator providerAccountValidator, AccountInstitutionService accountInstitutionService, AccountService accountService) {
@@ -59,5 +61,10 @@ public class AccountController {
         List<InstitutionListData> institutionListData = accountService.getInstitutionsByType(institutionType);
         logger.info("Institution List is requested by type!");
         return new ResponseEntity<>(institutionListData, HttpStatus.OK);
+    }
+
+    @GetMapping("/edit/{loggedInUser}")
+    public ResponseEntity<ProviderUserDetailsEdit> getProviderAccountEditData(@PathVariable String loggedInUser) {
+        return new ResponseEntity<>(accountService.getProviderAccountEditDetails(loggedInUser), HttpStatus.OK);
     }
 }
