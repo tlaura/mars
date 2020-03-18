@@ -25,6 +25,9 @@ import {InstitutionImportComponent} from './components/institution-import/instit
 import {SendMailComponent} from './components/send-mail/send-mail.component';
 import {AgmSnazzyInfoWindowModule} from "@agm/snazzy-info-window";
 import {NgxSocialButtonModule, SocialServiceConfig} from "ngx-social-button";
+import {EmailComponent} from './components/form-components/email/email.component';
+import {ContactsComponent} from './components/form-components/contacts/contacts.component';
+import {AddressComponent} from './components/form-components/address/address.component';
 
 export function getAuthServiceConfigs() {
   let config = new SocialServiceConfig()
@@ -50,7 +53,10 @@ export function getAuthServiceConfigs() {
     MyProfileComponent,
     SendMailComponent,
     MyProfileComponent,
-    InstitutionImportComponent
+    InstitutionImportComponent,
+    EmailComponent,
+    ContactsComponent,
+    AddressComponent
   ],
   imports: [
     BrowserModule,

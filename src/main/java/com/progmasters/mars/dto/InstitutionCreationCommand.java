@@ -1,5 +1,7 @@
 package com.progmasters.mars.dto;
 
+import java.util.List;
+
 public class InstitutionCreationCommand {
 
     private Long id;
@@ -11,6 +13,7 @@ public class InstitutionCreationCommand {
     private String description;
     private String website;
     private String phone;
+    private List<OpeningHoursCreationCommand> openingHours;
 
     public InstitutionCreationCommand() {
     }

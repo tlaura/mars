@@ -13,10 +13,7 @@ import {validationHandler} from "../../utils/validationHandler";
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
-  EMAIL_REGEX = '(?:[a-z0-9!#$%&\'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&\'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\\])';
   PASSWORD_REGEX = '(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{6,15})$';
-  ZIPCODE_REGEX = '^[1-9][0-9]{3}$';
-  PHONE_REGEX = '^\\+(\\d{1,2})\\D*(\\d{1,3})\\D*(\\d{3})\\D*(\\d{3,4})$';
   NAME_REGEX = '^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.\'-]+$';
   CURRENT_YEAR = new Date().getFullYear().valueOf();
   isNormalUser: boolean = true;
@@ -125,19 +122,18 @@ export class RegisterComponent implements OnInit {
       {
         'providerServiceName': new FormControl('',
           [Validators.required, Validators.pattern(this.NAME_REGEX)]),
-        'name': new FormControl('',
-          [Validators.required, Validators.pattern(this.NAME_REGEX)]),
         'password': new FormControl('',
           [Validators.required, Validators.pattern(this.PASSWORD_REGEX)]),
         'passwordAgain': new FormControl('',
           [Validators.required, Validators.pattern(this.PASSWORD_REGEX)]),
-        'email': new FormControl('',
-          [Validators.required, Validators.pattern(this.EMAIL_REGEX)]),
-        'phone': new FormControl('',
-          [Validators.required, Validators.pattern(this.PHONE_REGEX)]),
 
-        'zipcode': new FormControl(null,
-          [Validators.pattern(this.ZIPCODE_REGEX)]),
+
+        'name': new FormControl('', (Validators.required)),
+        'email': new FormControl('', Validators.required),
+        'phone': new FormControl(''),
+        'website': new FormControl(''),
+
+        'zipcode': new FormControl(null),
         'city': new FormControl(''),
         'address': new FormControl(''),
 
@@ -203,5 +199,35 @@ export class RegisterComponent implements OnInit {
       return {passwordMismatch: true};
     }
     return null;
+  };
+
+
+  setEmail(email: string) {
+    this.registerForm.get('email').setValue(email);
+  }
+
+  setPhone(phone: string) {
+    this.registerForm.get('phone').setValue(phone);
+  }
+
+  setWebsite(website: string) {
+    this.registerForm.get('website').setValue(website);
+  }
+
+  setName(name: string) {
+    this.registerForm.get('name').setValue(name);
+  }
+
+  setZipcode(zipcode: number) {
+    this.registerForm.get('zipcode').setValue(zipcode);
+  }
+
+
+  setCity(city: string) {
+    this.registerForm.get('city').setValue(city);
+  }
+
+  setAddress(address: string) {
+    this.registerForm.get('address').setValue(address);
   }
 }

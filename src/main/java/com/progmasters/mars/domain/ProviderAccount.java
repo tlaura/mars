@@ -48,6 +48,10 @@ public class ProviderAccount {
     private String city;
     private String address;
 
+    //TODO: add constructor and DTO
+    //TODO: validators
+    private String website;
+
     @NotNull
     @Size(min = 1)
     @Enumerated(EnumType.STRING)
