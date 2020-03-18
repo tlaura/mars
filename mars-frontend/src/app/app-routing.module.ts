@@ -15,6 +15,7 @@ import {InstitutionImportComponent} from "./components/institution-import/instit
 const routes: Routes = [
 
   {path: "institution-list", component: InstitutionListComponent},
+  {path: "institution-list/:filterType/:filterResult", component: InstitutionListComponent},
   {path: "institution-form", component: InstitutionFormComponent},
   {path: "institution-import", component: InstitutionImportComponent},
   {path: "institution-details/:id", component: InstitutionDetailsComponent},

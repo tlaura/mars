@@ -6,7 +6,10 @@ import com.progmasters.mars.util.ExcelFileLoader;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.PositiveOrZero;
 import java.util.List;
 
 @Entity
@@ -18,8 +21,9 @@ public class Institution {
     @Column(name = "id")
     private Long id;
 
-    @Column(unique = true, name = "name")
     @NotBlank
+    @NotEmpty
+    @Column(unique = true, name = "name")
     private String name;
 
     @PositiveOrZero
@@ -27,23 +31,24 @@ public class Institution {
     private Integer zipcode;
 
     @NotBlank
+    @NotEmpty
     @Column(name = "city")
     private String city;
 
     @NotBlank
+    @NotEmpty
     @Column(name = "address")
     private String address;
 
-    @Column(unique = true, name = "email")
     @NotBlank
-    @Email
-    @NotNull
     @NotEmpty
+    @Email
+    @Column(unique = true, name = "email")
     private String email;
 
     @Lob
     @NotBlank
-    @Length(min = 10)
+    @Length(min = 30)
     @Column(name = "description")
     private String description;
 
@@ -53,14 +58,17 @@ public class Institution {
     @Column(name = "latitude")
     private Double latitude;
 
-    @OneToMany
+    @OneToMany(mappedBy = "institution")
     private List<OpeningHours> openingHours;
 
     @ManyToOne
+    @JoinColumn(name = "provider_account_id")
     private ProviderAccount providerAccount;
 
+    @Column(name = "website")
     private String website;
 
+    @Column(name = "phone")
     private String phone;
 
     public Institution() {
@@ -84,7 +92,7 @@ public class Institution {
 
     }
 
-    public Institution(ExcelFileLoader parsedFile) {
+    public Institution(ExcelFileLoader parsedFile, GeoLocation geoLocation) {
         this.name = parsedFile.getName();
         this.zipcode = parsedFile.getZipCode();
         this.city = parsedFile.getCity();
@@ -93,6 +101,8 @@ public class Institution {
         this.phone = parsedFile.getPhone();
         this.website = parsedFile.getWebsite();
         this.description = parsedFile.getDescription();
+        this.latitude = geoLocation.getLatitude();
+        this.longitude = geoLocation.getLongitude();
     }
 
     public Long getId() {

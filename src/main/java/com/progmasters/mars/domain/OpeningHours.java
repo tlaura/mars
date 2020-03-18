@@ -7,17 +7,29 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalTime;
 
 @Entity
+@Table(name = "opening_hours")
 public class OpeningHours {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
+
     @NotNull
     @Enumerated(EnumType.STRING)
+    @Column(name = "week_day")
     private WeekDays weekDay;
+
     @NotNull
+    @Column(name = "opening_time")
     private LocalTime openingTime;
+
     @NotNull
+    @Column(name = "closing_time")
     private LocalTime closingTime;
+
+    @ManyToOne
+    @JoinColumn(name = "institution_id")
+    private Institution institution;
 
     public OpeningHours() {
     }

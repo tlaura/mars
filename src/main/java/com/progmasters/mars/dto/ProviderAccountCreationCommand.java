@@ -1,27 +1,43 @@
 package com.progmasters.mars.dto;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 public class ProviderAccountCreationCommand {
+
+    @NotBlank
+    @NotEmpty
     private String providerServiceName;
+
+    @NotBlank
+    @NotEmpty
     private String name;
+
+    @NotBlank
+    @NotEmpty
     private String password;
+
+    @NotBlank
+    @NotEmpty
     private String email;
+
+    @NotNull
+    @Size(min = 1)
+    private List<String> types;
+
     private String phone;
-    private String zipcode;
+    private Integer zipcode;
     private String city;
     private String address;
-    private List<String> type;
     private Integer ageGroupMin;
     private Integer ageGroupMax;
     private List<InstitutionCreationCommand> institutions;
     private Boolean newsletter;
 
     public ProviderAccountCreationCommand() {
-    }
-
-    public String getProvidedServiceName() {
-        return providerServiceName;
     }
 
     public String getName() {
@@ -40,7 +56,7 @@ public class ProviderAccountCreationCommand {
         return phone;
     }
 
-    public String getZipcode() {
+    public Integer getZipcode() {
         return zipcode;
     }
 
@@ -52,8 +68,8 @@ public class ProviderAccountCreationCommand {
         return address;
     }
 
-    public List<String> getType() {
-        return type;
+    public List<String> getTypes() {
+        return types;
     }
 
     public Integer getAgeGroupMin() {

@@ -27,9 +27,9 @@ public class ProviderAccountValidatorService {
         } else if (!providerAccount.getName().matches(NAME_REGEX)) {
             errors.rejectValue("name", "name.invalidFormat");
         }
-        if (providerAccount.getProvidedServiceName() == null) {
+        if (providerAccount.getProviderServiceName() == null) {
             errors.rejectValue("providerServiceName", "providerServiceName.mustGive");
-        } else if (!providerAccount.getProvidedServiceName().matches(NAME_REGEX)) {
+        } else if (!providerAccount.getProviderServiceName().matches(NAME_REGEX)) {
             errors.rejectValue("providerServiceName", "providerServiceName.invalidFormat");
         }
         if (providerAccount.getPassword() == null) {
@@ -46,9 +46,6 @@ public class ProviderAccountValidatorService {
             errors.rejectValue("phone", "phone.mustGive");
         } else if (!providerAccount.getPhone().matches(PHONE_REGEX)) {
             errors.rejectValue("phone", "phone.invalidFormat");
-        }
-        if (providerAccount.getZipcode() != null && !providerAccount.getZipcode().matches(ZIPCODE_REGEX)) {
-            errors.rejectValue("zipcode", "zipcode.invalidFormat");
         }
         if (providerAccount.getAgeGroupMin() == null || providerAccount.getAgeGroupMin() < 0) {
             errors.rejectValue("ageGroupMin", "ageGroupMin.mustGive");

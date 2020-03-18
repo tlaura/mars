@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {InstitutionDetailModel} from "../../models/institutionDetail.model";
 import {ActivatedRoute} from "@angular/router";
 import {InstitutionService} from "../../services/institution.service";
+import {SocialService} from "ngx-social-button";
 
 @Component({
   selector: 'app-institution-details',
@@ -12,8 +13,14 @@ export class InstitutionDetailsComponent implements OnInit {
 
   @Input() institution: InstitutionDetailModel;
   @Input() mailSender: boolean = false;
+  shareUrl: string;
+  shareObj = {
+    //localhost-ra nem működik, elvileg élesben igen?!?!?
+    href: this.shareUrl,
+    hashtag: "#NONE"
+  };
 
-  constructor(private activatedRoute: ActivatedRoute, private institutionService: InstitutionService) {
+  constructor(private activatedRoute: ActivatedRoute, private institutionService: InstitutionService, private socialService: SocialService) {
   }
 
   ngOnInit() {
@@ -23,11 +30,14 @@ export class InstitutionDetailsComponent implements OnInit {
         if (id) {
           this.institutionService.getInstitutionDetail(id).subscribe(
             institutionDetail => this.institution = institutionDetail,
-            error => console.warn(error)
+            error => console.warn(error),
+            () => {
+              this.shareUrl = "http://localhost/4200/institution-details/" + this.institution.id;
+            }
           )
         }
       }
-    )
+    );
   }
 
   openMailSend = () => {
@@ -35,6 +45,6 @@ export class InstitutionDetailsComponent implements OnInit {
   };
   closeMailSender = () => {
     this.mailSender = false;
-  }
+  };
 
 }

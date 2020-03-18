@@ -35,9 +35,9 @@ import {OpeningHoursComponent} from './components/form-components/opening-hours/
 
 export function getAuthServiceConfigs() {
   let config = new SocialServiceConfig()
-    .addFacebook("229963898396055")
-    .addGoogle("Your-Google-Client-Id")
-    .addLinkedIn("Your-LinkedIn-Client-Id");
+    .addFacebook("229963898396055");
+  // .addGoogle("Your-Google-Client-Id")
+  //  .addLinkedIn("Your-LinkedIn-Client-Id");
   return config;
 }
 

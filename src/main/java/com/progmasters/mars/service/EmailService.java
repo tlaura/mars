@@ -60,7 +60,6 @@ public class EmailService {
         if (userToken != null) {
             userToken.setConfirmed(true);
             confirmationTokenRepository.save(userToken);
-            //  confirmationTokenRepository.deleteById(userToken.getId());
         } else {
             throw new EntityNotFoundException("not valid confirmation link");
         }

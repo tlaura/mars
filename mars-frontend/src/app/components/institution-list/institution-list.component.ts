@@ -1,10 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {InstitutionService} from "../../services/institution.service";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {InstitutionListModel} from "../../models/institutionList.model";
 import {InstitutionTypeModel} from "../../models/InstitutionType.model";
 import {institutionListIndex} from "../../../environments/institutionListIndex.prod";
 import {AccountService} from "../../services/account.service";
+import {SocialService} from "ngx-social-button";
+import {FormControl} from "@angular/forms";
 
 @Component({
   selector: 'app-institution-list',
@@ -18,12 +20,23 @@ export class InstitutionListComponent implements OnInit {
   page: number = institutionListIndex.startPageIndex;
   size: number = institutionListIndex.numberOfItemPerPage;
   searchText: string;
+  currentType: string;
+  institutionType: FormControl;
+
+  shareObj = {
+    //localhost-ra nem működik, elvileg élesben igen?!?!?
+    href: "",
+    hashtag: "#NONE"
+  };
 
   sizeArray: Array<number> = institutionListIndex.itemsPerPageArray;
 
   constructor(private institutionService: InstitutionService,
               private accountService: AccountService,
-              private router: Router) {
+              private router: Router,
+              private activatedRoute: ActivatedRoute,
+              private socialService: SocialService) {
+    this.institutionType = new FormControl('all');
   }
 
   setSize = (size: number) => {
@@ -33,9 +46,31 @@ export class InstitutionListComponent implements OnInit {
   };
 
   ngOnInit() {
-    this.getInstitutions();
+    this.activatedRoute.paramMap.subscribe(
+      param => {
+        const filterType: string = param.get('filterType');
+        if (filterType) {
+          const filterResult: string = param.get('filterResult');
+          this.loadPageByFilterType(filterType, filterResult);
+          this.institutionType.setValue(filterType);
+        } else {
+          this.getInstitutions();
+        }
+      },
+    );
     this.getInstitutionType();
   }
+
+  loadPageByFilterType = (type: string, result: string): void => {
+    switch (type) {
+      case "providerType":
+        this.getInstitutionsByType(result);
+        break;
+      case "search":
+        //todo
+        break;
+    }
+  };
 
   narrowByType = (type: string) => {
     //todo refactor magic string
@@ -53,23 +88,35 @@ export class InstitutionListComponent implements OnInit {
     );
   };
 
-  private getInstitutionsByType = (type: string) => {
-    this.accountService.getInstitutionByType(type).subscribe(
-      institutionList => this.institutionList = institutionList,
-      error => console.warn(error),
-    );
-  };
+  shareList() {
+    if (this.currentType != "all") {
+      this.shareObj.href = "http://localhost:4200/institution-list/providerType/" + this.currentType;
+      console.log(this.shareObj);
+    }
+    this.socialService.facebookSharing(this.shareObj);
+  }
 
   private getInstitutions = () => {
     this.institutionService.getInstitutionList().subscribe(
       institutionList => this.institutionList = institutionList,
       error => console.warn(error),
-      () => console.log(this.institutionList)
     );
   };
 
 
   details = (id: number) => {
     this.router.navigate(["institution-details", id]);
+  };
+
+  setCurrentType(type: string) {
+    this.currentType = type;
+  }
+
+  private getInstitutionsByType = (type: string) => {
+    this.accountService.getInstitutionByType(type).subscribe(
+      institutionList => this.institutionList = institutionList,
+      error => console.warn(error),
+      () => console.log(this.institutionList),
+    );
   };
 }
