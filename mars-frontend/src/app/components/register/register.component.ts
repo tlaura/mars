@@ -136,7 +136,7 @@ export class RegisterComponent implements OnInit {
         'phone': new FormControl('',
           [Validators.required, Validators.pattern(this.PHONE_REGEX)]),
 
-        'zipcode': new FormControl('',
+        'zipcode': new FormControl(null,
           [Validators.pattern(this.ZIPCODE_REGEX)]),
         'city': new FormControl(''),
         'address': new FormControl(''),
@@ -157,7 +157,7 @@ export class RegisterComponent implements OnInit {
       id: new FormControl(null),
       name: new FormControl('',
         [Validators.required]),
-      zipcode: new FormControl('',
+      zipcode: new FormControl(null,
         [Validators.pattern(this.ZIPCODE_REGEX), Validators.required]),
       city: new FormControl('', Validators.required),
       address: new FormControl('', Validators.required),

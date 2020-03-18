@@ -75,7 +75,7 @@ public class InstitutionService {
 
     private void setLocation(List<InstitutionListData> collect) {
         for (InstitutionListData institution : collect) {
-            String address = institution.getZipCode() + " " + institution.getCity() + " " + institution.getAddress();
+            String address = institution.getZipcode() + " " + institution.getCity() + " " + institution.getAddress();
             GeoLocation geoLocation = geocodeService.getGeoLocation(address);
             institution.setLatitude(geoLocation.getLatitude());
             institution.setLongitude(geoLocation.getLongitude());

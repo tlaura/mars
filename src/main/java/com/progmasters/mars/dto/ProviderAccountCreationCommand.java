@@ -71,4 +71,8 @@ public class ProviderAccountCreationCommand {
     public Boolean getNewsletter() {
         return newsletter;
     }
+
+    public String getProviderServiceName() {
+        return providerServiceName;
+    }
 }

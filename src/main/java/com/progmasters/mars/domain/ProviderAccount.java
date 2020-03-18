@@ -43,7 +43,7 @@ public class ProviderAccount {
     private Role role;
 
     @Column(name = "zipcode")
-    private String zipCode;
+    private String zipcode;
 
     private String city;
     private String address;
@@ -70,7 +70,7 @@ public class ProviderAccount {
     public ProviderAccount(ProviderAccountCreationCommand providerAccountCreationCommand) {
         this.providerServiceName = providerAccountCreationCommand.getProvidedServiceName();
         this.name = providerAccountCreationCommand.getName();
-        this.zipCode = providerAccountCreationCommand.getZipcode();
+        this.zipcode = providerAccountCreationCommand.getZipcode();
         this.city = providerAccountCreationCommand.getCity();
         this.address = providerAccountCreationCommand.getAddress();
         this.email = providerAccountCreationCommand.getEmail();
@@ -141,12 +141,12 @@ public class ProviderAccount {
         this.role = role;
     }
 
-    public String getZipCode() {
-        return zipCode;
+    public String getZipcode() {
+        return zipcode;
     }
 
-    public void setZipCode(String zipCode) {
-        this.zipCode = zipCode;
+    public void setZipcode(String zipCode) {
+        this.zipcode = zipCode;
     }
 
     public String getCity() {

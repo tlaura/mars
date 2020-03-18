@@ -64,6 +64,7 @@ export class InstitutionListComponent implements OnInit {
     this.institutionService.getInstitutionList().subscribe(
       institutionList => this.institutionList = institutionList,
       error => console.warn(error),
+      () => console.log(this.institutionList)
     );
   };
 

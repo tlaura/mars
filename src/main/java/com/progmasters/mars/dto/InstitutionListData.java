@@ -6,7 +6,7 @@ public class InstitutionListData {
 
     private Long id;
     private String name;
-    private Integer zipCode;
+    private Integer zipcode;
     private String city;
     private String address;
     private Double longitude;
@@ -19,7 +19,7 @@ public class InstitutionListData {
     public InstitutionListData(Institution institution) {
         this.id = institution.getId();
         this.name = institution.getName();
-        this.zipCode = institution.getZipcode();
+        this.zipcode = institution.getZipcode();
         this.city = institution.getCity();
         this.address = institution.getAddress();
         this.longitude = institution.getLongitude();
@@ -34,8 +34,8 @@ public class InstitutionListData {
         return name;
     }
 
-    public Integer getZipCode() {
-        return zipCode;
+    public Integer getZipcode() {
+        return zipcode;
     }
 
     public String getCity() {

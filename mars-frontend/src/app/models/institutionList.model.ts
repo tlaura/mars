@@ -1,7 +1,7 @@
 export interface InstitutionListModel {
   id: number,
   name: string,
-  zipCode: number,
+  zipcode: number,
   city: string,
   address: string,
   type: string
