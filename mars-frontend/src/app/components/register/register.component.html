@@ -7,62 +7,26 @@
   <button (click)="renderProviderAccountRegisterForm()" [ngClass]="!isNormalUser ? 'active' : 'inactive'"
           class="user-option-chooser btn w-50 mb-0">Szolgáltatás
   </button>
-  <div class="register-div text-left p-sm-3 p-md-3">
-    <app-contacts
-      (emailEmitter)="setEmail($event)"
-      (nameEmitter)="setName($event)"
-      (phoneEmitter)="setPhone($event)"
-      (websiteEmitter)="setWebsite($event)"
-    ></app-contacts>
 
+
+  <div class="register-div text-left p-sm-3 p-md-3">
     <form [formGroup]="registerForm">
 
-      <!-- COMMON START FIELDS DIV -->
+      <app-contacts
+        (emailEmitter)="setEmail($event)"
+        (nameEmitter)="setName($event)"
+        (phoneEmitter)="setPhone($event)"
+        (websiteEmitter)="setWebsite($event)"
+      ></app-contacts>
 
-      <div class="row m-0" id="common-start-fields-div">
-        <div class="form-group col-sm-12 col-md-8">
-          <label *ngIf="isNormalUser" for="providerServiceName">Név:</label>
-          <label *ngIf="!isNormalUser" for="providerServiceName">Szolgáltatás neve*:</label>
-          <input class="form-control rounded-pill" formControlName="providerServiceName" id="providerServiceName"
-                 type="text">
-          <div
-            *ngIf="registerForm.get('providerServiceName').invalid && registerForm.get('providerServiceName').touched">
-            <small *ngIf="registerForm.get('providerServiceName').errors.pattern"
-                   class="text-danger">
-              Érvénytelen név!
-            </small>
-          </div>
-        </div>
-        <div class="col-sm-12 col-md-12"></div>
-      </div>
-
-      <div class="form-group col-sm-12 col-md-6">
-        <label for="password">Jelszó*:</label>
-        <input (change)="checkPasswords()" class="form-control rounded-pill" formControlName="password" id="password"
-               type="password">
-      </div>
-      <div class="form-group col-sm-12 col-md-6">
-        <label for="passwordAgain">Jelszó megerősítése:</label>
-        <input (change)="checkPasswords()" class="form-control rounded-pill" formControlName="passwordAgain"
-               id="passwordAgain" name="passwordAgain" type="password">
-      </div>
-
-      <div *ngIf="registerForm.get('password').invalid && registerForm.get('password').touched "
-           class="row form-group col-sm-12 col-md-12 mx-0">
-        <small *ngIf="registerForm.get('password').errors.required"
-               class="text-danger">
-          A mező kitöltése közelező!
-        </small>
-        <small *ngIf="registerForm.get('password').errors.pattern"
-               class="text-danger">
-          A jelszónak legalább 6, legfeljebb 15 karakterből kell állnia! Tartalmaznia kell legalább egy betűt és egy
-          számot!
-        </small>
-        <small *ngIf="registerForm.get('password').errors.passwordMismatch"
-               class="text-danger">
-          A két jelszónak meg kell egyeznie!
-        </small>
-      </div>
+      <app-provider-attributes
+        (ageGroupMaxEmitter)="setAgeGroupMax($event)"
+        (ageGroupMinEmitter)="setAgeGroupMin($event)"
+        (passwordEmitter)="setPassword($event)"
+        (providerServiceNameEmitter)="setProviderServiceName($event)"
+        (typesEmitter)="setTypes($event)"
+      >
+      </app-provider-attributes>
 
 
       <!-- CUSTOM ADDRESS CHECK DIV -->
@@ -71,48 +35,23 @@
         <div class="row m-0">
           <div class="form-group col-sm-12 col-md-12">
             <label for="customAddress">Cím hozzáadása a szolgáltatáshoz:</label>
-            <input (change)="haveProviderCustomAddress=!haveProviderCustomAddress" class="form-check-input m-1"
+            <input (change)="addCustomProviderAddress()" class="form-check-input m-1"
                    id="customAddress"
                    type="checkbox">
           </div>
         </div>
       </div>
 
-      <!-- ADDRESS DIV -->
-
-      <app-address
-        (addressEmitter)="setAddress($event)"
-        (cityEmitter)="setCity($event)"
-        (zipcodeEmitter)="setZipcode($event)"
+      <app-address (addressEmitter)="setAddress($event)"
+                   (cityEmitter)="setCity($event)"
+                   (zipcodeEmitter)="setZipcode($event)"
+                   *ngIf="haveProviderCustomAddress"
       ></app-address>
 
-      <!-- PROVIDER USER FIELDS-->
+
+      <!-- INSTITUTIONS -->
 
       <div *ngIf="!isNormalUser" id="provider-user-fields-div">
-
-        <div class="row m-0">
-          <div class="form-group col-sm-12 col-md-3">
-            <label for="ageGroupMin">Minimum kor*:</label>
-            <select class="form-control rounded-pill " formControlName="ageGroupMin" id="ageGroupMin"
-                    name="ageGroupMin">
-              <option *ngFor="let age of getAgesArray(100), let i = index" value="{{i}}">{{i}}</option>
-            </select>
-          </div>
-          <div class="form-group col-sm-12 col-md-3">
-            <label for="ageGroupMax">Maximum kor*:</label>
-            <select class="form-control rounded-pill" formControlName="ageGroupMax" id="ageGroupMax"
-                    name="ageGroupMax">
-              <option *ngFor="let age of getAgesArray(100), let i = index" value="{{i}}">{{i}}</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="form-group col-sm-12 col-md-6">
-          <label for="type">Szolgáltatás típusa*:</label>
-          <select class="form-control rounded-pill" formControlName="type" id="type" multiple name="type">
-            <option *ngFor="let type of types" value="{{type}}">{{type}}</option>
-          </select>
-        </div>
 
         <div class="form-group col-sm-12 col-md-12">
           <label>Intézmények:</label>

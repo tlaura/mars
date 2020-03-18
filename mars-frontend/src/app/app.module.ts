@@ -28,6 +28,8 @@ import {NgxSocialButtonModule, SocialServiceConfig} from "ngx-social-button";
 import {EmailComponent} from './components/form-components/email/email.component';
 import {ContactsComponent} from './components/form-components/contacts/contacts.component';
 import {AddressComponent} from './components/form-components/address/address.component';
+import {ProviderAttributesComponent} from './components/form-components/provider-attributes/provider-attributes.component';
+import {PasswordComponent} from './components/form-components/password/password.component';
 
 export function getAuthServiceConfigs() {
   let config = new SocialServiceConfig()
@@ -56,7 +58,9 @@ export function getAuthServiceConfigs() {
     InstitutionImportComponent,
     EmailComponent,
     ContactsComponent,
-    AddressComponent
+    AddressComponent,
+    ProviderAttributesComponent,
+    PasswordComponent
   ],
   imports: [
     BrowserModule,

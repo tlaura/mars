@@ -13,13 +13,9 @@ import {validationHandler} from "../../utils/validationHandler";
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
-  PASSWORD_REGEX = '(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{6,15})$';
-  NAME_REGEX = '^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.\'-]+$';
   CURRENT_YEAR = new Date().getFullYear().valueOf();
   isNormalUser: boolean = true;
   haveProviderCustomAddress: boolean = false;
-  // TODO:  fetch types from server?
-  types: string[] = ['diagnózis központ', ' terápia', 'fejlesztő hely', 'óvoda', 'általános iskola', 'középiskola', 'kollégium', 'munkahely', 'bentlakásos felnőtt ellátó', 'nappali foglalkoztató', 'egyéb'];
   weekDays: string[] = ['Hétfő', 'Kedd', 'Szerda', 'Csütörtök', 'Péntek', 'Szombat', 'Vasárnap'];
   registerForm: FormGroup;
   institutions = new FormArray([]);
@@ -67,7 +63,6 @@ export class RegisterComponent implements OnInit {
 
   renderProviderAccountRegisterForm() {
     this.registerForm = this.getCommonFieldsFormGroup();
-    this.addFormGroup(this.getProviderAccountRegisterFormGroup());
     this.isNormalUser = false;
   }
 
@@ -77,9 +72,6 @@ export class RegisterComponent implements OnInit {
     }
   }
 
-  getAgesArray(n: number) {
-    return Array(n);
-  }
 
   currentPasswordAgain: string = '';
 
@@ -91,15 +83,6 @@ export class RegisterComponent implements OnInit {
       })
   }
 
-  getProviderAccountRegisterFormGroup(): FormGroup {
-    return new FormGroup(
-      {
-        'type': new FormControl(null),
-        'ageGroupMin': new FormControl(1),
-        'ageGroupMax': new FormControl(99),
-        'institutions': this.institutions,
-      })
-  }
 
   addNewOpeningHours(control: AbstractControl) {
 
@@ -120,13 +103,11 @@ export class RegisterComponent implements OnInit {
   getCommonFieldsFormGroup(): FormGroup {
     return new FormGroup(
       {
-        'providerServiceName': new FormControl('',
-          [Validators.required, Validators.pattern(this.NAME_REGEX)]),
-        'password': new FormControl('',
-          [Validators.required, Validators.pattern(this.PASSWORD_REGEX)]),
-        'passwordAgain': new FormControl('',
-          [Validators.required, Validators.pattern(this.PASSWORD_REGEX)]),
-
+        'providerServiceName': new FormControl('', Validators.required),
+        'password': new FormControl('', Validators.required),
+        'ageGroupMin': new FormControl(0),
+        'ageGroupMax': new FormControl(99),
+        'types': new FormControl(null),
 
         'name': new FormControl('', (Validators.required)),
         'email': new FormControl('', Validators.required),
@@ -134,10 +115,10 @@ export class RegisterComponent implements OnInit {
         'website': new FormControl(''),
 
         'zipcode': new FormControl(null),
-        'city': new FormControl(''),
-        'address': new FormControl(''),
+        'city': new FormControl(null),
+        'address': new FormControl(null),
 
-        'newsletter': new FormControl(''),
+        'newsletter': new FormControl(false),
         'termsAndConditions': new FormControl(false, Validators.requiredTrue)
       }
     )
@@ -154,7 +135,7 @@ export class RegisterComponent implements OnInit {
       name: new FormControl('',
         [Validators.required]),
       zipcode: new FormControl(null,
-        [Validators.pattern(this.ZIPCODE_REGEX), Validators.required]),
+        [, Validators.required]),
       city: new FormControl('', Validators.required),
       address: new FormControl('', Validators.required),
       description: new FormControl('',
@@ -188,20 +169,6 @@ export class RegisterComponent implements OnInit {
     }
   };
 
-  checkPasswords = () => {
-    this.currentPasswordAgain = this.registerForm.get('passwordAgain').value;
-    this.registerForm.get('password').setValidators([Validators.required, Validators.pattern(this.PASSWORD_REGEX), this.passwordMatchValidator]);
-    this.registerForm.get('password').updateValueAndValidity();
-  };
-
-  passwordMatchValidator = (control: FormControl) => {
-    if (control.value != this.currentPasswordAgain) {
-      return {passwordMismatch: true};
-    }
-    return null;
-  };
-
-
   setEmail(email: string) {
     this.registerForm.get('email').setValue(email);
   }
@@ -229,5 +196,34 @@ export class RegisterComponent implements OnInit {
 
   setAddress(address: string) {
     this.registerForm.get('address').setValue(address);
+  }
+
+  setPassword(password: string) {
+    this.registerForm.get('password').setValue(password);
+  }
+
+  setProviderServiceName(providerServiceName: string) {
+    this.registerForm.get('providerServiceName').setValue(providerServiceName);
+  }
+
+  setAgeGroupMax(ageGroupMax: string) {
+    this.registerForm.get('ageGroupMax').setValue(ageGroupMax);
+  }
+
+  setAgeGroupMin(ageGroupMin: string) {
+    this.registerForm.get('ageGroupMin').setValue(ageGroupMin);
+  }
+
+  setTypes(types: string[]) {
+    this.registerForm.get('types').setValue(types);
+  }
+
+  addCustomProviderAddress() {
+    this.haveProviderCustomAddress = !this.haveProviderCustomAddress;
+    if (!this.haveProviderCustomAddress) {
+      this.registerForm.get('zipcode').reset();
+      this.registerForm.get('city').reset();
+      this.registerForm.get('address').reset();
+    }
   }
 }
