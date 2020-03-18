@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {InstitutionFormDataModel} from "../models/institutionFormData.model";
 import {Observable} from "rxjs";
 import {InstitutionListModel} from "../models/institutionList.model";
 import {InstitutionTypeModel} from "../models/InstitutionType.model";
@@ -15,7 +14,8 @@ export class InstitutionService {
   constructor(private http: HttpClient) {
   }
 
-  saveInstitution = (formData: InstitutionFormDataModel) => {
+  //TODO: new model
+  saveInstitution = (formData: InstitutionDetailModel) => {
     return this.http.post(this.BASE_URL, formData);
   };
 
@@ -27,9 +27,6 @@ export class InstitutionService {
     return this.http.get<Array<InstitutionTypeModel>>(this.BASE_URL + "institutionType");
   };
 
-  getInstitutionByType = (name: string): Observable<Array<InstitutionListModel>> => {
-    return this.http.get<Array<InstitutionListModel>>(this.BASE_URL + "getInstitutionsByType?type=" + name);
-  };
 
   getInstitutionDetail = (id: number): Observable<InstitutionDetailModel> => {
     return this.http.get<InstitutionDetailModel>(this.BASE_URL + id);

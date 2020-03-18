@@ -1,7 +1,7 @@
 package com.progmasters.mars.service;
 
 import com.progmasters.mars.repository.IndividualUserRepository;
-import com.progmasters.mars.repository.InstitutionalUserRepository;
+import com.progmasters.mars.repository.ProviderAccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,13 +11,13 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserService {
 
     private final IndividualUserRepository userRepository;
-    private final InstitutionalUserRepository institutionalUserRepository;
+    private final ProviderAccountRepository providerAccountRepository;
     private final EmailService emailService;
 
     @Autowired
-    public UserService(IndividualUserRepository userRepository, InstitutionalUserRepository institutionalUserRepository, EmailService emailService) {
+    public UserService(IndividualUserRepository userRepository, ProviderAccountRepository providerAccountRepository, EmailService emailService) {
         this.userRepository = userRepository;
-        this.institutionalUserRepository = institutionalUserRepository;
+        this.providerAccountRepository = providerAccountRepository;
         this.emailService = emailService;
     }
 }

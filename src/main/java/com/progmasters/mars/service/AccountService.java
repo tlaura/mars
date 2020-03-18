@@ -1,18 +1,17 @@
 package com.progmasters.mars.service;
 
 import com.progmasters.mars.domain.Institution;
-import com.progmasters.mars.domain.OpeningHours;
+import com.progmasters.mars.domain.InstitutionType;
 import com.progmasters.mars.domain.ProviderAccount;
-import com.progmasters.mars.dto.InstitutionDetailsData;
+import com.progmasters.mars.dto.InstitutionListData;
 import com.progmasters.mars.dto.ProviderAccountCreationCommand;
 import com.progmasters.mars.dto.ProviderUserDetails;
-import com.progmasters.mars.repository.InstitutionRepository;
-import com.progmasters.mars.repository.OpeningHoursRepository;
 import com.progmasters.mars.repository.ProviderAccountRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,15 +20,16 @@ import java.util.stream.Collectors;
 public class AccountService {
 
     private ProviderAccountRepository providerAccountRepository;
-    private final InstitutionRepository institutionRepository;
-    private OpeningHoursRepository openingHoursRepository;
+    private final InstitutionService institutionService;
     private BCryptPasswordEncoder passwordEncoder;
     private final EmailService emailService;
 
-    public AccountService(ProviderAccountRepository providerAccountRepository, InstitutionRepository institutionRepository, OpeningHoursRepository openingHoursRepository, BCryptPasswordEncoder passwordEncoder, EmailService emailService) {
+    public AccountService(ProviderAccountRepository providerAccountRepository,
+                          InstitutionService institutionService,
+                          BCryptPasswordEncoder passwordEncoder,
+                          EmailService emailService) {
         this.providerAccountRepository = providerAccountRepository;
-        this.institutionRepository = institutionRepository;
-        this.openingHoursRepository = openingHoursRepository;
+        this.institutionService = institutionService;
         this.passwordEncoder = passwordEncoder;
         this.emailService = emailService;
     }
@@ -38,41 +38,37 @@ public class AccountService {
         ProviderAccount providerAccount = new ProviderAccount(providerAccountCreationCommand);
         providerAccount.setPassword(passwordEncoder.encode(providerAccountCreationCommand.getPassword()));
         providerAccount.setInstitutions(createInstitutionList(providerAccountCreationCommand));
-        providerAccount.setOpeningHours(createOpeningHoursList(providerAccountCreationCommand));
 
         providerAccountRepository.save(providerAccount);
         emailService.sendConfirmationEmail(providerAccount);
     }
 
-    private List<OpeningHours> createOpeningHoursList(ProviderAccountCreationCommand providerAccountCreationCommand) {
-        return providerAccountCreationCommand.getOpeningHours().stream()
-                .map((openingHoursCreationCommand) -> {
-                    OpeningHours openingHours = new OpeningHours(openingHoursCreationCommand);
-                    openingHoursRepository.save(openingHours);
-                    return openingHours;
-                })
-                .collect(Collectors.toList());
-    }
-
+    //todo reheck
     private List<Institution> createInstitutionList(ProviderAccountCreationCommand providerAccountCreationCommand) {
         return providerAccountCreationCommand.getInstitutions().stream()
                 .map(institution -> institution.getId() != null ?
-                        institutionRepository.findById(institution.getId()).orElseThrow() : createInstitution(institution))
+                        institutionService.findById(institution.getId()) : institutionService.createInstitution(institution))
                 .collect(Collectors.toList());
-    }
-
-    private Institution createInstitution(InstitutionDetailsData institutionDetailsData) {
-        Institution institution = new Institution(institutionDetailsData);
-        institutionRepository.save(institution);
-        return institution;
     }
 
     public void removeById(Long id) {
         providerAccountRepository.deleteById(id);
     }
 
-    public ProviderUserDetails getProviderUser(String email) {
+    public ProviderUserDetails getProviderAccount(String email) {
         ProviderAccount providerAccount = providerAccountRepository.findByEmail(email);
         return new ProviderUserDetails(providerAccount);
+    }
+
+    public List<InstitutionListData> getInstitutionsByType(InstitutionType institutionType) {
+        List<ProviderAccount> accountListByType = providerAccountRepository.findByType(institutionType);
+        List<InstitutionListData> institutionListData = new ArrayList<>();
+        for (ProviderAccount providerAccount : accountListByType) {
+            for (Institution institution : providerAccount.getInstitutions()) {
+                institutionListData.add(new InstitutionListData(institution));
+            }
+        }
+
+        return institutionListData;
     }
 }

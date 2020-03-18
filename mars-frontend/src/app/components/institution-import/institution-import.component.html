@@ -1,7 +1,7 @@
 <div class="container-fluid">
   <form [formGroup]="importForm" enctype="multipart/form-data">
     <h2>Intézmények importálása</h2>
-    <div class="custom-file col-sm-1 col-md-3 form-group">
+    <div class="custom-file col-sm-12 col-md-3 form-group">
       <input (change)="uploadFile($event)"
              accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
              class="custom-file-input"

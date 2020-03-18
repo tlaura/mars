@@ -24,6 +24,15 @@ import {MyProfileComponent} from './components/my-profile/my-profile.component';
 import {InstitutionImportComponent} from './components/institution-import/institution-import.component';
 import {SendMailComponent} from './components/send-mail/send-mail.component';
 import {AgmSnazzyInfoWindowModule} from "@agm/snazzy-info-window";
+import {NgxSocialButtonModule, SocialServiceConfig} from "ngx-social-button";
+
+export function getAuthServiceConfigs() {
+  let config = new SocialServiceConfig()
+    .addFacebook("229963898396055")
+    .addGoogle("Your-Google-Client-Id")
+    .addLinkedIn("Your-LinkedIn-Client-Id");
+  return config;
+}
 
 @NgModule({
   declarations: [
@@ -55,13 +64,18 @@ import {AgmSnazzyInfoWindowModule} from "@agm/snazzy-info-window";
       apiKey: environment.apiKey,
       libraries: ["places", "geometry"]
     }),
-    AgmSnazzyInfoWindowModule
+    AgmSnazzyInfoWindowModule,
+    NgxSocialButtonModule
   ],
   providers: [
     GoogleMapsAPIWrapper,
     [
       {provide: HTTP_INTERCEPTORS, useClass: HttpRequestInterceptor, multi: true}
     ],
+    {
+      provide: SocialServiceConfig,
+      useFactory: getAuthServiceConfigs
+    }
   ],
   bootstrap: [AppComponent]
 })

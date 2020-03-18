@@ -5,6 +5,7 @@ import com.progmasters.mars.dto.ProviderAccountCreationCommand;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "provider_account")
@@ -16,19 +17,23 @@ public class ProviderAccount {
     @NotBlank
     @NotEmpty
     @NotNull
-    private String name;
+    private String providerServiceName;
+
     @NotBlank
     @NotEmpty
     @NotNull
-    private String username;
+    private String name;
+
     @NotBlank
     @NotEmpty
     @NotNull
     private String password;
+
     @NotBlank
     @NotEmpty
     @NotNull
     private String email;
+
     @NotBlank
     @NotEmpty
     @NotNull
@@ -38,20 +43,16 @@ public class ProviderAccount {
     private Role role;
 
     @Column(name = "zipcode")
-    private String zipCode;
+    private String zipcode;
 
     private String city;
     private String address;
 
     @NotNull
-    @Enumerated(EnumType.STRING)
-    private InstitutionType type;
-
-
-//    @NotNull
-    @OneToMany
     @Size(min = 1)
-    private List<OpeningHours> openingHours;
+    @Enumerated(EnumType.STRING)
+    @ElementCollection
+    private List<InstitutionType> type;
 
     @NotNull
     @PositiveOrZero
@@ -61,103 +62,146 @@ public class ProviderAccount {
     @PositiveOrZero
     private Integer ageGroupMax;
 
-    @OneToMany
+    @OneToMany(mappedBy = "providerAccount")
     private List<Institution> institutions;
+
     private Boolean newsletter;
 
     public ProviderAccount(ProviderAccountCreationCommand providerAccountCreationCommand) {
-        this.username = providerAccountCreationCommand.getUsername();
+        this.providerServiceName = providerAccountCreationCommand.getProvidedServiceName();
         this.name = providerAccountCreationCommand.getName();
-        this.zipCode = providerAccountCreationCommand.getZipcode();
+        this.zipcode = providerAccountCreationCommand.getZipcode();
         this.city = providerAccountCreationCommand.getCity();
         this.address = providerAccountCreationCommand.getAddress();
         this.email = providerAccountCreationCommand.getEmail();
         this.phone = providerAccountCreationCommand.getPhone();
         this.ageGroupMin = providerAccountCreationCommand.getAgeGroupMin();
         this.ageGroupMax = providerAccountCreationCommand.getAgeGroupMax();
-        this.type = InstitutionType.getTypeByHungarianName(providerAccountCreationCommand.getType());
+        this.type = providerAccountCreationCommand.getType().stream().map(InstitutionType::getTypeByHungarianName).collect(Collectors.toList());
         this.newsletter = providerAccountCreationCommand.getNewsletter();
+        this.role = Role.ROLE_PROVIDER;
     }
 
     public ProviderAccount() {
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setOpeningHours(List<OpeningHours> openingHours) {
-        this.openingHours = openingHours;
-    }
-
-    public void setInstitutions(List<Institution> institutions) {
-        this.institutions = institutions;
     }
 
     public Long getId() {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getProviderServiceName() {
+        return providerServiceName;
+    }
+
+    public void setProviderServiceName(String providerServiceName) {
+        this.providerServiceName = providerServiceName;
+    }
+
     public String getName() {
         return name;
     }
 
-    public String getUsername() {
-        return username;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getPassword() {
         return password;
     }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public String getEmail() {
         return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPhone() {
         return phone;
     }
 
-    public String getZipCode() {
-        return zipCode;
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public String getZipcode() {
+        return zipcode;
+    }
+
+    public void setZipcode(String zipCode) {
+        this.zipcode = zipCode;
     }
 
     public String getCity() {
         return city;
     }
 
+    public void setCity(String city) {
+        this.city = city;
+    }
+
     public String getAddress() {
         return address;
     }
 
-    public InstitutionType getType() {
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public List<InstitutionType> getType() {
         return type;
     }
 
-    public List<OpeningHours> getOpeningHours() {
-        return openingHours;
+    public void setType(List<InstitutionType> type) {
+        this.type = type;
     }
 
     public Integer getAgeGroupMin() {
         return ageGroupMin;
     }
 
+    public void setAgeGroupMin(Integer ageGroupMin) {
+        this.ageGroupMin = ageGroupMin;
+    }
+
     public Integer getAgeGroupMax() {
         return ageGroupMax;
+    }
+
+    public void setAgeGroupMax(Integer ageGroupMax) {
+        this.ageGroupMax = ageGroupMax;
     }
 
     public List<Institution> getInstitutions() {
         return institutions;
     }
 
+    public void setInstitutions(List<Institution> institutions) {
+        this.institutions = institutions;
+    }
+
     public Boolean getNewsletter() {
         return newsletter;
     }
 
-    public Role getRole() {
-        return role;
-    }
-    public void setRole(Role role) {
-        this.role = role;
+    public void setNewsletter(Boolean newsletter) {
+        this.newsletter = newsletter;
     }
 }

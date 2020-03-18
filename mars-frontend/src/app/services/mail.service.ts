@@ -14,7 +14,7 @@ export class MailService {
   }
 
   confirmRegistration = (token: string): Observable<any> => {
-    return this.http.get(this.BASE_URL + "confirmation" + token);
+    return this.http.get(this.BASE_URL + "confirmation/" + token);
   };
 
   sendEmail = (mailModel: EmailModel): Observable<any> => {

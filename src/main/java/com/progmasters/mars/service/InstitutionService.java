@@ -1,7 +1,6 @@
 package com.progmasters.mars.service;
 
 import com.progmasters.mars.domain.Institution;
-import com.progmasters.mars.domain.InstitutionType;
 import com.progmasters.mars.dto.*;
 import com.progmasters.mars.repository.InstitutionRepository;
 import com.progmasters.mars.util.ExcelFileLoader;
@@ -42,42 +41,17 @@ public class InstitutionService {
     }
 
 
-    public void createInstitution(InstitutionCreationForm institutionCreationForm) {
-        String address = institutionCreationForm.getZipCode() + " " + institutionCreationForm.getCity() + " " + institutionCreationForm.getAddress();
-        GeoLocation geoLocation = geocodeService.getGeoLocation(address);
+    public Institution createInstitution(InstitutionCreationCommand institutionCreationForm) {
+        String address = institutionCreationForm.getZipcode() + " " + institutionCreationForm.getCity() + " " + institutionCreationForm.getAddress();
+        GeoLocation geoLocation = getGeoLocationByAddress(address);
         Institution institution = new Institution(institutionCreationForm, geoLocation);
-        //todo get user id
         institutionRepository.save(institution);
+
+        return institution;
     }
 
-    public List<InstitutionListData> getInstitutionsByType(InstitutionType institutionType) {
-        return institutionRepository.findAllByInstitutionType(institutionType).stream().map(InstitutionListData::new).collect(Collectors.toList());
-    }
-
-    //todo remove in the future
-    public List<InstitutionListData> tempByType(InstitutionType institutionType) {
-        List<InstitutionListData> listByType = institutionRepository.findAllByInstitutionType(institutionType).stream().map(InstitutionListData::new).collect(Collectors.toList());
-        setLocation(listByType);
-        return listByType;
-    }
-
-    public List<InstitutionListData> tempInstitutionList() {
-        List<InstitutionListData> collect = institutionRepository.findAll()
-                .stream()
-                .map(InstitutionListData::new)
-                .collect(Collectors.toList());
-        setLocation(collect);
-
-        return collect;
-    }
-
-    private void setLocation(List<InstitutionListData> collect) {
-        for (InstitutionListData institution : collect) {
-            String address = institution.getZipCode() + " " + institution.getCity() + " " + institution.getAddress();
-            GeoLocation geoLocation = geocodeService.getGeoLocation(address);
-            institution.setLatitude(geoLocation.getLatitude());
-            institution.setLongitude(geoLocation.getLongitude());
-        }
+    private GeoLocation getGeoLocationByAddress(String address) {
+        return geocodeService.getGeoLocation(address);
     }
 
 
@@ -90,7 +64,7 @@ public class InstitutionService {
         institutionRepository.save(institution);
     }
 
-    private Institution findById(Long id) {
+    public Institution findById(Long id) {
         return institutionRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("no such entity found"));
     }
 
@@ -105,7 +79,12 @@ public class InstitutionService {
         try {
             XSSFWorkbook workbook = new XSSFWorkbook(excelDataFile.getInputStream());
             List<ExcelFileLoader> rows = ExcelFileLoader.getRowList(workbook);
-            rows.stream().map(Institution::new).forEach(institutionRepository::save);
+            for (ExcelFileLoader row : rows) {
+                String address = row.getZipCode() + " " + row.getCity() + " " + row.getAddress();
+                GeoLocation geoLocation = getGeoLocationByAddress(address);
+                Institution institution = new Institution(row, geoLocation);
+                institutionRepository.save(institution);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

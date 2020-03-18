@@ -21,11 +21,11 @@ public class ProviderUserDetails {
     public ProviderUserDetails(ProviderAccount providerAccount) {
         this.id = providerAccount.getId();
         this.name = providerAccount.getName();
-        this.username = providerAccount.getUsername();
+        this.username = providerAccount.getName();
         this.password = providerAccount.getPassword();
         this.email = providerAccount.getEmail();
         this.phone = providerAccount.getPhone();
-        this.zipcode = providerAccount.getZipCode();
+        this.zipcode = providerAccount.getZipcode();
         this.city = providerAccount.getCity();
         this.address = providerAccount.getAddress();
         this.institutionList = providerAccount.getInstitutions().stream().map(InstitutionListData::new).collect(Collectors.toList());

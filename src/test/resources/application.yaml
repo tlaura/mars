@@ -1,24 +1,13 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/mars?serverTimezone=UTC&characterEncoding=utf8
-    username: root
-    password: ChatApp2019!
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    initialization-mode: always
+    url: jdbc:h2:mem:testdb
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
   jpa:
-    hibernate:
-      ddl-auto: update
     properties:
       hibernate:
-        show_sql: true
-        format_sql: true
-        dialect: org.hibernate.dialect.MySQL8Dialect
-    generate-ddl: true
-  http:
-    encoding:
-      charset: UTF-8
-      enabled: true
-      force: true
+        dialect: org.hibernate.dialect.H2Dialect
   mail:
     host: smtp.gmail.com
     port: 587
@@ -36,13 +25,10 @@ spring:
 logging:
   level:
     com.progmasters: debug
-    org.springframework.web: info
+    org.springframework: info
     org.hibernate: error
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
-
-google:
-  apikey: AIzaSyAeQEHjfxVD8584aJATT0pSNBf3DuCr1h0
 
 email:
   send:
@@ -50,3 +36,5 @@ email:
     text: Az alábbi linkre kattintva aktiválhatja fiókját
     confirmation: http://localhost:4200/register-success/
   elapsed-hours: 72
+google:
+  apikey: AIzaSyAeQEHjfxVD8584aJATT0pSNBf3DuCr1h0
