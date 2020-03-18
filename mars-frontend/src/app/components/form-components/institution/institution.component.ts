@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {AbstractControl, Form, FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
+import {AbstractControl, FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Time} from "@angular/common";
 
 @Component({
@@ -8,6 +8,9 @@ import {Time} from "@angular/common";
   styleUrls: ['./institution.component.css']
 })
 export class InstitutionComponent implements OnInit {
+
+  @Output()
+  institutionsEmitter: new EventEmitter<FormGroup>;
 
   institutions: FormGroup;
 

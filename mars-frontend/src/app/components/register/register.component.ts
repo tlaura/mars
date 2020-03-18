@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {AbstractControl, FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
-import {Institution} from "../../models/institution";
+import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
 import {AccountService} from "../../services/account.service";
 import {Router} from "@angular/router";
 import {ProviderAccountRegisterModel} from "../../models/providerAccountRegisterModel";
@@ -16,19 +15,6 @@ export class RegisterComponent implements OnInit {
   isNormalUser: boolean = true;
   haveProviderCustomAddress: boolean = false;
   registerForm: FormGroup;
-
-  institutions = new FormArray([]);
-
-  allInstitution: Institution[] = [{
-    id: null,
-    name: 'Új intézmény hozzáadása',
-    zipcode: 0,
-    city: '',
-    address: '',
-    description: ''
-  },
-  ];
-
 
   constructor(private accountService: AccountService, private router: Router) {
     this.isNormalUser = true;
@@ -58,9 +44,7 @@ export class RegisterComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.accountService.fetchInstitutions().subscribe(
-      institutions => this.allInstitution = this.allInstitution.concat(institutions)
-    )
+
   }
 
   submit() {
@@ -69,7 +53,6 @@ export class RegisterComponent implements OnInit {
       const formData: ProviderAccountRegisterModel = this.registerForm.value;
       this.accountService.saveProviderAccount(formData).subscribe(
         () => {
-          // TODO: register email...
           this.router.navigate(['registration-complete']);
         },
         error => validationHandler(error, this.registerForm)
@@ -78,67 +61,14 @@ export class RegisterComponent implements OnInit {
   }
 
 
-  addNewOpeningHours(control: AbstractControl) {
-
-    const group = new FormGroup({
-      //weekDay: new FormControl(this.weekDays[0]),
-      openingTime: new FormControl('', Validators.required),
-      closingTime: new FormControl('', Validators.required),
-    });
-
-    (control as FormArray).push(group);
-  }
-
-  // TODO - opening hours
-  removeOpeningHours(control: AbstractControl, targetIndex: number) {
-    (control as FormArray).removeAt(targetIndex);
-  }
-
-
   removeInstitution() {
-    this.institutions.controls.pop();
-    this.registerForm.setControl('institutions', this.institutions);
+
   }
 
   addNewInstitution() {
-    const group = new FormGroup({
-      id: new FormControl(null),
-      name: new FormControl('',
-        [Validators.required]),
-      zipcode: new FormControl(null,
-        [, Validators.required]),
-      city: new FormControl('', Validators.required),
-      address: new FormControl('', Validators.required),
-      description: new FormControl('',
-        [Validators.required, Validators.minLength(30), Validators.maxLength(200)]),
-      openingHours: new FormArray([])
-    });
-    this.addNewOpeningHours(group.get('openingHours'));
-    this.institutions.push(group);
+    (this.registerForm.get('institutions') as FormArray).push();
   }
 
-  updateValues = (group: FormGroup) => {
-    const currentInstitutionId = group.get('id').value;
-    if (currentInstitutionId) {
-      const currentInstitution = this.allInstitution.find(item => item.id == currentInstitutionId);
-      group.setValue({
-        id: currentInstitution.id,
-        name: currentInstitution.name,
-        zipcode: currentInstitution.zipcode,
-        city: currentInstitution.city,
-        address: currentInstitution.address,
-        description: currentInstitution.description
-      });
-      for (let controlsKey in group.controls) {
-        if (controlsKey != 'id') {
-          group.get(controlsKey).disable();
-        }
-      }
-    } else {
-      group.reset();
-      group.enable();
-    }
-  };
 
   chooseProviderUser() {
     this.isNormalUser = false;

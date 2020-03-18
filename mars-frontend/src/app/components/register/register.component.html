@@ -35,7 +35,8 @@
         <div class="row m-0">
           <div class="form-group col-sm-12 col-md-12">
             <label for="customAddress">Cím hozzáadása a szolgáltatáshoz:</label>
-            <input (change)="changeProviderAddress()" class="form-check-input m-1"
+            <input (change)="changeProviderAddress()"
+                   class="form-check-input m-1"
                    id="customAddress"
                    type="checkbox">
           </div>
@@ -53,8 +54,11 @@
 
       <div class="form-group col-sm-12 col-md-12">
         <label>Intézmények:</label>
-        <button (click)="addNewInstitution()" class="btn rounded-pill btn-light btn-sm mx-sm-1 mx-sm-2">Intézmény
-          hozzáadása
+
+        <button (click)="addNewInstitution()"
+                class="btn rounded-pill btn-light btn-sm mx-sm-1 mx-sm-2"
+        >
+          Intézmény hozzáadása
         </button>
       </div>
 
