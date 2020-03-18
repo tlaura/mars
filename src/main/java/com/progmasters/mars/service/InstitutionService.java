@@ -43,43 +43,15 @@ public class InstitutionService {
 
     public Institution createInstitution(InstitutionCreationCommand institutionCreationForm) {
         String address = institutionCreationForm.getZipcode() + " " + institutionCreationForm.getCity() + " " + institutionCreationForm.getAddress();
-        GeoLocation geoLocation = geocodeService.getGeoLocation(address);
+        GeoLocation geoLocation = getGeoLocationByAddress(address);
         Institution institution = new Institution(institutionCreationForm, geoLocation);
         institutionRepository.save(institution);
 
         return institution;
     }
 
-/*
-    public List<InstitutionListData> getInstitutionsByType(InstitutionType institutionType) {
-        return institutionRepository.findAllByInstitutionType(institutionType).stream().map(InstitutionListData::new).collect(Collectors.toList());
-    }
-
-    //todo institution has no type anymore
-    public List<InstitutionListData> tempByType(InstitutionType institutionType) {
-        List<InstitutionListData> listByType = institutionRepository.findAllByInstitutionType(institutionType).stream().map(InstitutionListData::new).collect(Collectors.toList());
-        setLocation(listByType);
-        return listByType;
-    }
-*/
-
-    public List<InstitutionListData> tempInstitutionList() {
-        List<InstitutionListData> collect = institutionRepository.findAll()
-                .stream()
-                .map(InstitutionListData::new)
-                .collect(Collectors.toList());
-        setLocation(collect);
-
-        return collect;
-    }
-
-    private void setLocation(List<InstitutionListData> collect) {
-        for (InstitutionListData institution : collect) {
-            String address = institution.getZipcode() + " " + institution.getCity() + " " + institution.getAddress();
-            GeoLocation geoLocation = geocodeService.getGeoLocation(address);
-            institution.setLatitude(geoLocation.getLatitude());
-            institution.setLongitude(geoLocation.getLongitude());
-        }
+    private GeoLocation getGeoLocationByAddress(String address) {
+        return geocodeService.getGeoLocation(address);
     }
 
 
@@ -107,7 +79,12 @@ public class InstitutionService {
         try {
             XSSFWorkbook workbook = new XSSFWorkbook(excelDataFile.getInputStream());
             List<ExcelFileLoader> rows = ExcelFileLoader.getRowList(workbook);
-            rows.stream().map(Institution::new).forEach(institutionRepository::save);
+            for (ExcelFileLoader row : rows) {
+                String address = row.getZipCode() + " " + row.getCity() + " " + row.getAddress();
+                GeoLocation geoLocation = getGeoLocationByAddress(address);
+                Institution institution = new Institution(row, geoLocation);
+                institutionRepository.save(institution);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

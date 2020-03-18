@@ -84,7 +84,7 @@ public class Institution {
 
     }
 
-    public Institution(ExcelFileLoader parsedFile) {
+    public Institution(ExcelFileLoader parsedFile, GeoLocation geoLocation) {
         this.name = parsedFile.getName();
         this.zipcode = parsedFile.getZipCode();
         this.city = parsedFile.getCity();
@@ -93,6 +93,8 @@ public class Institution {
         this.phone = parsedFile.getPhone();
         this.website = parsedFile.getWebsite();
         this.description = parsedFile.getDescription();
+        this.latitude = geoLocation.getLatitude();
+        this.longitude = geoLocation.getLongitude();
     }
 
     public Long getId() {
