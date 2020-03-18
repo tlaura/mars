@@ -10,65 +10,72 @@ import java.util.stream.Collectors;
 @Entity
 @Table(name = "provider_account")
 public class ProviderAccount {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
     @NotBlank
     @NotEmpty
-    @NotNull
+    @Column(name = "provider_service_name")
     private String providerServiceName;
 
     @NotBlank
     @NotEmpty
-    @NotNull
+    @Column(name = "name")
     private String name;
 
     @NotBlank
     @NotEmpty
-    @NotNull
+    @Column(name = "password")
     private String password;
 
     @NotBlank
     @NotEmpty
-    @NotNull
+    @Column(name = "email")
     private String email;
-
-    @NotBlank
-    @NotEmpty
-    @NotNull
-    private String phone;
-
-    @Enumerated(EnumType.STRING)
-    private Role role;
-
-    @Column(name = "zipcode")
-    private String zipcode;
-
-    private String city;
-    private String address;
 
     @NotNull
     @Size(min = 1)
     @Enumerated(EnumType.STRING)
     @ElementCollection
-    private List<InstitutionType> type;
+    @CollectionTable(name = "provicer_account_type", joinColumns = @JoinColumn(name = "provider_account_id"))
+    private List<InstitutionType> types;
 
-    @NotNull
+    @Column(name = "phone")
+    private String phone;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role")
+    private Role role;
+
+    @Column(name = "zipcode")
+    private Integer zipcode;
+
+    @Column(name = "city")
+    private String city;
+
+    @Column(name = "address")
+    private String address;
+
     @PositiveOrZero
+    @Column(name = "age_group_min")
     private Integer ageGroupMin;
 
-    @NotNull
     @PositiveOrZero
+    @Column(name = "age_group_max")
     private Integer ageGroupMax;
+
+    @Column(name = "newsletter")
+    private Boolean newsletter;
 
     @OneToMany(mappedBy = "providerAccount")
     private List<Institution> institutions;
 
-    private Boolean newsletter;
 
     public ProviderAccount(ProviderAccountCreationCommand providerAccountCreationCommand) {
-        this.providerServiceName = providerAccountCreationCommand.getProvidedServiceName();
+        this.providerServiceName = providerAccountCreationCommand.getProviderServiceName();
         this.name = providerAccountCreationCommand.getName();
         this.zipcode = providerAccountCreationCommand.getZipcode();
         this.city = providerAccountCreationCommand.getCity();
@@ -77,7 +84,7 @@ public class ProviderAccount {
         this.phone = providerAccountCreationCommand.getPhone();
         this.ageGroupMin = providerAccountCreationCommand.getAgeGroupMin();
         this.ageGroupMax = providerAccountCreationCommand.getAgeGroupMax();
-        this.type = providerAccountCreationCommand.getType().stream().map(InstitutionType::getTypeByHungarianName).collect(Collectors.toList());
+        this.types = providerAccountCreationCommand.getTypes().stream().map(InstitutionType::getTypeByHungarianName).collect(Collectors.toList());
         this.newsletter = providerAccountCreationCommand.getNewsletter();
         this.role = Role.ROLE_PROVIDER;
     }
@@ -141,12 +148,12 @@ public class ProviderAccount {
         this.role = role;
     }
 
-    public String getZipcode() {
+    public Integer getZipcode() {
         return zipcode;
     }
 
-    public void setZipcode(String zipCode) {
-        this.zipcode = zipCode;
+    public void setZipcode(Integer zipcode) {
+        this.zipcode = zipcode;
     }
 
     public String getCity() {
@@ -165,12 +172,12 @@ public class ProviderAccount {
         this.address = address;
     }
 
-    public List<InstitutionType> getType() {
-        return type;
+    public List<InstitutionType> getTypes() {
+        return types;
     }
 
-    public void setType(List<InstitutionType> type) {
-        this.type = type;
+    public void setTypes(List<InstitutionType> type) {
+        this.types = type;
     }
 
     public Integer getAgeGroupMin() {

@@ -7,7 +7,7 @@ export interface ProviderUserProfileDetailsModel {
   password: string;
   email: string;
   phone: string;
-  zipcode: string;
+  zipcode: number;
   city: string;
   address: string;
   institutionList: InstitutionListModel[];

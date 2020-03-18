@@ -11,7 +11,7 @@ export interface ProviderAccountRegisterModel {
   city: string,
   address: string,
 
-  type: Array<string>,
+  types: Array<string>,
 
   ageGroupMin: number,
   ageGroupMax: number,

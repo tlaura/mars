@@ -54,13 +54,4 @@ public class InstitutionListData {
         return latitude;
     }
 
-    //todo remove
-
-    public void setLongitude(Double longitude) {
-        this.longitude = longitude;
-    }
-
-    public void setLatitude(Double latitude) {
-        this.latitude = latitude;
-    }
 }

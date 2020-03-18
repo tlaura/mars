@@ -18,6 +18,6 @@ public interface ProviderAccountRepository extends JpaRepository<ProviderAccount
 
     List<ProviderAccount> findAllByName(String name);
 
-    @Query("select p from ProviderAccount p join p.type t where t= :type")
+    @Query("select p from ProviderAccount p join p.types t where t= :type")
     List<ProviderAccount> findByType(@Param("type") InstitutionType institutionType);
 }

@@ -22,11 +22,11 @@ export class InstitutionImportComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  import = () => {
-    var importData: any = new FormData();
+  import = (): void => {
+    let importData: any = new FormData();
     importData.append("file", this.importForm.get('file').value);
     this.institutionService.import(importData).subscribe(
-      response => {
+      () => {
         this.router.navigate(['']);
       },
       error => {
@@ -34,15 +34,15 @@ export class InstitutionImportComponent implements OnInit {
       },
       () => console.log('Sikeres importálás.')
     )
-  }
+  };
 
   //TODO: fix DOMException ERROR
 
-  uploadFile(event) {
+  uploadFile = (event): void => {
     const file = (event.target as HTMLInputElement).files[0];
     this.importForm.patchValue({
       file: file
     });
     this.importForm.get('file').updateValueAndValidity()
-  }
+  };
 }

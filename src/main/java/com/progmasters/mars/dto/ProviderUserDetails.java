@@ -8,20 +8,20 @@ import java.util.stream.Collectors;
 public class ProviderUserDetails {
 
     private Long id;
+    private String providerServiceName;
     private String name;
-    private String username;
     private String password;
     private String email;
     private String phone;
-    private String zipcode;
+    private Integer zipcode;
     private String city;
     private String address;
     private List<InstitutionListData> institutionList;
 
     public ProviderUserDetails(ProviderAccount providerAccount) {
         this.id = providerAccount.getId();
+        this.providerServiceName = providerAccount.getProviderServiceName();
         this.name = providerAccount.getName();
-        this.username = providerAccount.getName();
         this.password = providerAccount.getPassword();
         this.email = providerAccount.getEmail();
         this.phone = providerAccount.getPhone();
@@ -51,8 +51,8 @@ public class ProviderUserDetails {
         return name;
     }
 
-    public String getUsername() {
-        return username;
+    public String getProviderServiceName() {
+        return providerServiceName;
     }
 
     public String getEmail() {
@@ -63,7 +63,7 @@ public class ProviderUserDetails {
         return phone;
     }
 
-    public String getZipcode() {
+    public Integer getZipcode() {
         return zipcode;
     }
 

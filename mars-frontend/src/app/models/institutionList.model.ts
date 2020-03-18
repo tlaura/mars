@@ -4,7 +4,6 @@ export interface InstitutionListModel {
   zipcode: number,
   city: string,
   address: string,
-  type: string
   latitude: number,
   longitude: number
 }
