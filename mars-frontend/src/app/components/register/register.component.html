@@ -64,7 +64,7 @@
 
       <div *ngFor="let array of getInstitutions().controls;let i = index;"
            class="row m-0">
-        <app-institution (institutionsEmitter)="setInstitutions($event,i)" *ngIf="!isNormalUser">
+        <app-institution *ngIf="!isNormalUser" [institutionForm]="array">
         </app-institution>
 
         <div class="form-group col-sm-12 col-md-1">

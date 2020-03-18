@@ -7,7 +7,7 @@
   </select>
 </div-->
 <!-- TODO: fetch at parent and send to child-->
-<form (change)="emitInstitutions()" [formGroup]="institutionForm">
+<form [formGroup]="institutionForm">
 
   <app-contacts
     (emailEmitter)="setEmail($event)"
@@ -34,9 +34,8 @@
     </button>
   </div>
 
-  <div *ngFor="let array of getOpeningHours().controls;let i = index;"
-       class="row m-0">
-    <app-opening-hours (openingHoursEmitter)="setOpeningHours($event,i)"
+  <div *ngFor="let array of getOpeningHours().controls;let i = index;">
+    <app-opening-hours [openingHours]="array"
     >
     </app-opening-hours>
 
@@ -46,7 +45,6 @@
         X
       </button>
     </div>
-
   </div>
 
   <div class="form-group col-sm-12 col-md-12">

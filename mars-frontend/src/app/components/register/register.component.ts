@@ -65,7 +65,20 @@ export class RegisterComponent implements OnInit {
   }
 
   addNewInstitution() {
-    (this.registerForm.get('institutions') as FormArray).push(new FormGroup({}));
+    (this.registerForm.get('institutions') as FormArray).push(new FormGroup({
+      'zipcode': new FormControl(),
+      'city': new FormControl(),
+      'address': new FormControl(),
+
+      'name': new FormControl(),
+      'email': new FormControl(),
+      'phone': new FormControl(),
+      'website': new FormControl(),
+
+      'description': new FormControl(),
+
+      'openingHours': new FormArray([])
+    }));
   }
 
   chooseProviderUser() {
@@ -137,7 +150,5 @@ export class RegisterComponent implements OnInit {
     return this.registerForm.get('institutions') as FormArray;
   }
 
-  setInstitutions(institution: FormGroup, index: number) {
-    (this.registerForm.get('institutions') as FormArray)[index] = institution;
-  }
+
 }

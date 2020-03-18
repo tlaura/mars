@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
@@ -8,13 +8,10 @@ import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
 })
 export class InstitutionComponent implements OnInit {
 
-  @Output()
-  institutionsEmitter: EventEmitter<FormGroup>;
-
+  @Input()
   institutionForm: FormGroup;
 
   constructor() {
-    this.institutionsEmitter = new EventEmitter<FormGroup>();
     this.institutionForm = new FormGroup({
       'zipcode': new FormControl(null, Validators.required),
       'city': new FormControl(null, Validators.required),
@@ -40,21 +37,15 @@ export class InstitutionComponent implements OnInit {
   }
 
   addNewOpeningHours() {
-    (this.institutionForm.get('openingHours') as FormArray).push(new FormGroup({}));
+    (this.institutionForm.get('openingHours') as FormArray).push(new FormGroup({
+      'weekDay': new FormControl(null),
+      'openingTime': new FormControl(null),
+      'closingTime': new FormControl(null)
+    }));
   }
 
   removeOpeningHours(index: number) {
     (this.institutionForm.get('openingHours') as FormArray).removeAt(index);
-  }
-
-  emitInstitutions() {
-    this.institutionsEmitter.emit(this.institutionForm);
-  }
-
-  setOpeningHours(openingHours: FormGroup, index: number) {
-    (this.institutionForm.get('openingHours') as FormArray)[index] = openingHours;
-    console.log(this.institutionForm);
-    console.log(openingHours);
   }
 
   setEmail(email: string) {

@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {FormControl, FormGroup} from "@angular/forms";
 
 @Component({
@@ -9,24 +9,19 @@ import {FormControl, FormGroup} from "@angular/forms";
 export class OpeningHoursComponent implements OnInit {
   weekDays: string[] = ['Hétfő', 'Kedd', 'Szerda', 'Csütörtök', 'Péntek', 'Szombat', 'Vasárnap'];
 
-  @Output()
-  openingHoursEmitter: EventEmitter<FormGroup>;
-
+  @Input()
   openingHours: FormGroup;
 
   constructor() {
-    this.openingHoursEmitter = new EventEmitter<FormGroup>();
     this.openingHours = new FormGroup({
-      'weekDay': new FormControl(),
-      'openingTime': new FormControl(),
-      'closingTime': new FormControl()
+      'weekDay': new FormControl(null),
+      'openingTime': new FormControl(null),
+      'closingTime': new FormControl(null)
     })
   }
 
   ngOnInit(): void {
   }
 
-  emitOpeningHours() {
-    this.openingHoursEmitter.emit(this.openingHours);
-  }
+
 }
