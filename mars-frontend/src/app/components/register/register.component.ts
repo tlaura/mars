@@ -13,12 +13,12 @@ import {validationHandler} from "../../utils/validationHandler";
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
-  CURRENT_YEAR = new Date().getFullYear().valueOf();
   isNormalUser: boolean = true;
   haveProviderCustomAddress: boolean = false;
-  weekDays: string[] = ['Hétfő', 'Kedd', 'Szerda', 'Csütörtök', 'Péntek', 'Szombat', 'Vasárnap'];
   registerForm: FormGroup;
+
   institutions = new FormArray([]);
+
   allInstitution: Institution[] = [{
     id: null,
     name: 'Új intézmény hozzáadása',
@@ -29,79 +29,10 @@ export class RegisterComponent implements OnInit {
   },
   ];
 
-  // TODO: refactor ?
 
   constructor(private accountService: AccountService, private router: Router) {
     this.isNormalUser = true;
-    this.registerForm = this.getCommonFieldsFormGroup();
-    this.addFormGroup(this.getNormalAccountRegisterFormGroup());
-  }
-
-  ngOnInit() {
-    this.accountService.fetchInstitutions().subscribe(
-      institutions => this.allInstitution = this.allInstitution.concat(institutions)
-    )
-  }
-
-  submit() {
-    this.registerForm.markAllAsTouched();
-    const formData: ProviderAccountRegisterModel = this.registerForm.value;
-    this.accountService.saveProviderAccount(formData).subscribe(
-      () => {
-        // TODO: register email...
-        this.router.navigate(['registration-complete']);
-      },
-      error => validationHandler(error, this.registerForm)
-    );
-  }
-
-  renderNormalAccountRegisterForm() {
-    this.registerForm = this.getCommonFieldsFormGroup();
-    this.addFormGroup(this.getNormalAccountRegisterFormGroup());
-    this.isNormalUser = true;
-  }
-
-  renderProviderAccountRegisterForm() {
-    this.registerForm = this.getCommonFieldsFormGroup();
-    this.isNormalUser = false;
-  }
-
-  addFormGroup(formGroupToAdd: FormGroup) {
-    for (let controlsKey in formGroupToAdd.controls) {
-      this.registerForm.addControl(controlsKey, formGroupToAdd.get(controlsKey));
-    }
-  }
-
-
-  currentPasswordAgain: string = '';
-
-  getNormalAccountRegisterFormGroup(): FormGroup {
-    return new FormGroup(
-      {
-        'birthyear': new FormControl('',
-          [Validators.required, Validators.min(this.CURRENT_YEAR - 50), Validators.max(this.CURRENT_YEAR)]),
-      })
-  }
-
-
-  addNewOpeningHours(control: AbstractControl) {
-
-    const group = new FormGroup({
-      weekDay: new FormControl(this.weekDays[0]),
-      openingTime: new FormControl('', Validators.required),
-      closingTime: new FormControl('', Validators.required),
-    });
-
-    (control as FormArray).push(group);
-  }
-
-  // TODO - opening hours
-  removeOpeningHours(control: AbstractControl, targetIndex: number) {
-    (control as FormArray).removeAt(targetIndex);
-  }
-
-  getCommonFieldsFormGroup(): FormGroup {
-    return new FormGroup(
+    this.registerForm = new FormGroup(
       {
         'providerServiceName': new FormControl('', Validators.required),
         'password': new FormControl('', Validators.required),
@@ -118,11 +49,51 @@ export class RegisterComponent implements OnInit {
         'city': new FormControl(null),
         'address': new FormControl(null),
 
+        'institutions': new FormArray([]),
+
         'newsletter': new FormControl(false),
         'termsAndConditions': new FormControl(false, Validators.requiredTrue)
       }
     )
   }
+
+  ngOnInit() {
+    this.accountService.fetchInstitutions().subscribe(
+      institutions => this.allInstitution = this.allInstitution.concat(institutions)
+    )
+  }
+
+  submit() {
+    if (!this.isNormalUser) {
+      this.registerForm.markAllAsTouched();
+      const formData: ProviderAccountRegisterModel = this.registerForm.value;
+      this.accountService.saveProviderAccount(formData).subscribe(
+        () => {
+          // TODO: register email...
+          this.router.navigate(['registration-complete']);
+        },
+        error => validationHandler(error, this.registerForm)
+      );
+    }
+  }
+
+
+  addNewOpeningHours(control: AbstractControl) {
+
+    const group = new FormGroup({
+      //weekDay: new FormControl(this.weekDays[0]),
+      openingTime: new FormControl('', Validators.required),
+      closingTime: new FormControl('', Validators.required),
+    });
+
+    (control as FormArray).push(group);
+  }
+
+  // TODO - opening hours
+  removeOpeningHours(control: AbstractControl, targetIndex: number) {
+    (control as FormArray).removeAt(targetIndex);
+  }
+
 
   removeInstitution() {
     this.institutions.controls.pop();
@@ -169,6 +140,23 @@ export class RegisterComponent implements OnInit {
     }
   };
 
+  chooseProviderUser() {
+    this.isNormalUser = false;
+  }
+
+  chooseNormalUser() {
+    this.isNormalUser = true;
+  }
+
+  changeProviderAddress() {
+    this.haveProviderCustomAddress = !this.haveProviderCustomAddress;
+    if (!this.haveProviderCustomAddress) {
+      this.registerForm.get('zipcode').reset();
+      this.registerForm.get('city').reset();
+      this.registerForm.get('address').reset();
+    }
+  }
+
   setEmail(email: string) {
     this.registerForm.get('email').setValue(email);
   }
@@ -188,7 +176,6 @@ export class RegisterComponent implements OnInit {
   setZipcode(zipcode: number) {
     this.registerForm.get('zipcode').setValue(zipcode);
   }
-
 
   setCity(city: string) {
     this.registerForm.get('city').setValue(city);
@@ -218,12 +205,4 @@ export class RegisterComponent implements OnInit {
     this.registerForm.get('types').setValue(types);
   }
 
-  addCustomProviderAddress() {
-    this.haveProviderCustomAddress = !this.haveProviderCustomAddress;
-    if (!this.haveProviderCustomAddress) {
-      this.registerForm.get('zipcode').reset();
-      this.registerForm.get('city').reset();
-      this.registerForm.get('address').reset();
-    }
-  }
 }

@@ -30,6 +30,8 @@ import {ContactsComponent} from './components/form-components/contacts/contacts.
 import {AddressComponent} from './components/form-components/address/address.component';
 import {ProviderAttributesComponent} from './components/form-components/provider-attributes/provider-attributes.component';
 import {PasswordComponent} from './components/form-components/password/password.component';
+import {InstitutionComponent} from './components/form-components/institution/institution.component';
+import {OpeningHoursComponent} from './components/form-components/opening-hours/opening-hours.component';
 
 export function getAuthServiceConfigs() {
   let config = new SocialServiceConfig()
@@ -60,7 +62,9 @@ export function getAuthServiceConfigs() {
     ContactsComponent,
     AddressComponent,
     ProviderAttributesComponent,
-    PasswordComponent
+    PasswordComponent,
+    InstitutionComponent,
+    OpeningHoursComponent
   ],
   imports: [
     BrowserModule,

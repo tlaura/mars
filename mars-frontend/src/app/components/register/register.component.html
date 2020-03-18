@@ -1,10 +1,10 @@
 <div class="col-sm-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3 text-center">
   <h1 class="">Regisztráció</h1>
 
-  <button (click)="renderNormalAccountRegisterForm()" [ngClass]="isNormalUser ? 'active' : 'inactive'"
+  <button (click)="chooseNormalUser()" [ngClass]="isNormalUser ? 'active' : 'inactive'"
           class="user-option-chooser btn w-50 mb-0">Felhasználó
   </button>
-  <button (click)="renderProviderAccountRegisterForm()" [ngClass]="!isNormalUser ? 'active' : 'inactive'"
+  <button (click)="chooseProviderUser()" [ngClass]="!isNormalUser ? 'active' : 'inactive'"
           class="user-option-chooser btn w-50 mb-0">Szolgáltatás
   </button>
 
@@ -35,7 +35,7 @@
         <div class="row m-0">
           <div class="form-group col-sm-12 col-md-12">
             <label for="customAddress">Cím hozzáadása a szolgáltatáshoz:</label>
-            <input (change)="addCustomProviderAddress()" class="form-check-input m-1"
+            <input (change)="changeProviderAddress()" class="form-check-input m-1"
                    id="customAddress"
                    type="checkbox">
           </div>
@@ -51,154 +51,21 @@
 
       <!-- INSTITUTIONS -->
 
-      <div *ngIf="!isNormalUser" id="provider-user-fields-div">
-
-        <div class="form-group col-sm-12 col-md-12">
-          <label>Intézmények:</label>
-          <button (click)="addNewInstitution()" class="btn rounded-pill btn-light btn-sm mx-sm-1 mx-sm-2">Intézmény
-            hozzáadása
-          </button>
-        </div>
-
-        <div *ngFor="let institutionGroup of institutions.controls;let i = index; let last = last"
-             [formGroup]="institutionGroup"
-             class="row m-0">
-
-          <div class="form-group col-sm-12 col-md-10">
-            <select (change)="updateValues(institutionGroup)" class="form-control rounded-pill" formControlName="id"
-                    id="id"
-                    name="institution">
-              <option *ngFor="let institution of allInstitution" value="{{institution.id}}">
-                {{institution.name}}</option>
-            </select>
-          </div>
-
-          <div class="form-group col-sm-12 col-md-1">
-            <button (click)="removeInstitution()" *ngIf="last" class="btn btn-outline-danger rounded-pill">X
-            </button>
-          </div>
-
-          <div class="row m-0">
-            <div class="form-group col-sm-12 col-md-10">
-              <label>Név*:</label>
-              <input class="form-control rounded-pill" formControlName="name" type="text">
-              <div *ngIf="institutionGroup.get('name').invalid && institutionGroup.get('name').touched">
-                <small *ngIf="institutionGroup.get('name').errors.required"
-                       class="text-danger">
-                  A mező kitöltése közelező!
-                </small>
-                <small *ngIf="institutionGroup.get('name').errors.pattern"
-                       class="text-danger">
-                  Érvénytelen név!
-                </small>
-              </div>
-            </div>
-
-            <div class="form-group col-sm-12 col-md-3">
-              <label>Irányítószám*:</label>
-              <input class="form-control rounded-pill" formControlName="zipcode" type="number">
-            </div>
-
-            <div class="form-group col-sm-12 col-md-6">
-              <label>Település*:</label>
-              <input class="form-control rounded-pill" formControlName="city" type="text">
-              <!-- TODO: autofill base on zipcode -->
-            </div>
-
-            <div *ngIf="institutionGroup.get('zipcode').invalid && institutionGroup.get('zipcode').touched"
-                 class="row mx-0 col-md-12 col-sm-12 form-group">
-              <small *ngIf="institutionGroup.get('zipcode').errors.required"
-                     class="text-danger">
-                A mező kitöltése közelező!
-              </small>
-              <small *ngIf="institutionGroup.get('zipcode').errors.pattern"
-                     class="text-danger">
-                Érvénytelen irányítószám!
-              </small>
-            </div>
-
-            <div class="form-group col-sm-12 col-md-9">
-              <label>Cím*:</label>
-              <input class="form-control rounded-pill" formControlName="address" type="text">
-            </div>
-
-            <div class="form-group col-sm-12 col-md-12">
-              <label>Nyitvatartás*:</label>
-
-            </div>
-
-            <div *ngFor="let array of institutionGroup.get('openingHours').controls;let i = index; let last = last"
-                 [formGroup]="array"
-                 class="row m-0">
-              <div class="form-group col-sm-12 col-md-4">
-                <select class="form-control rounded-pill" formControlName="weekDay" id="weekDay" name="weekDay">
-                  <option *ngFor="let day of weekDays" value="{{day}}">{{day}}</option>
-                </select>
-              </div>
-              <div class="form-group col-sm-12 col-md-3">
-
-                <input class="form-control rounded-pill " formControlName="openingTime" id="openingTime"
-                       name="openingTime" type="Time">
-              </div>
-              <div class="form-group col-sm-12 col-md-3">
-
-                <input class="form-control rounded-pill" formControlName="closingTime" id="closingTime"
-                       name="closingTime" type="Time">
-              </div>
-              <div class="form-group col-sm-12 col-md-1">
-                <button (click)="addNewOpeningHours(institutionGroup.get('openingHours'))" *ngIf="last"
-                        class="btn rounded-circle ">+
-                </button>
-                <button (click)="removeOpeningHours(institutionGroup.get('openingHours'),i)" *ngIf="last && i!=0"
-                        class="btn btn-outline-danger rounded-pill">
-                  X
-                </button>
-              </div>
-            </div>
-            <div class="col-sm-12 col-md-12 form-group row mx-0">
-              <small
-                *ngIf="institutionGroup.get('openingHours').invalid && institutionGroup.get('openingHours').touched"
-                class="text-danger">
-                Érvénytelen időpont!
-              </small>
-            </div>
-
-            <div class="form-group col-sm-12 col-md-12">
-              <label>Rövid leírás*:</label>
-              <textarea class="form-control rounded-pill" formControlName="description" rows="2"></textarea>
-              <div *ngIf="institutionGroup.get('description').invalid && institutionGroup.get('description').touched">
-                <small *ngIf="institutionGroup.get('description').errors.required"
-                       class="text-danger">
-                  A mező kitöltése közelező!
-                </small>
-                <small
-                  *ngIf="institutionGroup.get('description').errors?.minlength || registerForm.get('description').errors?.maxlength"
-                  class="text-danger">
-                  A leírásnak legalább 30 és legfeljebb 200 karakter hosszúnak kell lennie!
-                </small>
-              </div>
-            </div>
-          </div>
-        </div>
-
+      <div class="form-group col-sm-12 col-md-12">
+        <label>Intézmények:</label>
+        <button (click)="addNewInstitution()" class="btn rounded-pill btn-light btn-sm mx-sm-1 mx-sm-2">Intézmény
+          hozzáadása
+        </button>
       </div>
 
-      <!-- NORMAL USER FIELDS DIV -->
+      <app-institution *ngIf="!isNormalUser">
+      </app-institution>
 
-      <div *ngIf="isNormalUser" class="form-group col-sm-12 col-md-12" id="normal-user-fields-div">
-        <label for="birthyear">Érintett családtag születési éve*:</label>
-        <input class="form-control col-md-3 rounded-pill" formControlName="birthyear" id="birthyear" type="number">
-        <div *ngIf="registerForm.get('birthyear').invalid && registerForm.get('birthyear').touched">
-          <small *ngIf="registerForm.get('birthyear').errors.required"
-                 class="text-danger">
-            A mező kitöltése közelező!
-          </small>
-          <small *ngIf="registerForm.get('birthyear').errors.min || registerForm.get('birthyear').errors.max"
-                 class="text-danger">
-            Érvénytelen születési év!
-          </small>
-        </div>
+      <div class="form-group col-sm-12 col-md-1">
+        <button (click)="removeInstitution()" class="btn btn-outline-danger rounded-pill">X
+        </button>
       </div>
+
 
       <!-- COMMON END FIELDS DIV -->
 
