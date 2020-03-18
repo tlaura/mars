@@ -28,9 +28,9 @@ import {NgxSocialButtonModule, SocialServiceConfig} from "ngx-social-button";
 
 export function getAuthServiceConfigs() {
   let config = new SocialServiceConfig()
-    .addFacebook("229963898396055")
-    .addGoogle("Your-Google-Client-Id")
-    .addLinkedIn("Your-LinkedIn-Client-Id");
+    .addFacebook("229963898396055");
+  // .addGoogle("Your-Google-Client-Id")
+  //  .addLinkedIn("Your-LinkedIn-Client-Id");
   return config;
 }
 
@@ -50,7 +50,7 @@ export function getAuthServiceConfigs() {
     MyProfileComponent,
     SendMailComponent,
     MyProfileComponent,
-    InstitutionImportComponent
+    InstitutionImportComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,12 +1,18 @@
 <div class="container">
-<app-map [locations]="institutionList"></app-map>
+  <app-map [locations]="institutionList"></app-map>
 
   <input [(ngModel)]="searchText" placeholder="keresés név vagy cím alapján" type="text">
-  <select (change)="narrowByType($event.target.value)" id="institution-type" name="institution-type">
+  <select (change)="narrowByType($event.target.value)" (click)="setCurrentType($event.target.value)"
+          [formControl]="institutionType" id="institution-type" name="institution-type">
     <option selected value="all">Minden</option>
     <option *ngFor="let institutionType of institutionTypeList"
             value="{{institutionType.name}}">{{institutionType.displayName}}</option>
   </select>
+
+  <div class="col-md-2">
+    <facebook-share-button (click)="shareList()"></facebook-share-button>
+  </div>
+
   <div class="list-container h-25">
   </div>
   <div *ngFor="let institution of institutionList |filter:searchText |paginate:{itemsPerPage:size,currentPage:page}">
