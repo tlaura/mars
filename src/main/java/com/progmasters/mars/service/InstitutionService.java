@@ -102,7 +102,10 @@ public class InstitutionService {
                 String address = row.getZipcode() + " " + row.getCity() + " " + row.getAddress();
                 GeoLocation geoLocation = getGeoLocationByAddress(address);
                 Institution institution = new Institution(row, geoLocation);
-                institutionRepository.save(institution);
+                if (institutionRepository.findAllByName(institution.getName()).isEmpty()
+                        && institutionRepository.findAllByEmail(institution.getEmail()).isEmpty()) {
+                    institutionRepository.save(institution);
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();

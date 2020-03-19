@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import {ProviderAccountRegisterModel} from "../models/providerAccountRegisterModel";
 import {Observable} from "rxjs";
 import {HttpClient} from "@angular/common/http";
-import {Institution} from "../models/institution";
 import {ProviderUserProfileDetailsModel} from "../models/providerUserProfileDetails.model";
 import {environment} from "../../environments/environment";
 import {InstitutionListModel} from "../models/institutionList.model";
@@ -20,11 +19,6 @@ export class AccountService {
 
   saveProviderAccount = (formData: ProviderAccountRegisterModel): Observable<any> => {
     return this.http.post(this.BASE_URL + '/providers', formData);
-  };
-
-  //todo replace to right service
-  fetchInstitutions = (): Observable<Array<Institution>> => {
-    return this.http.get<Array<Institution>>(this.BASE_URL + '/institutions/details');
   };
 
   fetchProviderAccountDetails = (username: string): Observable<ProviderUserProfileDetailsModel> => {
