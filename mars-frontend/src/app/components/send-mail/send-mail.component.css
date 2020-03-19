@@ -12,3 +12,7 @@ input {
   border-color: cornflowerblue;
   background-color: cornflowerblue;
 }
+
+label {
+  color: tomato;
+}

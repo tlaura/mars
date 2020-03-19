@@ -1,15 +1,29 @@
 <form [formGroup]="emailForm">
-  <label for="fromEmail">Ön e-mail címe: </label>
-  <input class="rounded-pill" formControlName="fromEmail" id="fromEmail" name="fromEmail" type="text">
-  <br>
-  <label for="name">Neve:</label>
-  <input class="rounded-pill" formControlName="name" id="name" name="name" type="text">
-  <br>
-  <label for="subject">Tárgy:</label>
-  <input class="rounded-pill" formControlName="subject" id="subject" name="subject" type="text">
-  <br>
-  <label for="text">Üzenet: </label>
-  <textarea cols="30" formControlName="text" id="text" name="text" rows="5"></textarea>
-  <br>
-  <input (click)="sendMail()" class="submit btn btn-primary rounded-pill" type="submit">
+  <div class="row">
+
+    <div class="form-group col-5 mr-2">
+      <div class="row col-12">
+        <label class="small" for="fromEmail">Az Ön e-mail címe: </label>
+        <input class="rounded-pill" formControlName="fromEmail" id="fromEmail" name="fromEmail" type="text">
+      </div>
+
+      <div class="row col-12">
+        <label class="small" for="name">Neve:</label>
+        <input class="rounded-pill" formControlName="name" id="name" name="name" type="text">
+      </div>
+
+      <div class="row col-12">
+        <label class="small" for="subject">Tárgy:</label>
+        <input class="rounded-pill" formControlName="subject" id="subject" name="subject" type="text">
+      </div>
+
+    </div>
+    <div class="form-group col-6">
+      <label class="small" for="text">Üzenet:</label>
+      <textarea cols="30" formControlName="text" id="text" name="text" rows="5"></textarea>
+    </div>
+  </div>
+
+  <input (click)="sendMail()" class="form-group submit btn btn-primary rounded-pill" type="submit">
+
 </form>

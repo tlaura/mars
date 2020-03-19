@@ -7,8 +7,12 @@
 
   <p>{{institution?.description}}</p>
 
-  <h6 (click)="openMailSend()">Elérhetőség:</h6>
+  <h6>Elérhetőség:</h6>
   <p>{{institution?.email}}</p>
+
+  <div class="form-group">
+    <button (click)="openMailSend()" class="btn btn-outline-primary btn-sm">Email küldés</button>
+  </div>
 
   <app-send-mail (sent)="openMailSend()" *ngIf="mailSender" [toEmail]="institution?.email"></app-send-mail>
   <!--  <div class="col-md-2">-->
