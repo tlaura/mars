@@ -49,7 +49,7 @@ public class Institution {
     @Lob
     @NotBlank
     @Length(min = 30)
-    @Length(max = 200)
+    //TODO: max length
     @Column(name = "description")
     private String description;
 
