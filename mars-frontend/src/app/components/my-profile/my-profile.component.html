@@ -3,7 +3,7 @@
     <h1>Profil</h1>
   </div>
   <section>
-    <h4 class="display-4">{{providerAccount.name}}</h4>
+    <h4 class="display-4">{{providerAccount?.name}}</h4>
     <hr>
   </section>
 
@@ -15,44 +15,44 @@
             <p class="text-dark">Teljes név:</p>
           </dt>
           <dd class="col-sm-9">
-            <p class="text-dark">{{providerAccount.name}}</p>
+            <p class="text-dark">{{providerAccount?.name}}</p>
           </dd>
 
           <dt class="col-sm-3">
             <p class="text-dark">Szolgáltatás neve:</p>
           </dt>
           <dd class="col-sm-9">
-            <p class="text-dark">{{providerAccount.providerServiceName}}</p>
+            <p class="text-dark">{{providerAccount?.providerServiceName}}</p>
           </dd>
 
           <dt class="col-sm-3">
             <p class="text-dark">Telefon:</p>
           </dt>
           <dd class="col-sm-9">
-            <p class="text-dark">{{providerAccount.phone}}</p>
+            <p class="text-dark">{{providerAccount?.phone}}</p>
           </dd>
 
           <dt class="col-sm-3">
             <p class="text-dark">Email:</p>
           </dt>
           <dd class="col-sm-9">
-            <p class="text-dark">{{providerAccount.email}}</p>
+            <p class="text-dark">{{providerAccount?.email}}</p>
           </dd>
 
           <dt class="col-sm-3">Cím:</dt>
           <dd class="col-sm-9">
-            <p class="text-dark">{{providerAccount.zipcode}}<br>
-              {{providerAccount.city}}<br>
-              {{providerAccount.address}}</p>
+            <p class="text-dark">{{providerAccount?.zipcode}}<br>
+              {{providerAccount?.city}}<br>
+              {{providerAccount?.address}}</p>
           </dd>
 
           <dt class="col-sm-3">Korcsoport:</dt>
           <dd class="col-sm-9">
-            <p class="text-dark">{{providerAccount.ageGroupMin}} - {{providerAccount.ageGroupMax}}</p>
+            <p class="text-dark">{{providerAccount?.ageGroupMin}} - {{providerAccount?.ageGroupMax}}</p>
           </dd>
 
           <dt class="col-sm-3">Szolgáltatás típusai:</dt>
-          <dd *ngFor="let type of providerAccount.institutionTypes" class="col-sm-9">
+          <dd *ngFor="let type of providerAccount?.institutionTypes" class="col-sm-9">
             <p class="text-dark">{{type}}<br>
           </dd>
 
@@ -62,7 +62,7 @@
       <section class="m-4 text-dark">
           Intézmények:
         <div class="card bg-light m-4"
-          *ngFor="let insitution of providerAccount.institutionList">
+             *ngFor="let insitution of providerAccount?.institutionList">
           <div class="card-header">
             {{insitution?.name}}
           </div>
