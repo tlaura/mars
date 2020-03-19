@@ -7,6 +7,7 @@ import com.progmasters.mars.dto.ProviderUserDetails;
 import com.progmasters.mars.service.AccountInstitutionService;
 import com.progmasters.mars.service.AccountService;
 import com.progmasters.mars.validation.ProviderAccountValidator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.WebDataBinder;
@@ -23,7 +24,7 @@ public class AccountController {
     private final AccountInstitutionService accountInstitutionService;
     private final AccountService accountService;
 
-
+    @Autowired
     public AccountController(ProviderAccountValidator providerAccountValidator, AccountInstitutionService accountInstitutionService, AccountService accountService) {
         this.accountInstitutionService = accountInstitutionService;
         this.providerAccountValidator = providerAccountValidator;
@@ -48,7 +49,7 @@ public class AccountController {
 
     @GetMapping("/getInstitutionsByType")
     public ResponseEntity<List<InstitutionListData>> getInstitutionByType(@RequestParam("type") String type) {
-
+        //TODO FYI Az ENUM-nak van valueOf methodja
         InstitutionType institutionType = InstitutionType.getTypeByName(type);
         List<InstitutionListData> institutionListData = accountService.getInstitutionsByType(institutionType);
         return new ResponseEntity<>(institutionListData, HttpStatus.OK);

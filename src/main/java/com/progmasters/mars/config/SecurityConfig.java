@@ -39,21 +39,38 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.formLogin().loginPage("/login")
-                .usernameParameter("email")
-                .permitAll().and()
+        //TODO Ezt a részt lehet kicsit rendezettebben tartani. PL
+        // Van egy speciális komment, ami kikapcsolja a formázást adott szakaszon belül
+        // Ezt IDEA-ban külön be kell állítani. Majd itt indentálással, sorbarendezéssel stb
+        // kicsit átláthatóbbá lehet tenni a kódot! Ez amúgy elég bevett dolog securityConfignál...
+        // MÁSIK, ha egyelőre úgyis minden permitAll() akkor lehet használni wild-cardokat (*, **)
+        // Majd pl  .antMatchers(HttpMethod.GET, "/api/**").permitAll() ->Tehát mindent le lehet kérni
+        // Majd pl  .antMatchers(HttpMethod.PUT, "/api/**").authenticated ->Tehát mindenki tud PUT-olni aki be van jelentkezve
+        // Majd pl  .antMatchers(HttpMethod.POST, "/api/**").hasAnyRole('USER','ADMIN') ->Csak USER vagy ADMIN tud létrehozni
+        // Majd pl  .antMatchers(HttpMethod.DELETE, "/api/**").hasRole('ADMIN') -> Csak ADMIN tud törölni BÁRMIT
+
+        // @formatter:off
+        http
+                //TODO Ez nem kell (: ez nem azt csinálja, amire szerintem gondoltok
+//                .formLogin().loginPage("/login")
+//                .usernameParameter("email")
+//                .permitAll().and()
                 .cors().and()
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/api/user/login").permitAll()
-                .antMatchers("/api/providers/*").permitAll()
-                .antMatchers("/api/institutions/**").permitAll()
-                .antMatchers("/api/institutions/institutionType").permitAll()
-                .antMatchers("/**").permitAll()
+                    .antMatchers("/api/user/login").permitAll()
+                    .antMatchers("/api/providers/*").permitAll()
+                    .antMatchers("/api/institutions/**").permitAll()
+                    .antMatchers("/api/institutions/institutionType").permitAll()
+                    .antMatchers("/**").permitAll()
                 .anyRequest().authenticated()
 //                .antMatchers("/api/*").hasRole("ADMIN")
-                .and().logout().deleteCookies("JSESSIONID")
-                .and().httpBasic();
+                .and()
+                    .logout().deleteCookies("JSESSIONID")
+                .and().httpBasic()
+        ;
+        // @formatter:on
+
     }
 
     @Bean

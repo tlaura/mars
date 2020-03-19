@@ -4,6 +4,7 @@ import com.progmasters.mars.domain.ConfirmationToken;
 import com.progmasters.mars.domain.ProviderAccount;
 import com.progmasters.mars.dto.MailData;
 import com.progmasters.mars.repository.ConfirmationTokenRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -14,10 +15,13 @@ import java.util.List;
 
 @Service
 public class EmailService {
+    //TODO Az email küldés eléggé be tudja lassítani a flowt, ezért ezt sokszor érdemes külön szálra kiszervezni...
+    // Ez elég melós, főleg ha akarunk esetleg feedbacket is, hogy kiment-e rendben a levél...
+    // Viszont sokszor megéri, hiszen pl a regisztrációs oldal addig fog váratni minket, hogy sikeres volt-e, amíg a
+    // teljes levélküldés folyamat be nem fejeződött...
 
     private final JavaMailSender javaMailSender;
     private final ConfirmationTokenRepository confirmationTokenRepository;
-
 
     @Value("${email.send.subject}")
     private String subject;
@@ -26,6 +30,8 @@ public class EmailService {
     @Value("${email.send.confirmation}")
     private String confirmationUrl;
 
+    //TODO @Autowired!!
+    @Autowired
     public EmailService(JavaMailSender javaMailSender, ConfirmationTokenRepository confirmationTokenRepository) {
         this.javaMailSender = javaMailSender;
         this.confirmationTokenRepository = confirmationTokenRepository;

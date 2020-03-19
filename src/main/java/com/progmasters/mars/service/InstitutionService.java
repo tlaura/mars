@@ -32,6 +32,10 @@ public class InstitutionService {
     }
 
     public List<InstitutionListData> getInstitutionList() {
+        //TODO Látom a szándék megvan, ezt a Pageable-t ajánlott mihamarabb bevezetni,
+        // könnyű implementálni, és menő :)
+        // Van rá valahol példám ha érdekel :)
+
         //  Pageable pageable= PageRequest.of(page,size);
         return institutionRepository.findAll()
                 .stream()

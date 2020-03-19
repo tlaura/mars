@@ -20,6 +20,7 @@ public class InstitutionController {
 
     private final InstitutionService institutionService;
 
+    //TODO Legalább a controllerekbe érdemes rakni mindenhova logolást!
 
     @Autowired
     public InstitutionController(InstitutionService institutionService) {
@@ -46,7 +47,6 @@ public class InstitutionController {
 
         return new ResponseEntity<>(institutionTypeDataList, HttpStatus.OK);
     }
-
 
     @GetMapping("/details")
     public List<InstitutionDetailsData> institutionsDetails() {

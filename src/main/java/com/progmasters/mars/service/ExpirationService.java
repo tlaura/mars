@@ -34,7 +34,15 @@ public class ExpirationService {
     private void removeUnconfirmedUsers() {
         List<ConfirmationToken> confirmationTokens = emailService.findAllConfirmationToken();
         for (ConfirmationToken confirmationToken : confirmationTokens) {
-            Duration elapsedTime = Duration.between(confirmationToken.getDate(), LocalDateTime.now());
+//TODO ez így lehet picit olvashatóbb
+//            boolean tokenExpired =
+//                    confirmationToken
+//                            .getDate()
+//                            .plusHours(MAX_ELAPSED_HOURS)
+//                            .isBefore(LocalDateTime.now());
+//            if (tokenExpired) {
+
+                Duration elapsedTime = Duration.between(confirmationToken.getDate(), LocalDateTime.now());
             long difference = Math.abs(elapsedTime.toHours());
             if (!confirmationToken.isConfirmed() && difference >= MAX_ELAPSED_HOURS) {
                 emailService.removeConfirmationToken(confirmationToken.getId());

@@ -16,6 +16,8 @@ public class ConfirmationToken {
     @Column(name = "confirmation_token")
     private String token = UUID.randomUUID().toString();
 
+    //TODO Ez itt lehetne még szebb, ha ZonedDateTime mentődne a DB-be,
+    // erről majd írok valamit, mert elég szívatós dolog
     @Column(name = "creation_date")
     private LocalDateTime date = LocalDateTime.now();
 

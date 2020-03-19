@@ -38,11 +38,10 @@ public class JPAUserDetailsService implements UserDetailsService {
         List<GrantedAuthority> authorities = AuthorityUtils
                 .createAuthorityList(providerAccount.getRole().toString());
 
-        UserDetails principal = User
+        return User
                 .withUsername(username)
                 .authorities(authorities)
                 .password(providerAccount.getPassword())
                 .build();
-        return principal;
     }
 }
