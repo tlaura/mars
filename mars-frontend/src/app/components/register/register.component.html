@@ -1,15 +1,14 @@
-<div class="col-sm-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3 text-center">
+<div class="col-sm-12 col-md-6 offset-md-3 col-lg-6 offset-lg-3 text-center">
   <h1 class="">Regisztráció</h1>
 
-  <button (click)="chooseNormalUser()" [ngClass]="isNormalUser ? 'active' : 'inactive'"
+  <button (click)="chooseNormalUser()" disabled
           class="user-option-chooser btn w-50 mb-0">Felhasználó
   </button>
   <button (click)="chooseProviderUser()" [ngClass]="!isNormalUser ? 'active' : 'inactive'"
           class="user-option-chooser btn w-50 mb-0">Szolgáltatás
   </button>
 
-
-  <div class="register-div text-left p-sm-3 p-md-3">
+  <div class="register-div text-left p-sm-3 p-md-3 container">
     <form [formGroup]="registerForm">
 
       <app-contacts
@@ -18,6 +17,7 @@
         (phoneEmitter)="setPhone($event)"
         (websiteEmitter)="setWebsite($event)"
       ></app-contacts>
+
 
       <app-provider-attributes
         (ageGroupMaxEmitter)="setAgeGroupMax($event)"

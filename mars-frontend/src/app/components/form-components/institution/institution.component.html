@@ -7,6 +7,7 @@
   </select>
 </div-->
 <!-- TODO: fetch at parent and send to child-->
+<hr/>
 <form [formGroup]="institutionForm">
 
   <app-contacts
@@ -24,21 +25,22 @@
   >
   </app-address>
 
+
   <div class="form-group col-sm-12 col-md-12">
     <label>Nyitvatartás:</label>
-  </div>
 
-  <div class="form-group col-sm-12 col-md-1">
     <button (click)="addNewOpeningHours()"
-            class="btn rounded-circle ">+
+            class="btn rounded-pill btn-light btn-sm mx-sm-1 mx-sm-2">
+      Nyitvatartási idő hozzáadása
     </button>
   </div>
 
-  <div *ngFor="let array of getOpeningHours().controls;let i = index;">
-    <app-opening-hours [openingHours]="array"
-    >
-    </app-opening-hours>
 
+  <div *ngFor="let array of getOpeningHours().controls;let i = index;" class="row mx-0">
+    <div class="col-sm-11 col-md-10">
+      <app-opening-hours [openingHours]="array">
+      </app-opening-hours>
+    </div>
     <div class="form-group col-sm-12 col-md-1">
       <button (click)="removeOpeningHours(i)"
               class="btn btn-outline-danger rounded-pill">
@@ -50,7 +52,7 @@
   <div class="form-group col-sm-12 col-md-12">
     <label>Rövid leírás:</label>
     <textarea formControlName="description"
-              class="form-control rounded-pill"
+              class="form-control"
               rows="2">
   </textarea>
     <div *ngIf="institutionForm.get('description').invalid && institutionForm.get('description').touched">

@@ -1,9 +1,20 @@
-<app-password (passwordEmitter)="setPassword($event)"></app-password>
-<app-password (passwordEmitter)="setPasswordAgain($event)"></app-password>
-<small *ngIf="!passwordMatch"
-       class="text-danger">
-  A két jelszónak meg kell egyeznie!
-</small>
+<div class="row mx-0">
+  <div class="form-group col-sm-12 col-md-6">
+    <app-password (passwordEmitter)="setPassword($event)"></app-password>
+  </div>
+  <div class="form-group col-sm-12 col-md-6">
+    <app-password (passwordEmitter)="setPasswordAgain($event)"></app-password>
+  </div>
+</div>
+
+
+<div class="row m-0 col-sm-12 col-md-12">
+  <small *ngIf="!passwordMatch"
+         class="text-danger">
+    A két jelszónak meg kell egyeznie!
+  </small>
+</div>
+
 
 <div class="form-group col-sm-12 col-md-8">
   <label for="providerServiceName">Szolgáltatás neve:</label>
@@ -20,9 +31,9 @@
   </div>
 </div>
 
-<div class="form-group col-sm-12 col-md-6">
+<div class="form-group col-sm-12 col-md-8">
   <label for="types">Szolgáltatás típusa:</label>
-  <select class="form-control rounded-pill mdb-select md-form"
+  <select class="form-control mdb-select md-form"
           (focusout)="emitTypes()"
           [formControl]="types"
           id="types"

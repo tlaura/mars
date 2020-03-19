@@ -1,13 +1,12 @@
-<div class="form-group col-sm-12 col-md-7">
-  <label for="email">Email cím:</label>
-  <input (focusout)="emitEmail()" class="form-control rounded-pill" [formControl]="email" id="email" type="text">
-  <small *ngIf="email.errors?.serverError && email.touched"
-         class="text-danger">
-    {{email.errors['serverError']}}
+<label for="email">Email cím:</label>
+<input (focusout)="emitEmail()" [formControl]="email" class="form-control rounded-pill" id="email" type="text">
+<small *ngIf="email.errors?.serverError && email.touched"
+       class="text-danger">
+  {{email.errors['serverError']}}
+</small>
+<div *ngIf="email.errors?.pattern">
+  <small class="text-danger">
+    Érvénytelen email cím!
   </small>
-  <div *ngIf="email.errors?.pattern">
-    <small class="text-danger">
-      Érvénytelen email cím!
-    </small>
-  </div>
 </div>
+
