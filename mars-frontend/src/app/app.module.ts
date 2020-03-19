@@ -14,7 +14,6 @@ import {RegisterComponent} from './components/register/register.component';
 import {Ng2SearchPipeModule} from "ng2-search-filter";
 import {NgxPaginationModule} from "ngx-pagination";
 import {AgmCoreModule, GoogleMapsAPIWrapper} from "@agm/core";
-import {environment} from "../environments/environment.local";
 import {MapComponent} from './components/map/map.component';
 import {LoginFormComponent} from "./components/login-form/login-form.component";
 import {HttpRequestInterceptor} from "./utils/httpRequestInterceptor";
@@ -32,6 +31,7 @@ import {ProviderAttributesComponent} from './components/form-components/provider
 import {PasswordComponent} from './components/form-components/password/password.component';
 import {InstitutionComponent} from './components/form-components/institution/institution.component';
 import {OpeningHoursComponent} from './components/form-components/opening-hours/opening-hours.component';
+import {environment} from "../environments/environment";
 
 export function getAuthServiceConfigs() {
   let config = new SocialServiceConfig()

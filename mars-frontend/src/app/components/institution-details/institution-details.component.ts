@@ -2,7 +2,6 @@ import {Component, Input, OnInit} from '@angular/core';
 import {InstitutionDetailModel} from "../../models/institutionDetail.model";
 import {ActivatedRoute} from "@angular/router";
 import {InstitutionService} from "../../services/institution.service";
-import {SocialService} from "ngx-social-button";
 
 @Component({
   selector: 'app-institution-details',
@@ -20,7 +19,7 @@ export class InstitutionDetailsComponent implements OnInit {
     hashtag: "#NONE"
   };
 
-  constructor(private activatedRoute: ActivatedRoute, private institutionService: InstitutionService, private socialService: SocialService) {
+  constructor(private activatedRoute: ActivatedRoute, private institutionService: InstitutionService) {
   }
 
   ngOnInit() {
@@ -32,7 +31,7 @@ export class InstitutionDetailsComponent implements OnInit {
             institutionDetail => this.institution = institutionDetail,
             error => console.warn(error),
             () => {
-              this.shareUrl = "http://localhost/4200/institution-details/" + this.institution.id;
+              this.shareUrl = location.href + this.institution.id;
             }
           )
         }
