@@ -1,13 +1,14 @@
-<div class="details-div col-sm-12 col-md-6 offset-md-3 col-lg-6 offset-lg-3 text-center container">
-  <h1>{{institution?.name}}</h1>
+<div class="details-div text-center container">
+  <h4 class="font-weight-bold">{{institution?.name}}</h4>
   <h5>{{ institution?.zipcode}} {{institution?.city}} {{institution?.address}}</h5>
-  <h5>Nyitva tartás:</h5>
+  <h6>Nyitva tartás:</h6>
   <div *ngFor="let openingHour of openingHours">{{openingHour.weekDay}}: {{openingHour.openingTime}}
     -{{openingHour.closingTime}}</div>
 
-  <h3>{{institution?.description}}</h3>
+  <p>{{institution?.description}}</p>
 
-  <h5 (click)="openMailSend()">Elérhetőség: {{institution?.email}}</h5>
+  <h6 (click)="openMailSend()">Elérhetőség:</h6>
+  <p>{{institution?.email}}</p>
 
   <app-send-mail (sent)="openMailSend()" *ngIf="mailSender" [toEmail]="institution?.email"></app-send-mail>
   <!--  <div class="col-md-2">-->
