@@ -1,6 +1,7 @@
 package com.progmasters.mars.service;
 
 import com.progmasters.mars.domain.Institution;
+import com.progmasters.mars.domain.ProviderAccount;
 import com.progmasters.mars.dto.*;
 import com.progmasters.mars.repository.InstitutionRepository;
 import com.progmasters.mars.util.ExcelFileLoader;
@@ -45,6 +46,16 @@ public class InstitutionService {
         String address = institutionCreationForm.getZipcode() + " " + institutionCreationForm.getCity() + " " + institutionCreationForm.getAddress();
         GeoLocation geoLocation = getGeoLocationByAddress(address);
         Institution institution = new Institution(institutionCreationForm, geoLocation);
+        institutionRepository.save(institution);
+
+        return institution;
+    }
+
+    public Institution createInstitution(InstitutionCreationCommand institutionCreationForm, ProviderAccount providerAccount) {
+        String address = institutionCreationForm.getZipcode() + " " + institutionCreationForm.getCity() + " " + institutionCreationForm.getAddress();
+        GeoLocation geoLocation = getGeoLocationByAddress(address);
+        Institution institution = new Institution(institutionCreationForm, geoLocation);
+        institution.setProviderAccount(providerAccount);
         institutionRepository.save(institution);
 
         return institution;

@@ -37,17 +37,17 @@ public class AccountService {
     public void createProviderAccount(ProviderAccountCreationCommand providerAccountCreationCommand) {
         ProviderAccount providerAccount = new ProviderAccount(providerAccountCreationCommand);
         providerAccount.setPassword(passwordEncoder.encode(providerAccountCreationCommand.getPassword()));
-        providerAccount.setInstitutions(createInstitutionList(providerAccountCreationCommand));
+        providerAccount.setInstitutions(createInstitutionList(providerAccountCreationCommand, providerAccount));
 
         providerAccountRepository.save(providerAccount);
         emailService.sendConfirmationEmail(providerAccount);
     }
 
-    //todo reheck
-    private List<Institution> createInstitutionList(ProviderAccountCreationCommand providerAccountCreationCommand) {
+    //todo recheck
+    private List<Institution> createInstitutionList(ProviderAccountCreationCommand providerAccountCreationCommand, ProviderAccount providerAccount) {
         return providerAccountCreationCommand.getInstitutions().stream()
                 .map(institution -> institution.getId() != null ?
-                        institutionService.findById(institution.getId()) : institutionService.createInstitution(institution))
+                        institutionService.findById(institution.getId()) : institutionService.createInstitution(institution, providerAccount))
                 .collect(Collectors.toList());
     }
 
