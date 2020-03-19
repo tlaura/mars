@@ -37,6 +37,10 @@ label {
   color: tomato;
 }
 
+p {
+  color: tomato;
+}
+
 hr {
   display: block;
   height: 1px;

@@ -39,10 +39,12 @@ export class InstitutionImportComponent implements OnInit {
   //TODO: fix DOMException ERROR
 
   uploadFile = (event): void => {
+
     const file = (event.target as HTMLInputElement).files[0];
     this.importForm.patchValue({
       file: file
     });
     this.importForm.get('file').updateValueAndValidity()
   };
+
 }

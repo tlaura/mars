@@ -55,10 +55,6 @@ public class ProviderAccountValidatorService {
         }
     }
 
-    public boolean nameIsTaken(String name) {
-        return !providerAccountRepository.findAllByName(name).isEmpty();
-    }
-
     public boolean emailIsTaken(String email) {
         return !providerAccountRepository.findAllByEmail(email).isEmpty();
     }

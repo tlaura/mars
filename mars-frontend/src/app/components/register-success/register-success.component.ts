@@ -26,7 +26,7 @@ export class RegisterSuccessComponent implements OnInit {
         this.mailService.confirmRegistration(token).subscribe(
           () => this.confirmed = true,
           error => console.warn(error),
-          () => setTimeout(this.navigateToLogin, 30000)
+          () => setTimeout(this.navigateToLogin, 2000)
         )
       }
     );

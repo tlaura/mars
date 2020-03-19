@@ -20,18 +20,11 @@ public class ProviderAccountValidator implements Validator {
         return ProviderAccountCreationCommand.class.equals(aClass);
     }
 
-
-    //TODO: fix validators
     @Override
     public void validate(Object o, Errors errors) {
         if (o != null) {
             ProviderAccountCreationCommand providerAccount = (ProviderAccountCreationCommand) o;
             validatorService.validateFields(providerAccount, errors);
-            if (providerAccount.getName() != null) {
-                if (validatorService.nameIsTaken(providerAccount.getName())) {
-                    errors.rejectValue("name", "name.mustBeUnique");
-                }
-            }
             if (providerAccount.getEmail() != null) {
                 if (validatorService.emailIsTaken(providerAccount.getEmail())) {
                     errors.rejectValue("email", "email.mustBeUnique");
