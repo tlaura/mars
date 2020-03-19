@@ -73,4 +73,24 @@ public class AccountService {
         ProviderAccount providerAccount = providerAccountRepository.findByEmail(loggedInUser);
         return new ProviderUserDetailsEdit(providerAccount);
     }
+
+    public ProviderAccount updateProviderAccount(ProviderUserDetailsEdit providerUserDetailsEdit, String loggedInUser) {
+        ProviderAccount providerAccount = providerAccountRepository.findByEmail(loggedInUser);
+        if (providerAccount != null) {
+            updateAccountFields(providerUserDetailsEdit, providerAccount);
+            return providerAccount;
+        } else {
+            return null;
+        }
+    }
+
+    private void updateAccountFields(ProviderUserDetailsEdit providerUserDetailsEdit, ProviderAccount providerAccount) {
+        providerAccount.setName(providerUserDetailsEdit.getName());
+        providerAccount.setProviderServiceName(providerUserDetailsEdit.getProviderServiceName());
+        providerAccount.setPassword(providerUserDetailsEdit.getPassword());
+        providerAccount.setPhone(providerUserDetailsEdit.getPhone());
+        providerAccount.setZipcode(providerUserDetailsEdit.getZipcode());
+        providerAccount.setCity(providerUserDetailsEdit.getCity());
+        providerAccount.setAddress(providerUserDetailsEdit.getAddress());
+    }
 }

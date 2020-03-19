@@ -27,15 +27,15 @@
         </small>
       </div>
 
-      <div class="form-group">
-        <label for="password">Jelszó:</label>
-        <input class="form-control" formControlName="password" id="password" name="password" type="password">
-        <small *ngIf="providerAccountForm.get('password').invalid &&
-                    providerAccountForm.get('password').touched"
-               class="text-danger">
-          A mező kitöltése kötelező
-        </small>
-      </div>
+      <!--      <div class="form-group">-->
+      <!--        <label for="password">Jelszó:</label>-->
+      <!--        <input class="form-control" formControlName="password" id="password" name="password" type="password">-->
+      <!--        <small *ngIf="providerAccountForm.get('password').invalid &&-->
+      <!--                    providerAccountForm.get('password').touched"-->
+      <!--               class="text-danger">-->
+      <!--          A mező kitöltése kötelező-->
+      <!--        </small>-->
+      <!--      </div>-->
 
       <div class="form-group">
         <label for="phone">Telefonszám:</label>
@@ -76,10 +76,9 @@
           A mező kitöltése kötelező
         </small>
       </div>
-
-      <div class="container p-3 m-4">
-        <ng-template viewMode></ng-template>
-      </div>
+      <!--      <div class="container p-3 m-4">-->
+      <!--        <ng-template viewMode></ng-template>-->
+      <!--      </div>-->
 
       <button [disabled]="providerAccountForm.invalid" class="btn btn-info rounded-pill">Mentés</button>
       <button (click)="goBack()" class="btn btn-info rounded-pill">Vissza</button>

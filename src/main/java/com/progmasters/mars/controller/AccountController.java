@@ -1,6 +1,7 @@
 package com.progmasters.mars.controller;
 
 import com.progmasters.mars.domain.InstitutionType;
+import com.progmasters.mars.domain.ProviderAccount;
 import com.progmasters.mars.dto.InstitutionListData;
 import com.progmasters.mars.dto.ProviderAccountCreationCommand;
 import com.progmasters.mars.dto.ProviderUserDetails;
@@ -23,10 +24,10 @@ import java.util.List;
 @RequestMapping("/api/providers")
 public class AccountController {
 
+    private static final Logger logger = LoggerFactory.getLogger(AccountController.class);
     private ProviderAccountValidator providerAccountValidator;
     private final AccountInstitutionService accountInstitutionService;
     private final AccountService accountService;
-    private final Logger logger = LoggerFactory.getLogger(AccountController.class);
 
 
     @Autowired
@@ -66,5 +67,18 @@ public class AccountController {
     @GetMapping("/edit/{loggedInUser}")
     public ResponseEntity<ProviderUserDetailsEdit> getProviderAccountEditData(@PathVariable String loggedInUser) {
         return new ResponseEntity<>(accountService.getProviderAccountEditDetails(loggedInUser), HttpStatus.OK);
+    }
+
+    @PutMapping("/{loggedInUser}")
+    public ResponseEntity<ProviderUserDetailsEdit> updateProviderAccountDetails(@Valid @RequestBody ProviderUserDetailsEdit providerUserDetailsEdit, @PathVariable String loggedInUser) {
+        ProviderAccount providerUpdate = accountService.updateProviderAccount(providerUserDetailsEdit, loggedInUser);
+        ResponseEntity<ProviderUserDetailsEdit> result;
+        if (providerUpdate == null) {
+            result = new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            result = new ResponseEntity<>(new ProviderUserDetailsEdit(providerUpdate), HttpStatus.OK);
+            logger.info("provider account updated");
+        }
+        return result;
     }
 }

@@ -1,9 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup} from "@angular/forms";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {LoginService} from "../../services/login.service";
 import {AccountService} from "../../services/account.service";
 import {ProviderAccountEditDataModel} from "../../models/providerAccountEditData.model";
 import {Router} from "@angular/router";
+import {validationHandler} from "../../utils/validationHandler";
 
 @Component({
   selector: 'app-edit-profile',
@@ -18,10 +19,13 @@ export class EditProfileComponent implements OnInit {
               private providerService: AccountService,
               private router: Router) {
     this.providerAccountForm = new FormGroup({
-      name: new FormControl(''),
-      providerServiceName: new FormControl(''),
-      phone: new FormControl(''),
-
+      name: new FormControl('', Validators.required),
+      providerServiceName: new FormControl('', Validators.required),
+      // password: new FormControl(''),
+      phone: new FormControl('', Validators.required),
+      zipcode: new FormControl(''),
+      city: new FormControl(''),
+      address: new FormControl(''),
     })
   }
 
@@ -33,10 +37,11 @@ export class EditProfileComponent implements OnInit {
   getProviderDetails = (id: string) => {
     this.providerService.fetchProviderAccountEditDetails(this.loggedInUser).subscribe(
       (providerDetails: ProviderAccountEditDataModel) => {
+        console.log(providerDetails);
         this.providerAccountForm.patchValue({
           name: providerDetails.name,
           providerServiceName: providerDetails.providerServiceName,
-          password: providerDetails.password,
+          // password: providerDetails.password,
           phone: providerDetails.phone,
           zipcode: providerDetails.zipcode,
           address: providerDetails.address,
@@ -50,6 +55,17 @@ export class EditProfileComponent implements OnInit {
   };
 
   saveChanges() {
+    // if(this.providerAccountForm.valid) {
+    let account: ProviderAccountEditDataModel = {...this.providerAccountForm.value};
+    this.providerService.editProviderAccount(account, this.loggedInUser).subscribe(
+      () => {
+        console.log('data changes saved');
+        this.router.navigate(['my-profile']);
+      },
+      error => {
+        validationHandler(error, this.providerAccountForm);
+      }
+    )
 
   }
 

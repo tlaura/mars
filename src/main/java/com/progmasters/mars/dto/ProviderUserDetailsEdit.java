@@ -6,7 +6,7 @@ public class ProviderUserDetailsEdit {
 
     private String email;
     private String name;
-    private String username;
+    private String providerServiceName;
     private String password;
     private String phone;
     private String zipcode;
@@ -17,13 +17,16 @@ public class ProviderUserDetailsEdit {
     public ProviderUserDetailsEdit(ProviderAccount providerAccount) {
         this.email = providerAccount.getEmail();
         this.name = providerAccount.getName();
-        this.username = providerAccount.getName();
+        this.providerServiceName = providerAccount.getProviderServiceName();
         this.password = providerAccount.getPassword();
         this.phone = providerAccount.getPhone();
         this.zipcode = providerAccount.getZipcode();
         this.city = providerAccount.getCity();
         this.address = providerAccount.getAddress();
         this.newsletter = providerAccount.getNewsletter();
+    }
+
+    public ProviderUserDetailsEdit() {
     }
 
     public String getEmail() {
@@ -34,8 +37,8 @@ public class ProviderUserDetailsEdit {
         return name;
     }
 
-    public String getUsername() {
-        return username;
+    public String getProviderServiceName() {
+        return providerServiceName;
     }
 
     public String getPassword() {
