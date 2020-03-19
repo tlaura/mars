@@ -69,7 +69,7 @@ public class AccountController {
         return new ResponseEntity<>(accountService.getProviderAccountEditDetails(loggedInUser), HttpStatus.OK);
     }
 
-    @PutMapping("/{loggedInUser}")
+    @PatchMapping("/{loggedInUser}")
     public ResponseEntity<ProviderUserDetailsEdit> updateProviderAccountDetails(@Valid @RequestBody ProviderUserDetailsEdit providerUserDetailsEdit, @PathVariable String loggedInUser) {
         ProviderAccount providerUpdate = accountService.updateProviderAccount(providerUserDetailsEdit, loggedInUser);
         ResponseEntity<ProviderUserDetailsEdit> result;

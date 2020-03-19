@@ -87,7 +87,7 @@ public class AccountService {
     private void updateAccountFields(ProviderUserDetailsEdit providerUserDetailsEdit, ProviderAccount providerAccount) {
         providerAccount.setName(providerUserDetailsEdit.getName());
         providerAccount.setProviderServiceName(providerUserDetailsEdit.getProviderServiceName());
-        providerAccount.setPassword(providerUserDetailsEdit.getPassword());
+//        providerAccount.setPassword(providerUserDetailsEdit.getPassword());
         providerAccount.setPhone(providerUserDetailsEdit.getPhone());
         providerAccount.setZipcode(providerUserDetailsEdit.getZipcode());
         providerAccount.setCity(providerUserDetailsEdit.getCity());
