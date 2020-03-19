@@ -12,12 +12,12 @@ import {validationHandler} from "../../utils/validationHandler";
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
-  isNormalUser: boolean = true;
+  isNormalUser: boolean = false;
   haveProviderCustomAddress: boolean = false;
   registerForm: FormGroup;
 
   constructor(private accountService: AccountService, private router: Router) {
-    this.isNormalUser = true;
+    this.chooseProviderUser();
     this.registerForm = new FormGroup(
       {
         'providerServiceName': new FormControl('', Validators.required),
@@ -66,16 +66,17 @@ export class RegisterComponent implements OnInit {
 
   addNewInstitution() {
     (this.registerForm.get('institutions') as FormArray).push(new FormGroup({
-      'zipcode': new FormControl(),
-      'city': new FormControl(),
-      'address': new FormControl(),
+      'zipcode': new FormControl(null, Validators.required),
+      'city': new FormControl(null, Validators.required),
+      'address': new FormControl(null, Validators.required),
 
-      'name': new FormControl(),
-      'email': new FormControl(),
+      'name': new FormControl('', Validators.required),
+      'email': new FormControl('', Validators.required),
       'phone': new FormControl(),
       'website': new FormControl(),
 
-      'description': new FormControl(),
+      'description': new FormControl('',
+        [Validators.required, Validators.minLength(30), Validators.maxLength(200)]),
 
       'openingHours': new FormArray([])
     }));
