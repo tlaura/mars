@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormArray, FormControl, FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'app-institution',
@@ -12,21 +12,7 @@ export class InstitutionComponent implements OnInit {
   institutionForm: FormGroup;
 
   constructor() {
-    this.institutionForm = new FormGroup({
-      'zipcode': new FormControl(null, Validators.required),
-      'city': new FormControl(null, Validators.required),
-      'address': new FormControl(null, Validators.required),
-
-      'name': new FormControl('', Validators.required),
-      'email': new FormControl('', Validators.required),
-      'phone': new FormControl(),
-      'website': new FormControl(),
-
-      'description': new FormControl('',
-        [Validators.required, Validators.minLength(30), Validators.maxLength(200)]),
-
-      'openingHours': new FormArray([])
-    })
+    this.institutionForm = new FormGroup({})
   }
 
   ngOnInit(): void {

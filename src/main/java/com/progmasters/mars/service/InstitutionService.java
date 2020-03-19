@@ -23,10 +23,12 @@ public class InstitutionService {
     private final InstitutionRepository institutionRepository;
     private final GeocodeService geocodeService;
 
+
     @Autowired
     public InstitutionService(InstitutionRepository institutionRepository, GeocodeService geocodeService) {
         this.institutionRepository = institutionRepository;
         this.geocodeService = geocodeService;
+
     }
 
     public List<InstitutionListData> getInstitutionList() {
@@ -42,10 +44,11 @@ public class InstitutionService {
     }
 
 
-    public Institution createInstitution(InstitutionCreationCommand institutionCreationForm) {
-        String address = institutionCreationForm.getZipcode() + " " + institutionCreationForm.getCity() + " " + institutionCreationForm.getAddress();
+    public Institution createInstitution(InstitutionCreationCommand institutionCreationCommand) {
+        String address = institutionCreationCommand.getZipcode() + " " + institutionCreationCommand.getCity() + " " + institutionCreationCommand.getAddress();
         GeoLocation geoLocation = getGeoLocationByAddress(address);
-        Institution institution = new Institution(institutionCreationForm, geoLocation);
+        Institution institution = new Institution(institutionCreationCommand, geoLocation);
+
         institutionRepository.save(institution);
 
         return institution;

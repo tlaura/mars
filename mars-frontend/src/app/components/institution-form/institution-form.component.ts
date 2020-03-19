@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder} from "@angular/forms";
+import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {InstitutionService} from "../../services/institution.service";
 import {validationHandler} from "../../utils/validationHandler";
+import {Institution} from "../../models/institution";
 
 @Component({
   selector: 'app-institution-form',
@@ -11,28 +12,37 @@ import {validationHandler} from "../../utils/validationHandler";
 })
 export class InstitutionFormComponent implements OnInit {
 
-  institutionForm = this.formBuilder.group({
-    "name": ['',],
-    "zipCode": [''],
-    "city": [''],
-    "address": [''],
-    "email": [''],
-    "description": [''],
-    "creatorId": [0] //TODO Should be current users Id
-  });
+  institutionForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder,
-              private institutionService: InstitutionService,
+  constructor(private institutionService: InstitutionService,
               private router: Router) {
+    this.institutionForm = new FormGroup({
+      'zipcode': new FormControl(null, Validators.required),
+      'city': new FormControl(null, Validators.required),
+      'address': new FormControl(null, Validators.required),
+
+      'name': new FormControl('', Validators.required),
+      'email': new FormControl('', Validators.required),
+      'phone': new FormControl(),
+      'website': new FormControl(),
+
+      'description': new FormControl('',
+        [Validators.required, Validators.minLength(30), Validators.maxLength(200)]),
+
+      'openingHours': new FormArray([])
+    })
   }
 
   ngOnInit() {
   }
 
+
+  //      const formData: ProviderAccountRegisterModel = this.registerForm.value;
   submit() {
-    this.institutionService.saveInstitution(this.institutionForm.value)
+    const formData: Institution = this.institutionForm.value;
+    this.institutionService.saveInstitution(formData)
       .subscribe(
-        () => this.router.navigate(["institute-list"]),
+        () => this.router.navigate(["institution-list"]),
         error => validationHandler(error, this.institutionForm),
       );
 

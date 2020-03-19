@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {FormControl, FormGroup} from "@angular/forms";
+import {FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'app-opening-hours',
@@ -13,11 +13,7 @@ export class OpeningHoursComponent implements OnInit {
   openingHours: FormGroup;
 
   constructor() {
-    this.openingHours = new FormGroup({
-      'weekDay': new FormControl(null),
-      'openingTime': new FormControl(null),
-      'closingTime': new FormControl(null)
-    })
+    this.openingHours = new FormGroup({});
   }
 
   ngOnInit(): void {

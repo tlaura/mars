@@ -3,7 +3,7 @@ package com.progmasters.mars.dto;
 import java.time.LocalTime;
 
 public class OpeningHoursCreationCommand {
-    private String weekDay; //TODO: enum
+    private String weekDay;
     private LocalTime openingTime;
     private LocalTime closingTime;
 
