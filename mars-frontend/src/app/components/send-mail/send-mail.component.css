@@ -1,0 +1,9 @@
+input::placeholder {
+  color: lightgrey;
+}
+
+input {
+  border: 1px solid tomato;
+  outline: 0;
+  box-shadow: none !important;
+}

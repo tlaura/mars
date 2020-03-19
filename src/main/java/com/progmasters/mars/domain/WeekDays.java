@@ -27,4 +27,12 @@ public enum WeekDays {
         }
         return foundType;
     }
+
+    public String getHungarianName() {
+        return hungarianName;
+    }
+
+    public String getEnglishName() {
+        return englishName;
+    }
 }

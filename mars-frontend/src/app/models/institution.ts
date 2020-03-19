@@ -1,4 +1,4 @@
-import {OpeningHours} from "./openingHours";
+import {OpeningHoursModel} from "./openingHours.model";
 
 export interface Institution {
   id: number,
@@ -12,6 +12,6 @@ export interface Institution {
   city: string,
   address: string,
 
-  openingHours: OpeningHours[],
+  openingHours: OpeningHoursModel[],
   description: string
 }
