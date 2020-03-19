@@ -4,14 +4,19 @@ import com.progmasters.mars.domain.ConfirmationToken;
 import com.progmasters.mars.domain.ProviderAccount;
 import com.progmasters.mars.dto.MailData;
 import com.progmasters.mars.repository.ConfirmationTokenRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 @Service
 public class EmailService {
@@ -22,6 +27,7 @@ public class EmailService {
 
     private final JavaMailSender javaMailSender;
     private final ConfirmationTokenRepository confirmationTokenRepository;
+    private final Logger logger = LoggerFactory.getLogger(EmailService.class);
 
     @Value("${email.send.subject}")
     private String subject;
@@ -37,7 +43,8 @@ public class EmailService {
         this.confirmationTokenRepository = confirmationTokenRepository;
     }
 
-    private void sendMsg(String toEmail, String subject, String text) {
+    @Async
+    public CompletableFuture<Long> sendMsg(String toEmail, String subject, String text) {
         SimpleMailMessage message = new SimpleMailMessage();
 
         message.setTo(toEmail);
@@ -45,19 +52,32 @@ public class EmailService {
         message.setText(text);
 
         javaMailSender.send(message);
+        long finished = System.currentTimeMillis();
+        return CompletableFuture.completedFuture(finished);
     }
 
     public void sendEmailToGivenEmail(MailData mailData) {
         //todo refactor
-        sendMsg(mailData.getToEmail(), mailData.getName() + "(" + mailData.getFromEmail() + ")" + "-" + mailData.getSubject(), mailData.getText());
+        long start = System.currentTimeMillis();
+        CompletableFuture<Long> msgSent = sendMsg(mailData.getToEmail(), mailData.getName() + "(" + mailData.getFromEmail() + ")" + "-" + mailData.getSubject(), mailData.getText());
+        try {
+            logger.info("Elapsed time: " + (msgSent.get() - start));
+        } catch (InterruptedException | ExecutionException e) {
+            logger.warn(e.getMessage());
+        }
     }
 
     public void sendConfirmationEmail(ProviderAccount user) {
 
         ConfirmationToken userToken = new ConfirmationToken(user);
         confirmationTokenRepository.save(userToken);
-
-        sendMsg(user.getEmail(), subject, text + "\n" + confirmationUrl + userToken.getToken());
+        long start = System.currentTimeMillis();
+        CompletableFuture<Long> msgSent = sendMsg(user.getEmail(), subject, text + "\n" + confirmationUrl + userToken.getToken());
+        try {
+            logger.info("Elapsed time on message sent:\t" + (msgSent.get() - start));
+        } catch (InterruptedException | ExecutionException e) {
+            logger.warn(e.getMessage());
+        }
     }
 
     public void confirmUser(String token) {
