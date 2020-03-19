@@ -4,6 +4,7 @@ import {Observable} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {Institution} from "../models/institution";
 import {ProviderUserProfileDetailsModel} from "../models/providerUserProfileDetails.model";
+import {environment} from "../../environments/environment";
 import {InstitutionListModel} from "../models/institutionList.model";
 
 @Injectable({
@@ -11,7 +12,7 @@ import {InstitutionListModel} from "../models/institutionList.model";
 })
 export class AccountService {
 
-  BASE_URL = 'http://localhost:8080/api';
+  BASE_URL = environment.BASE_URL + '/api';
 
   constructor(private http: HttpClient) {
   }

@@ -2,6 +2,8 @@ package com.progmasters.mars.config;
 
 import com.progmasters.mars.security.JPAUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -18,7 +20,8 @@ import java.util.Arrays;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-
+    @Value("${cors-policies}")
+    private String[] corsPolicies;
     private JPAUserDetailsService jpaUserDetailsService;
     private PasswordEncoder passwordEncoder;
 
@@ -36,7 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http    .formLogin().loginPage("/login")
+        http.formLogin().loginPage("/login")
                 .usernameParameter("email")
                 .permitAll().and()
                 .cors().and()
@@ -56,7 +59,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:4200", "http://127.0.0.1:4200", "http://[::1]:4200"));
+        configuration.setAllowedOrigins(Arrays.asList(corsPolicies));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
         configuration.setAllowCredentials(true);
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type", "X-Requested-With"));

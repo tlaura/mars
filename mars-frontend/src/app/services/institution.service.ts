@@ -4,12 +4,13 @@ import {Observable} from "rxjs";
 import {InstitutionListModel} from "../models/institutionList.model";
 import {InstitutionTypeModel} from "../models/InstitutionType.model";
 import {InstitutionDetailModel} from "../models/institutionDetail.model";
+import {environment} from "../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
 })
 export class InstitutionService {
-  private BASE_URL = "http://localhost:8080/api/institutions/";
+  private BASE_URL = environment.BASE_URL + "/api/institutions/";
 
   constructor(private http: HttpClient) {
   }

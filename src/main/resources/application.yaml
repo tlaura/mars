@@ -50,3 +50,5 @@ email:
     text: Az alábbi linkre kattintva aktiválhatja fiókját
     confirmation: http://localhost:4200/register-success/
   elapsed-hours: 72
+
+cors-policies: http://localhost:4200, http://127.0.0.1:4200

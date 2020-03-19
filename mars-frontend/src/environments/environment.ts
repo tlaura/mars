@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  apiKey: 'AIzaSyAeQEHjfxVD8584aJATT0pSNBf3DuCr1h0'
+  apiKey: 'AIzaSyAeQEHjfxVD8584aJATT0pSNBf3DuCr1h0',
+  BASE_URL: "http://localhost:8080"
 };
 
 /*

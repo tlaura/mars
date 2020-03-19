@@ -1,0 +1,6 @@
+spring:
+  datasource:
+    username: root
+    password: test1234
+
+cors-policies: http://18.202.237.252, http://mars-demo.progmasters.hu, https://mars-demo.progmasters.hu
