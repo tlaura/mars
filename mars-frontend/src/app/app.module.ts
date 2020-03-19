@@ -32,6 +32,7 @@ import {PasswordComponent} from './components/form-components/password/password.
 import {InstitutionComponent} from './components/form-components/institution/institution.component';
 import {OpeningHoursComponent} from './components/form-components/opening-hours/opening-hours.component';
 import {environment} from "../environments/environment";
+import {InstitutionImportCompleteComponent} from './components/institution-import-complete/institution-import-complete.component';
 
 export function getAuthServiceConfigs() {
   let config = new SocialServiceConfig()
@@ -64,7 +65,8 @@ export function getAuthServiceConfigs() {
     ProviderAttributesComponent,
     PasswordComponent,
     InstitutionComponent,
-    OpeningHoursComponent
+    OpeningHoursComponent,
+    InstitutionImportCompleteComponent
   ],
   imports: [
     BrowserModule,

@@ -10,6 +10,7 @@ import {RegistrationCompleteComponent} from "./components/registration-complete/
 import {RegisterSuccessComponent} from "./components/register-success/register-success.component";
 import {MyProfileComponent} from "./components/my-profile/my-profile.component";
 import {InstitutionImportComponent} from "./components/institution-import/institution-import.component";
+import {InstitutionImportCompleteComponent} from "./components/institution-import-complete/institution-import-complete.component";
 
 
 const routes: Routes = [
@@ -23,6 +24,7 @@ const routes: Routes = [
   {path: "login", component: LoginFormComponent},
   {path: "register", component: RegisterComponent},
   {path: "registration-complete", component: RegistrationCompleteComponent},
+  {path: "institution-import-complete", component: InstitutionImportCompleteComponent},
   {path: "register-success/:token", component: RegisterSuccessComponent},
   {path: "my-profile", component: MyProfileComponent},
   {path: "", component: InstitutionListComponent},
