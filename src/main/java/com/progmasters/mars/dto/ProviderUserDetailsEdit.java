@@ -9,7 +9,7 @@ public class ProviderUserDetailsEdit {
     private String providerServiceName;
     private String password;
     private String phone;
-    private String zipcode;
+    private Integer zipcode;
     private String city;
     private String address;
     private Boolean newsletter;
@@ -49,7 +49,7 @@ public class ProviderUserDetailsEdit {
         return phone;
     }
 
-    public String getZipcode() {
+    public Integer getZipcode() {
         return zipcode;
     }
 

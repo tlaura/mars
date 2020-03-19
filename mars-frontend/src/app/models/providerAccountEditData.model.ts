@@ -5,7 +5,7 @@ export interface ProviderAccountEditDataModel {
   providerServiceName: string;
   phone: string;
   password: string;
-  zipcode: string;
+  zipcode: number;
   city: string;
   address: string;
   newsletter: boolean;
