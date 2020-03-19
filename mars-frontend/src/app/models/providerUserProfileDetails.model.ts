@@ -3,13 +3,15 @@ import {InstitutionListModel} from "./institutionList.model";
 export interface ProviderUserProfileDetailsModel {
   id?: number;
   name: string;
-  username: string;
+  providerServiceName: string;
   password: string;
   email: string;
   phone: string;
   zipcode: number;
   city: string;
   address: string;
+  ageGroupMin: number;
+  ageGroupMax: number;
+  institutionTypes: string[];
   institutionList: InstitutionListModel[];
-  // openinghours: OpeningHoursModel[];
 }

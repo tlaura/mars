@@ -16,6 +16,9 @@ public class ProviderUserDetails {
     private Integer zipcode;
     private String city;
     private String address;
+    private Integer ageGroupMin;
+    private Integer ageGroupMax;
+    private List<String> institutionTypes;
     private List<InstitutionListData> institutionList;
 
     public ProviderUserDetails(ProviderAccount providerAccount) {
@@ -28,9 +31,14 @@ public class ProviderUserDetails {
         this.zipcode = providerAccount.getZipcode();
         this.city = providerAccount.getCity();
         this.address = providerAccount.getAddress();
+        this.ageGroupMin = providerAccount.getAgeGroupMin();
+        this.ageGroupMax = providerAccount.getAgeGroupMax();
+        this.institutionTypes = providerAccount.getTypes().stream().map(Enum::toString).collect(Collectors.toList());
         this.institutionList = providerAccount.getInstitutions().stream().map(InstitutionListData::new).collect(Collectors.toList());
     }
 
+    public ProviderUserDetails() {
+    }
 
     public List<InstitutionListData> getInstitutionList() {
         return institutionList;
@@ -38,9 +46,6 @@ public class ProviderUserDetails {
 
     public String getPassword() {
         return password;
-    }
-
-    public ProviderUserDetails() {
     }
 
     public Long getId() {
@@ -73,5 +78,17 @@ public class ProviderUserDetails {
 
     public String getAddress() {
         return address;
+    }
+
+    public Integer getAgeGroupMin() {
+        return ageGroupMin;
+    }
+
+    public Integer getAgeGroupMax() {
+        return ageGroupMax;
+    }
+
+    public List<String> getInstitutionTypes() {
+        return institutionTypes;
     }
 }
