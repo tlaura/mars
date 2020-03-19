@@ -1,10 +1,12 @@
 package com.progmasters.mars.controller;
 
 import com.progmasters.mars.domain.InstitutionType;
+import com.progmasters.mars.domain.ProviderAccount;
 import com.progmasters.mars.dto.InstitutionListData;
 import com.progmasters.mars.dto.ProviderAccountCreationCommand;
 import com.progmasters.mars.dto.ProviderUserDetails;
 import com.progmasters.mars.service.AccountInstitutionService;
+import com.progmasters.mars.dto.ProviderUserDetailsEdit;
 import com.progmasters.mars.service.AccountService;
 import com.progmasters.mars.validation.ProviderAccountValidator;
 import org.slf4j.Logger;
@@ -22,10 +24,11 @@ import java.util.List;
 @RequestMapping("/api/providers")
 public class AccountController {
 
+    private static final Logger logger = LoggerFactory.getLogger(AccountController.class);
     private ProviderAccountValidator providerAccountValidator;
     private final AccountInstitutionService accountInstitutionService;
     private final AccountService accountService;
-    private final Logger logger = LoggerFactory.getLogger(AccountController.class);
+
 
     @Autowired
     public AccountController(ProviderAccountValidator providerAccountValidator, AccountInstitutionService accountInstitutionService, AccountService accountService) {
@@ -59,5 +62,23 @@ public class AccountController {
         List<InstitutionListData> institutionListData = accountService.getInstitutionsByType(institutionType);
         logger.info("Institution List is requested by type!");
         return new ResponseEntity<>(institutionListData, HttpStatus.OK);
+    }
+
+    @GetMapping("/edit/{loggedInUser}")
+    public ResponseEntity<ProviderUserDetailsEdit> getProviderAccountEditData(@PathVariable String loggedInUser) {
+        return new ResponseEntity<>(accountService.getProviderAccountEditDetails(loggedInUser), HttpStatus.OK);
+    }
+
+    @PatchMapping("/{loggedInUser}")
+    public ResponseEntity<ProviderUserDetailsEdit> updateProviderAccountDetails(@Valid @RequestBody ProviderUserDetailsEdit providerUserDetailsEdit, @PathVariable String loggedInUser) {
+        ProviderAccount providerUpdate = accountService.updateProviderAccount(providerUserDetailsEdit, loggedInUser);
+        ResponseEntity<ProviderUserDetailsEdit> result;
+        if (providerUpdate == null) {
+            result = new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            result = new ResponseEntity<>(new ProviderUserDetailsEdit(providerUpdate), HttpStatus.OK);
+            logger.info("provider account updated");
+        }
+        return result;
     }
 }

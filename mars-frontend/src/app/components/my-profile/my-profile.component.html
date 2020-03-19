@@ -1,5 +1,7 @@
 <section class="container" *ngIf="loggedInUser">
-  <h1>Profil</h1>
+  <div class="row align-items-left justify-content-center">
+    <h1>Profil</h1>
+  </div>
   <section>
     <h4 class="display-4">{{providerAccount.name}}</h4>
     <hr>
@@ -8,11 +10,19 @@
     <section class="row">
       <section class="col-6 mb-4">
         <dl class="row">
+
           <dt class="col-sm-3">
-            <p class="text-dark">Email:</p>
+            <p class="text-dark">Teljes név:</p>
           </dt>
           <dd class="col-sm-9">
-            <p class="text-dark">{{providerAccount.email}}</p>
+            <p class="text-dark">{{providerAccount.name}}</p>
+          </dd>
+
+          <dt class="col-sm-3">
+            <p class="text-dark">Szolgáltatás neve:</p>
+          </dt>
+          <dd class="col-sm-9">
+            <p class="text-dark">{{providerAccount.providerServiceName}}</p>
           </dd>
 
           <dt class="col-sm-3">
@@ -22,16 +32,34 @@
             <p class="text-dark">{{providerAccount.phone}}</p>
           </dd>
 
+          <dt class="col-sm-3">
+            <p class="text-dark">Email:</p>
+          </dt>
+          <dd class="col-sm-9">
+            <p class="text-dark">{{providerAccount.email}}</p>
+          </dd>
+
           <dt class="col-sm-3">Cím:</dt>
           <dd class="col-sm-9">
             <p class="text-dark">{{providerAccount.zipcode}}<br>
               {{providerAccount.city}}<br>
               {{providerAccount.address}}</p>
           </dd>
+
+          <dt class="col-sm-3">Korcsoport:</dt>
+          <dd class="col-sm-9">
+            <p class="text-dark">{{providerAccount.ageGroupMin}} - {{providerAccount.ageGroupMax}}</p>
+          </dd>
+
+          <dt class="col-sm-3">Szolgáltatás típusai:</dt>
+          <dd *ngFor="let type of providerAccount.institutionTypes" class="col-sm-9">
+            <p class="text-dark">{{type}}<br>
+          </dd>
+
         </dl>
       </section>
 
-      <section class="m-4">
+      <section class="m-4 text-dark">
           Intézmények:
         <div class="card bg-light m-4"
           *ngFor="let insitution of providerAccount.institutionList">
@@ -39,13 +67,16 @@
             {{insitution.name}}
           </div>
           <div class="card-body">
-            {{insitution.type}}<br>
-            {{insitution.address}}
+            {{insitution.description}}<br>
+            ----------
+            {{insitution.phone}}<br>
+            {{insitution.website}}<br>
+            {{insitution.email}}<br>
           </div>
         </div>
       </section>
   </section>
-  <button class="submit btn btn-primary rounded-pill" type="submit">
+  <button class="submit btn btn-info rounded-pill" routerLink="edit-profile">
     Edit Profile
   </button>
 </section>
