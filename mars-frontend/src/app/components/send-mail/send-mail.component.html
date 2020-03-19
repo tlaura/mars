@@ -1,11 +1,15 @@
 <form [formGroup]="emailForm">
-  <p>Ön e-mail címe: </p>
+  <label for="fromEmail">Ön e-mail címe: </label>
   <input formControlName="fromEmail" id="fromEmail" name="fromEmail" type="text">
-  <p>Neve:</p>
+  <br>
+  <label for="name">Neve:</label>
   <input formControlName="name" id="name" name="name" type="text">
-  <p>Tárgy:</p>
+  <br>
+  <label for="subject">Tárgy:</label>
   <input formControlName="subject" id="subject" name="subject" type="text">
-  <p>Üzenet: </p>
+  <br>
+  <label for="text">Üzenet: </label>
   <textarea cols="30" formControlName="text" id="text" name="text" rows="5"></textarea>
-  <input (click)="sendMail()" type="submit">
+  <br>
+  <input (click)="sendMail()" class="submit btn btn-primary rounded-pill" type="submit">
 </form>

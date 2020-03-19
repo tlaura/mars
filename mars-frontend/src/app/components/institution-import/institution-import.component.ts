@@ -27,7 +27,7 @@ export class InstitutionImportComponent implements OnInit {
     importData.append("file", this.importForm.get('file').value);
     this.institutionService.import(importData).subscribe(
       () => {
-        this.router.navigate(['']);
+        this.router.navigate(['institution-import-complete']);
       },
       error => {
         console.warn(error);

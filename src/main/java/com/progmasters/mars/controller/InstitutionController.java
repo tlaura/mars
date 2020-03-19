@@ -28,11 +28,6 @@ public class InstitutionController {
 
     }
 
-    @GetMapping("/test")
-    public ResponseEntity test() {
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
     @GetMapping
     public ResponseEntity<List<InstitutionListData>> institutions() {
         //todo handle sorting

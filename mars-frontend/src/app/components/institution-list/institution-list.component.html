@@ -9,14 +9,13 @@
             value="{{institutionType.name}}">{{institutionType.displayName}}</option>
   </select>
 
-  <div class="col-md-2">
-    <facebook-share-button (click)="shareList()"></facebook-share-button>
-  </div>
+  <!--  <div class="col-md-2">-->
+  <!--    <facebook-share-button (click)="shareList()"></facebook-share-button>-->
+  <!--  </div>-->
 
   <div class="list-container h-25">
   </div>
   <div *ngFor="let institution of institutionList |filter:searchText |paginate:{itemsPerPage:size,currentPage:page}">
-
     <div class="row list-item-container">
       <div (click)="details(institution.id)" class="col text-left">
         <h3>{{institution.name}}</h3>

@@ -2,6 +2,8 @@ import {Component, Input, OnInit} from '@angular/core';
 import {InstitutionDetailModel} from "../../models/institutionDetail.model";
 import {ActivatedRoute} from "@angular/router";
 import {InstitutionService} from "../../services/institution.service";
+import {OpeningHoursService} from "../../services/opening-hours.service";
+import {OpeningHoursModel} from "../../models/openingHours.model";
 
 @Component({
   selector: 'app-institution-details',
@@ -12,6 +14,7 @@ export class InstitutionDetailsComponent implements OnInit {
 
   @Input() institution: InstitutionDetailModel;
   @Input() mailSender: boolean = false;
+  openingHours: Array<OpeningHoursModel>;
   shareUrl: string;
   shareObj = {
     //localhost-ra nem működik, elvileg élesben igen?!?!?
@@ -19,7 +22,7 @@ export class InstitutionDetailsComponent implements OnInit {
     hashtag: "#NONE"
   };
 
-  constructor(private activatedRoute: ActivatedRoute, private institutionService: InstitutionService) {
+  constructor(private activatedRoute: ActivatedRoute, private institutionService: InstitutionService, private openingHoursService: OpeningHoursService) {
   }
 
   ngOnInit() {
@@ -27,23 +30,32 @@ export class InstitutionDetailsComponent implements OnInit {
       paramMap => {
         const id: number = Number(paramMap.get('id'));
         if (id) {
-          this.institutionService.getInstitutionDetail(id).subscribe(
-            institutionDetail => this.institution = institutionDetail,
-            error => console.warn(error),
-            () => {
-              this.shareUrl = location.href + this.institution.id;
-            }
-          )
+          this.getInstitutionDetail(id);
         }
       }
     );
   }
 
-  openMailSend = () => {
-    this.mailSender = true;
+  getInstitutionDetail = (id: number): void => {
+    this.institutionService.getInstitutionDetail(id).subscribe(
+      institutionDetail => this.institution = institutionDetail,
+      error => console.warn(error),
+      () => {
+        this.getOpeningHours(id);
+        //this.shareUrl = location.href + this.institution.id;
+      }
+    );
   };
-  closeMailSender = () => {
-    this.mailSender = false;
+
+  getOpeningHours = (id: number): void => {
+    this.openingHoursService.getOpeningHoursByInstitutionId(id).subscribe(
+      openingHours => this.openingHours = openingHours,
+      error => console.warn(error)
+    )
+  };
+
+  openMailSend = (): void => {
+    this.mailSender = this.mailSender === false;
   };
 
 }
