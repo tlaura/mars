@@ -44,6 +44,7 @@ export class EditProfileComponent implements OnInit {
           // password: providerDetails.password,
           phone: providerDetails.phone,
           zipcode: providerDetails.zipcode,
+          city: providerDetails.city,
           address: providerDetails.address,
           newsletter: providerDetails.newsletter
         })
@@ -66,7 +67,6 @@ export class EditProfileComponent implements OnInit {
         validationHandler(error, this.providerAccountForm);
       }
     )
-
   }
 
   goBack() {
