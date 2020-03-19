@@ -31,6 +31,7 @@ public class UserController {
     public ResponseEntity<AuthenticatedUserDetails> getUserInfo() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetails user = (UserDetails) authentication.getPrincipal();
+        logger.info("Login is requested!");
         return new ResponseEntity<>(new AuthenticatedUserDetails(user), HttpStatus.OK);
     }
 }

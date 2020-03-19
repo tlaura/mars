@@ -7,6 +7,8 @@ import com.progmasters.mars.dto.ProviderUserDetails;
 import com.progmasters.mars.service.AccountInstitutionService;
 import com.progmasters.mars.service.AccountService;
 import com.progmasters.mars.validation.ProviderAccountValidator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +25,7 @@ public class AccountController {
     private ProviderAccountValidator providerAccountValidator;
     private final AccountInstitutionService accountInstitutionService;
     private final AccountService accountService;
+    private final Logger logger = LoggerFactory.getLogger(AccountController.class);
 
     @Autowired
     public AccountController(ProviderAccountValidator providerAccountValidator, AccountInstitutionService accountInstitutionService, AccountService accountService) {
@@ -37,21 +40,24 @@ public class AccountController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> createInstitution(@RequestBody @Valid ProviderAccountCreationCommand providerAccountCreationCommand) {
+    public ResponseEntity<Void> createProviderAccount(@RequestBody @Valid ProviderAccountCreationCommand providerAccountCreationCommand) {
         accountInstitutionService.saveAccount(providerAccountCreationCommand);
+        logger.info("Provider Account creation requested!");
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @GetMapping("/{username}")
     public ResponseEntity<ProviderUserDetails> getProviderUser(@PathVariable String username) {
+        logger.info("Provider Account Details requested!");
         return new ResponseEntity<>(accountService.getProviderAccount(username), HttpStatus.OK);
     }
 
     @GetMapping("/getInstitutionsByType")
     public ResponseEntity<List<InstitutionListData>> getInstitutionByType(@RequestParam("type") String type) {
-        //TODO FYI Az ENUM-nak van valueOf methodja
-        InstitutionType institutionType = InstitutionType.getTypeByName(type);
+        //TODO FYI Az ENUM-nak van valueOf methodja  --fixed
+        InstitutionType institutionType = InstitutionType.valueOf(type);
         List<InstitutionListData> institutionListData = accountService.getInstitutionsByType(institutionType);
+        logger.info("Institution List is requested by type!");
         return new ResponseEntity<>(institutionListData, HttpStatus.OK);
     }
 }

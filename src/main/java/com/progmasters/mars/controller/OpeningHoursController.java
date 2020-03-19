@@ -2,6 +2,9 @@ package com.progmasters.mars.controller;
 
 import com.progmasters.mars.dto.OpeningHoursData;
 import com.progmasters.mars.service.OpeningHoursService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +19,9 @@ import java.util.List;
 public class OpeningHoursController {
 
     private final OpeningHoursService openingHoursService;
+    private final Logger logger = LoggerFactory.getLogger(OpeningHoursController.class);
 
+    @Autowired
     public OpeningHoursController(OpeningHoursService openingHoursService) {
         this.openingHoursService = openingHoursService;
     }
@@ -24,7 +29,7 @@ public class OpeningHoursController {
     @GetMapping("{id}")
     public ResponseEntity<List<OpeningHoursData>> getOpeningHoursByInstitutionId(@PathVariable Long id) {
         List<OpeningHoursData> openingHoursList = openingHoursService.getOpeningHoursByInstitutionId(id);
-
+        logger.info("Opening hours is requested by institution ID: " + id);
         return new ResponseEntity<>(openingHoursList, HttpStatus.OK);
     }
 }

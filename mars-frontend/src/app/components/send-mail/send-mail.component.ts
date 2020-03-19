@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {FormControl, FormGroup} from "@angular/forms";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {MailService} from "../../services/mail.service";
 import {EmailModel} from "../../models/email.model";
 
@@ -16,10 +16,10 @@ export class SendMailComponent implements OnInit {
 
   constructor(private mailService: MailService) {
     this.emailForm = new FormGroup({
-      fromEmail: new FormControl(''),
-      name: new FormControl(''),
-      subject: new FormControl(''),
-      text: new FormControl('')
+      fromEmail: new FormControl('', Validators.required),
+      name: new FormControl('', Validators.required),
+      subject: new FormControl('', Validators.required),
+      text: new FormControl('', Validators.required)
     })
   }
 
