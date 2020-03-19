@@ -2,7 +2,6 @@ package com.progmasters.mars.config;
 
 import com.progmasters.mars.security.JPAUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -66,7 +65,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
 //                .antMatchers("/api/*").hasRole("ADMIN")
                 .and()
-                    .logout().deleteCookies("JSESSIONID")
+                .logout().logoutUrl("/api/user/logout").deleteCookies("JSESSIONID")
                 .and().httpBasic()
         ;
         // @formatter:on
@@ -85,5 +84,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
-
 }
