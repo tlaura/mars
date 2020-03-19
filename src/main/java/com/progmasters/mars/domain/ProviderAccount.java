@@ -3,7 +3,9 @@ package com.progmasters.mars.domain;
 import com.progmasters.mars.dto.ProviderAccountCreationCommand;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.PositiveOrZero;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -36,8 +38,8 @@ public class ProviderAccount {
     @Column(name = "email")
     private String email;
 
-    @NotNull
-    @Size(min = 1)
+    //    @NotNull
+//    @Size(min = 1)
     @Enumerated(EnumType.STRING)
     @ElementCollection
     @CollectionTable(name = "provicer_account_type", joinColumns = @JoinColumn(name = "provider_account_id"))
