@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -40,15 +39,14 @@ public class ExpirationService {
 //                            .getDate()
 //                            .plusHours(MAX_ELAPSED_HOURS)
 //                            .isBefore(LocalDateTime.now());
-//            if (tokenExpired) {
+//            if (tokenExpired) { --fixed
 
-                Duration elapsedTime = Duration.between(confirmationToken.getDate(), LocalDateTime.now());
-            long difference = Math.abs(elapsedTime.toHours());
-            if (!confirmationToken.isConfirmed() && difference >= MAX_ELAPSED_HOURS) {
+            boolean tokenExpired = confirmationToken.getDate().plusHours(MAX_ELAPSED_HOURS).isBefore(LocalDateTime.now());
+            if (tokenExpired) {
                 emailService.removeConfirmationToken(confirmationToken.getId());
                 Long userId = confirmationToken.getUser().getId();
                 accountService.removeById(userId);
-                logger.info("Account ID removed from db:\t" + userId + "\tElapsed time:\t" + difference);
+                logger.info("Account ID removed from db:\t" + userId);
             }
         }
     }
