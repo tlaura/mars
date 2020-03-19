@@ -6,6 +6,10 @@ public class InstitutionListData {
 
     private Long id;
     private String name;
+    private String description;
+    private String email;
+    private String website;
+    private String phone;
     private Integer zipcode;
     private String city;
     private String address;
@@ -19,11 +23,31 @@ public class InstitutionListData {
     public InstitutionListData(Institution institution) {
         this.id = institution.getId();
         this.name = institution.getName();
+        this.description = institution.getDescription();
+        this.email = institution.getEmail();
+        this.website = institution.getWebsite();
+        this.phone = institution.getPhone();
         this.zipcode = institution.getZipcode();
         this.city = institution.getCity();
         this.address = institution.getAddress();
         this.longitude = institution.getLongitude();
         this.latitude = institution.getLatitude();
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getWebsite() {
+        return website;
+    }
+
+    public String getPhone() {
+        return phone;
     }
 
     public Long getId() {
@@ -53,5 +77,4 @@ public class InstitutionListData {
     public Double getLatitude() {
         return latitude;
     }
-
 }

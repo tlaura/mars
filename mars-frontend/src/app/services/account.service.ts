@@ -6,6 +6,7 @@ import {Institution} from "../models/institution";
 import {ProviderUserProfileDetailsModel} from "../models/providerUserProfileDetails.model";
 import {environment} from "../../environments/environment";
 import {InstitutionListModel} from "../models/institutionList.model";
+import {ProviderAccountEditDataModel} from "../models/providerAccountEditData.model";
 
 @Injectable({
   providedIn: 'root'
@@ -33,4 +34,13 @@ export class AccountService {
   getInstitutionByType = (name: string): Observable<Array<InstitutionListModel>> => {
     return this.http.get<Array<InstitutionListModel>>(this.BASE_URL + "/providers/getInstitutionsByType?type=" + name);
   };
+
+  fetchProviderAccountEditDetails = (loggedInUser: string) => {
+    return this.http.get(this.BASE_URL + '/providers/edit/' + loggedInUser);
+  };
+
+  editProviderAccount = (data: ProviderAccountEditDataModel, loggedInUser: string): Observable<any> => {
+    data.email = loggedInUser;
+    return this.http.patch(this.BASE_URL + '/providers/' + loggedInUser, data);
+  }
 }
