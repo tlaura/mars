@@ -4,6 +4,7 @@ import com.progmasters.mars.domain.InstitutionType;
 import com.progmasters.mars.dto.InstitutionListData;
 import com.progmasters.mars.dto.ProviderAccountCreationCommand;
 import com.progmasters.mars.dto.ProviderUserDetails;
+import com.progmasters.mars.service.AccountInstitutionService;
 import com.progmasters.mars.service.AccountService;
 import com.progmasters.mars.validation.ProviderAccountValidator;
 import org.springframework.http.HttpStatus;
@@ -18,13 +19,15 @@ import java.util.List;
 @RequestMapping("/api/providers")
 public class AccountController {
 
-    private AccountService accountService;
     private ProviderAccountValidator providerAccountValidator;
+    private final AccountInstitutionService accountInstitutionService;
+    private final AccountService accountService;
 
 
-    public AccountController(AccountService accountService, ProviderAccountValidator providerAccountValidator) {
-        this.accountService = accountService;
+    public AccountController(ProviderAccountValidator providerAccountValidator, AccountInstitutionService accountInstitutionService, AccountService accountService) {
+        this.accountInstitutionService = accountInstitutionService;
         this.providerAccountValidator = providerAccountValidator;
+        this.accountService = accountService;
     }
 
     @InitBinder("providerAccountCreationCommand")
@@ -33,9 +36,9 @@ public class AccountController {
     }
 
     @PostMapping
-    public ResponseEntity createInstitution(@RequestBody @Valid ProviderAccountCreationCommand providerAccountCreationCommand) {
-        accountService.createProviderAccount(providerAccountCreationCommand);
-        return new ResponseEntity(HttpStatus.CREATED);
+    public ResponseEntity<Void> createInstitution(@RequestBody @Valid ProviderAccountCreationCommand providerAccountCreationCommand) {
+        accountInstitutionService.saveAccount(providerAccountCreationCommand);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @GetMapping("/{username}")

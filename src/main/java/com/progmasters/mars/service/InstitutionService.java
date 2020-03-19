@@ -22,13 +22,13 @@ public class InstitutionService {
 
     private final InstitutionRepository institutionRepository;
     private final GeocodeService geocodeService;
-
+    private final AccountService accountService;
 
     @Autowired
-    public InstitutionService(InstitutionRepository institutionRepository, GeocodeService geocodeService) {
+    public InstitutionService(InstitutionRepository institutionRepository, GeocodeService geocodeService, AccountService accountService) {
         this.institutionRepository = institutionRepository;
         this.geocodeService = geocodeService;
-
+        this.accountService = accountService;
     }
 
     public List<InstitutionListData> getInstitutionList() {
@@ -43,22 +43,23 @@ public class InstitutionService {
         return new InstitutionDetailsData(findById(id));
     }
 
+    public Long saveToAccount(InstitutionCreationCommand institutionCreationCommand, Long accountId) {
+        ProviderAccount providerAccount = accountService.findById(accountId);
+        Institution institution;
+        if (institutionCreationCommand.getId() != null) {
+            institution = findById(institutionCreationCommand.getId());
+        } else {
+            institution = createInstitution(institutionCreationCommand);
+        }
+        institution.setProviderAccount(providerAccount);
+
+        return institution.getId();
+    }
 
     public Institution createInstitution(InstitutionCreationCommand institutionCreationCommand) {
         String address = institutionCreationCommand.getZipcode() + " " + institutionCreationCommand.getCity() + " " + institutionCreationCommand.getAddress();
         GeoLocation geoLocation = getGeoLocationByAddress(address);
         Institution institution = new Institution(institutionCreationCommand, geoLocation);
-
-        institutionRepository.save(institution);
-
-        return institution;
-    }
-
-    public Institution createInstitution(InstitutionCreationCommand institutionCreationForm, ProviderAccount providerAccount) {
-        String address = institutionCreationForm.getZipcode() + " " + institutionCreationForm.getCity() + " " + institutionCreationForm.getAddress();
-        GeoLocation geoLocation = getGeoLocationByAddress(address);
-        Institution institution = new Institution(institutionCreationForm, geoLocation);
-        institution.setProviderAccount(providerAccount);
         institutionRepository.save(institution);
 
         return institution;

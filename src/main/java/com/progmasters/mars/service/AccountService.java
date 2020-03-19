@@ -11,44 +11,35 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
 public class AccountService {
 
     private ProviderAccountRepository providerAccountRepository;
-    private final InstitutionService institutionService;
     private BCryptPasswordEncoder passwordEncoder;
     private final EmailService emailService;
 
     public AccountService(ProviderAccountRepository providerAccountRepository,
-                          InstitutionService institutionService,
                           BCryptPasswordEncoder passwordEncoder,
                           EmailService emailService) {
         this.providerAccountRepository = providerAccountRepository;
-        this.institutionService = institutionService;
         this.passwordEncoder = passwordEncoder;
         this.emailService = emailService;
     }
 
-    public void createProviderAccount(ProviderAccountCreationCommand providerAccountCreationCommand) {
+    public Long save(ProviderAccountCreationCommand providerAccountCreationCommand) {
         ProviderAccount providerAccount = new ProviderAccount(providerAccountCreationCommand);
         providerAccount.setPassword(passwordEncoder.encode(providerAccountCreationCommand.getPassword()));
-        providerAccount.setInstitutions(createInstitutionList(providerAccountCreationCommand, providerAccount));
-
         providerAccountRepository.save(providerAccount);
-        emailService.sendConfirmationEmail(providerAccount);
-    }
 
-    //todo recheck
-    private List<Institution> createInstitutionList(ProviderAccountCreationCommand providerAccountCreationCommand, ProviderAccount providerAccount) {
-        return providerAccountCreationCommand.getInstitutions().stream()
-                .map(institution -> institution.getId() != null ?
-                        institutionService.findById(institution.getId()) : institutionService.createInstitution(institution, providerAccount))
-                .collect(Collectors.toList());
+
+        emailService.sendConfirmationEmail(providerAccount);
+
+        return providerAccount.getId();
     }
 
     public void removeById(Long id) {
@@ -68,7 +59,10 @@ public class AccountService {
                 institutionListData.add(new InstitutionListData(institution));
             }
         }
-
         return institutionListData;
+    }
+
+    public ProviderAccount findById(Long id) {
+        return providerAccountRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("No account found by given id"));
     }
 }
