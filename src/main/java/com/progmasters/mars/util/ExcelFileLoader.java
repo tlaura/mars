@@ -1,5 +1,7 @@
 package com.progmasters.mars.util;
 
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -10,44 +12,39 @@ import java.util.List;
 
 public class ExcelFileLoader {
 
-    private static int ADDRESS_POS = 0;
-    private static int CITY_POS = 1;
-    private static int ZIPCODE_POS = 2;
-    //TODO: customize... or check
-
     private static int name_col;
+    private static int zipcode_col;
+    private static int city_col;
     private static int address_col;
     private static int email_col;
     private static int phone_col;
     private static int website_col;
     private static int description_col;
-    private static int institutionType_col;
-    private static int all_col;
-    // TODO: fix mandatory fields
+
+    private static List<Integer> mandatory_cols = new ArrayList<>();
 
     private String name;
-    private Integer zipCode;
+    private Integer zipcode;
     private String city;
     private String address;
     private String email;
     private String phone;
     private String website;
     private String description;
-    private String institutionType;
+
 
     private ExcelFileLoader() {
     }
 
     private ExcelFileLoader(XSSFRow row) {
         name = row.getCell(name_col).getStringCellValue();
-        zipCode = parseZipCodeFromAddress(row.getCell(address_col).getStringCellValue());
-        city = parseCityFromAddress(row.getCell(address_col).getStringCellValue());
-        address = parseAddressFromAddress(row.getCell(address_col).getStringCellValue());
-        email = parseEmail(row.getCell(email_col).getStringCellValue());
+        zipcode = Integer.parseInt(row.getCell(zipcode_col).getStringCellValue());
+        city = row.getCell(city_col).getStringCellValue();
+        address = row.getCell(address_col).getStringCellValue();
+        email = row.getCell(email_col).getStringCellValue();
         description = row.getCell(description_col).getStringCellValue();
-        institutionType = row.getCell(institutionType_col).getStringCellValue();
-        phone = row.getCell(phone_col).getStringCellValue(); // TODO: VALID? more phone?
-        website = row.getCell(website_col).getStringCellValue(); // TODO: VALID? more site?
+        phone = row.getCell(phone_col).getStringCellValue();
+        website = row.getCell(website_col).getStringCellValue();
     }
 
     public static List<ExcelFileLoader> getRowList(XSSFWorkbook workbook) {
@@ -71,67 +68,63 @@ public class ExcelFileLoader {
             switch (row.getCell(i).getStringCellValue()) { //TODO: header check
                 case "name":
                     name_col = i;
+                    mandatory_cols.add(i);
+                    break;
+                case "zipcode":
+                    zipcode_col = i;
+                    mandatory_cols.add(i);
+                    break;
+                case "city":
+                    city_col = i;
+                    mandatory_cols.add(i);
                     break;
                 case "address":
                     address_col = i;
+                    mandatory_cols.add(i);
                     break;
                 case "phone":
                     phone_col = i;
                     break;
                 case "email":
                     email_col = i;
+                    mandatory_cols.add(i);
                     break;
                 case "website":
                     website_col = i;
                     break;
                 case "description":
                     description_col = i;
-                    break;
-                case "type":
-                    institutionType_col = i;
+                    mandatory_cols.add(i);
                     break;
                 default:
             }
             i++;
         }
-        all_col = i;
     }
 
     private static boolean isValidRow(XSSFRow row) {
-        for (int i = 0; i < all_col; i++) {
-            if (row.getCell(i) == null) {
-                return false;
-            }
+
+        return mandatory_cols.stream()
+                .allMatch((index -> isValidCell(row.getCell(index))));
+    }
+
+    private static boolean isValidCell(XSSFCell cell) {
+        if (cell == null) {
+            return false;
+        } else {
+            cell.setCellType(Cell.CELL_TYPE_STRING);
+            return !(cell.getStringCellValue().isEmpty()
+                    || cell.getStringCellValue().isBlank());
         }
-        return true;
     }
 
-    private String parseAddressFromAddress(String stringCellValue) {
-        String[] stringCellValueArray = stringCellValue.split(", "); //TODO: check splitter
-        return stringCellValueArray[ADDRESS_POS];
-    }
-
-    private String parseCityFromAddress(String stringCellValue) {
-        String[] stringCellValueArray = stringCellValue.split(", ");
-        return stringCellValueArray[CITY_POS];
-    }
-
-    private Integer parseZipCodeFromAddress(String stringCellValue) {
-        String[] stringCellValueArray = stringCellValue.split(", ");
-        return Integer.parseInt(stringCellValueArray[ZIPCODE_POS].split(" ")[0]);
-    }
-
-    private String parseEmail(String stringCellValue) { // TODO: email list
-        String[] stringCellValueArray = stringCellValue.split(", ");
-        return stringCellValueArray[0];
-    }
 
     public String getName() {
         return name;
     }
 
-    public Integer getZipCode() {
-        return zipCode;
+    public Integer getZipcode() {
+        return zipcode;
     }
 
     public String getCity() {
@@ -146,19 +139,15 @@ public class ExcelFileLoader {
         return email;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public String getInstitutionType() {
-        return institutionType;
-    }
-
     public String getPhone() {
         return phone;
     }
 
     public String getWebsite() {
         return website;
+    }
+
+    public String getDescription() {
+        return description;
     }
 }
