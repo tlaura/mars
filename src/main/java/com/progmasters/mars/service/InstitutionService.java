@@ -91,7 +91,7 @@ public class InstitutionService {
             XSSFWorkbook workbook = new XSSFWorkbook(excelDataFile.getInputStream());
             List<ExcelFileLoader> rows = ExcelFileLoader.getRowList(workbook);
             for (ExcelFileLoader row : rows) {
-                String address = row.getZipCode() + " " + row.getCity() + " " + row.getAddress();
+                String address = row.getZipcode() + " " + row.getCity() + " " + row.getAddress();
                 GeoLocation geoLocation = getGeoLocationByAddress(address);
                 Institution institution = new Institution(row, geoLocation);
                 institutionRepository.save(institution);
