@@ -25,8 +25,8 @@ export class LoginService {
 
   logout = (): Observable<any> => {
     console.log('logout');
-    return this.http.get(environment.BASE_URL + '/logout');
-  }
+    return this.http.get(BASE_URL + '/logout');
+  };
 
   getCurrentUser = (): LoggedInUserDetailsModel => {
     return JSON.parse(localStorage.getItem('user'));

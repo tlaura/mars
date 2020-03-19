@@ -64,14 +64,14 @@
         <div class="card bg-light m-4"
           *ngFor="let insitution of providerAccount.institutionList">
           <div class="card-header">
-            {{insitution.name}}
+            {{insitution?.name}}
           </div>
           <div class="card-body">
-            {{insitution.description}}<br>
+            {{insitution?.description}}<br>
             ----------
-            {{insitution.phone}}<br>
-            {{insitution.website}}<br>
-            {{insitution.email}}<br>
+            {{insitution?.phone}}<br>
+            {{insitution?.website}}<br>
+            {{insitution?.email}}<br>
           </div>
         </div>
       </section>
