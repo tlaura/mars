@@ -4,7 +4,7 @@ import com.progmasters.mars.domain.ProviderAccount;
 
 public class ProviderUserDetailsEdit {
 
-    private Long id;
+    private String email;
     private String name;
     private String username;
     private String password;
@@ -15,7 +15,7 @@ public class ProviderUserDetailsEdit {
     private Boolean newsletter;
 
     public ProviderUserDetailsEdit(ProviderAccount providerAccount) {
-        this.id = providerAccount.getId();
+        this.email = providerAccount.getEmail();
         this.name = providerAccount.getName();
         this.username = providerAccount.getName();
         this.password = providerAccount.getPassword();
@@ -26,8 +26,8 @@ public class ProviderUserDetailsEdit {
         this.newsletter = providerAccount.getNewsletter();
     }
 
-    public Long getId() {
-        return id;
+    public String getEmail() {
+        return email;
     }
 
     public String getName() {

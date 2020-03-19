@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {FormGroup} from "@angular/forms";
+import {FormControl, FormGroup} from "@angular/forms";
 import {LoginService} from "../../services/login.service";
 import {AccountService} from "../../services/account.service";
-import {ProviderUserProfileEditDetailsModel} from "../../models/providerUserProfileEditDetails.model";
+import {ProviderAccountEditDataModel} from "../../models/providerAccountEditData.model";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-edit-profile',
@@ -14,7 +15,14 @@ export class EditProfileComponent implements OnInit {
   loggedInUser;
 
   constructor(private loginService: LoginService,
-              private providerService: AccountService) {
+              private providerService: AccountService,
+              private router: Router) {
+    this.providerAccountForm = new FormGroup({
+      name: new FormControl(''),
+      providerServiceName: new FormControl(''),
+      phone: new FormControl(''),
+
+    })
   }
 
   ngOnInit(): void {
@@ -24,7 +32,7 @@ export class EditProfileComponent implements OnInit {
 
   getProviderDetails = (id: string) => {
     this.providerService.fetchProviderAccountEditDetails(this.loggedInUser).subscribe(
-      (providerDetails: ProviderUserProfileEditDetailsModel) => {
+      (providerDetails: ProviderAccountEditDataModel) => {
         this.providerAccountForm.patchValue({
           name: providerDetails.name,
           providerServiceName: providerDetails.providerServiceName,
@@ -43,5 +51,9 @@ export class EditProfileComponent implements OnInit {
 
   saveChanges() {
 
+  }
+
+  goBack() {
+    this.router.navigate(['my-profile']);
   }
 }

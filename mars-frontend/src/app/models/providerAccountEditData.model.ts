@@ -1,5 +1,6 @@
-export interface ProviderUserProfileEditDetailsModel {
-  id?: number;
+export interface ProviderAccountEditDataModel {
+  // id?: number;
+  email: string;
   name: string;
   providerServiceName: string;
   phone: string;
