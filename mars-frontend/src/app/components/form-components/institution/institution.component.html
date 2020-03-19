@@ -7,6 +7,7 @@
   </select>
 </div-->
 <!-- TODO: fetch at parent and send to child-->
+<hr/>
 <form [formGroup]="institutionForm">
 
   <app-contacts
@@ -51,7 +52,7 @@
   <div class="form-group col-sm-12 col-md-12">
     <label>Rövid leírás:</label>
     <textarea formControlName="description"
-              class="form-control rounded-pill"
+              class="form-control"
               rows="2">
   </textarea>
     <div *ngIf="institutionForm.get('description').invalid && institutionForm.get('description').touched">
