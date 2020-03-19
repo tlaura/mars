@@ -7,3 +7,8 @@ input {
   outline: 0;
   box-shadow: none !important;
 }
+
+.submit.btn {
+  border-color: cornflowerblue;
+  background-color: cornflowerblue;
+}
