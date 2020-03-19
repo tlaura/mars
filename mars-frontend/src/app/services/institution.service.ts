@@ -5,6 +5,7 @@ import {InstitutionListModel} from "../models/institutionList.model";
 import {InstitutionTypeModel} from "../models/InstitutionType.model";
 import {InstitutionDetailModel} from "../models/institutionDetail.model";
 import {environment} from "../../environments/environment";
+import {Institution} from "../models/institution";
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,7 @@ export class InstitutionService {
   }
 
   //TODO: new model
-  saveInstitution = (formData: InstitutionDetailModel) => {
+  saveInstitution = (formData: Institution) => {
     return this.http.post(this.BASE_URL, formData);
   };
 

@@ -67,4 +67,16 @@ public class OpeningHours {
     public void setClosingTime(LocalTime closingTime) {
         this.closingTime = closingTime;
     }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Institution getInstitution() {
+        return institution;
+    }
+
+    public void setInstitution(Institution institution) {
+        this.institution = institution;
+    }
 }
