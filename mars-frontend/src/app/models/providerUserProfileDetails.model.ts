@@ -11,5 +11,5 @@ export interface ProviderUserProfileDetailsModel {
   city: string;
   address: string;
   institutionList: InstitutionListModel[];
-  // openinghours: OpeningHours[];
+  // openinghours: OpeningHoursModel[];
 }

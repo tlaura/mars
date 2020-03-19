@@ -1,6 +1,6 @@
 import {Time} from "@angular/common";
 
-export interface OpeningHours {
+export interface OpeningHoursModel {
   weekDay: string,
   openingTime: Time,
   closingTime: Time,

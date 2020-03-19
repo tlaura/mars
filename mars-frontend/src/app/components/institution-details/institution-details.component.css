@@ -1,0 +1,9 @@
+.details-div {
+  font-size: small;
+  border-right: 1px solid tomato;
+  border-left: 1px solid tomato;
+  border-bottom: 1px solid tomato;
+  border-bottom-left-radius: 2rem;
+  border-bottom-right-radius: 2rem;
+}
+
