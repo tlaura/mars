@@ -155,8 +155,8 @@ export class RegisterComponent implements OnInit {
   logEverything() {
     console.log(this.registerForm);
     for (let controlsKey in this.registerForm.controls) {
-      console.log('control: ' + controlsKey +
-        'validator:' + this.registerForm.get(controlsKey).validator +
+      console.log('control: ' + controlsKey + ' | ' +
+        'validator:' + this.registerForm.get(controlsKey).validator + ' | ' +
         'valid: ' + this.registerForm.get(controlsKey).valid);
     }
     debugger;
