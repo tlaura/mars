@@ -44,7 +44,9 @@ public class ExcelFileLoader {
         email = row.getCell(email_col).getStringCellValue();
         description = row.getCell(description_col).getStringCellValue();
         phone = row.getCell(phone_col).getStringCellValue();
-        website = row.getCell(website_col).getStringCellValue();
+        if (row.getCell(website_col) != null) {
+            website = row.getCell(website_col).getStringCellValue();
+        }
     }
 
     public static List<ExcelFileLoader> getRowList(XSSFWorkbook workbook) {

@@ -151,14 +151,4 @@ export class RegisterComponent implements OnInit {
     return this.registerForm.get('institutions') as FormArray;
   }
 
-
-  logEverything() {
-    console.log(this.registerForm);
-    for (let controlsKey in this.registerForm.controls) {
-      console.log('control: ' + controlsKey + ' | ' +
-        'validator:' + this.registerForm.get(controlsKey).validator + ' | ' +
-        'valid: ' + this.registerForm.get(controlsKey).valid);
-    }
-    debugger;
-  }
 }

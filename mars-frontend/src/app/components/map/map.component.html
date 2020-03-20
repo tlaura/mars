@@ -1,4 +1,4 @@
-<agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom">
+<agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom" gestureHandling="cooperative">
   <agm-marker (markerClick)="markerClick(location.id)" *ngFor="let location of locations"
               [latitude]="location.latitude" [longitude]="location.longitude">
     <agm-snazzy-info-window #infoWindow
@@ -16,3 +16,5 @@
     <!--    </agm-info-window>-->
   </agm-marker>
 </agm-map>
+
+
