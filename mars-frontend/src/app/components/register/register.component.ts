@@ -26,7 +26,7 @@ export class RegisterComponent implements OnInit {
         'ageGroupMax': new FormControl(99),
         'types': new FormControl(null),
 
-        'name': new FormControl('', (Validators.required)),
+        'name': new FormControl('', Validators.required),
         'email': new FormControl('', Validators.required),
         'phone': new FormControl(''),
         'website': new FormControl(''),
@@ -152,4 +152,13 @@ export class RegisterComponent implements OnInit {
   }
 
 
+  logEverything() {
+    console.log(this.registerForm);
+    for (let controlsKey in this.registerForm.controls) {
+      console.log('control: ' + controlsKey + ' | ' +
+        'validator:' + this.registerForm.get(controlsKey).validator + ' | ' +
+        'valid: ' + this.registerForm.get(controlsKey).valid);
+    }
+    debugger;
+  }
 }

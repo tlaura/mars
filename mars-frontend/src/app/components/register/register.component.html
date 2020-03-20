@@ -83,7 +83,8 @@
           </div>
 
           <div class="form-group col-sm-12 col-md-12 my-0 small">
-            <input class="form-check-input mt-0" formControlName="termsAndConditions" id="termsAndConditions"
+            <input (click)="logEverything()" class="form-check-input mt-0" formControlName="termsAndConditions"
+                   id="termsAndConditions"
                    type="checkbox">
             <label class="mb-1" for="termsAndConditions">Elolvastam és elfogadom az
               <a class="nav-link d-inline p-0" href="">Adatvédelmi Nyilatkozatot</a>*.</label>
