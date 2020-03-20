@@ -1,31 +1,28 @@
-<div class="background-div">
+<div class="background-div col-sm-12">
 
-  <div class="p-sm-0 p-md-2 p-lg-4">
-    <div class="row institution-list-div mx-0 col-sm-12">
-
-      <div class="container col-sm-12 col-md-6 p-sm-0 p-md-1 p-lg-3">
-        <app-map [locations]="institutionList"></app-map>
-      </div>
-
-
-      <div class="container col-sm-12 col-md-6 py-sm-0 py-md-2 py-lg-3">
-
-        <div class="form-group">
-          <input [(ngModel)]="searchText" class="form-control-sm rounded-pill col-sm-12 "
-                 placeholder="Keresés név vagy cím alapján"
-                 type="text">
-        </div>
-        <div class="form-group">
-          <select (change)="narrowByType($event.target.value)" (click)="setCurrentType($event.target.value)"
-                  [formControl]="institutionType" class="form-control-sm rounded-pill col-sm-6" id="institution-type"
-                  name="institution-type">
-            <option selected value="all">Mind</option>
-            <option *ngFor="let institutionType of institutionTypeList"
-                    value="{{institutionType.name}}">{{institutionType.displayName}}</option>
-          </select>
-        </div>
+  <div class="row mx-0 pt-sm-0 pt-md-1 pt-lg-3">
+    <div class="form-group col-sm-12">
+      <input [(ngModel)]="searchText" class="form-control-sm rounded-pill col-md-3 col-lg-4 offset-md-3"
+             placeholder="Keresés név vagy cím alapján"
+             type="text">
+      <select (change)="narrowByType($event.target.value)" (click)="setCurrentType($event.target.value)"
+              [formControl]="institutionType" class="form-control-sm rounded-pill col-md-3 col-lg-2"
+              id="institution-type"
+              name="institution-type">
+        <option selected value="all">Mind</option>
+        <option *ngFor="let institutionType of institutionTypeList"
+                value="{{institutionType.name}}">{{institutionType.displayName}}</option>
+      </select>
+    </div>
+  </div>
 
 
+  <app-map [locations]="institutionList"></app-map>
+
+
+  <div class="row mx-0 p-sm-1 p-md-1 p-lg-4">
+    <div class="institution-list-div col-md-6 offset-md-3 p-sm-0">
+      <div class="col-sm-12 py-sm-1 py-md-1 py-lg-3">
         <!--  <div class="col-md-2">-->
         <!--    <facebook-share-button (click)="shareList()"></facebook-share-button>-->
         <!--  </div>-->
@@ -41,12 +38,13 @@
             </div>
           </div>
         </div>
-        <select (change)="setSize($event.target.value)" class="rounded-pill" id="size" name="size">
+        <select (change)="setSize($event.target.value)" class="rounded-pill float-left" id="size" name="size">
           <option *ngFor="let size of sizeArray" value="{{size}}">{{size}}</option>
         </select>
-        <pagination-controls (pageChange)="page = $event" class="my-pagination" nextLabel="Következő oldal"
-                             previousLabel="Előző oldal"></pagination-controls>
-
+        <div class="col-sm-12 col-md-10 offset-md-1 text-center">
+          <pagination-controls (pageChange)="page = $event" class="my-pagination" nextLabel="Következő oldal"
+                               previousLabel="Előző oldal"></pagination-controls>
+        </div>
       </div>
 
     </div>

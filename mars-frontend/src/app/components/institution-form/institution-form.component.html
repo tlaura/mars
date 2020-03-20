@@ -4,7 +4,7 @@
     <form (ngSubmit)="submit()" [formGroup]="institutionForm">
       <app-institution [institutionForm]="institutionForm">
       </app-institution>
-      <button class="btn btn-primary submit rounded-pill">Mentés</button>
+      <button [disabled]="!institutionForm.valid" class="btn btn-primary submit rounded-pill">Mentés</button>
     </form>
   </div>
 </div>

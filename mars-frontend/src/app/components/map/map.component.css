@@ -1,3 +1,10 @@
 agm-map {
-  height: 80vh;
+  height: 30vw;
+  width: 100%;
+}
+
+@media (max-width: 500px) and (max-height: 998px) {
+  agm-map {
+    height: 50vh;
+  }
 }

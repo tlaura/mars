@@ -17,7 +17,9 @@
              for="file">{{importForm.get('file').value.name}}</label>
     </div>
     <div class="form-group">
-      <button (click)="import()" class="btn btn-outline-primary rounded-pill mt-2">Importálás</button>
+      <button (click)="import()" [disabled]="!importForm.valid"
+              class="btn btn-primary submit rounded-pill mt-2">Importálás
+      </button>
     </div>
   </form>
 </div>
