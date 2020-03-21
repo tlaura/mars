@@ -20,7 +20,7 @@ cd $frontend_folder_name
 ng build --prod
 cd ..
 mvn clean package -DskipTests=true
-chmod 400 $pem_file_full_path
+#chmod 400 $pem_file_full_path
 
 #COPY LOCAL FILES TO SERVER
 scp  -i $pem_file_full_path -r $frontend_source_location ubuntu@$remote_address:$frontend_remote_location
