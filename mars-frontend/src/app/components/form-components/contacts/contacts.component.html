@@ -1,13 +1,13 @@
 <div class="row m-0">
   <div class="form-group col-sm-12 col-md-6">
-    <label for="name">Név:</label>
+    <label for="name">Név*:</label>
     <input (focusout)="emitName()"
            [formControl]="name"
            class="form-control rounded-pill"
            id="name"
            type="text">
     <div *ngIf="name.errors?.pattern">
-      <small class="text-danger">
+      <small class="text-danger-custom">
         Érvénytelen név!
       </small>
     </div>
@@ -18,14 +18,14 @@
   </div>
 
   <div class="form-group col-sm-12 col-md-6 ">
-    <label for="phone">Telefonszám:</label>
+    <label for="phone">Telefonszám*:</label>
     <input (focusout)="emitPhone()"
            [formControl]="phone"
            class="form-control rounded-pill"
            id="phone" placeholder="+36-XX-XXX-XXXX"
            type="text">
     <div *ngIf="phone.errors?.pattern">
-      <small class="text-danger">
+      <small class="text-danger-custom">
         Érvénytelen telefonszám!
       </small>
     </div>
@@ -39,7 +39,7 @@
            id="website"
            type="text">
     <div *ngIf="website.errors?.pattern">
-      <small class="text-danger">
+      <small class="text-danger-custom">
         Érvénytelen weboldal!
       </small>
     </div>

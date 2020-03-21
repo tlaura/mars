@@ -1,119 +1,123 @@
-<div class="col-sm-12 col-md-6 offset-md-3 col-lg-6 offset-lg-3 text-center">
-  <h1 class="">Regisztráció</h1>
+<div class="background-div">
+  <div class="col-sm-12 col-md-10 offset-md-1 col-lg-8 offset-lg-2 text-center">
+    <h4>Regisztráció</h4>
 
-  <button (click)="chooseNormalUser()" disabled
-          class="user-option-chooser btn w-50 mb-0">Felhasználó
-  </button>
-  <button (click)="chooseProviderUser()" [ngClass]="!isNormalUser ? 'active' : 'inactive'"
-          class="user-option-chooser btn w-50 mb-0">Szolgáltatás
-  </button>
+    <button (click)="chooseNormalUser()" class="user-option-chooser btn w-50 mb-0"
+            disabled>Felhasználó
+    </button>
+    <button (click)="chooseProviderUser()" [ngClass]="!isNormalUser ? 'active' : 'inactive'"
+            class="user-option-chooser btn w-50 mb-0">Szolgáltatás
+    </button>
 
-  <div class="register-div text-left p-sm-3 p-md-3 container">
-    <form [formGroup]="registerForm">
+    <div class="register-div text-left p-sm-3 p-md-3 container">
+      <form [formGroup]="registerForm">
 
-      <app-contacts
-        (emailEmitter)="setEmail($event)"
-        (nameEmitter)="setName($event)"
-        (phoneEmitter)="setPhone($event)"
-        (websiteEmitter)="setWebsite($event)"
-      ></app-contacts>
-
-
-      <app-provider-attributes
-        (ageGroupMaxEmitter)="setAgeGroupMax($event)"
-        (ageGroupMinEmitter)="setAgeGroupMin($event)"
-        (passwordEmitter)="setPassword($event)"
-        (providerServiceNameEmitter)="setProviderServiceName($event)"
-        (typesEmitter)="setTypes($event)"
-      >
-      </app-provider-attributes>
+        <div class="row mx-0">
+          <div class="col-sm-12 col-md-6 px-0">
+            <app-contacts
+              (emailEmitter)="setEmail($event)"
+              (nameEmitter)="setName($event)"
+              (phoneEmitter)="setPhone($event)"
+              (websiteEmitter)="setWebsite($event)"
+            ></app-contacts>
 
 
-      <!-- CUSTOM ADDRESS CHECK DIV -->
+            <app-provider-attributes
+              (ageGroupMaxEmitter)="setAgeGroupMax($event)"
+              (ageGroupMinEmitter)="setAgeGroupMin($event)"
+              (passwordEmitter)="setPassword($event)"
+              (providerServiceNameEmitter)="setProviderServiceName($event)"
+              (typesEmitter)="setTypes($event)"
+            >
+            </app-provider-attributes>
 
-      <div *ngIf="!isNormalUser" id="custom-address-check-div">
-        <div class="row m-0">
-          <div class="form-group col-sm-12 col-md-12">
-            <label for="customAddress">Cím hozzáadása a szolgáltatáshoz:</label>
-            <input (change)="changeProviderAddress()"
-                   class="form-check-input m-1"
-                   id="customAddress"
-                   type="checkbox">
+
+            <!-- CUSTOM ADDRESS CHECK DIV -->
+
+            <div *ngIf="!isNormalUser" id="custom-address-check-div">
+              <div class="row m-0">
+                <div class="form-group col-sm-12 col-md-12">
+                  <label for="customAddress">Cím hozzáadása a szolgáltatáshoz:</label>
+                  <input (change)="changeProviderAddress()"
+                         class="form-check-input m-1"
+                         id="customAddress"
+                         type="checkbox">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-12 col-md-6 px-0">
+            <app-address (addressEmitter)="setAddress($event)"
+                         (cityEmitter)="setCity($event)"
+                         (zipcodeEmitter)="setZipcode($event)"
+                         *ngIf="haveProviderCustomAddress"
+            ></app-address>
           </div>
         </div>
-      </div>
 
-      <app-address (addressEmitter)="setAddress($event)"
-                   (cityEmitter)="setCity($event)"
-                   (zipcodeEmitter)="setZipcode($event)"
-                   *ngIf="haveProviderCustomAddress"
-      ></app-address>
-
-
-      <!-- INSTITUTIONS -->
-
-      <div class="form-group col-sm-12 col-md-12">
-        <label>Intézmények:</label>
-
-        <button (click)="addNewInstitution()"
-                class="btn rounded-pill btn-light btn-sm mx-sm-1 mx-sm-2"
-        >
-          Intézmény hozzáadása
-        </button>
-      </div>
-
-      <div *ngFor="let array of getInstitutions().controls;let i = index;"
-           class="row m-0">
-        <app-institution *ngIf="!isNormalUser" [institutionForm]="array">
-        </app-institution>
-
-        <div class="form-group col-sm-12 col-md-1">
-          <button (click)="removeInstitution(i)" class="btn btn-outline-danger rounded-pill">X
-          </button>
-        </div>
-      </div>
-
-      <!-- COMMON END FIELDS DIV -->
-
-      <div id="common-end-fields-div">
-        <div class="pl-sm-1 pl-md-3 mb-sm-1 mb-md-3">
-          <div class="form-group col-sm-12 col-md-12 my-0 small">
-            <input class="form-check-input mt-0" formControlName="newsletter" id="newsletter" type="checkbox">
-            <label class="mb-1" for="newsletter">Feliratkozom a hírlevélre. </label>
-          </div>
-
-          <div class="form-group col-sm-12 col-md-12 my-0 small">
-            <input class="form-check-input mt-0" formControlName="termsAndConditions"
-                   id="termsAndConditions"
-                   type="checkbox">
-            <label class="mb-1" for="termsAndConditions">Elolvastam és elfogadom az
-              <a class="nav-link d-inline p-0" href="">Adatvédelmi Nyilatkozatot</a>*.</label>
-          </div>
-          <small
-            *ngIf="registerForm.get('termsAndConditions').invalid && registerForm.get('termsAndConditions').dirty"
-            class="text-danger col-sm-12 col-md-12">
-            A mező kitöltése közelező!
-          </small>
-        </div>
+        <!-- INSTITUTIONS -->
 
         <div class="form-group col-sm-12 col-md-12">
-          <small *ngIf="registerForm.get('email').errors?.serverError"
-                 class="text-danger">
-            {{registerForm.get('email').errors['serverError']}}
-          </small>
-        </div>
+          <label>Intézmények:</label>
 
-        <div class="form-group pl-sm-1 pl-md-3">
-          <button (click)="submit()" [disabled]="registerForm.invalid" class="submit btn btn-primary rounded-pill"
-                  type="submit">
-            Regisztráció
+          <button (click)="addNewInstitution()"
+                  class="btn rounded-pill btn-light btn-sm mx-sm-1 mx-sm-2"
+          >
+            Intézmény hozzáadása
           </button>
         </div>
-      </div>
 
-    </form>
+        <div *ngFor="let array of getInstitutions().controls;let i = index;"
+             class="row m-0 blue-block-on-tomato-div my-md-4 p-md-1 p-lg-3">
+          <app-institution *ngIf="!isNormalUser" [institutionForm]="array">
+          </app-institution>
+
+          <div class="form-group col-sm-12 col-md-1">
+            <button (click)="removeInstitution(i)" class="btn btn-outline-primary delete rounded-pill">X
+            </button>
+          </div>
+        </div>
+        <!-- COMMON END FIELDS DIV -->
+
+        <div id="common-end-fields-div">
+          <div class="pl-sm-1 pl-md-3 mb-sm-1 mb-md-3">
+            <div class="form-group col-sm-12 col-md-12 my-0 small">
+              <input class="form-check-input mt-0" formControlName="newsletter" id="newsletter" type="checkbox">
+              <label class="mb-1" for="newsletter">Feliratkozom a hírlevélre. </label>
+            </div>
+
+            <div class="form-group col-sm-12 col-md-12 my-0 small">
+              <input class="form-check-input mt-0" formControlName="termsAndConditions"
+                     id="termsAndConditions"
+                     type="checkbox">
+              <label class="mb-1" for="termsAndConditions">Elolvastam és elfogadom az
+                <a class="nav-link d-inline p-0" href="" target="_blank">Adatvédelmi Nyilatkozatot</a>*.</label>
+            </div>
+            <small
+              *ngIf="registerForm.get('termsAndConditions').invalid && registerForm.get('termsAndConditions').dirty"
+              class="text-danger-custom col-sm-12 col-md-12">
+              A mező kitöltése közelező!
+            </small>
+          </div>
+
+          <div class="form-group col-sm-12 col-md-12">
+            <small *ngIf="registerForm.get('email').errors?.serverError"
+                   class="text-danger-custom">
+              {{registerForm.get('email').errors['serverError']}}
+            </small>
+          </div>
+
+          <div class="form-group pl-sm-1 pl-md-3">
+            <button (click)="submit()" [disabled]="registerForm.invalid" class="submit btn btn-primary rounded-pill"
+                    type="submit">
+              Regisztráció
+            </button>
+          </div>
+        </div>
+
+      </form>
+
+    </div>
 
   </div>
-
 </div>
-

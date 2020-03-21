@@ -1,38 +1,42 @@
-<div class="col-sm-12 col-md-8 offset-md-2 col-lg-4 offset-lg-4 text-center">
-  <h1 class="mb-sm-1 mb-md-3 mb-lg-4 ">Bejelentkezés</h1>
-  <div class="login-div p-4  w-100 text-left">
-    <form [formGroup]="loginForm">
-      <div class="form-group">
-        <label for="userName">Email cím:</label>
-        <input class="form-control rounded-pill" formControlName="userName" id="userName" placeholder="Email"
-               type="email">
-        <small *ngIf="loginForm.get('userName').invalid && loginForm.get('userName').touched"
-               class="text-danger col-sm-12 col-md-12">
-          A mező kitöltése közelező!
-        </small>
-      </div>
+<div class="background-div">
+  <div class="col-sm-12 col-md-8 offset-md-2 col-lg-4 offset-lg-4 text-center">
+    <h4 class="mb-sm-1 mb-md-3 mb-lg-4 ">Bejelentkezés</h4>
+    <div class="white-block-on-tomato-div p-4  w-100 text-left">
+      <form [formGroup]="loginForm">
+        <div class="form-group">
+          <label for="userName">Email cím:</label>
+          <input class="form-control rounded-pill" formControlName="userName" id="userName" placeholder="Email"
+                 type="email">
+          <small *ngIf="loginForm.get('userName').invalid && loginForm.get('userName').touched"
+                 class="text-danger col-sm-12 col-md-12">
+            A mező kitöltése közelező!
+          </small>
+        </div>
 
-      <div class="form-group">
-        <label for="password">Jelszó:</label>
-        <input class="form-control rounded-pill" formControlName="password" placeholder="Jelszó" id="password" type="password" >
-        <small *ngIf="loginForm.get('password').invalid && loginForm.get('password').touched"
-               class="text-danger col-sm-12 col-md-12">
-          A mező kitöltése közelező!
-        </small>
-      </div>
+        <div class="form-group">
+          <label for="password">Jelszó:</label>
+          <input class="form-control rounded-pill" formControlName="password" id="password" placeholder="Jelszó"
+                 type="password">
+          <small *ngIf="loginForm.get('password').invalid && loginForm.get('password').touched"
+                 class="text-danger col-sm-12 col-md-12">
+            A mező kitöltése közelező!
+          </small>
+        </div>
 
-      <div class="alert alert-danger rounded-pill" *ngIf="showErrorMessage">
-        Helytelen felhasználónév vagy jelszó!
-      </div>
+        <div *ngIf="showErrorMessage" class="alert alert-danger rounded-pill">
+          Helytelen felhasználónév vagy jelszó!
+        </div>
 
-      <div class="form-group">
-        <p>Elfelejtett jelszó? <a href="#">Kattints ide!</a></p>
-        <p>Új felhasználó? <a routerLink="/register">Regisztráljon!</a></p>
-      </div>
+        <div class="form-group">
+          <p>Elfelejtett jelszó? <a href="#">Kattints ide!</a></p>
+          <p>Még nincs fiókod? <a routerLink="/register">Regisztrálj!</a></p>
+        </div>
 
-      <button (click)="login()" [disabled]="loginForm.invalid" class="submit btn btn-primary rounded-pill" type="submit">
-        Bejelentkezés
-      </button>
-    </form>
+        <button (click)="login()" [disabled]="loginForm.invalid" class="submit btn btn-primary rounded-pill"
+                type="submit">
+          Bejelentkezés
+        </button>
+      </form>
+    </div>
   </div>
 </div>

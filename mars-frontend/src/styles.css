@@ -15,13 +15,61 @@ html * {
   left: 0;
 }
 
-.white-block-div {
+.white-block-on-tomato-div {
   font-size: small;
   border-radius: 2rem;
   background-color: white;
   box-shadow: #b34532 0.5rem 0.5rem;
 }
 
+.blue-block-on-tomato-div {
+  font-size: small;
+  border-radius: 2rem;
+  background-color: cornflowerblue;
+  box-shadow: #3789b3 0.5rem 0.5rem;
+}
+
+.blue-block-on-tomato-div label {
+  color: white !important;
+}
+
+.blue-block-on-tomato-div input, select {
+  border: 1px solid cornflowerblue !important;
+}
+
+.blue-block-on-tomato-div .text-danger-custom {
+  color: white !important;
+}
+
+.blue-block-on-tomato-div .delete {
+  background-color: white !important;
+  border: cornflowerblue !important;
+  color: cornflowerblue !important;
+}
+
+.blue-block-on-tomato-div .input-group-text {
+  background-color: cornflowerblue;
+}
+
+.white-block-on-tomato-div .input-group-text {
+  background-color: tomato;
+}
+
+.input-group-text {
+  height: 31px;
+  color: white !important;
+  font-weight: bold !important;
+  border: none !important;
+  border-radius: 0 !important;
+}
+
+.white-block-on-tomato-div .text-danger-custom {
+  color: tomato !important;
+}
+
+.register-div .text-danger-custom {
+  color: tomato;
+}
 
 input::placeholder {
   color: lightgrey;
@@ -33,13 +81,31 @@ input {
   box-shadow: none !important;
 }
 
-select {
+.register-div input {
+  border: 1px solid tomato;
+  outline: 0;
+  box-shadow: none !important;
+}
+
+.white-block-on-tomato-div select {
   border: 1px solid tomato;
   color: tomato;
   outline: 0;
 }
 
-h1 {
+.register-div .select-tomato {
+  border: 1px solid tomato !important;
+  color: tomato !important;
+  outline: 0;
+}
+
+.blue-block-on-tomato-div select {
+  border: 1px solid cornflowerblue;
+  color: cornflowerblue;
+  outline: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
   color: white;
   margin-bottom: 2rem;
 }
@@ -57,7 +123,7 @@ hr {
   padding: 0;
 }
 
-.submit.btn {
+.submit .btn {
   border-color: cornflowerblue;
   background-color: cornflowerblue;
 }

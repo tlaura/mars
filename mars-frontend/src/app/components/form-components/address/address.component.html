@@ -1,6 +1,6 @@
 <div class="row m-0">
   <div class="form-group col-sm-12 col-md-4">
-    <label for="zipcode">Irányítószám:</label>
+    <label for="zipcode">Irányítószám*:</label>
     <input class="form-control rounded-pill"
            (focusout)="emitZipcode()"
            [formControl]="zipcode"
@@ -9,7 +9,7 @@
   </div>
 
   <div class="form-group col-sm-12 col-md-8">
-    <label for="city">Település:</label>
+    <label for="city">Település*:</label>
     <input class="form-control rounded-pill"
            (focusout)="emitCity()"
            [formControl]="city"
@@ -19,13 +19,13 @@
 
   <div  *ngIf="zipcode.errors?.pattern"
        class="form-group col-sm-12 col-md-12 row mx-0">
-    <small class="text-danger">
+    <small class="text-danger-custom">
       Érvénytelen irányítószám!
     </small>
   </div>
 
   <div class="form-group col-sm-12 col-md-12">
-    <label for="address">Cím:</label>
+    <label for="address">Cím*:</label>
     <input class="form-control rounded-pill"
            (focusout)="emitAddress()"
            [formControl]="address"

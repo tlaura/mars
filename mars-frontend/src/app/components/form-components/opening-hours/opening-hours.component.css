@@ -16,11 +16,3 @@ input[type=time]::-webkit-inner-spin-button {
   border-bottom-left-radius: 0 !important;
 }
 
-.input-group-text {
-  height: 31px;
-  background-color: tomato;
-  color: white;
-  font-weight: bold;
-  border: none;
-  border-radius: 0;
-}

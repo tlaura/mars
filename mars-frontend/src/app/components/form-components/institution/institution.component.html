@@ -32,12 +32,12 @@
         </textarea>
         <div *ngIf="institutionForm.get('description').invalid && institutionForm.get('description').touched">
           <small *ngIf="institutionForm.get('description').errors?.required"
-                 class="text-danger">
+                 class="text-danger-custom">
             A mező kitöltése közelező!
           </small>
           <small
             *ngIf="institutionForm.get('description').errors?.minlength || institutionForm.get('description').errors?.maxlength"
-            class="text-danger">
+            class="text-danger-custom">
             A leírásnak legalább 30 és legfeljebb 200 karakter hosszúnak kell lennie!
           </small>
         </div>
@@ -62,7 +62,7 @@
 
         <div class="col-sm-1">
           <button (click)="removeOpeningHours(i)"
-                  class="btn btn-sm btn-outline-danger rounded-pill">
+                  class="btn btn-sm btn-outline-danger delete rounded-pill">
             X
           </button>
         </div>

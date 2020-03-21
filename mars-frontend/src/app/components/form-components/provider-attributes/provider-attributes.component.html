@@ -10,14 +10,14 @@
 
 <div class="row m-0 col-sm-12 col-md-12 mb-2">
   <small *ngIf="!passwordMatch"
-         class="text-danger">
+         class="text-danger-custom">
     A két jelszónak meg kell egyeznie!
   </small>
 </div>
 
 
 <div class="form-group col-sm-12 col-md-8">
-  <label for="providerServiceName">Szolgáltatás neve:</label>
+  <label for="providerServiceName">Szolgáltatás neve*:</label>
   <input class="form-control rounded-pill"
          (focusout)="emitProviderServiceName()"
          [formControl]="providerServiceName"
@@ -25,7 +25,7 @@
          type="text">
   <div *ngIf="providerServiceName.invalid && providerServiceName.touched">
     <small *ngIf="providerServiceName.errors?.pattern"
-           class="text-danger">
+           class="text-danger-custom">
       Érvénytelen név!
     </small>
   </div>
@@ -33,7 +33,7 @@
 
 <div class="form-group col-sm-12 col-md-8">
   <label for="types">Szolgáltatás típusa:</label>
-  <select class="form-control mdb-select md-form"
+  <select class="form-control mdb-select md-form select-tomato"
           (focusout)="emitTypes()"
           [formControl]="types"
           id="types"
@@ -46,7 +46,7 @@
 <div class="row m-0">
   <div class="form-group col-sm-12 col-md-5 col-lg-3">
     <label for="ageGroupMin">Minimum kor:</label>
-    <select class="form-control rounded-pill "
+    <select class="form-control rounded-pill select-tomato"
             (focusout)="emitAgeGroupMin()"
             [formControl]="ageGroupMin"
             id="ageGroupMin"
@@ -56,7 +56,7 @@
   </div>
   <div class="form-group col-sm-12 col-md-5 col-lg-3">
     <label for="ageGroupMax">Maximum kor:</label>
-    <select class="form-control rounded-pill"
+    <select class="form-control rounded-pill select-tomato"
             (focusout)="emitAgeGroupMax()"
             [formControl]="ageGroupMax"
             id="ageGroupMax"
