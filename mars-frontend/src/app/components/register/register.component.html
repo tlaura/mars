@@ -1,4 +1,4 @@
-<div class="background-div">
+<div class="tomato-background-div">
   <div class="col-sm-12 col-md-10 offset-md-1 col-lg-8 offset-lg-2 text-center">
     <h4>Regisztráció</h4>
 
@@ -68,7 +68,7 @@
         </div>
 
         <div *ngFor="let array of getInstitutions().controls;let i = index;"
-             class="row m-0 blue-block-on-tomato-div my-md-4 p-md-1 p-lg-3">
+             class="row m-0 blue-block-on-white-div my-md-4 p-md-1 p-lg-3">
           <app-institution *ngIf="!isNormalUser" [institutionForm]="array">
           </app-institution>
 

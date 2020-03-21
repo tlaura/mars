@@ -5,7 +5,7 @@ html * {
 }
 
 
-.background-div {
+.tomato-background-div {
   background-color: tomato;
   width: 100%;
   min-height: 100vh;
@@ -15,6 +15,32 @@ html * {
   left: 0;
 }
 
+.blue-background-div {
+  background-color: cornflowerblue;
+  width: 100%;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  top: 0;
+  left: 0;
+}
+
+.register-div input {
+  border: 1px solid tomato;
+  outline: 0;
+  box-shadow: none !important;
+}
+
+.register-div .text-danger-custom {
+  color: tomato;
+}
+
+.register-div .select-tomato {
+  border: 1px solid tomato;
+  color: tomato;
+  outline: 0;
+}
+
 .white-block-on-tomato-div {
   font-size: small;
   border-radius: 2rem;
@@ -22,37 +48,54 @@ html * {
   box-shadow: #b34532 0.5rem 0.5rem;
 }
 
-.blue-block-on-tomato-div {
+.white-block-on-tomato-div .input-group-text {
+  background-color: tomato;
+}
+
+.white-block-on-tomato-div .text-danger-custom {
+  color: tomato !important;
+}
+
+.white-block-on-tomato-div select {
+  border: 1px solid tomato;
+  color: tomato;
+  outline: 0;
+}
+
+
+.blue-block-on-white-div {
   font-size: small;
   border-radius: 2rem;
   background-color: cornflowerblue;
-  box-shadow: #3789b3 0.5rem 0.5rem;
+  box-shadow: #b3b3b3 0.5rem 0.5rem;
 }
 
-.blue-block-on-tomato-div label {
+.blue-block-on-white-div label {
   color: white !important;
 }
 
-.blue-block-on-tomato-div input, select {
+.blue-block-on-white-div input {
   border: 1px solid cornflowerblue !important;
 }
 
-.blue-block-on-tomato-div .text-danger-custom {
+.blue-block-on-white-div .text-danger-custom {
   color: white !important;
 }
 
-.blue-block-on-tomato-div .delete {
+.blue-block-on-white-div .delete {
   background-color: white !important;
   border: cornflowerblue !important;
   color: cornflowerblue !important;
 }
 
-.blue-block-on-tomato-div .input-group-text {
+.blue-block-on-white-div .input-group-text {
   background-color: cornflowerblue;
 }
 
-.white-block-on-tomato-div .input-group-text {
-  background-color: tomato;
+.blue-block-on-white-div select {
+  border: 1px solid cornflowerblue !important;
+  color: cornflowerblue !important;
+  outline: 0;
 }
 
 .input-group-text {
@@ -63,12 +106,9 @@ html * {
   border-radius: 0 !important;
 }
 
-.white-block-on-tomato-div .text-danger-custom {
-  color: tomato !important;
-}
-
-.register-div .text-danger-custom {
-  color: tomato;
+.submit .btn {
+  border-color: cornflowerblue;
+  background-color: cornflowerblue;
 }
 
 input::placeholder {
@@ -79,30 +119,6 @@ input {
   border: 1px solid tomato;
   outline: 0;
   box-shadow: none !important;
-}
-
-.register-div input {
-  border: 1px solid tomato;
-  outline: 0;
-  box-shadow: none !important;
-}
-
-.white-block-on-tomato-div select {
-  border: 1px solid tomato;
-  color: tomato;
-  outline: 0;
-}
-
-.register-div .select-tomato {
-  border: 1px solid tomato !important;
-  color: tomato !important;
-  outline: 0;
-}
-
-.blue-block-on-tomato-div select {
-  border: 1px solid cornflowerblue;
-  color: cornflowerblue;
-  outline: 0;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -123,7 +139,3 @@ hr {
   padding: 0;
 }
 
-.submit .btn {
-  border-color: cornflowerblue;
-  background-color: cornflowerblue;
-}

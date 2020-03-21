@@ -3,7 +3,7 @@
 }
 
 @media (min-width: 768px) and (max-width: 1199px) {
-  .background-div {
+  .tomato-background-div {
     width: 100vw;
   }
 }

@@ -4,7 +4,7 @@
   box-shadow: #b34532 0.5rem 0.5rem;
 }
 
-.background-div {
+.tomato-background-div {
   background-color: tomato;
   width: 100%;
   min-height: 100vh;
@@ -15,7 +15,7 @@
 }
 
 @media (min-width: 768px) and (max-width: 1199px) {
-  .background-div {
+  .tomato-background-div {
     width: 100vw;
   }
 }
