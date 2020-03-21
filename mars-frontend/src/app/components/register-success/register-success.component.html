@@ -1,2 +1,5 @@
-<h4 *ngIf="confirmed">Sikeresen aktiválta fiókját!</h4>
-<p *ngIf="form.get('confirmed').errors?.serverError">{{form.get('confirmed').errors.serverError}}</p>
+<div class="tomato-background-div">
+  <h4 *ngIf="confirmed">Sikeresen aktiválta fiókját!</h4>
+  <p *ngIf="form.get('confirmed').errors?.serverError">{{form.get('confirmed').errors.serverError}}</p>
+</div>
+
