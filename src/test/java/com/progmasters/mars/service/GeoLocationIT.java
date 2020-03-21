@@ -1,5 +1,6 @@
 package com.progmasters.mars.service;
 
+import com.google.maps.errors.NotFoundException;
 import com.progmasters.mars.dto.GeoLocation;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -20,9 +21,8 @@ public class GeoLocationIT {
 
 
     @Test
-    public void getGeoLocationTest() {
+    public void getGeoLocationTest() throws NotFoundException {
         String address = "1089 Budapest Orczy út 43";
-
         GeoLocation geoLocation = geocodeService.getGeoLocation(address);
 
         Assertions.assertNotNull(geoLocation);

@@ -1,5 +1,6 @@
 package com.progmasters.mars.controller;
 
+import com.google.maps.errors.NotFoundException;
 import com.progmasters.mars.domain.InstitutionType;
 import com.progmasters.mars.dto.InstitutionCreationCommand;
 import com.progmasters.mars.dto.InstitutionDetailsData;
@@ -63,7 +64,12 @@ public class InstitutionController {
 
     @PostMapping
     public ResponseEntity<Void> createInstitution(@RequestBody @Valid InstitutionCreationCommand institutionCreationCommand) {
-        institutionService.createInstitution(institutionCreationCommand);
+        try {
+            institutionService.createInstitution(institutionCreationCommand);
+        } catch (NotFoundException e) {
+            logger.info("Map not loading");
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
         logger.info("Institution creation is requested!");
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
