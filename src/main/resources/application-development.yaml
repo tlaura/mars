@@ -6,6 +6,6 @@ spring:
 #TODO jár a pacsi, hogy ezt már meg is csináltátok ;)
 email:
   send:
-    confirmation: https://54.229.84.224/register-success/
+    confirmation: https://mars-demo.progmasters.hu/register-success/
 
 cors-policies: http://54.229.84.224, https://54.229.84.224, http://mars-demo.progmasters.hu, https://mars-demo.progmasters.hu
