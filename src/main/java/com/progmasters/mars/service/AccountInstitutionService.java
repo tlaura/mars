@@ -4,6 +4,7 @@ import com.progmasters.mars.domain.InstitutionType;
 import com.progmasters.mars.domain.ProviderAccount;
 import com.progmasters.mars.dto.InstitutionListData;
 import com.progmasters.mars.dto.ProviderAccountCreationCommand;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ public class AccountInstitutionService {
     private final InstitutionOpeningHoursService institutionOpeningHoursService;
     private final EmailService emailService;
 
+    @Autowired
     public AccountInstitutionService(AccountService accountService, InstitutionService institutionService, InstitutionOpeningHoursService institutionOpeningHoursService, EmailService emailService) {
         this.accountService = accountService;
         this.institutionService = institutionService;

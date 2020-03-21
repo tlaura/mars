@@ -32,3 +32,11 @@ hr {
   margin: 1em 0;
   padding: 0;
 }
+
+:-webkit-autofill {
+  animation-name: onAutoFillStart;
+}
+
+:not(:-webkit-autofill) {
+  animation-name: onAutoFillCancel;
+}

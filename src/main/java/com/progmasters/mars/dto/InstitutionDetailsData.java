@@ -44,6 +44,19 @@ public class InstitutionDetailsData {
 
     }
 
+    public InstitutionDetailsData(Long id, String name, Integer zipcode, String city, String address, String email, String description, Double longitude, Double latitude, String website, String phone) {
+        this.id = id;
+        this.name = name;
+        this.zipcode = zipcode;
+        this.city = city;
+        this.address = address;
+        this.email = email;
+        this.description = description;
+        this.longitude = longitude;
+        this.latitude = latitude;
+        this.website = website;
+        this.phone = phone;
+    }
 
     public Long getId() {
         return id;

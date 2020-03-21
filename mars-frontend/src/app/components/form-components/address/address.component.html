@@ -2,7 +2,8 @@
   <div class="form-group col-sm-12 col-md-4">
     <label for="zipcode">Irányítószám*:</label>
     <input class="form-control rounded-pill"
-           (focusout)="emitZipcode()"
+           (change)="emitZipcode()"
+           autocomplete="off"
            [formControl]="zipcode"
            id="zipcode"
            type="number">
@@ -11,7 +12,8 @@
   <div class="form-group col-sm-12 col-md-8">
     <label for="city">Település*:</label>
     <input class="form-control rounded-pill"
-           (focusout)="emitCity()"
+           (change)="emitCity()"
+           autocomplete="off"
            [formControl]="city"
            id="city"
            type="text">
@@ -27,7 +29,8 @@
   <div class="form-group col-sm-12 col-md-12">
     <label for="address">Cím*:</label>
     <input class="form-control rounded-pill"
-           (focusout)="emitAddress()"
+           (change)="emitAddress()"
+           autocomplete="off"
            [formControl]="address"
            id="address"
            type="text">
