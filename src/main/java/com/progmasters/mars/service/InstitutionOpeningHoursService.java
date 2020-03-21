@@ -23,6 +23,7 @@ public class InstitutionOpeningHoursService {
         for (InstitutionCreationCommand institutionCreationCommand : institutionList) {
             Institution institution = null;
             try {
+
                 institution = institutionService.saveToAccount(institutionCreationCommand, providerAccount);
             } catch (NotFoundException e) {
                 e.printStackTrace();
