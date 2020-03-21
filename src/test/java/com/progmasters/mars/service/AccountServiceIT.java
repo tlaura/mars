@@ -6,6 +6,7 @@ import com.progmasters.mars.dto.InstitutionCreationCommand;
 import com.progmasters.mars.dto.ProviderAccountCreationCommand;
 import com.progmasters.mars.dto.ProviderUserDetails;
 import com.progmasters.mars.dto.ProviderUserDetailsEdit;
+import com.progmasters.mars.util.ProviderAccountBuilder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -124,7 +125,16 @@ public class AccountServiceIT {
         String address = "Irányi utca 3";
         Boolean newsletter = true;
 
-        return new ProviderUserDetailsEdit(email, name, serviceName, pw, phone, zipcode, city, address, newsletter);
+        return new ProviderAccountBuilder().setProviderServiceName(serviceName)
+                .setName(name)
+                .setPassword(pw)
+                .setEmail(email)
+                .setPhone(phone)
+                .setZipcode(zipcode)
+                .setCity(city)
+                .setAddress(address)
+                .setNewsletter(newsletter)
+                .buildDetailsEdit();
     }
 
     private ProviderAccountCreationCommand createOneAccountCommand() {
@@ -144,6 +154,20 @@ public class AccountServiceIT {
         List<InstitutionCreationCommand> institutions = new ArrayList<>();
         Boolean newsletter = false;
 
-        return new ProviderAccountCreationCommand(serviceName, name, pw, email, types, phone, zipcode, city, address, ageGroupMin, ageGroupMax, institutions, newsletter);
+        return new ProviderAccountBuilder()
+                .setProviderServiceName(serviceName)
+                .setName(name)
+                .setPassword(pw)
+                .setEmail(email)
+                .setTypes(types)
+                .setPhone(phone)
+                .setZipcode(zipcode)
+                .setCity(city)
+                .setAddress(address)
+                .setAgeGroupMax(ageGroupMax)
+                .setAgeGroupMin(ageGroupMin)
+                .setInstitutions(institutions)
+                .setNewsletter(newsletter)
+                .buildCreationCommand();
     }
 }
