@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -110,5 +111,16 @@ public class InstitutionService {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    List<InstitutionListData> getInstitutionsByProviderAccount(ProviderAccount providerAccount) {
+        List<InstitutionListData> institutionList = new ArrayList<>();
+        providerAccount.getInstitutions().stream().map(InstitutionListData::new).forEach(institutionList::add);
+
+        return institutionList;
+    }
+
+    void detachFromAccount(Institution institution) {
+        institution.setProviderAccount(null);
     }
 }

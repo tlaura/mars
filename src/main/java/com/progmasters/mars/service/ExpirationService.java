@@ -3,6 +3,7 @@ package com.progmasters.mars.service;
 import com.progmasters.mars.domain.ConfirmationToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -17,11 +18,12 @@ public class ExpirationService {
     private static Integer MAX_ELAPSED_HOURS;
     private final Logger logger = LoggerFactory.getLogger(ExpirationService.class);
     private final EmailService emailService;
-    private final AccountService accountService;
+    private final AccountInstitutionService accountInstitutionService;
 
-    public ExpirationService(EmailService emailService, AccountService accountService) {
+    @Autowired
+    public ExpirationService(EmailService emailService, AccountInstitutionService accountInstitutionService) {
         this.emailService = emailService;
-        this.accountService = accountService;
+        this.accountInstitutionService = accountInstitutionService;
     }
 
     //Every 3 days
@@ -45,7 +47,7 @@ public class ExpirationService {
             if (tokenExpired) {
                 emailService.removeConfirmationToken(confirmationToken.getId());
                 Long userId = confirmationToken.getUser().getId();
-                accountService.removeById(userId);
+                accountInstitutionService.deleteAccountById(userId);
                 logger.info("Account ID removed from db:\t" + userId);
             }
         }

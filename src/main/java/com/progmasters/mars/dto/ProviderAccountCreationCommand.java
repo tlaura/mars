@@ -40,6 +40,22 @@ public class ProviderAccountCreationCommand {
     public ProviderAccountCreationCommand() {
     }
 
+    public ProviderAccountCreationCommand(@NotBlank @NotEmpty String providerServiceName, @NotBlank @NotEmpty String name, @NotBlank @NotEmpty String password, @NotBlank @NotEmpty String email, @NotNull @Size(min = 1) List<String> types, String phone, Integer zipcode, String city, String address, Integer ageGroupMin, Integer ageGroupMax, List<InstitutionCreationCommand> institutions, Boolean newsletter) {
+        this.providerServiceName = providerServiceName;
+        this.name = name;
+        this.password = password;
+        this.email = email;
+        this.types = types;
+        this.phone = phone;
+        this.zipcode = zipcode;
+        this.city = city;
+        this.address = address;
+        this.ageGroupMin = ageGroupMin;
+        this.ageGroupMax = ageGroupMax;
+        this.institutions = institutions;
+        this.newsletter = newsletter;
+    }
+
     public String getName() {
         return name;
     }

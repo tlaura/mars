@@ -38,3 +38,5 @@ email:
   elapsed-hours: 72
 google:
   apikey: AIzaSyAeQEHjfxVD8584aJATT0pSNBf3DuCr1h0
+
+cors-policies: http://localhost:4200, http://127.0.0.1:4200

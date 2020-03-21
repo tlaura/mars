@@ -8,13 +8,14 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ProviderAccountRepository extends JpaRepository<ProviderAccount, Long> {
 
     List<ProviderAccount> findAllByEmail(String email);
 
-    ProviderAccount findByEmail(String username);
+    Optional<ProviderAccount> findByEmail(String email);
 
     List<ProviderAccount> findAllByName(String name);
 

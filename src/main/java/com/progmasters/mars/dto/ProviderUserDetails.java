@@ -1,5 +1,6 @@
 package com.progmasters.mars.dto;
 
+import com.progmasters.mars.domain.Institution;
 import com.progmasters.mars.domain.ProviderAccount;
 
 import java.util.List;
@@ -18,7 +19,7 @@ public class ProviderUserDetails {
     private String address;
     private Integer ageGroupMin;
     private Integer ageGroupMax;
-    private List<String> institutionTypes;
+    private List<String> types;
     private List<InstitutionListData> institutionList;
 
     public ProviderUserDetails(ProviderAccount providerAccount) {
@@ -33,8 +34,11 @@ public class ProviderUserDetails {
         this.address = providerAccount.getAddress();
         this.ageGroupMin = providerAccount.getAgeGroupMin();
         this.ageGroupMax = providerAccount.getAgeGroupMax();
-        this.institutionTypes = providerAccount.getTypes().stream().map(Enum::toString).collect(Collectors.toList());
-        this.institutionList = providerAccount.getInstitutions().stream().map(InstitutionListData::new).collect(Collectors.toList());
+        this.types = providerAccount.getTypes().stream().map(Enum::toString).collect(Collectors.toList());
+        List<Institution> institutions = providerAccount.getInstitutions();
+        if (institutions != null) {
+            this.institutionList = institutions.stream().map(InstitutionListData::new).collect(Collectors.toList());
+        }
     }
 
     public ProviderUserDetails() {
@@ -88,7 +92,7 @@ public class ProviderUserDetails {
         return ageGroupMax;
     }
 
-    public List<String> getInstitutionTypes() {
-        return institutionTypes;
+    public List<String> getTypes() {
+        return types;
     }
 }

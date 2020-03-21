@@ -1,7 +1,6 @@
 package com.progmasters.mars.security;
 
 import com.progmasters.mars.domain.ProviderAccount;
-import com.progmasters.mars.repository.IndividualUserRepository;
 import com.progmasters.mars.repository.ProviderAccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -12,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Service
@@ -29,7 +29,7 @@ public class JPAUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 //        com.progmasters.mars.domain.User user = individualUserRepository.findByEmail(username);
-        ProviderAccount providerAccount = providerAccountRepository.findByEmail(username);
+        ProviderAccount providerAccount = providerAccountRepository.findByEmail(username).orElseThrow(() -> new EntityNotFoundException("No account found"));
 
         if (providerAccount == null) {
             throw new UsernameNotFoundException("No account was found with given name");
