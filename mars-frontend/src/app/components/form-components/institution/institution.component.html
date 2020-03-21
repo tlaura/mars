@@ -45,7 +45,7 @@
       <div class="form-group col-sm-12 col-md-12">
         <label>Nyitvatartás:</label>
 
-        <button (click)="addNewOpeningHours()" *ngIf="getOpeningHours().length<15"
+        <button (click)="addNewOpeningHours()" *ngIf="getOpeningHours().length<=7"
                 class="btn rounded-pill btn-light btn-sm mx-sm-1 mx-sm-2">
           Nyitvatartási idő hozzáadása
         </button>
