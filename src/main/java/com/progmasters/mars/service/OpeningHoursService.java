@@ -16,15 +16,12 @@ import java.util.stream.Collectors;
 public class OpeningHoursService {
 
     private final OpeningHoursRepository openingHoursRepository;
-    private final InstitutionService institutionService;
 
-    public OpeningHoursService(OpeningHoursRepository openingHoursRepository, InstitutionService institutionService) {
+    public OpeningHoursService(OpeningHoursRepository openingHoursRepository) {
         this.openingHoursRepository = openingHoursRepository;
-        this.institutionService = institutionService;
     }
 
-    public void saveToInstitution(List<OpeningHoursCreationCommand> openingHoursList, Long institutionId) {
-        Institution institution = institutionService.findById(institutionId);
+    public void saveToInstitution(List<OpeningHoursCreationCommand> openingHoursList, Institution institution) {
         openingHoursList.stream().map(OpeningHours::new).forEach(openingHours -> updateAndSave(openingHours, institution));
     }
 

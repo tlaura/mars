@@ -19,25 +19,21 @@ public class AccountService {
 
     private ProviderAccountRepository providerAccountRepository;
     private BCryptPasswordEncoder passwordEncoder;
-    private final EmailService emailService;
 
     public AccountService(ProviderAccountRepository providerAccountRepository,
-                          BCryptPasswordEncoder passwordEncoder,
-                          EmailService emailService) {
+                          BCryptPasswordEncoder passwordEncoder
+    ) {
         this.providerAccountRepository = providerAccountRepository;
         this.passwordEncoder = passwordEncoder;
-        this.emailService = emailService;
     }
 
-    public Long save(ProviderAccountCreationCommand providerAccountCreationCommand) {
+    ProviderAccount save(ProviderAccountCreationCommand providerAccountCreationCommand) {
         ProviderAccount providerAccount = new ProviderAccount(providerAccountCreationCommand);
         providerAccount.setPassword(passwordEncoder.encode(providerAccountCreationCommand.getPassword()));
         providerAccountRepository.save(providerAccount);
 
 
-        emailService.sendConfirmationEmail(providerAccount);
-
-        return providerAccount.getId();
+        return providerAccount;
     }
 
     void removeById(Long id) {

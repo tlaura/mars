@@ -27,7 +27,6 @@ import static org.junit.jupiter.api.Assertions.*;
 public class AccountServiceIT {
 
     private ProviderAccountCreationCommand providerAccount;
-    private Long savedId;
 
     @Autowired
     private AccountService accountService;
@@ -35,7 +34,7 @@ public class AccountServiceIT {
     @BeforeEach
     public void init() {
         this.providerAccount = createOneAccountCommand();
-        savedId = accountService.save(providerAccount);
+        accountService.save(providerAccount);
     }
 
 
@@ -46,7 +45,7 @@ public class AccountServiceIT {
     }
 
     @Test
-    public void testRemoveById() {
+    public void testRemoveById_shouldReturnTrue() {
         ProviderAccount account = accountService.findByEmail("pecske92@gmail.com");
         accountService.removeById(account.getId());
 

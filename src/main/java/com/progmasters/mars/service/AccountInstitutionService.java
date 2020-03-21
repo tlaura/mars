@@ -15,16 +15,19 @@ public class AccountInstitutionService {
     private final AccountService accountService;
     private final InstitutionService institutionService;
     private final InstitutionOpeningHoursService institutionOpeningHoursService;
+    private final EmailService emailService;
 
-    public AccountInstitutionService(AccountService accountService, InstitutionService institutionService, InstitutionOpeningHoursService institutionOpeningHoursService) {
+    public AccountInstitutionService(AccountService accountService, InstitutionService institutionService, InstitutionOpeningHoursService institutionOpeningHoursService, EmailService emailService) {
         this.accountService = accountService;
         this.institutionService = institutionService;
         this.institutionOpeningHoursService = institutionOpeningHoursService;
+        this.emailService = emailService;
     }
 
     public void saveAccount(ProviderAccountCreationCommand providerAccountCreationCommand) {
-        Long accountId = accountService.save(providerAccountCreationCommand);
-        institutionOpeningHoursService.saveInstitution(providerAccountCreationCommand.getInstitutions(), accountId);
+        ProviderAccount providerAccount = accountService.save(providerAccountCreationCommand);
+        institutionOpeningHoursService.saveInstitution(providerAccountCreationCommand.getInstitutions(), providerAccount);
+        emailService.sendConfirmationEmail(providerAccount);
     }
 
     public List<InstitutionListData> getInstitutionsByAccountType(InstitutionType institutionType) {
