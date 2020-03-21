@@ -37,7 +37,6 @@ export class EditProfileComponent implements OnInit {
   getProviderDetails = (id: string) => {
     this.providerService.fetchProviderAccountEditDetails(this.loggedInUser).subscribe(
       (providerDetails: ProviderAccountEditDataModel) => {
-        console.log(providerDetails);
         this.providerAccountForm.patchValue({
           name: providerDetails.name,
           providerServiceName: providerDetails.providerServiceName,

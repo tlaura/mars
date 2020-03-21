@@ -28,4 +28,11 @@ public class GeoLocationIT {
         Assertions.assertNotNull(geoLocation);
     }
 
+    // mock GeocodingApi.geocode
+
+    // test 1: mock returns { geometry: {location: { lat: 1, lnng: 1 }}}
+    // then function should return Geocoding(1,1)
+
+    // test 2: mock should throw  an exception
+    // assert what should happens in the catch block does happen
 }
