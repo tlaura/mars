@@ -1,9 +1,7 @@
 package com.progmasters.mars.service;
 
-import com.progmasters.mars.domain.Institution;
 import com.progmasters.mars.domain.InstitutionType;
 import com.progmasters.mars.domain.ProviderAccount;
-import com.progmasters.mars.dto.InstitutionListData;
 import com.progmasters.mars.dto.ProviderAccountCreationCommand;
 import com.progmasters.mars.dto.ProviderUserDetails;
 import com.progmasters.mars.dto.ProviderUserDetailsEdit;
@@ -13,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -22,69 +19,64 @@ public class AccountService {
 
     private ProviderAccountRepository providerAccountRepository;
     private BCryptPasswordEncoder passwordEncoder;
-    private final EmailService emailService;
 
     public AccountService(ProviderAccountRepository providerAccountRepository,
-                          BCryptPasswordEncoder passwordEncoder,
-                          EmailService emailService) {
+                          BCryptPasswordEncoder passwordEncoder
+    ) {
         this.providerAccountRepository = providerAccountRepository;
         this.passwordEncoder = passwordEncoder;
-        this.emailService = emailService;
     }
 
-    public Long save(ProviderAccountCreationCommand providerAccountCreationCommand) {
+    ProviderAccount save(ProviderAccountCreationCommand providerAccountCreationCommand) {
         ProviderAccount providerAccount = new ProviderAccount(providerAccountCreationCommand);
         providerAccount.setPassword(passwordEncoder.encode(providerAccountCreationCommand.getPassword()));
         providerAccountRepository.save(providerAccount);
 
 
-        emailService.sendConfirmationEmail(providerAccount);
-
-        return providerAccount.getId();
+        return providerAccount;
     }
 
-    public void removeById(Long id) {
+    void removeById(Long id) {
+        ProviderAccount account = findById(id);
+        account.setTypes(null);
+
         providerAccountRepository.deleteById(id);
     }
 
-    public ProviderUserDetails getProviderAccount(String loggedInUser) {
-        ProviderAccount providerAccount = providerAccountRepository.findByEmail(loggedInUser);
-        return new ProviderUserDetails(providerAccount);
+    public ProviderUserDetails getProviderAccountByEmail(String loggedInUserEmail) {
+        return new ProviderUserDetails(findByEmail(loggedInUserEmail));
     }
 
-    public List<InstitutionListData> getInstitutionsByType(InstitutionType institutionType) {
-        List<ProviderAccount> accountListByType = providerAccountRepository.findByType(institutionType);
-        List<InstitutionListData> institutionListData = new ArrayList<>();
-        for (ProviderAccount providerAccount : accountListByType) {
-            for (Institution institution : providerAccount.getInstitutions()) {
-                institutionListData.add(new InstitutionListData(institution));
-            }
-        }
-        return institutionListData;
+    List<ProviderAccount> getAccountsByType(InstitutionType institutionType) {
+        return providerAccountRepository.findByType(institutionType);
     }
 
 
-    public ProviderAccount findById(Long id) {
-        return providerAccountRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("No account found by given id"));
+    ProviderAccount findById(Long id) {
+        return providerAccountRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("No account found by given id:\t" + id));
+    }
+
+    ProviderAccount findByEmail(String email) {
+        return providerAccountRepository.findByEmail(email).orElseThrow(() -> new EntityNotFoundException("No account found by given email:\t" + email));
     }
 
 
-    public ProviderUserDetailsEdit getProviderAccountEditDetails(String loggedInUser) {
-        ProviderAccount providerAccount = providerAccountRepository.findByEmail(loggedInUser);
+    public ProviderUserDetailsEdit getProviderAccountEditDetailsByEmail(String loggedInUserEmail) {
+        return new ProviderUserDetailsEdit(findByEmail(loggedInUserEmail));
+    }
+
+    public ProviderUserDetailsEdit updateProviderAccount(ProviderUserDetailsEdit providerUserDetailsEdit, String loggedInUserEmail) {
+        ProviderAccount providerAccount = findByEmail(loggedInUserEmail);
+        updateAccountFields(providerUserDetailsEdit, providerAccount);
+
         return new ProviderUserDetailsEdit(providerAccount);
     }
 
-    public ProviderAccount updateProviderAccount(ProviderUserDetailsEdit providerUserDetailsEdit, String loggedInUser) {
-        ProviderAccount providerAccount = providerAccountRepository.findByEmail(loggedInUser);
-        if (providerAccount != null) {
-            updateAccountFields(providerUserDetailsEdit, providerAccount);
-            return providerAccount;
-        } else {
-            return null;
-        }
+    List<ProviderAccount> findAllAccounts() {
+        return providerAccountRepository.findAll();
     }
 
-    private void updateAccountFields(ProviderUserDetailsEdit providerUserDetailsEdit, ProviderAccount providerAccount) {
+    void updateAccountFields(ProviderUserDetailsEdit providerUserDetailsEdit, ProviderAccount providerAccount) {
         providerAccount.setName(providerUserDetailsEdit.getName());
         providerAccount.setProviderServiceName(providerUserDetailsEdit.getProviderServiceName());
 //        providerAccount.setPassword(providerUserDetailsEdit.getPassword());
@@ -92,5 +84,6 @@ public class AccountService {
         providerAccount.setZipcode(providerUserDetailsEdit.getZipcode());
         providerAccount.setCity(providerUserDetailsEdit.getCity());
         providerAccount.setAddress(providerUserDetailsEdit.getAddress());
+        providerAccount.setNewsletter(providerUserDetailsEdit.getNewsletter());
     }
 }

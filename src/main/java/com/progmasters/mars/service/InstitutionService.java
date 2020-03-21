@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,13 +23,11 @@ public class InstitutionService {
 
     private final InstitutionRepository institutionRepository;
     private final GeocodeService geocodeService;
-    private final AccountService accountService;
 
     @Autowired
-    public InstitutionService(InstitutionRepository institutionRepository, GeocodeService geocodeService, AccountService accountService) {
+    public InstitutionService(InstitutionRepository institutionRepository, GeocodeService geocodeService) {
         this.institutionRepository = institutionRepository;
         this.geocodeService = geocodeService;
-        this.accountService = accountService;
     }
 
     public List<InstitutionListData> getInstitutionList() {
@@ -47,8 +46,7 @@ public class InstitutionService {
         return new InstitutionDetailsData(findById(id));
     }
 
-    public Long saveToAccount(InstitutionCreationCommand institutionCreationCommand, Long accountId) {
-        ProviderAccount providerAccount = accountService.findById(accountId);
+    Institution saveToAccount(InstitutionCreationCommand institutionCreationCommand, ProviderAccount providerAccount) {
         Institution institution;
         if (institutionCreationCommand.getId() != null) {
             institution = findById(institutionCreationCommand.getId());
@@ -57,7 +55,7 @@ public class InstitutionService {
         }
         institution.setProviderAccount(providerAccount);
 
-        return institution.getId();
+        return institution;
     }
 
     public Institution createInstitution(InstitutionCreationCommand institutionCreationCommand) {
@@ -110,5 +108,16 @@ public class InstitutionService {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    List<InstitutionListData> getInstitutionsByProviderAccount(ProviderAccount providerAccount) {
+        List<InstitutionListData> institutionList = new ArrayList<>();
+        providerAccount.getInstitutions().stream().map(InstitutionListData::new).forEach(institutionList::add);
+
+        return institutionList;
+    }
+
+    void detachFromAccount(Institution institution) {
+        institution.setProviderAccount(null);
     }
 }

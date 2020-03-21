@@ -29,6 +29,18 @@ public class ProviderUserDetailsEdit {
     public ProviderUserDetailsEdit() {
     }
 
+    public ProviderUserDetailsEdit(String email, String name, String providerServiceName, String password, String phone, Integer zipcode, String city, String address, Boolean newsletter) {
+        this.email = email;
+        this.name = name;
+        this.providerServiceName = providerServiceName;
+        //   this.password = password;
+        this.phone = phone;
+        this.zipcode = zipcode;
+        this.city = city;
+        this.address = address;
+        this.newsletter = newsletter;
+    }
+
     public String getEmail() {
         return email;
     }

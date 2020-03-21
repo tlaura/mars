@@ -1,5 +1,7 @@
 package com.progmasters.mars.service;
 
+import com.progmasters.mars.domain.Institution;
+import com.progmasters.mars.domain.ProviderAccount;
 import com.progmasters.mars.dto.InstitutionCreationCommand;
 import org.springframework.stereotype.Service;
 
@@ -16,10 +18,10 @@ public class InstitutionOpeningHoursService {
         this.institutionService = institutionService;
     }
 
-    public void saveInstitution(List<InstitutionCreationCommand> institutionList, Long accountId) {
+    public void saveInstitution(List<InstitutionCreationCommand> institutionList, ProviderAccount providerAccount) {
         for (InstitutionCreationCommand institutionCreationCommand : institutionList) {
-            Long institutionId = institutionService.saveToAccount(institutionCreationCommand, accountId);
-            openingHoursService.saveToInstitution(institutionCreationCommand.getOpeningHours(), institutionId);
+            Institution institution = institutionService.saveToAccount(institutionCreationCommand, providerAccount);
+            openingHoursService.saveToInstitution(institutionCreationCommand.getOpeningHours(), institution);
 
         }
     }
