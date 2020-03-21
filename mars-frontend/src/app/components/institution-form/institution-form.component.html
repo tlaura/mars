@@ -1,10 +1,13 @@
-<div class="col-sm-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3 text-center">
-  <h1>Új intézmény felvétele</h1>
-  <div class="institution-register-div text-left p-sm-3 p-md-3 container">
-    <form (ngSubmit)="submit()" [formGroup]="institutionForm">
-      <app-institution [institutionForm]="institutionForm">
-      </app-institution>
-      <button [disabled]="!institutionForm.valid" class="btn btn-primary submit rounded-pill">Mentés</button>
-    </form>
+<div class="tomato-background-div">
+  <div class="col-sm-12 col-md-10 offset-md-1 col-lg-10 offset-lg-1 text-center">
+    <h4>Új intézmény felvétele</h4>
+    <div class="white-block-on-tomato-div text-left p-sm-3 p-md-3 container">
+      <form (ngSubmit)="submit()" [formGroup]="institutionForm">
+        <app-institution [institutionForm]="institutionForm">
+        </app-institution>
+        <button [disabled]="!institutionForm.valid" class="btn btn-primary submit rounded-pill">Mentés</button>
+      </form>
+    </div>
   </div>
 </div>
+

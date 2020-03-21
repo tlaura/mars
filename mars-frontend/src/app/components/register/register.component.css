@@ -1,10 +1,12 @@
 .register-div {
-  font-size: small;
   border-right: 1px solid tomato;
   border-left: 1px solid tomato;
   border-bottom: 1px solid tomato;
   border-bottom-left-radius: 2rem;
   border-bottom-right-radius: 2rem;
+  font-size: small;
+  background-color: white;
+  box-shadow: #b34532 0.5rem 0.5rem;
 }
 
 .user-option-chooser {
@@ -37,43 +39,4 @@
   border-right: 1px solid tomato;
   border-left: 1px solid tomato;
   border-top: 1px solid tomato;
-}
-
-.submit.btn {
-  border-color: cornflowerblue;
-  background-color: cornflowerblue;
-}
-
-input::placeholder {
-  color: lightgrey;
-}
-
-input {
-  border: 1px solid tomato;
-  outline: 0;
-  box-shadow: none !important;
-}
-
-select {
-  border: 1px solid tomato;
-  outline: 0;
-  box-shadow: none !important;
-}
-
-h1 {
-  color: tomato;
-  margin-bottom: 2rem;
-}
-
-label {
-  color: tomato;
-}
-
-hr {
-  display: block;
-  height: 1px;
-  border: 0;
-  border-top: 1px solid black;
-  margin: 1em 0;
-  padding: 0;
 }

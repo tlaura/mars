@@ -23,11 +23,13 @@ export class InstitutionComponent implements OnInit {
   }
 
   addNewOpeningHours() {
-    (this.institutionForm.get('openingHours') as FormArray).push(new FormGroup({
-      'weekDay': new FormControl(null),
-      'openingTime': new FormControl(null),
-      'closingTime': new FormControl(null)
-    }));
+    if (this.getOpeningHours().length < 15) {
+      (this.institutionForm.get('openingHours') as FormArray).push(new FormGroup({
+        'weekDay': new FormControl(null),
+        'openingTime': new FormControl(null),
+        'closingTime': new FormControl(null)
+      }));
+    }
   }
 
   removeOpeningHours(index: number) {

@@ -1,23 +1,10 @@
-.institution-list-div {
-  font-size: small;
-  border-radius: 2rem;
-  background-color: white;
-}
-
-.background-div {
-  background-color: tomato;
-  width: 100%;
-  min-height: 100vh;
-  margin: 0;
-  padding: 0;
-  top: 0;
-  left: 0;
+#filter-div input, select {
+  box-shadow: #b34532 0.2rem 0.2rem !important;
 }
 
 @media (min-width: 768px) and (max-width: 1199px) {
-  .background-div {
+  .tomato-background-div {
     width: 100vw;
-
   }
 }
 
@@ -32,40 +19,4 @@
 
 .my-pagination /deep/ .ngx-pagination li {
   color: tomato;
-}
-
-input::placeholder {
-
-  color: lightgrey;
-}
-
-input {
-  border: 1px solid tomato;
-  outline: 0;
-  box-shadow: none !important;
-}
-
-select {
-  border: 1px solid tomato;
-  color: tomato;
-  outline: 0;
-  box-shadow: none !important;
-}
-
-h1 {
-  color: tomato;
-  margin-bottom: 2rem;
-}
-
-label {
-  color: tomato;
-}
-
-hr {
-  display: block;
-  height: 1px;
-  border: 0;
-  border-top: 1px solid tomato;
-  margin: 1em 0;
-  padding: 0;
 }

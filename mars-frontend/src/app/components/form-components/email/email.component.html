@@ -1,7 +1,7 @@
-<label for="email">Email cím:</label>
+<label for="email">Email cím*:</label>
 <input (focusout)="emitEmail()" [formControl]="email" class="form-control rounded-pill" id="email" type="text">
 <div *ngIf="email.errors?.pattern">
-  <small class="text-danger">
+  <small class="text-danger-custom">
     Érvénytelen email cím!
   </small>
 </div>

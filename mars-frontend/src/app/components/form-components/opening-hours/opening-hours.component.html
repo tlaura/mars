@@ -1,7 +1,7 @@
 <form [formGroup]="openingHours">
   <div class="row mx-0">
-    <div class="form-group col-sm-12 col-md-12 col-lg-6">
-      <select class="form-control rounded-pill"
+    <div class="form-group col-sm-12 col-md-5 col-lg-6">
+      <select class="form-control-sm col-md-12 rounded-pill"
               formControlName="weekDay"
               id="weekDay"
               name="weekDay">
@@ -9,20 +9,20 @@
       </select>
     </div>
 
-    <div class="form-group col-sm-12 col-md-6 col-lg-3">
-      <input class="form-control rounded-pill "
-             formControlName="openingTime"
-             id="openingTime"
-             name="openingTime"
-             type="Time">
-    </div>
-
-    <div class="form-group col-sm-12 col-md-6 col-lg-3">
-      <input class="form-control rounded-pill"
-             formControlName="closingTime"
-             id="closingTime"
-             name="closingTime"
-             type="Time">
+    <div class="input-group-sm p-md-0 col-md-6 col-lg-6">
+      <div class="input-prepend input-append row m-0 w-100">
+        <input class="form-control-sm rounded-pill col-sm-5 text-center"
+               formControlName="openingTime"
+               id="openingTime"
+               name="openingTime"
+               type="Time">
+        <span class="add-on col-sm-1 input-group-text">-</span>
+        <input class="form-control-sm rounded-pill col-sm-5 text-center"
+               formControlName="closingTime"
+               id="closingTime"
+               name="closingTime"
+               type="Time">
+      </div>
     </div>
   </div>
 </form>
