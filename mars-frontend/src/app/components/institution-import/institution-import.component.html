@@ -1,25 +1,28 @@
-<div class="container-fluid">
-  <form [formGroup]="importForm" enctype="multipart/form-data">
-    <h2>Intézmények importálása</h2>
-    <p class="text-danger">Figyelem! </p>
-    <p class="small">A feltölteni kívánt fáj első sorának tartalmaznia kell a következőket az oszlopoknak
-      megfelelően:</p>
-    <p class="small">name, email, phone, website, zipcode, city, address, description</p>
-    <div class="custom-file col-sm-8 col-md-5 col-lg-3 form-group">
-      <input (change)="uploadFile($event)"
-             accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
-             class="custom-file-input"
-             formControlName="file"
-             id="file"
-             type="file">
-      <label *ngIf="!importForm.get('file').value" class="custom-file-label" for="file">Fájl kiválasztása...</label>
-      <label *ngIf="importForm.get('file').value" class="custom-file-label"
-             for="file">{{importForm.get('file').value.name}}</label>
+<div class="background-div">
+  <div class="row mx-0 pt-sm-0 pt-md-1 pt-lg-3">
+    <div class="white-block-div col-sm-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3 p-sm-0 p-md-2 p-lg-4">
+      <form [formGroup]="importForm" enctype="multipart/form-data">
+        <h5 class="text-danger font-weight-bold mb-sm-0 mb-md-2">Figyelem! </h5>
+        <p class="small">A feltölteni kívánt fáj első sorának tartalmaznia kell a következőket az oszlopoknak
+          megfelelően:</p>
+        <p class="small">name, email, phone, website, zipcode, city, address, description</p>
+        <div class="custom-file col-sm-12 col-md-8 col-lg-6 form-group">
+          <input (change)="uploadFile($event)"
+                 accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+                 class="custom-file-input"
+                 formControlName="file"
+                 id="file"
+                 type="file">
+          <label *ngIf="!importForm.get('file').value" class="custom-file-label" for="file">Fájl kiválasztása...</label>
+          <label *ngIf="importForm.get('file').value" class="custom-file-label"
+                 for="file">{{importForm.get('file').value.name}}</label>
+        </div>
+        <div class="form-group">
+          <button (click)="import()" [disabled]="!importForm.valid"
+                  class="btn btn-primary submit rounded-pill mt-2">Importálás
+          </button>
+        </div>
+      </form>
     </div>
-    <div class="form-group">
-      <button (click)="import()" [disabled]="!importForm.valid"
-              class="btn btn-primary submit rounded-pill mt-2">Importálás
-      </button>
-    </div>
-  </form>
+  </div>
 </div>

@@ -3,3 +3,61 @@
 html * {
   font-family: 'Ubuntu', sans-serif;
 }
+
+
+.background-div {
+  background-color: tomato;
+  width: 100%;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  top: 0;
+  left: 0;
+}
+
+.white-block-div {
+  font-size: small;
+  border-radius: 2rem;
+  background-color: white;
+  box-shadow: #b34532 0.5rem 0.5rem;
+}
+
+
+input::placeholder {
+  color: lightgrey;
+}
+
+input {
+  border: 1px solid tomato;
+  outline: 0;
+  box-shadow: none !important;
+}
+
+select {
+  border: 1px solid tomato;
+  color: tomato;
+  outline: 0;
+}
+
+h1 {
+  color: white;
+  margin-bottom: 2rem;
+}
+
+label {
+  color: tomato;
+}
+
+hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid tomato;
+  margin: 1em 0;
+  padding: 0;
+}
+
+.submit.btn {
+  border-color: cornflowerblue;
+  background-color: cornflowerblue;
+}
