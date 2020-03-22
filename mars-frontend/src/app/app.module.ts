@@ -68,7 +68,7 @@ export function getAuthServiceConfigs() {
     InstitutionComponent,
     OpeningHoursComponent,
     InstitutionImportCompleteComponent,
-    EditProfileComponent
+    EditProfileComponent,
   ],
   imports: [
     BrowserModule,

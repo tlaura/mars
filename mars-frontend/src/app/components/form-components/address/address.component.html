@@ -3,7 +3,6 @@
     <label for="zipcode">Irányítószám*:</label>
     <input class="form-control rounded-pill"
            (change)="emitZipcode()"
-           autocomplete="off"
            [formControl]="zipcode"
            id="zipcode"
            type="number">
@@ -13,7 +12,6 @@
     <label for="city">Település*:</label>
     <input class="form-control rounded-pill"
            (change)="emitCity()"
-           autocomplete="off"
            [formControl]="city"
            id="city"
            type="text">
@@ -30,7 +28,6 @@
     <label for="address">Cím*:</label>
     <input class="form-control rounded-pill"
            (change)="emitAddress()"
-           autocomplete="off"
            [formControl]="address"
            id="address"
            type="text">
