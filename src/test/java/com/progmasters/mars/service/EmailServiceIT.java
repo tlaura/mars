@@ -23,7 +23,7 @@ public class EmailServiceIT {
         ProviderAccount account = new ProviderAccountBuilder().setProviderServiceName("nincs")
                 .setName("nincs")
                 .setPassword("nincs")
-                .setEmail("nincs@gmail.com")
+                .setEmail("pecske92@gmail.com")
                 .setZipcode(1089)
                 .setCity("budapest")
                 .setAddress("nincs")
