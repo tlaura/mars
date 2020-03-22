@@ -38,7 +38,8 @@ export class AccountService {
     return this.http.patch(this.BASE_URL + '/providers/' + loggedInUser, data);
   };
 
-  editProviderAccountDetails = (data: ProviderUserProfileDetailsModel, id: number) => {
+  editProviderAccountDetails = (data: ProviderUserProfileDetailsModel, id: number): Observable<any> => {
     return this.http.put(this.BASE_URL + '/providers/' + id, data);
   }
+
 }

@@ -16,7 +16,8 @@ export class MyProfileComponent implements OnInit {
   @Input() name: string;
   @Output() focusOut: EventEmitter<any> = new EventEmitter<any>();
 
-  constructor(private loginService: LoginService, private providerService: AccountService) { }
+  constructor(private loginService: LoginService, public providerService: AccountService) {
+  }
 
   onFocusOut() {
     // this.focusOut.emit(this.name);

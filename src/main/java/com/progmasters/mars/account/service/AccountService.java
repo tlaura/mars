@@ -14,6 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -112,5 +114,31 @@ public class AccountService {
         } else {
             throw new EntityNotFoundException("not valid confirmation link");
         }
+    }
+
+    public ProviderAccount updateProviderAccountDetails(ProviderUserDetails providerUserDetails, Long id) {
+        Optional<ProviderAccount> optionalAcc = providerAccountRepository.findById(id);
+        if (optionalAcc.isPresent()) {
+            ProviderAccount providerAccount = optionalAcc.get();
+            updateDetails(providerUserDetails, providerAccount);
+            return providerAccount;
+        } else {
+            return null;
+        }
+    }
+
+    private void updateDetails(ProviderUserDetails providerUserDetails, ProviderAccount providerAccount) {
+        providerAccount.setName(providerUserDetails.getName());
+        providerAccount.setProviderServiceName(providerUserDetails.getProviderServiceName());
+        providerAccount.setPassword(providerUserDetails.getPassword());
+        providerAccount.setPhone(providerUserDetails.getPhone());
+        providerAccount.setEmail(providerUserDetails.getEmail());
+        providerAccount.setZipcode(providerUserDetails.getZipcode());
+        providerAccount.setCity(providerUserDetails.getCity());
+        providerAccount.setAddress(providerUserDetails.getAddress());
+        providerAccount.setNewsletter(providerUserDetails.getNewsletter());
+        providerAccount.setAgeGroupMin(providerUserDetails.getAgeGroupMin());
+        providerAccount.setAgeGroupMax(providerUserDetails.getAgeGroupMax());
+        providerAccount.setTypes(providerUserDetails.getTypes().stream().map(InstitutionType::getTypeByHungarianName).collect(Collectors.toList()));
     }
 }

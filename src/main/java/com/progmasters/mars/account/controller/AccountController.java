@@ -1,7 +1,9 @@
 package com.progmasters.mars.account.controller;
 
+
 import com.progmasters.mars.account.ProviderAccountValidator;
 import com.progmasters.mars.account.domain.InstitutionType;
+import com.progmasters.mars.account.domain.ProviderAccount;
 import com.progmasters.mars.account.dto.ProviderAccountCreationCommand;
 import com.progmasters.mars.account.dto.ProviderUserDetails;
 import com.progmasters.mars.account.dto.ProviderUserDetailsEdit;
@@ -68,10 +70,21 @@ public class AccountController {
         return new ResponseEntity<>(accountService.getProviderAccountEditDetailsByEmail(loggedInUser), HttpStatus.OK);
     }
 
-    @PatchMapping("/{loggedInUser}")
-    public ResponseEntity<ProviderUserDetailsEdit> updateProviderAccountDetails(@Valid @RequestBody ProviderUserDetailsEdit providerUserDetailsEdit, @PathVariable String loggedInUser) {
-        logger.info("provider account update requested");
-        ProviderUserDetailsEdit updatedAccount = accountService.updateProviderAccount(providerUserDetailsEdit, loggedInUser);
-        return new ResponseEntity<>(updatedAccount, HttpStatus.OK);
+//    @PatchMapping("/{loggedInUser}")
+//    public ResponseEntity<ProviderUserDetailsEdit> updateProviderAccountDetails(@Valid @RequestBody ProviderUserDetailsEdit providerUserDetailsEdit, @PathVariable String loggedInUser) {
+//        logger.info("provider account update requested");
+//        ProviderUserDetailsEdit updatedAccount = accountService.updateProviderAccount(providerUserDetailsEdit, loggedInUser);
+//        return new ResponseEntity<>(updatedAccount, HttpStatus.OK);
+//    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity updateProviderAccount(@Valid @RequestBody ProviderUserDetails providerUserDetails, @PathVariable Long id) {
+        logger.info("Provider Account update requested");
+        ProviderAccount updatedAccount = accountService.updateProviderAccountDetails(providerUserDetails, id);
+        if (updatedAccount == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
     }
 }
