@@ -31,9 +31,6 @@ public class JPAUserDetailsService implements UserDetailsService {
 //        com.progmasters.mars.domain.User user = individualUserRepository.findByEmail(username);
         ProviderAccount providerAccount = providerAccountRepository.findByEmail(username).orElseThrow(() -> new EntityNotFoundException("No account found"));
 
-        if (providerAccount == null) {
-            throw new UsernameNotFoundException("No account was found with given name");
-        }
 
         List<GrantedAuthority> authorities = AuthorityUtils
                 .createAuthorityList(providerAccount.getRole().toString());
