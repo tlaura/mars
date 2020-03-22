@@ -3,7 +3,6 @@ spring:
     username: root
     password: test1234
 
-#TODO jár a pacsi, hogy ezt már meg is csináltátok ;)
 email:
   send:
     confirmation: https://mars-demo.progmasters.hu/register-success/
