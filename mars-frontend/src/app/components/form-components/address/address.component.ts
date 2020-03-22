@@ -42,14 +42,17 @@ export class AddressComponent implements OnInit {
   }
 
   emitZipcode() {
-    this.zipcodeEmitter.emit(this.zipcode.value);
+    console.log("zipcode emitted");
+    this.zipcodeEmitter.emit(this.zipcode.value)
   }
 
   emitCity() {
+    console.log("city emitted");
     this.cityEmitter.emit(this.city.value);
   }
 
   emitAddress() {
+    console.log("address emitted");
     this.addressEmitter.emit(this.address.value);
   }
 

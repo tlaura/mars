@@ -1,7 +1,7 @@
 <div class="row m-0">
   <div class="form-group col-sm-12 col-md-6">
     <label for="name">Név*:</label>
-    <input (focusout)="emitName()"
+    <input (change)="emitName()"
            [formControl]="name"
            class="form-control rounded-pill"
            id="name"
@@ -19,7 +19,7 @@
 
   <div class="form-group col-sm-12 col-md-6 ">
     <label for="phone">Telefonszám*:</label>
-    <input (focusout)="emitPhone()"
+    <input (change)="emitPhone()"
            [formControl]="phone"
            class="form-control rounded-pill"
            id="phone" placeholder="+36-XX-XXX-XXXX"
@@ -33,7 +33,7 @@
 
   <div class="form-group col-sm-12 col-md-6 ">
     <label for="website">Weboldal:</label>
-    <input (focusout)="emitWebsite()"
+    <input (change)="emitWebsite()"
            [formControl]="website"
            class="form-control rounded-pill"
            id="website"
