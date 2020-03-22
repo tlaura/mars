@@ -1,7 +1,7 @@
 package com.progmasters.mars.controller;
 
 import com.progmasters.mars.security.AuthenticatedUserDetails;
-import com.progmasters.mars.service.UserService;
+import com.progmasters.mars.service.EmailService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +20,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
-    private final UserService userService;
+    private final EmailService emailService;
 
     @Autowired
-    public UserController(UserService userService) {
-        this.userService = userService;
+    public UserController(EmailService emailService) {
+        this.emailService = emailService;
     }
 
     @GetMapping("/login")
@@ -32,6 +32,15 @@ public class UserController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetails user = (UserDetails) authentication.getPrincipal();
         logger.info("Login is requested!");
-        return new ResponseEntity<>(new AuthenticatedUserDetails(user), HttpStatus.OK);
+        ResponseEntity<AuthenticatedUserDetails> responseEntity;
+        AuthenticatedUserDetails authenticatedUserDetails = new AuthenticatedUserDetails(user);
+        if (emailService.isUserConfirmed(authenticatedUserDetails.getName())) {
+            responseEntity = new ResponseEntity<>(authenticatedUserDetails, HttpStatus.OK);
+        } else {
+            responseEntity = new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        return responseEntity;
+
     }
 }

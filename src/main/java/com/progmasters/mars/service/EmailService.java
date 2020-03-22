@@ -27,6 +27,7 @@ public class EmailService {
 
     private final JavaMailSender javaMailSender;
     private final ConfirmationTokenRepository confirmationTokenRepository;
+    private final AccountService accountService;
     private final Logger logger = LoggerFactory.getLogger(EmailService.class);
 
     @Value("${email.send.subject}")
@@ -37,9 +38,10 @@ public class EmailService {
     private String confirmationUrl;
 
     @Autowired
-    public EmailService(JavaMailSender javaMailSender, ConfirmationTokenRepository confirmationTokenRepository) {
+    public EmailService(JavaMailSender javaMailSender, ConfirmationTokenRepository confirmationTokenRepository, AccountService accountService) {
         this.javaMailSender = javaMailSender;
         this.confirmationTokenRepository = confirmationTokenRepository;
+        this.accountService = accountService;
     }
 
     @Async
@@ -97,5 +99,10 @@ public class EmailService {
 
     public List<ConfirmationToken> findAllConfirmationToken() {
         return confirmationTokenRepository.findAll();
+    }
+
+    public boolean isUserConfirmed(String email) {
+        ProviderAccount account = accountService.findByEmail(email);
+        return confirmationTokenRepository.findByUser(account).orElseThrow(() -> new EntityNotFoundException("No account found by given email")).isConfirmed();
     }
 }
