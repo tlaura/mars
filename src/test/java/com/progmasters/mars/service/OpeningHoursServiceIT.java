@@ -1,7 +1,10 @@
 package com.progmasters.mars.service;
 
+import com.google.maps.errors.NotFoundException;
+import com.progmasters.mars.domain.Institution;
 import com.progmasters.mars.dto.InstitutionCreationCommand;
 import com.progmasters.mars.dto.OpeningHoursCreationCommand;
+import com.progmasters.mars.dto.OpeningHoursData;
 import com.progmasters.mars.util.InstitutionBuilder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,6 +18,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 @SpringBootTest
@@ -23,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 @AutoConfigureTestDatabase
 public class OpeningHoursServiceIT {
 
-    private InstitutionCreationCommand institution;
+    private Institution institution;
 
     private List<OpeningHoursCreationCommand> openingHoursList;
 
@@ -34,18 +38,29 @@ public class OpeningHoursServiceIT {
 
     @BeforeEach
     public void init() {
-        this.institution = createInstitution();
+        InstitutionCreationCommand institutionCreationCommand = createInstitution();
         this.openingHoursList = createOpeningHoursList();
-        institutionService.createInstitution(institution);
-        institutionService.findByName(institution.getName());
+        try {
+            institutionService.createInstitution(institutionCreationCommand);
+        } catch (NotFoundException e) {
+            e.printStackTrace();
+        }
+        this.institution = institutionService.findByName(institutionCreationCommand.getName());
         openingHoursService.saveToInstitution(openingHoursList, institution);
     }
 
     @Test
-    public void testSaveToInstitution_returnsTrue() {
+    public void testSaveToInstitution_assertTrue() {
         assertFalse(openingHoursService.findAll().isEmpty());
     }
 
+    @Test
+    public void testGetOpeningHoursByInstitutionId_assertTrue() {
+        Long id = this.institution.getId();
+        List<OpeningHoursData> openingHours = openingHoursService.getOpeningHoursByInstitutionId(id);
+        assertEquals(2, openingHours.size());
+
+    }
 
     private List<OpeningHoursCreationCommand> createOpeningHoursList() {
         List<OpeningHoursCreationCommand> openingHours = new ArrayList<>();
