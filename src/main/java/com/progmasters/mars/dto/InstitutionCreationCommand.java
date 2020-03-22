@@ -84,4 +84,39 @@ public class InstitutionCreationCommand {
         return openingHours;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setZipcode(Integer zipcode) {
+        this.zipcode = zipcode;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setWebsite(String website) {
+        this.website = website;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public void setOpeningHours(List<OpeningHoursCreationCommand> openingHours) {
+        this.openingHours = openingHours;
+    }
 }

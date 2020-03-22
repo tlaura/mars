@@ -33,4 +33,8 @@ public class OpeningHoursService {
         openingHours.setInstitution(institution);
         openingHoursRepository.save(openingHours);
     }
+
+    public List<OpeningHours> findAll() {
+        return openingHoursRepository.findAll();
+    }
 }

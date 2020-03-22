@@ -36,7 +36,6 @@ public class EmailService {
     @Value("${email.send.confirmation}")
     private String confirmationUrl;
 
-    //TODO @Autowired!!
     @Autowired
     public EmailService(JavaMailSender javaMailSender, ConfirmationTokenRepository confirmationTokenRepository) {
         this.javaMailSender = javaMailSender;
