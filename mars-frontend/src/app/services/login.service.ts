@@ -24,7 +24,6 @@ export class LoginService {
   }
 
   logout = (): Observable<any> => {
-    console.log('logout');
     return this.http.get(BASE_URL + '/logout');
   };
 

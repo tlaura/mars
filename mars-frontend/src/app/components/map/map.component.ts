@@ -16,7 +16,7 @@ export class MapComponent implements OnInit {
   latitude: number = institutionListIndex.mapLatitude;
   longitude: number = institutionListIndex.mapLongitude;
   zoom: number = institutionListIndex.mapZoom;
-  show: boolean = false;
+  @Input() show: boolean = false;
   @Input() locations: Array<InstitutionListModel>;
   institutionDetail: InstitutionDetailModel;
 

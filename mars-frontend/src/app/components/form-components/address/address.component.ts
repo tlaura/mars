@@ -1,4 +1,4 @@
-import {Component, EventEmitter, HostListener, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {FormControl, Validators} from "@angular/forms";
 
 @Component({
@@ -31,18 +31,12 @@ export class AddressComponent implements OnInit {
     this.addressEmitter = new EventEmitter<string>();
   }
 
-  @HostListener('animationstart')
-  onAutoFillStart() {
-    this.emitZipcode();
-    this.emitCity();
-    this.emitAddress();
-  }
 
   ngOnInit(): void {
   }
 
   emitZipcode() {
-    this.zipcodeEmitter.emit(this.zipcode.value);
+    this.zipcodeEmitter.emit(this.zipcode.value)
   }
 
   emitCity() {
