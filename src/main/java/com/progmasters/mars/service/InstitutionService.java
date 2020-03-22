@@ -121,4 +121,8 @@ public class InstitutionService {
     void detachFromAccount(Institution institution) {
         institution.setProviderAccount(null);
     }
+
+    public Institution findByName(String name) {
+        return institutionRepository.findByName(name);
+    }
 }

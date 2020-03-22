@@ -3,6 +3,7 @@ package com.progmasters.mars.service;
 import com.progmasters.mars.domain.InstitutionType;
 import com.progmasters.mars.domain.ProviderAccount;
 import com.progmasters.mars.dto.InstitutionListData;
+import com.progmasters.mars.util.ProviderAccountBuilder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -64,25 +65,25 @@ public class AccountInstitutionServiceIT {
 
 
     private ProviderAccount createOneProviderAccount() {
-        ProviderAccount providerAccount = new ProviderAccount();
-        providerAccount.setId(1l);
-        providerAccount.setProviderServiceName("PecskeTestService");
-        providerAccount.setName("Pecske");
-        providerAccount.setPassword("ValarMorghulis7");
-        providerAccount.setEmail("pecske92@gmail.com");
+
         List<InstitutionType> types = new ArrayList<>();
         types.add(InstitutionType.DIAGNOSTIC_CENTER);
         types.add(InstitutionType.THERAPY);
-        providerAccount.setTypes(types);
-        providerAccount.setPhone("+36205851886");
-        providerAccount.setZipcode(1089);
-        providerAccount.setCity("Budapest");
-        providerAccount.setAddress("Orczy út 43");
-        providerAccount.setAgeGroupMin(10);
-        providerAccount.setAgeGroupMax(22);
-        providerAccount.setNewsletter(true);
 
-        return providerAccount;
+        return new ProviderAccountBuilder()
+                .setProviderServiceName("PescskeTestService")
+                .setName("Pecske")
+                .setPassword("ValarMorghulis7")
+                .setEmail("pecske92@gmail.com")
+                .setInstitutionTypes(types)
+                .setPhone("+36205851886")
+                .setZipcode(1089)
+                .setCity("Budapest")
+                .setAddress("Orczy út 43")
+                .setAgeGroupMin(10)
+                .setAgeGroupMax(22)
+                .setNewsletter(true)
+                .buildProviderAccount();
     }
 
     private InstitutionListData createOneInstitutionListData() {

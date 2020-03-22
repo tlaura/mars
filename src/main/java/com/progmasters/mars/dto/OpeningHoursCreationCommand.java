@@ -7,8 +7,12 @@ public class OpeningHoursCreationCommand {
     private LocalTime openingTime;
     private LocalTime closingTime;
 
-    public OpeningHoursCreationCommand() {
+    public OpeningHoursCreationCommand(String weekDay, LocalTime openingTime, LocalTime closingTime) {
+        this.weekDay = weekDay;
+        this.openingTime = openingTime;
+        this.closingTime = closingTime;
     }
+
 
     public String getWeekDay() {
         return weekDay;

@@ -16,4 +16,6 @@ public interface InstitutionRepository extends JpaRepository<Institution, Long> 
     List<Institution> findAllByName(@NotBlank @NotEmpty String name);
 
     List<Institution> findAllByEmail(@NotBlank @NotEmpty @Email String email);
+
+    Institution findByName(String name);
 }

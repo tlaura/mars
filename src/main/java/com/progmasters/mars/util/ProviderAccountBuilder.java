@@ -1,5 +1,7 @@
 package com.progmasters.mars.util;
 
+import com.progmasters.mars.domain.InstitutionType;
+import com.progmasters.mars.domain.ProviderAccount;
 import com.progmasters.mars.dto.InstitutionCreationCommand;
 import com.progmasters.mars.dto.ProviderAccountCreationCommand;
 import com.progmasters.mars.dto.ProviderUserDetailsEdit;
@@ -31,6 +33,7 @@ public class ProviderAccountBuilder {
     @NotNull
     @Size(min = 1)
     private List<String> types;
+    private List<InstitutionType> institutionTypes;
 
     private String phone;
     private Integer zipcode;
@@ -63,6 +66,11 @@ public class ProviderAccountBuilder {
 
     public ProviderAccountBuilder setTypes(List<String> types) {
         this.types = types;
+        return this;
+    }
+
+    public ProviderAccountBuilder setInstitutionTypes(List<InstitutionType> types) {
+        this.institutionTypes = types;
         return this;
     }
 
@@ -112,5 +120,22 @@ public class ProviderAccountBuilder {
 
     public ProviderUserDetailsEdit buildDetailsEdit() {
         return new ProviderUserDetailsEdit(email, name, providerServiceName, password, phone, zipcode, city, address, newsletter);
+    }
+
+    public ProviderAccount buildProviderAccount() {
+        ProviderAccount providerAccount = new ProviderAccount();
+        providerAccount.setProviderServiceName(providerServiceName);
+        providerAccount.setName(name);
+        providerAccount.setPassword(password);
+        providerAccount.setEmail(email);
+        providerAccount.setTypes(institutionTypes);
+        providerAccount.setPhone(phone);
+        providerAccount.setZipcode(zipcode);
+        providerAccount.setCity(city);
+        providerAccount.setAddress(address);
+        providerAccount.setAgeGroupMin(ageGroupMin);
+        providerAccount.setAgeGroupMax(ageGroupMax);
+        providerAccount.setNewsletter(newsletter);
+        return providerAccount;
     }
 }
