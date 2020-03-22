@@ -36,5 +36,9 @@ export class AccountService {
   editProviderAccount = (data: ProviderAccountEditDataModel, loggedInUser: string): Observable<any> => {
     data.email = loggedInUser;
     return this.http.patch(this.BASE_URL + '/providers/' + loggedInUser, data);
+  };
+
+  editProviderAccountDetails = (data: ProviderUserProfileDetailsModel, id: number) => {
+    return this.http.put(this.BASE_URL + '/providers/' + id, data);
   }
 }

@@ -11,50 +11,98 @@
       <section class="col-6 mb-4">
         <dl class="row">
 
-          <dt class="col-sm-3">
-            <p class="text-dark">Teljes név:</p>
-          </dt>
-          <dd class="col-sm-9">
-            <p class="text-dark">{{providerAccount?.name}}</p>
-          </dd>
 
           <dt class="col-sm-3">
-            <p class="text-dark">Szolgáltatás neve:</p>
+            Teljes név:
           </dt>
-          <dd class="col-sm-9">
-            <p class="text-dark">{{providerAccount?.providerServiceName}}</p>
+          <dd (click)='editMode=true' *ngIf='!editMode' class="col-sm-9">
+            <p> {{providerAccount?.name}} </p>
           </dd>
+          <input (focusout)="onFocusOut()" (focusout)="editMode=false" (keydown.enter)='$event.target.blur()'
+                 (keydown.enter)='$event.target.blur()' *ngIf='editMode'
+                 [(ngModel)]='providerAccount.name' appAutofocus class='text-dark' type='text'>
+          <br>
 
           <dt class="col-sm-3">
-            <p class="text-dark">Telefon:</p>
+            Szolgáltatás neve:
           </dt>
-          <dd class="col-sm-9">
-            <p class="text-dark">{{providerAccount?.phone}}</p>
+          <dd (click)='editMode=true' *ngIf='!editMode' class="col-sm-9">
+            <p> {{providerAccount?.providerServiceName}}</p>
           </dd>
+          <input (focusout)="onFocusOut()" (focusout)="editMode=false"
+                 (keydown.enter)='$event.target.blur()'
+                 (keydown.enter)='$event.target.blur()' *ngIf='editMode'
+                 [(ngModel)]='providerAccount.providerServiceName' appAutofocus class='text-dark' type='text'>
+
 
           <dt class="col-sm-3">
-            <p class="text-dark">Email:</p>
+            Telefon:
           </dt>
-          <dd class="col-sm-9">
-            <p class="text-dark">{{providerAccount?.email}}</p>
+          <dd (click)='editMode=true' *ngIf='!editMode' class="col-sm-9">
+            <p> {{providerAccount?.phone}}</p>
           </dd>
+          <input (focusout)="onFocusOut()" (focusout)="editMode=false"
+                 (keydown.enter)='$event.target.blur()'
+                 (keydown.enter)='$event.target.blur()' *ngIf='editMode'
+                 [(ngModel)]='providerAccount.phone' appAutofocus class='text-dark' type='text'>
 
-          <dt class="col-sm-3">Cím:</dt>
-          <dd class="col-sm-9">
-            <p class="text-dark">{{providerAccount?.zipcode}}<br>
-              {{providerAccount?.city}}<br>
-              {{providerAccount?.address}}</p>
-          </dd>
 
-          <dt class="col-sm-3">Korcsoport:</dt>
-          <dd class="col-sm-9">
-            <p class="text-dark">{{providerAccount?.ageGroupMin}} - {{providerAccount?.ageGroupMax}}</p>
+          <dt class="col-sm-3">
+            Email:
+          </dt>
+          <dd (click)='editMode=true' *ngIf='!editMode' class="col-sm-9">
+            <p> {{providerAccount?.email}}</p>
           </dd>
+          <input (focusout)="onFocusOut()" (focusout)="editMode=false"
+                 (keydown.enter)='$event.target.blur()'
+                 (keydown.enter)='$event.target.blur()' *ngIf='editMode'
+                 [(ngModel)]='providerAccount.email' appAutofocus class='email' type='text'>
 
-          <dt class="col-sm-3">Szolgáltatás típusai:</dt>
-          <dd *ngFor="let type of providerAccount?.institutionTypes" class="col-sm-9">
-            <p class="text-dark">{{type}}<br>
-          </dd>
+
+          <!--          <dt class="col-sm-3">-->
+          <!--            <p class="text-dark">Teljes név:</p>-->
+          <!--          </dt>-->
+          <!--          <dd class="col-sm-9">-->
+          <!--            <p class="text-dark">{{providerAccount?.name}}</p>-->
+          <!--          </dd>-->
+
+          <!--          <dt class="col-sm-3">-->
+          <!--            <p class="text-dark">Szolgáltatás neve:</p>-->
+          <!--          </dt>-->
+          <!--          <dd class="col-sm-9">-->
+          <!--            <p class="text-dark">{{providerAccount?.providerServiceName}}</p>-->
+          <!--          </dd>-->
+
+          <!--          <dt class="col-sm-3">-->
+          <!--            <p class="text-dark">Telefon:</p>-->
+          <!--          </dt>-->
+          <!--          <dd class="col-sm-9">-->
+          <!--            <p class="text-dark">{{providerAccount?.phone}}</p>-->
+          <!--          </dd>-->
+
+          <!--          <dt class="col-sm-3">-->
+          <!--            <p class="text-dark">Email:</p>-->
+          <!--          </dt>-->
+          <!--          <dd class="col-sm-9">-->
+          <!--            <p class="text-dark">{{providerAccount?.email}}</p>-->
+          <!--          </dd>-->
+
+          <!--          <dt class="col-sm-3">Cím:</dt>-->
+          <!--          <dd class="col-sm-9">-->
+          <!--            <p class="text-dark">{{providerAccount?.zipcode}}<br>-->
+          <!--              {{providerAccount?.city}}<br>-->
+          <!--              {{providerAccount?.address}}</p>-->
+          <!--          </dd>-->
+
+          <!--          <dt class="col-sm-3">Korcsoport:</dt>-->
+          <!--          <dd class="col-sm-9">-->
+          <!--            <p class="text-dark">{{providerAccount?.ageGroupMin}} - {{providerAccount?.ageGroupMax}}</p>-->
+          <!--          </dd>-->
+
+          <!--          <dt class="col-sm-3">Szolgáltatás típusai:</dt>-->
+          <!--          <dd *ngFor="let type of providerAccount?.institutionTypes" class="col-sm-9">-->
+          <!--            <p class="text-dark">{{type}}<br>-->
+          <!--          </dd>-->
 
         </dl>
       </section>
@@ -76,7 +124,7 @@
         </div>
       </section>
   </section>
-  <button class="submit btn btn-info rounded-pill" routerLink="edit-profile">
-    Edit Profile
+  <button (click)="saveChanges()" class="submit btn btn-info rounded-pill" type="submit">
+    Módosítás
   </button>
 </section>

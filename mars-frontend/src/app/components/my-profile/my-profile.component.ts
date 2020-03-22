@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ProviderUserProfileDetailsModel} from "../../models/providerUserProfileDetails.model";
 import {LoginService} from "../../services/login.service";
 import {AccountService} from "../../services/account.service";
@@ -12,8 +12,16 @@ export class MyProfileComponent implements OnInit {
 
   providerAccount: ProviderUserProfileDetailsModel;
   loggedInUser;
+  editMode = false;
+  @Input() name: string;
+  @Output() focusOut: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(private loginService: LoginService, private providerService: AccountService) { }
+
+  onFocusOut() {
+    // this.focusOut.emit(this.name);
+    console.log(this.providerAccount);
+  }
 
   ngOnInit(): void {
     this.loggedInUser = this.loginService.getCurrentUser()['name'];
@@ -25,5 +33,17 @@ export class MyProfileComponent implements OnInit {
       //  TODO - write unauthorized validation
       }
     )
+  }
+
+  saveChanges = () => {
+    // if(this.providerAccount.id == null) error
+    console.log(this.providerAccount);
+    this.providerService.editProviderAccountDetails(this.providerAccount, this.providerAccount.id).subscribe(
+      () => {
+        console.log("Data changes saved");
+      }, error => {
+        console.log(error);
+      }
+    );
   }
 }
