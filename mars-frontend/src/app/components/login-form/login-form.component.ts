@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {LoginService} from "../../services/login.service";
 import {Router} from "@angular/router";
@@ -25,7 +25,6 @@ export class LoginFormComponent implements OnInit {
 
   login = () => {
     const loginData = {...this.loginForm.value};
-    console.log(loginData);
 
     this.loginService.login(loginData).subscribe(
       response => {

@@ -22,6 +22,7 @@ export class InstitutionListComponent implements OnInit {
   searchText: string;
   currentType: string;
   institutionType: FormControl;
+  showWindows: boolean;
 
   shareObj = {
     //localhost-ra nem működik, elvileg élesben igen?!?!?
@@ -79,6 +80,8 @@ export class InstitutionListComponent implements OnInit {
     } else {
       this.getInstitutions();
     }
+    this.showWindows = false;
+
   };
 
   private getInstitutionType = () => {
@@ -91,7 +94,6 @@ export class InstitutionListComponent implements OnInit {
   shareList() {
     if (this.currentType != "all") {
       this.shareObj.href = "http://localhost:4200/institution-list/providerType/" + this.currentType;
-      console.log(this.shareObj);
     }
     this.socialService.facebookSharing(this.shareObj);
   }
@@ -116,7 +118,6 @@ export class InstitutionListComponent implements OnInit {
     this.accountService.getInstitutionByType(type).subscribe(
       institutionList => this.institutionList = institutionList,
       error => console.warn(error),
-      () => console.log(this.institutionList),
     );
   };
 }
