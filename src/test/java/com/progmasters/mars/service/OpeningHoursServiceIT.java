@@ -1,11 +1,13 @@
 package com.progmasters.mars.service;
 
 import com.google.maps.errors.NotFoundException;
-import com.progmasters.mars.domain.Institution;
-import com.progmasters.mars.dto.InstitutionCreationCommand;
-import com.progmasters.mars.dto.OpeningHoursCreationCommand;
-import com.progmasters.mars.dto.OpeningHoursData;
-import com.progmasters.mars.util.InstitutionBuilder;
+import com.progmasters.mars.institution.InstitutionBuilder;
+import com.progmasters.mars.institution.domain.Institution;
+import com.progmasters.mars.institution.dto.InstitutionCreationCommand;
+import com.progmasters.mars.institution.openinghours.dto.OpeningHoursCreationCommand;
+import com.progmasters.mars.institution.openinghours.dto.OpeningHoursData;
+import com.progmasters.mars.institution.openinghours.service.OpeningHoursService;
+import com.progmasters.mars.institution.service.InstitutionService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

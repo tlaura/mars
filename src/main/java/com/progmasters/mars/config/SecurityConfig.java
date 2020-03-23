@@ -1,6 +1,6 @@
 package com.progmasters.mars.config;
 
-import com.progmasters.mars.security.JPAUserDetailsService;
+import com.progmasters.mars.account.security.JPAUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

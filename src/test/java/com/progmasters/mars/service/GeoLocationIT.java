@@ -1,7 +1,8 @@
 package com.progmasters.mars.service;
 
 import com.google.maps.errors.NotFoundException;
-import com.progmasters.mars.dto.GeoLocation;
+import com.progmasters.mars.institution.location.GeoLocation;
+import com.progmasters.mars.institution.location.GeocodeService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
