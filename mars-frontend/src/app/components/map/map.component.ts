@@ -51,7 +51,7 @@ export class MapComponent implements OnInit {
   };
 
   icon_institution = {
-    url: 'https://svgshare.com/i/JPk.svg',
+    url: 'https://drive.google.com/file/d/1RUTfZJajA7lB4d0kvVZ3212_oLN2Lq6R/view?usp=sharing',
     scaledSize: {
       width: 40,
       height: 40
@@ -59,7 +59,7 @@ export class MapComponent implements OnInit {
   };
 
   icon_provider = {
-    url: 'https://svgshare.com/i/JPk.svg',
+    url: 'https://drive.google.com/file/d/1wUXZYN9VqvdvkpLYrbaxvU4j72jbxGp9/view?usp=sharing',
     scaledSize: {
       width: 40,
       height: 40
@@ -67,7 +67,7 @@ export class MapComponent implements OnInit {
   };
 
   getIcon() {
-    //TODO: use the right icon
+    //TODO: choose right icon
     return this.icon_institution;
   }
 }
