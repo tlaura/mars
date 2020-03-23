@@ -1,5 +1,5 @@
 <form [formGroup]="emailForm">
-  <div class="row mx-0 text-left">
+  <div class="row mx-0 text-left form-group">
 
     <div class="form-group col-sm-6 col-lg-4">
 
@@ -17,7 +17,8 @@
       <label class="small" for="text">Üzenet*:</label>
       <textarea class="form-control" formControlName="text" id="text" name="text" rows="6"></textarea>
     </div>
+    <input (click)="sendMail()" [disabled]="emailForm.invalid" class="btn btn-primary submit rounded-pill"
+           type="submit">
   </div>
-  <input (click)="sendMail()" [disabled]="emailForm.invalid" class="btn btn-primary submit rounded-pill" type="submit">
 
 </form>

@@ -1,6 +1,6 @@
-<div [ngClass]="hasBackground? 'tomato-background-div':'' ">
-  <div [ngClass]="hasBackground? 'white-block-on-tomato-div p-sm-1 p-md-2 col-sm-12 col-md-10 offset-md-1 col-lg-8 offset-lg-2':
-  'white-block-on-tomato-div p-sm-1 p-md-2 col-sm-12' ">
+<div [ngClass]="isInInfoBox? '':'tomato-background-div'">
+  <div [ngClass]="isInInfoBox? 'white-block-on-tomato-div p-sm-1 p-md-2 col-sm-12':
+   'white-block-on-tomato-div p-sm-1 p-md-2 col-sm-12 col-md-10 offset-md-1 col-lg-8 offset-lg-2'">
     <h4 class="tomato-head font-weight-bold">{{institution?.name}}</h4>
     <h5 class="tomato-head">{{ institution?.zipcode}} {{institution?.city}} {{institution?.address}}</h5>
     <h6 class="tomato-head">Nyitva tartás:</h6>
@@ -21,6 +21,8 @@
     <!--    <facebook-share-button [share]="shareObj"></facebook-share-button>-->
     <!--  </div>-->
 
+    <button (click)="backToInstitutionList()" *ngIf="!isInInfoBox" class="btn btn-primary submit rounded-pill">Vissza
+    </button>
   </div>
 </div>
 

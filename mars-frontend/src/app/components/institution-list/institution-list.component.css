@@ -20,3 +20,7 @@
 .my-pagination /deep/ .ngx-pagination li {
   color: tomato;
 }
+
+.custom-link {
+  cursor: pointer;
+}

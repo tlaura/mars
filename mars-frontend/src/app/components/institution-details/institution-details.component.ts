@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {InstitutionDetailModel} from "../../models/institutionDetail.model";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {InstitutionService} from "../../services/institution.service";
 import {OpeningHoursService} from "../../services/opening-hours.service";
 import {OpeningHoursModel} from "../../models/openingHours.model";
@@ -14,7 +14,7 @@ export class InstitutionDetailsComponent implements OnInit {
 
   @Input() institution: InstitutionDetailModel;
   @Input() mailSender: boolean = false;
-  @Input() hasBackground: boolean = true;
+  @Input() isInInfoBox: boolean = false;
   openingHours: Array<OpeningHoursModel>;
   shareUrl: string;
   shareObj = {
@@ -23,7 +23,7 @@ export class InstitutionDetailsComponent implements OnInit {
     hashtag: "#NONE"
   };
 
-  constructor(private activatedRoute: ActivatedRoute, private institutionService: InstitutionService, private openingHoursService: OpeningHoursService) {
+  constructor(private router: Router, private activatedRoute: ActivatedRoute, private institutionService: InstitutionService, private openingHoursService: OpeningHoursService) {
   }
 
   ngOnInit() {
@@ -59,4 +59,7 @@ export class InstitutionDetailsComponent implements OnInit {
     this.mailSender = this.mailSender === false;
   };
 
+  backToInstitutionList() {
+    this.router.navigate(['institution-list'])
+  }
 }
