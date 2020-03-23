@@ -21,7 +21,7 @@
 
 
   <div class="row mx-0 p-sm-1 p-md-1 p-lg-4">
-    <div class="white-block-on-tomato-div col-md-6 offset-md-3 p-sm-0">
+    <div class="white-block-on-tomato-div col-md-8 offset-md-2 p-sm-0">
       <div class="col-sm-12 py-sm-1 py-md-1 py-lg-3">
         <!--  <div class="col-md-2">-->
         <!--    <facebook-share-button (click)="shareList()"></facebook-share-button>-->
@@ -31,9 +31,10 @@
           *ngFor="let institution of institutionList |filter:searchText |paginate:{itemsPerPage:size,currentPage:page};let last = last">
           <div class="row">
             <div (click)="details(institution.id)" class="col text-left">
-              <label class="row mx-0 font-weight-bold">{{institution.name}}</label>
+              <label class="row mx-0 font-weight-bold text-uppercase">{{institution.name}}</label>
               <label class="row mx-0 ">{{institution.zipcode}} {{institution.city}} {{institution.address}}</label>
               <label *ngIf="institution.type" class="row mx-0">{{institution.type}}</label>
+              <label class="row mx-0 small">{{institution.description}}</label>
               <hr *ngIf="!last"/>
             </div>
           </div>

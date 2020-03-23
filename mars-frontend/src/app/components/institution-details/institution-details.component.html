@@ -1,6 +1,7 @@
 <div [ngClass]="hasBackground? 'tomato-background-div':'' ">
-  <div class="white-block-on-tomato-div text-center container">
-    <h4 class="tomato-head afont-weight-bold">{{institution?.name}}</h4>
+  <div [ngClass]="hasBackground? 'white-block-on-tomato-div p-sm-1 p-md-2 col-sm-12 col-md-10 offset-md-1 col-lg-8 offset-lg-2':
+  'white-block-on-tomato-div p-sm-1 p-md-2 col-sm-12' ">
+    <h4 class="tomato-head font-weight-bold">{{institution?.name}}</h4>
     <h5 class="tomato-head">{{ institution?.zipcode}} {{institution?.city}} {{institution?.address}}</h5>
     <h6 class="tomato-head">Nyitva tartás:</h6>
     <div *ngFor="let openingHour of openingHours">{{openingHour.weekDay}}: {{openingHour.openingTime}}
@@ -12,7 +13,7 @@
     <p>{{institution?.email}}</p>
 
     <div class="form-group">
-      <button (click)="openMailSend()" class="btn btn-outline-primary btn-sm">Email küldés</button>
+      <button (click)="openMailSend()" class="btn btn-primary submit rounded-pill">Email küldés</button>
     </div>
 
     <app-send-mail (sent)="openMailSend()" *ngIf="mailSender" [toEmail]="institution?.email"></app-send-mail>

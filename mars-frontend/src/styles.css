@@ -106,9 +106,9 @@ html * {
   border-radius: 0 !important;
 }
 
-.submit .btn {
-  border-color: cornflowerblue;
-  background-color: cornflowerblue;
+.submit .btn .btn-primary button {
+  border-color: cornflowerblue !important;
+  background-color: cornflowerblue !important;
 }
 
 input::placeholder {
@@ -126,7 +126,7 @@ h1, h2, h3, h4, h5, h6 {
   margin-bottom: 2rem;
 }
 
-.tomato-head h1, h2, h3, h4, h5, h6 {
+.tomato-head {
   color: tomato;
   margin-bottom: 2rem;
 }

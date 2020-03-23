@@ -23,6 +23,7 @@ export class SendMailComponent implements OnInit {
     })
   }
 
+  //TODO: validator for email, name, message length...
   ngOnInit(): void {
   }
 

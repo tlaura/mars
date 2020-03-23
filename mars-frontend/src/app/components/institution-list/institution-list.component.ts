@@ -25,7 +25,7 @@ export class InstitutionListComponent implements OnInit {
   showWindows: boolean;
 
   shareObj = {
-    //localhost-ra nem működik, elvileg élesben igen?!?!?
+    //TODO: localhost-ra nem működik, elvileg élesben igen?!?!?
     href: "",
     hashtag: "#NONE"
   };
