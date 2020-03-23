@@ -106,7 +106,7 @@ html * {
   border-radius: 0 !important;
 }
 
-.submit .btn .btn-primary button {
+.submit {
   border-color: cornflowerblue !important;
   background-color: cornflowerblue !important;
 }
