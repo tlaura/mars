@@ -51,7 +51,7 @@ export class MapComponent implements OnInit {
   };
 
   icon_institution = {
-    url: 'https://svgur.com/s/JPk',
+    url: 'https://svgshare.com/i/JPk.svg',
     scaledSize: {
       width: 40,
       height: 40
@@ -59,7 +59,7 @@ export class MapComponent implements OnInit {
   };
 
   icon_provider = {
-    url: 'https://svgur.com/s/JP2',
+    url: 'https://svgur.com/s/JP2.svg',
     scaledSize: {
       width: 40,
       height: 40
