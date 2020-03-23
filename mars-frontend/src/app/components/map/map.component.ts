@@ -23,6 +23,7 @@ export class MapComponent implements OnInit {
   constructor(private mapsAPILoader: MapsAPILoader, private institutionService: InstitutionService) {
   }
 
+
   ngOnInit(): void {
     this.mapsAPILoader.load().then(() => this.setCurrentLocation()
     );
@@ -49,4 +50,24 @@ export class MapComponent implements OnInit {
 
   };
 
+  icon_institution = {
+    url: 'https://svgshare.com/i/JPk.svg',
+    scaledSize: {
+      width: 40,
+      height: 40
+    }
+  };
+
+  icon_provider = {
+    url: 'https://svgshare.com/i/JPk.svg',
+    scaledSize: {
+      width: 40,
+      height: 40
+    }
+  };
+
+  getIcon() {
+    //TODO: use the right icon
+    return this.icon_institution;
+  }
 }

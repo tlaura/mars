@@ -1,22 +1,25 @@
-<div class="details-div text-center container">
-  <h4 class="font-weight-bold">{{institution?.name}}</h4>
-  <h5>{{ institution?.zipcode}} {{institution?.city}} {{institution?.address}}</h5>
-  <h6>Nyitva tartás:</h6>
-  <div *ngFor="let openingHour of openingHours">{{openingHour.weekDay}}: {{openingHour.openingTime}}
-    -{{openingHour.closingTime}}</div>
+<div class="tomato-background-div">
+  <div class="white-block-on-tomato-div text-center container">
+    <h4 class="tomato-head afont-weight-bold">{{institution?.name}}</h4>
+    <h5 class="tomato-head">{{ institution?.zipcode}} {{institution?.city}} {{institution?.address}}</h5>
+    <h6 class="tomato-head">Nyitva tartás:</h6>
+    <div *ngFor="let openingHour of openingHours">{{openingHour.weekDay}}: {{openingHour.openingTime}}
+      -{{openingHour.closingTime}}</div>
 
-  <p>{{institution?.description}}</p>
+    <p>{{institution?.description}}</p>
 
-  <h6>Elérhetőség:</h6>
-  <p>{{institution?.email}}</p>
+    <h6 class="tomato-head">Elérhetőség:</h6>
+    <p>{{institution?.email}}</p>
 
-  <div class="form-group">
-    <button (click)="openMailSend()" class="btn btn-outline-primary btn-sm">Email küldés</button>
+    <div class="form-group">
+      <button (click)="openMailSend()" class="btn btn-outline-primary btn-sm">Email küldés</button>
+    </div>
+
+    <app-send-mail (sent)="openMailSend()" *ngIf="mailSender" [toEmail]="institution?.email"></app-send-mail>
+    <!--  <div class="col-md-2">-->
+    <!--    <facebook-share-button [share]="shareObj"></facebook-share-button>-->
+    <!--  </div>-->
+
   </div>
-
-  <app-send-mail (sent)="openMailSend()" *ngIf="mailSender" [toEmail]="institution?.email"></app-send-mail>
-  <!--  <div class="col-md-2">-->
-  <!--    <facebook-share-button [share]="shareObj"></facebook-share-button>-->
-  <!--  </div>-->
-
 </div>
+

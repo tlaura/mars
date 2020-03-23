@@ -2,12 +2,14 @@
          [scrollwheel]="null" [zoom]="zoom"
          gestureHandling="cooperative">
   <agm-marker (markerClick)="markerClick(location.id)" *ngFor="let location of locations"
-              [latitude]="location.latitude" [longitude]="location.longitude">
+              [iconUrl]="getIcon()" [latitude]="location.latitude" [longitude]="location.longitude"
+  >
     <agm-snazzy-info-window #infoWindow
                             [closeWhenOthersOpen]="true"
                             [isOpen]="show"
                             maxHeight="1500"
                             maxWidth="500" placement="right"
+                            disableAutoPan="true"
     >
       <ng-template>
         <app-institution-details [institution]="institutionDetail"></app-institution-details>
