@@ -36,7 +36,8 @@ public class InstitutionService {
         // könnyű implementálni, és menő :)
         // Van rá valahol példám ha érdekel :)
 
-        //  Pageable pageable= PageRequest.of(page,size);
+        //      Pageable pageable= PageRequest.of(page,size);
+        //       return institutionRepository.findAll(pageable).stream().map(InstitutionListData::new).collect(Collectors.toList());
         return institutionRepository.findAll()
                 .stream()
                 .map(InstitutionListData::new)
