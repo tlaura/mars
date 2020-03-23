@@ -14,6 +14,7 @@ export class InstitutionDetailsComponent implements OnInit {
 
   @Input() institution: InstitutionDetailModel;
   @Input() mailSender: boolean = false;
+  @Input() hasBackground: boolean = true;
   openingHours: Array<OpeningHoursModel>;
   shareUrl: string;
   shareObj = {

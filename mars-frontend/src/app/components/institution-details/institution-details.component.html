@@ -1,4 +1,4 @@
-<div class="tomato-background-div">
+<div [ngClass]="hasBackground? 'tomato-background-div':'' ">
   <div class="white-block-on-tomato-div text-center container">
     <h4 class="tomato-head afont-weight-bold">{{institution?.name}}</h4>
     <h5 class="tomato-head">{{ institution?.zipcode}} {{institution?.city}} {{institution?.address}}</h5>

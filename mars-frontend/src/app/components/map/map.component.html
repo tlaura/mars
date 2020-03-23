@@ -10,9 +10,11 @@
                             maxHeight="1500"
                             maxWidth="500" placement="right"
                             disableAutoPan="true"
+                            backgroundColor="tomato"
+                            borderRadius="2em"
     >
       <ng-template>
-        <app-institution-details [institution]="institutionDetail"></app-institution-details>
+        <app-institution-details [hasBackground]="false" [institution]="institutionDetail"></app-institution-details>
       </ng-template>
     </agm-snazzy-info-window>
     <!--    <agm-info-window #infoWindow>-->
