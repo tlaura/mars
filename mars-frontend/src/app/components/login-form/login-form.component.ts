@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {LoginService} from "../../services/login.service";
 import {Router} from "@angular/router";
+import {HttpErrorResponse} from "@angular/common/http";
 
 
 @Component({
@@ -11,14 +12,16 @@ import {Router} from "@angular/router";
 })
 export class LoginFormComponent implements OnInit {
   loginForm: FormGroup;
-  showErrorMessage = false;
+  showUnauthorizedMessage = false;
+  showUncofirmedMessage = false;
 
-  constructor(private loginService: LoginService, private formBuilder: FormBuilder, private router: Router) { }
+  constructor(private loginService: LoginService, private formBuilder: FormBuilder, private router: Router) {
+  }
 
   ngOnInit() {
     this.loginForm = new FormGroup({
-      'userName': new FormControl('', Validators.required),
-      'password': new FormControl('', Validators.required)
+        'userName': new FormControl('', Validators.required),
+        'password': new FormControl('', Validators.required)
       }
     )
   }
@@ -34,7 +37,11 @@ export class LoginFormComponent implements OnInit {
       },
       error => {
         console.warn(error);
-        this.showErrorMessage = true;
+        if ((error as HttpErrorResponse).status === 403) {
+          this.showUncofirmedMessage = true;
+        } else {
+          this.showUnauthorizedMessage = true;
+        }
       }
     )
   }

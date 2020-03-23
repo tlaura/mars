@@ -37,7 +37,7 @@ public class UserController {
         if (emailService.isUserConfirmed(authenticatedUserDetails.getName())) {
             responseEntity = new ResponseEntity<>(authenticatedUserDetails, HttpStatus.OK);
         } else {
-            responseEntity = new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            responseEntity = new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
 
         return responseEntity;

@@ -23,8 +23,11 @@
           </small>
         </div>
 
-        <div *ngIf="showErrorMessage" class="alert alert-danger rounded-pill">
+        <div *ngIf="showUnauthorizedMessage" class="alert alert-danger rounded-pill">
           Helytelen felhasználónév vagy jelszó!
+        </div>
+        <div *ngIf="showUncofirmedMessage" class="alert alert-danger rounded-pill">
+          Kérjük aktiválja fiókját az email-ben kapott üzenet alapján!
         </div>
 
         <div class="form-group">

@@ -15,7 +15,7 @@ import java.util.List;
 public class ExpirationService {
 
     @Value("${email.elapsed-hours}")
-    private static Integer MAX_ELAPSED_HOURS;
+    private Integer MAX_ELAPSED_HOURS;
     private final Logger logger = LoggerFactory.getLogger(ExpirationService.class);
     private final EmailService emailService;
     private final AccountInstitutionService accountInstitutionService;

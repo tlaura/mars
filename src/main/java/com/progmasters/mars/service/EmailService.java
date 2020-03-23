@@ -100,10 +100,8 @@ public class EmailService {
     public List<ConfirmationToken> findAllConfirmationToken() {
         return confirmationTokenRepository.findAll();
     }
-
     public boolean isUserConfirmed(String email) {
         ProviderAccount account = accountService.findByEmail(email);
-        // return confirmationTokenRepository.findByUser(account).orElseThrow(() -> new EntityNotFoundException("No account found by given email")).isConfirmed();
-        return true;
+        return confirmationTokenRepository.findByUser(account).orElseThrow(() -> new EntityNotFoundException("No account found by given email")).isConfirmed();
     }
 }
