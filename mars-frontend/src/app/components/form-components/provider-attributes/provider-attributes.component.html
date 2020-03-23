@@ -44,7 +44,7 @@
 </div>
 
 <div class="row m-0">
-  <div class="form-group col-sm-12 col-md-5 col-lg-3">
+  <div class="form-group col-sm-12 col-md-6 col-lg-4">
     <label for="ageGroupMin">Minimum kor:</label>
     <select class="form-control rounded-pill select-tomato"
             (focusout)="emitAgeGroupMin()"
@@ -54,7 +54,7 @@
       <option *ngFor="let age of getAgesArray(100), let i = index" value="{{i}}">{{i}}</option>
     </select>
   </div>
-  <div class="form-group col-sm-12 col-md-5 col-lg-3">
+  <div class="form-group col-sm-12 col-md-6 col-lg-4">
     <label for="ageGroupMax">Maximum kor:</label>
     <select class="form-control rounded-pill select-tomato"
             (focusout)="emitAgeGroupMax()"
