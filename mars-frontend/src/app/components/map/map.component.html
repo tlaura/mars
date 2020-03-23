@@ -7,11 +7,10 @@
     <agm-snazzy-info-window #infoWindow
                             [closeWhenOthersOpen]="true"
                             [isOpen]="show"
-                            maxHeight="1500"
+                            borderRadius="2rem"
                             maxWidth="500" placement="right"
-                            disableAutoPan="true"
                             backgroundColor="tomato"
-                            borderRadius="2em"
+                            maxHeight=""
     >
       <ng-template>
         <app-institution-details [hasBackground]="false" [institution]="institutionDetail"></app-institution-details>

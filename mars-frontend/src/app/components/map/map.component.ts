@@ -59,7 +59,7 @@ export class MapComponent implements OnInit {
   };
 
   icon_provider = {
-    url: 'https://svgur.com/s/JP2.svg',
+    url: 'https://svgur.com/s/JP2.',
     scaledSize: {
       width: 40,
       height: 40
