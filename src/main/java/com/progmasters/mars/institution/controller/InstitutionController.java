@@ -2,6 +2,7 @@ package com.progmasters.mars.institution.controller;
 
 import com.google.maps.errors.NotFoundException;
 import com.progmasters.mars.account.domain.InstitutionType;
+import com.progmasters.mars.institution.InstitutionValidator;
 import com.progmasters.mars.institution.dto.InstitutionCreationCommand;
 import com.progmasters.mars.institution.dto.InstitutionDetailsData;
 import com.progmasters.mars.institution.dto.InstitutionListData;
@@ -12,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -26,12 +28,12 @@ public class InstitutionController {
 
     private final InstitutionService institutionService;
     private final Logger logger = LoggerFactory.getLogger(InstitutionController.class);
-
-    //TODO Legalább a controllerekbe érdemes rakni mindenhova logolást!
+    private InstitutionValidator institutionValidator;
 
     @Autowired
-    public InstitutionController(InstitutionService institutionService) {
+    public InstitutionController(InstitutionService institutionService, InstitutionValidator institutionValidator) {
         this.institutionService = institutionService;
+        this.institutionValidator = institutionValidator;
     }
 
     @GetMapping
@@ -46,7 +48,6 @@ public class InstitutionController {
     @GetMapping("/institutionType")
     public ResponseEntity<List<InstitutionTypeData>> getInstitutionType() {
         List<InstitutionTypeData> institutionTypeDataList = Arrays.stream(InstitutionType.values()).map(InstitutionTypeData::new).collect(Collectors.toList());
-
         logger.info("Institution types is requested!");
         return new ResponseEntity<>(institutionTypeDataList, HttpStatus.OK);
     }
@@ -62,12 +63,17 @@ public class InstitutionController {
         return new ResponseEntity<>(institutionService.getInstitutionDetails(id), HttpStatus.OK);
     }
 
+    @InitBinder("institutionCreationCommand")
+    protected void initBinder(WebDataBinder binder) {
+        binder.addValidators(institutionValidator);
+    }
+
     @PostMapping
     public ResponseEntity<Void> createInstitution(@RequestBody @Valid InstitutionCreationCommand institutionCreationCommand) {
         try {
             institutionService.createInstitution(institutionCreationCommand);
         } catch (NotFoundException e) {
-            logger.info("Map not loading");
+            logger.info("Location not found");
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         logger.info("Institution creation is requested!");

@@ -1,8 +1,35 @@
 package com.progmasters.mars.institution;
 
-public class InstitutionValidator {
+import com.progmasters.mars.institution.dto.InstitutionCreationCommand;
+import com.progmasters.mars.institution.service.InstitutionValidatorService;
+import org.springframework.stereotype.Component;
+import org.springframework.validation.Errors;
+import org.springframework.validation.Validator;
 
-    //TODO: validate institutions
+@Component
+public class InstitutionValidator implements Validator {
 
-    //TODO Van rajta bean validáció! Vagy egyik vagy másik IMHO
+    private final InstitutionValidatorService validatorService;
+
+    public InstitutionValidator(InstitutionValidatorService institutionValidatorService) {
+        this.validatorService = institutionValidatorService;
+    }
+
+    @Override
+    public boolean supports(Class<?> clazz) {
+        return InstitutionCreationCommand.class.equals(clazz);
+    }
+
+    @Override
+    public void validate(Object target, Errors errors) {
+        if (target != null) {
+            InstitutionCreationCommand institutionCreationCommand = (InstitutionCreationCommand) target;
+            validatorService.validateFields(institutionCreationCommand, errors);
+            if (institutionCreationCommand.getName() != null) {
+                if (validatorService.nameIsTaken(institutionCreationCommand.getName())) {
+                    errors.rejectValue("name", "name.mustBeUnique");
+                }
+            }
+        }
+    }
 }
