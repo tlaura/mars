@@ -30,6 +30,7 @@ export class MapComponent implements OnInit {
   }
 
   setCurrentLocation = () => {
+
     if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition(position => {
         this.latitude = position.coords.latitude;

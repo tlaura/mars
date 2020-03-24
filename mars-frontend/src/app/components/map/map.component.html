@@ -1,6 +1,6 @@
 <ng-container>
   <agm-map [latitude]="latitude" [longitude]="longitude"
-           [mapTypeControl]="true" [scrollwheel]="null"
+           [scrollwheel]="null"
            [zoom]="zoom"
            gestureHandling="cooperative">
     <agm-marker (markerClick)="markerClick(i)" *ngFor="let location of locations; let i = index"
