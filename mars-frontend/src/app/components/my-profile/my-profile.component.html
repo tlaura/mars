@@ -1,99 +1,119 @@
-<div *ngIf="loggedInUser" class="container">
-  <div class="row align-items-left justify-content-center">
-    <h1 style="color: black">Profil</h1>
-  </div>
-
-  <span class="glyphicon glyphicon-pencil" style="color: black"></span>
-  <button (click)='editMode=true' class="edit-button">Edit<span class="glyphicon glyphicon-pencil"></span></button>
-  <!--  <button (click)='editMode=true' class="edit-button">Edit<span class="edit-pencil fas fa-pencil-alt"></span></button>-->
-  <div class="row">
-    <div class="col-sm-12 col-md-6">
-      <label>Teljes név:</label>
-      <div (click)='editMode=true' *ngIf='!editMode' class="col-sm-9">
-        <div class="edit-pencil glyphicon glyphicon-pencil"></div>
-        <p> {{providerAccount?.name}} </p>
-      </div>
-      <div>
-        <input (focusout)="editMode=false"
-               (keydown.enter)='$event.target.blur()' *ngIf='editMode'
-               [(ngModel)]='providerAccount.name' class='text-dark' type='text'>
-      </div>
-      <br>
-
-      <label>Szolgáltatás neve:</label>
-      <div (click)='editMode=true' *ngIf='!editMode' class="col-sm-9">
-        <p> {{providerAccount?.providerServiceName}} </p>
-      </div>
-      <div>
-        <input (focusout)="editMode=false"
-               (keydown.enter)='$event.target.blur()' *ngIf='editMode'
-               [(ngModel)]='providerAccount.providerServiceName' class='text-dark' type='text'>
-      </div>
-      <br>
-
-      <label>Email cím:</label>
-      <div class="col-sm-9">
-        <p>{{providerAccount?.email}}</p>
-      </div>
-      <br>
-
-      <label>Telefon:</label>
-      <div (click)='editMode=true' *ngIf='!editMode' class="col-sm-9">
-        <p> {{providerAccount?.phone}} </p>
-      </div>
-      <div>
-        <input (focusout)="editMode=false"
-               (keydown.enter)='$event.target.blur()' *ngIf='editMode'
-               [(ngModel)]='providerAccount.phone' class='text-dark' type='text'>
-      </div>
-      <br>
-
-      <label>Cím:</label>
-      <div (click)='editMode=true' *ngIf='!editMode' class="col-sm-9">
-        <p> {{providerAccount?.zipcode}} </p>
-        <p>{{providerAccount?.city}}</p>
-        <p>{{providerAccount?.address}}</p>
-      </div>
-      <div>
-        <input (focusout)="editMode=false"
-               (keydown.enter)='$event.target.blur()' *ngIf='editMode'
-               [(ngModel)]='providerAccount.zipcode' class='text-dark' type='text'>
-      </div>
-      <div>
-        <input (focusout)="editMode=false"
-               (keydown.enter)='$event.target.blur()' *ngIf='editMode'
-               [(ngModel)]='providerAccount.city' class='text-dark' type='text'>
-      </div>
-      <div>
-        <input (focusout)="editMode=false"
-               (keydown.enter)='$event.target.blur()' *ngIf='editMode'
-               [(ngModel)]='providerAccount.address' class='text-dark' type='text'>
-      </div>
-      <br>
-
-
-      <button (click)="saveChanges()" class="submit btn btn-info rounded-pill" type="submit">
-        Mentés
-      </button>
-
+<div class="tomato-background-div">
+  <div *ngIf="loggedInUser" class="container white-block-on-tomato-div">
+    <div class="row align-items-left justify-content-center">
+      <h1 class="tomato-head">Profil</h1>
     </div>
 
-    <div class="col-sm-12 col-md-6" style="padding: 30px 0">
-      Intézmények:
-      <div *ngFor="let insitution of providerAccount?.institutionList"
-           class="card bg-light m-4">
-        <div class="card-header">
-          {{insitution?.name}}
+    <button (click)='editModeChange()' class="rounded-pill">Edit<i class="fas fa-pencil-alt"></i></button>
+    <!--  (keydown.enter)='$event.target.blur()'-->
+
+    <div class="row">
+      <div class="col-sm-12 col-md-6">
+        <label>Teljes név:</label>
+        <div *ngIf='!editMode' class="col-sm-9">
+          <p> {{providerAccount?.name}} </p>
         </div>
-        <div class="card-body">
-          {{insitution?.description}}<br>
-          ---------- <br>
-          {{insitution?.phone}}<br>
-          {{insitution?.website}}<br>
-          {{insitution?.email}}<br>
+        <div>
+          <input (keydown.enter)='editModeChange()'
+                 *ngIf='editMode'
+                 [(ngModel)]='providerAccount.name' class='text-dark' type='text'>
+          <!--        <small *ngIf="providerAccount.get('password').invalid && loginForm.get('password').touched"-->
+          <!--               class="text-danger col-sm-12 col-md-12">-->
+          <!--          A mező kitöltése közelező!-->
+          <!--        </small>-->
+        </div>
+        <br>
+
+        <label>Szolgáltatás neve:</label>
+        <div *ngIf='!editMode' class="col-sm-9">
+          <p> {{providerAccount?.providerServiceName}} </p>
+        </div>
+        <div>
+          <input (keydown.enter)='editModeChange()'
+                 *ngIf='editMode'
+                 [(ngModel)]='providerAccount.providerServiceName' class='text-dark' type='text'>
+        </div>
+        <br>
+
+        <label>Email cím:</label>
+        <div class="col-sm-9">
+          <p>{{providerAccount?.email}}</p>
+        </div>
+        <br>
+
+        <label>Telefon:</label>
+        <div (click)='editMode=true' *ngIf='!editMode' class="col-sm-9">
+          <p> {{providerAccount?.phone}} </p>
+        </div>
+        <div>
+          <input (keydown.enter)='editModeChange()'
+                 *ngIf='editMode'
+                 [(ngModel)]='providerAccount.phone' class='text-dark' type='text'>
+        </div>
+        <br>
+
+        <label>Cím:</label>
+        <div *ngIf='!editMode' class="col-sm-9">
+          <p> {{providerAccount?.zipcode}} </p>
+          <p>{{providerAccount?.city}}</p>
+          <p>{{providerAccount?.address}}</p>
+        </div>
+        <div>
+          <input (keydown.enter)='editModeChange()'
+                 *ngIf='editMode'
+                 [(ngModel)]='providerAccount.zipcode' class='text-dark' type='text'>
+        </div>
+        <div>
+          <input (keydown.enter)='editModeChange()'
+                 *ngIf='editMode'
+                 [(ngModel)]='providerAccount.city' class='text-dark' type='text'>
+        </div>
+        <div>
+          <input (keydown.enter)='editModeChange()'
+                 *ngIf='editMode'
+                 [(ngModel)]='providerAccount.address' class='text-dark' type='text'>
+        </div>
+        <br>
+
+        <label>Szolgáltatás típusai:</label>
+        <div>
+          <ul class="col-sm-9">
+            <p *ngFor="let type of providerAccount?.types">
+              {{type}}
+            </p>
+          </ul>
+        </div>
+        <br>
+
+        <label>Korcsoport:</label>
+        <div class="col-sm-9">
+          <p>{{providerAccount?.ageGroupMin}} - {{providerAccount?.ageGroupMax}}</p>
+        </div>
+        <br>
+
+        <button (click)="saveChanges()" class="submit btn btn-info rounded-pill" type="submit">
+          Mentés
+        </button>
+
+      </div>
+
+      <div class="col-sm-12 col-md-6" style="padding: 30px 0">
+        Intézmények:
+        <div *ngFor="let insitution of providerAccount?.institutionList"
+             class="card bg-light m-4">
+          <div class="card-header">
+            {{insitution?.name}}
+          </div>
+          <div class="card-body">
+            {{insitution?.description}}<br>
+            ---------- <br>
+            {{insitution?.phone}}<br>
+            {{insitution?.website}}<br>
+            {{insitution?.email}}<br>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
+  </div>
 </div>

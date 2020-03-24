@@ -39,8 +39,6 @@ public class UserController {
         } else {
             responseEntity = new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
-
         return responseEntity;
-
     }
 }
