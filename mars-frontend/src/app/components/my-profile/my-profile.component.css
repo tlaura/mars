@@ -1,0 +1,18 @@
+.text-dark {
+  border-radius: 2rem;
+}
+
+.edit-button {
+  margin-right: 120px;
+  padding: 10px 20px;
+}
+
+.profile-div {
+  padding: 30px;
+}
+
+.button-flex {
+  display: flex;
+  justify-content: flex-end;
+}
+

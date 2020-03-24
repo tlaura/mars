@@ -19,5 +19,4 @@ export class OpeningHoursComponent implements OnInit {
   ngOnInit(): void {
   }
 
-
 }

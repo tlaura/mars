@@ -12,6 +12,6 @@ export interface ProviderUserProfileDetailsModel {
   address: string;
   ageGroupMin: number;
   ageGroupMax: number;
-  institutionTypes: string[];
+  types: string[];
   institutionList: InstitutionListModel[];
 }

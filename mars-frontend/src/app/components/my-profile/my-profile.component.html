@@ -1,82 +1,134 @@
-<section class="container" *ngIf="loggedInUser">
-  <div class="row align-items-left justify-content-center">
-    <h1>Profil</h1>
-  </div>
-  <section>
-    <h4 class="display-4">{{providerAccount?.name}}</h4>
-    <hr>
-  </section>
+<div class="tomato-background-div">
+  <div *ngIf="loggedInUser" class="container white-block-on-tomato-div">
+    <div class="row align-items-left justify-content-center">
+      <h1 class="tomato-head">
+        <hr>
+        Profil
+      </h1>
+    </div>
 
-    <section class="row">
-      <section class="col-6 mb-4">
-        <dl class="row">
+    <div class="row">
+      <div class="profile-div col-sm-12 col-md-6">
 
-          <dt class="col-sm-3">
-            <p class="text-dark">Teljes név:</p>
-          </dt>
-          <dd class="col-sm-9">
-            <p class="text-dark">{{providerAccount?.name}}</p>
-          </dd>
+        <div *ngIf="!editMode" class="button-flex">
+          <button (click)='editMode=true' class="edit-button rounded-pill">
+            Edit<i class="fas fa-pencil-alt"></i></button>
+        </div>
 
-          <dt class="col-sm-3">
-            <p class="text-dark">Szolgáltatás neve:</p>
-          </dt>
-          <dd class="col-sm-9">
-            <p class="text-dark">{{providerAccount?.providerServiceName}}</p>
-          </dd>
+        <div *ngIf="editMode" class="button-flex">
+          <button (click)='cancelEdit()' class="edit-button rounded-pill">
+            Cancel
+          </button>
+        </div>
 
-          <dt class="col-sm-3">
-            <p class="text-dark">Telefon:</p>
-          </dt>
-          <dd class="col-sm-9">
-            <p class="text-dark">{{providerAccount?.phone}}</p>
-          </dd>
+        <label>Teljes név:</label>
+        <div *ngIf='!editMode' class="col-sm-9">
+          <p> {{providerAccount?.name}} </p>
+        </div>
+        <div>
+          <input
+            *ngIf='editMode'
+            [(ngModel)]='providerAccount.name' class='text-dark' type='text'>
+          <!--        <small *ngIf="providerAccount.get('password').invalid && loginForm.get('password').touched"-->
+          <!--               class="text-danger col-sm-12 col-md-12">-->
+          <!--          A mező kitöltése közelező!-->
+          <!--        </small>-->
+        </div>
+        <br>
 
-          <dt class="col-sm-3">
-            <p class="text-dark">Email:</p>
-          </dt>
-          <dd class="col-sm-9">
-            <p class="text-dark">{{providerAccount?.email}}</p>
-          </dd>
+        <label>Szolgáltatás neve:</label>
+        <div *ngIf='!editMode' class="col-sm-9">
+          <p> {{providerAccount?.providerServiceName}} </p>
+        </div>
+        <div>
+          <input
+            *ngIf='editMode'
+            [(ngModel)]='providerAccount.providerServiceName' class='text-dark' type='text'>
+        </div>
+        <br>
 
-          <dt class="col-sm-3">Cím:</dt>
-          <dd class="col-sm-9">
-            <p class="text-dark">{{providerAccount?.zipcode}}<br>
-              {{providerAccount?.city}}<br>
-              {{providerAccount?.address}}</p>
-          </dd>
+        <label>Email cím:</label>
+        <div class="col-sm-9">
+          <p>{{providerAccount?.email}}</p>
+        </div>
+        <br>
 
-          <dt class="col-sm-3">Korcsoport:</dt>
-          <dd class="col-sm-9">
-            <p class="text-dark">{{providerAccount?.ageGroupMin}} - {{providerAccount?.ageGroupMax}}</p>
-          </dd>
+        <label>Telefon:</label>
+        <div (click)='editMode=true' *ngIf='!editMode' class="col-sm-9">
+          <p> {{providerAccount?.phone}} </p>
+        </div>
+        <div>
+          <input
+            *ngIf='editMode'
+            [(ngModel)]='providerAccount.phone' class='text-dark' type='text'>
+        </div>
+        <br>
 
-          <dt class="col-sm-3">Szolgáltatás típusai:</dt>
-          <dd *ngFor="let type of providerAccount?.institutionTypes" class="col-sm-9">
-            <p class="text-dark">{{type}}<br>
-          </dd>
+        <label>Cím:</label>
+        <div *ngIf='!editMode' class="col-sm-9">
+          <p> {{providerAccount?.zipcode}} </p>
+          <p>{{providerAccount?.city}}</p>
+          <p>{{providerAccount?.address}}</p>
+        </div>
+        <div>
+          <input
+            *ngIf='editMode'
+            [(ngModel)]='providerAccount.zipcode' class='text-dark' type='text'>
+        </div>
+        <div>
+          <input
+            *ngIf='editMode'
+            [(ngModel)]='providerAccount.city' class='text-dark' type='text'>
+        </div>
+        <div>
+          <input
+            *ngIf='editMode'
+            [(ngModel)]='providerAccount.address' class='text-dark' type='text'>
+        </div>
+        <br>
 
-        </dl>
-      </section>
+        <label>Szolgáltatás típusai:</label>
+        <div>
+          <ul class="col-sm-9">
+            <p *ngFor="let type of providerAccount?.types">
+              {{type}}
+            </p>
+          </ul>
+        </div>
+        <br>
 
-      <section class="m-4 text-dark">
-          Intézmények:
-        <div class="card bg-light m-4"
-             *ngFor="let insitution of providerAccount?.institutionList">
+        <label>Korcsoport:</label>
+        <div class="col-sm-9">
+          <p>{{providerAccount?.ageGroupMin}} - {{providerAccount?.ageGroupMax}}</p>
+        </div>
+        <br>
+
+        <button (click)="saveChanges()" class="submit btn btn-info rounded-pill" type="submit">
+          Mentés
+        </button>
+
+      </div>
+
+      <div class="col-sm-12 col-md-6" style="padding: 30px 0">
+        Intézmények:
+        <div *ngFor="let insitution of providerAccount?.institutionList"
+             class="card bg-light m-4">
           <div class="card-header">
             {{insitution?.name}}
           </div>
           <div class="card-body">
             {{insitution?.description}}<br>
-            ----------
+            ---------- <br>
             {{insitution?.phone}}<br>
             {{insitution?.website}}<br>
             {{insitution?.email}}<br>
+            <div class="button-flex">
+              <button class="rounded-pill">Törlés</button>
+            </div>
           </div>
         </div>
-      </section>
-  </section>
-  <button class="submit btn btn-info rounded-pill" routerLink="edit-profile">
-    Edit Profile
-  </button>
-</section>
+      </div>
+    </div>
+
+  </div>
+</div>

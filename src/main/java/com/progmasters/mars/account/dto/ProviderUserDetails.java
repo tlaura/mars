@@ -21,6 +21,7 @@ public class ProviderUserDetails {
     private Integer ageGroupMin;
     private Integer ageGroupMax;
     private List<String> types;
+    private Boolean newsletter;
     private List<InstitutionListData> institutionList;
 
     public ProviderUserDetails(ProviderAccount providerAccount) {
@@ -35,6 +36,7 @@ public class ProviderUserDetails {
         this.address = providerAccount.getAddress();
         this.ageGroupMin = providerAccount.getAgeGroupMin();
         this.ageGroupMax = providerAccount.getAgeGroupMax();
+        this.newsletter = providerAccount.getNewsletter();
         this.types = providerAccount.getTypes().stream().map(Enum::toString).collect(Collectors.toList());
         List<Institution> institutions = providerAccount.getInstitutions();
         if (institutions != null) {
@@ -95,5 +97,9 @@ public class ProviderUserDetails {
 
     public List<String> getTypes() {
         return types;
+    }
+
+    public Boolean getNewsletter() {
+        return newsletter;
     }
 }
