@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {FormControl, FormGroup} from "@angular/forms";
+import {FormGroup, Validators} from "@angular/forms";
+import {validatorBounds} from "../../../../environments/validatorBounds";
 
 @Component({
   selector: 'app-address',
@@ -7,23 +8,16 @@ import {FormControl, FormGroup} from "@angular/forms";
   styleUrls: ['./address.component.css']
 })
 export class AddressComponent implements OnInit {
-  ZIPCODE_REGEX = '^[1-9][0-9]{3}$';
+  private ZIPCODE_MIN = validatorBounds.zipcodeMin;
+  private ZIPCODE_MAX = validatorBounds.zipcodeMax;
 
   @Input() addressFormGroup: FormGroup = new FormGroup({});
 
-  zipcode: FormControl;
-  city: FormControl;
-  address: FormControl;
-
-
   constructor() {
-    this.zipcode = new FormControl(this.addressFormGroup.get('zipcode'));
-    this.city = new FormControl(this.addressFormGroup.get('city'));
-    this.address = new FormControl(this.addressFormGroup.get('address'));
   }
 
-
   ngOnInit(): void {
+    this.addressFormGroup.get('zipcode').setValidators([Validators.min(this.ZIPCODE_MIN), Validators.max(this.ZIPCODE_MAX)])
   }
 
 }

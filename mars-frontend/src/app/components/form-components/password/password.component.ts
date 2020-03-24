@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {FormGroup} from "@angular/forms";
+import {FormGroup, Validators} from "@angular/forms";
+import {validatorBounds} from "../../../../environments/validatorBounds";
 
 @Component({
   selector: 'app-password',
@@ -7,7 +8,7 @@ import {FormGroup} from "@angular/forms";
   styleUrls: ['./password.component.css']
 })
 export class PasswordComponent implements OnInit {
-  PASSWORD_REGEX = '(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{6,15})$';
+  PASSWORD_REGEX = validatorBounds.passwordRegex;
 
   @Input()
   passwordFormGroup: FormGroup = new FormGroup({});
@@ -16,6 +17,7 @@ export class PasswordComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.passwordFormGroup.get("password").setValidators(Validators.pattern(this.PASSWORD_REGEX));
   }
 
 }

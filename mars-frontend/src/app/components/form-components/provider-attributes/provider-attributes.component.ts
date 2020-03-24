@@ -1,5 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {FormControl, FormGroup} from "@angular/forms";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {validatorBounds} from "../../../../environments/validatorBounds";
+import {InstitutionTypeModel} from "../../../models/InstitutionType.model";
 
 @Component({
   selector: 'app-provider-attributes',
@@ -7,10 +9,11 @@ import {FormControl, FormGroup} from "@angular/forms";
   styleUrls: ['./provider-attributes.component.css']
 })
 export class ProviderAttributesComponent implements OnInit {
-  NAME_REGEX = '^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.\'-]+$';
+  NAME_REGEX = validatorBounds.nameRegex;
 
   //TODO: add new type by admin
-  allType: string[] = ['diagnózis központ', 'terápia', 'fejlesztő hely', 'óvoda', 'általános iskola', 'középiskola', 'kollégium', 'munkahely', 'bentlakásos felnőtt ellátó', 'nappali foglalkoztató', 'egyéb'];
+  @Input()
+  allType: Array<InstitutionTypeModel> = [];
 
   @Input()
   providerAttributesFormGroup: FormGroup;
@@ -46,6 +49,7 @@ export class ProviderAttributesComponent implements OnInit {
       () => this.checkPassword(),
       error => console.warn(error),
     );
+    this.providerAttributesFormGroup.get('providerServiceName').setValidators([Validators.required, Validators.pattern(this.NAME_REGEX)])
   }
 
   getAgesArray(n: number) {

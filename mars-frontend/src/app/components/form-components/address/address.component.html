@@ -16,7 +16,7 @@
              type="text">
     </div>
 
-    <div *ngIf="zipcode.errors?.pattern"
+    <div *ngIf="addressFormGroup.get('zipcode').errors?.pattern"
          class="form-group col-sm-12 col-md-12 row mx-0">
       <small class="text-danger-custom">
         Érvénytelen irányítószám!

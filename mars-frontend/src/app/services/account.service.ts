@@ -12,29 +12,29 @@ import {ProviderAccountEditDataModel} from "../models/providerAccountEditData.mo
 })
 export class AccountService {
 
-  BASE_URL = environment.BASE_URL + '/api';
+  BASE_URL = environment.BASE_URL + '/api/providers/';
 
   constructor(private http: HttpClient) {
   }
 
   saveProviderAccount = (formData: ProviderAccountRegisterModel): Observable<any> => {
-    return this.http.post(this.BASE_URL + '/providers', formData);
+    return this.http.post(this.BASE_URL, formData);
   };
 
   fetchProviderAccountDetails = (username: string): Observable<ProviderUserProfileDetailsModel> => {
-    return this.http.get<ProviderUserProfileDetailsModel>(this.BASE_URL + '/providers/' + username);
+    return this.http.get<ProviderUserProfileDetailsModel>(this.BASE_URL + username);
   };
 
   getInstitutionByType = (name: string): Observable<Array<InstitutionListModel>> => {
-    return this.http.get<Array<InstitutionListModel>>(this.BASE_URL + "/providers/getInstitutionsByType?type=" + name);
+    return this.http.get<Array<InstitutionListModel>>(this.BASE_URL + "getInstitutionsByType?type=" + name);
   };
 
   fetchProviderAccountEditDetails = (loggedInUser: string) => {
-    return this.http.get(this.BASE_URL + '/providers/edit/' + loggedInUser);
+    return this.http.get(this.BASE_URL + 'edit/' + loggedInUser);
   };
 
   editProviderAccount = (data: ProviderAccountEditDataModel, loggedInUser: string): Observable<any> => {
     data.email = loggedInUser;
-    return this.http.patch(this.BASE_URL + '/providers/' + loggedInUser, data);
+    return this.http.patch(this.BASE_URL + loggedInUser, data);
   }
 }

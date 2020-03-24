@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {FormGroup} from "@angular/forms";
+import {FormGroup, Validators} from "@angular/forms";
+import {validatorBounds} from "../../../../environments/validatorBounds";
 
 @Component({
   selector: 'app-contacts',
@@ -7,18 +8,19 @@ import {FormGroup} from "@angular/forms";
   styleUrls: ['./contacts.component.css']
 })
 export class ContactsComponent implements OnInit {
-  PHONE_REGEX = '^\\+(\\d{1,2})\\D*(\\d{1,3})\\D*(\\d{3})\\D*(\\d{3,4})$';
-  WEBSITE_REGEX = '(https?:\\/\\/)?(www\\.)[-a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,4}\\b([-a-zA-Z0-9@:%_\\+.~#?&//=]*)|(https?:\\/\\/)?(www\\.)?(?!ww)[-a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,4}\\b([-a-zA-Z0-9@:%_\\+.~#?&//=]*)';
-  NAME_REGEX = '^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.\'-]+$';
+  private PHONE_REGEX = validatorBounds.phoneRegex;
+  private WEBSITE_REGEX = validatorBounds.websiteRegex;
+  private NAME_REGEX = validatorBounds.nameRegex;
 
 
   @Input() contactsFormGroup: FormGroup = new FormGroup({});
 
   constructor() {
-
   }
 
   ngOnInit(): void {
+    this.contactsFormGroup.get('phone').setValidators([Validators.required, Validators.pattern(this.PHONE_REGEX)]);
+    this.contactsFormGroup.get('website').setValidators(Validators.pattern(this.WEBSITE_REGEX));
+    this.contactsFormGroup.get('name').setValidators([Validators.required, Validators.pattern(this.NAME_REGEX)]);
   }
-
 }

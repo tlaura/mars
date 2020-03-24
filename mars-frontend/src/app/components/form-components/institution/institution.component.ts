@@ -11,25 +11,9 @@ export class InstitutionComponent implements OnInit {
     @Input()
     institutionForm: FormGroup;
 
-    @Input()
-    addressFormGroup: FormGroup;
-
-    @Input()
-    contactsFormGroup: FormGroup;
-
     constructor() {
         this.institutionForm = new FormGroup({});
 
-        this.addressFormGroup = new FormGroup({
-            zipcode: this.institutionForm.get('zipcode'),
-            city: this.institutionForm.get('city'),
-            address: this.institutionForm.get('address'),
-        });
-        this.contactsFormGroup = new FormGroup({
-            phone: this.contactsFormGroup.get('phone'),
-            website: this.contactsFormGroup.get('website'),
-            name: this.contactsFormGroup.get('name'),
-        });
     }
 
     ngOnInit(): void {

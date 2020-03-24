@@ -23,6 +23,7 @@
 
 
             <app-provider-attributes
+              [allType]="allType"
               [providerAttributesFormGroup]="registerForm"
               (isPasswordValid)="setIfPasswordIsValid($event)"
             >
