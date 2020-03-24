@@ -8,6 +8,7 @@ import com.progmasters.mars.account.dto.ProviderAccountCreationCommand;
 import com.progmasters.mars.account.dto.ProviderUserDetails;
 import com.progmasters.mars.account.dto.ProviderUserDetailsEdit;
 import com.progmasters.mars.account.repository.ProviderAccountRepository;
+import com.progmasters.mars.institution.domain.Institution;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -139,5 +140,10 @@ public class AccountService {
         providerAccount.setAgeGroupMin(providerUserDetails.getAgeGroupMin());
         providerAccount.setAgeGroupMax(providerUserDetails.getAgeGroupMax());
 //        providerAccount.setTypes(providerUserDetails.getTypes().stream().map(InstitutionType::valueOf).collect(Collectors.toList()));
+    }
+
+    public boolean deleteInstitutionOfAccountById(String loggedInUser, Long id) {
+
+
     }
 }
