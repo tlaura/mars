@@ -11,6 +11,7 @@ import {AccountService} from "../../services/account.service";
 export class MyProfileComponent implements OnInit {
 
   providerAccount: ProviderUserProfileDetailsModel;
+  accountCopy: ProviderUserProfileDetailsModel;
   loggedInUser = 'tarczi.laura@gmail.com';
   editMode = false;
   @Input() name: string;
@@ -27,8 +28,8 @@ export class MyProfileComponent implements OnInit {
     // this.loggedInUser = this.loginService.getCurrentUser()['name'];
     this.providerService.fetchProviderAccountDetails(this.loggedInUser).subscribe(
       (providerDetails: ProviderUserProfileDetailsModel) => {
-        console.log(providerDetails);
         this.providerAccount = providerDetails;
+        this.accountCopy = Object.assign({}, providerDetails);
       }, error => {
         console.warn(error)
       //  TODO - write unauthorized validation
@@ -36,15 +37,23 @@ export class MyProfileComponent implements OnInit {
     )
   }
 
+
   saveChanges = () => {
     // if(this.providerAccount.id == null) error
-    console.log(this.providerAccount);
     this.providerService.editProviderAccountDetails(this.providerAccount, this.providerAccount.id).subscribe(
       () => {
+        this.editModeChange();
         console.log("Data changes saved");
       }, error => {
         console.log(error);
       }
     );
+  };
+
+  cancelEdit = () => {
+    this.editMode = false;
+    this.providerAccount = this.accountCopy;
+    console.log(this.providerAccount);
+    console.log(this.accountCopy);
   }
 }

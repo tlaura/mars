@@ -1,7 +1,18 @@
-/*.edit-pencil {*/
-/*  display: none;*/
-/*  margin-left: 3px;*/
-/*  padding: 3px;*/
-/*  border-left: 1px solid #dcdcdc;*/
-/*}*/
+.text-dark {
+  border-radius: 2rem;
+}
+
+.edit-button {
+  margin-right: 120px;
+  padding: 10px 20px;
+}
+
+.profile-div {
+  padding: 30px;
+}
+
+.edit-div {
+  display: flex;
+  justify-content: flex-end;
+}
 
