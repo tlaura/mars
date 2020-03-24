@@ -46,7 +46,7 @@ public class ExpirationService {
 //            if (tokenExpired) { --fixed
 
             boolean tokenExpired = confirmationToken.getDate().plusHours(MAX_ELAPSED_HOURS).isBefore(LocalDateTime.now());
-            if (tokenExpired) {
+            if (!confirmationToken.isConfirmed() && tokenExpired) {
                 accountService.removeConfirmationToken(confirmationToken.getId());
                 Long userId = confirmationToken.getUser().getId();
                 accountInstitutionService.deleteAccountById(userId);
