@@ -37,7 +37,6 @@ export class MyProfileComponent implements OnInit {
     )
   }
 
-
   saveChanges = () => {
     // if(this.providerAccount.id == null) error
     this.providerService.editProviderAccountDetails(this.providerAccount, this.providerAccount.id).subscribe(
@@ -53,5 +52,15 @@ export class MyProfileComponent implements OnInit {
   cancelEdit = () => {
     this.editMode = false;
     this.providerAccount = Object.assign({}, this.accountCopy);
+  };
+
+  deleteInstitution = (id: number) => {
+    this.providerService.deleteInstitution(id).subscribe(
+      () => {
+        console.log("Institution deleted");
+      }, error => {
+        console.log(error);
+      }
+    );
   }
 }

@@ -40,6 +40,9 @@ export class AccountService {
 
   editProviderAccountDetails = (data: ProviderUserProfileDetailsModel, id: number): Observable<any> => {
     return this.http.put(this.BASE_URL + '/providers/' + id, data);
-  }
+  };
 
+  deleteInstitution(id: number) {
+    return this.http.delete(this.BASE_URL + '/delete/' + id);
+  }
 }

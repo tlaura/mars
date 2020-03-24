@@ -123,7 +123,7 @@
             {{insitution?.website}}<br>
             {{insitution?.email}}<br>
             <div class="button-flex">
-              <button class="rounded-pill">Törlés</button>
+              <button (click)="deleteInstitution(insitution.id)" class="rounded-pill">Törlés</button>
             </div>
           </div>
         </div>
