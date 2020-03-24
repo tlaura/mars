@@ -1,67 +1,67 @@
-<div class="row mx-0">
-  <div class="form-group col-sm-12 col-md-6">
-    <app-password (passwordEmitter)="setPassword($event)"></app-password>
+<form [formGroup]="providerAttributesFormGroup">
+  <div class="row mx-0">
+    <div class="form-group col-sm-12 col-md-6">
+      <app-password [passwordFormGroup]="providerAttributesFormGroup"></app-password>
+    </div>
+    <div class="form-group col-sm-12 col-md-6">
+      <app-password [passwordFormGroup]="passwordAgainFormGroup"></app-password>
+    </div>
   </div>
-  <div class="form-group col-sm-12 col-md-6">
-    <app-password (passwordEmitter)="setPasswordAgain($event)"></app-password>
-  </div>
-</div>
 
 
-<div class="row m-0 col-sm-12 col-md-12 mb-2">
-  <small *ngIf="!passwordMatch"
-         class="text-danger-custom">
-    A két jelszónak meg kell egyeznie!
-  </small>
-</div>
-
-
-<div class="form-group col-sm-12 col-md-8">
-  <label for="providerServiceName">Szolgáltatás neve*:</label>
-  <input class="form-control rounded-pill"
-         (focusout)="emitProviderServiceName()"
-         [formControl]="providerServiceName"
-         id="providerServiceName"
-         type="text">
-  <div *ngIf="providerServiceName.invalid && providerServiceName.touched">
-    <small *ngIf="providerServiceName.errors?.pattern"
-           class="text-danger-custom">
-      Érvénytelen név!
+  <div class="row m-0 col-sm-12 col-md-12 mb-2">
+    <small
+      *ngIf="providerAttributesFormGroup.get('password').invalid && providerAttributesFormGroup.get('password').touched"
+      class="text-danger-custom">
+      A két jelszónak meg kell egyeznie!
     </small>
   </div>
-</div>
 
-<div class="form-group col-sm-12 col-md-8">
-  <label for="types">Szolgáltatás típusa:</label>
-  <select class="form-control mdb-select md-form select-tomato"
-          (focusout)="emitTypes()"
-          [formControl]="types"
-          id="types"
-          multiple
-          name="types">
-    <option *ngFor="let type of allType" value="{{type}}">{{type}}</option>
-  </select>
-</div>
 
-<div class="row m-0">
-  <div class="form-group col-sm-12 col-md-6 col-lg-4">
-    <label for="ageGroupMin">Minimum kor:</label>
-    <select class="form-control rounded-pill select-tomato"
-            (focusout)="emitAgeGroupMin()"
-            [formControl]="ageGroupMin"
-            id="ageGroupMin"
-            name="ageGroupMin">
-      <option *ngFor="let age of getAgesArray(100), let i = index" value="{{i}}">{{i}}</option>
+  <div class="form-group col-sm-12 col-md-8">
+    <label for="providerServiceName">Szolgáltatás neve*:</label>
+    <input class="form-control rounded-pill"
+           formControlName="providerServiceName"
+           id="providerServiceName"
+           type="text">
+    <div
+      *ngIf="providerAttributesFormGroup.get('providerServiceName').invalid && providerAttributesFormGroup.get('providerServiceName').touched">
+      <small *ngIf="providerAttributesFormGroup.get('providerServiceName').errors?.pattern"
+             class="text-danger-custom">
+        Érvénytelen név!
+      </small>
+    </div>
+  </div>
+
+  <div class="form-group col-sm-12 col-md-8">
+    <label for="types">Szolgáltatás típusa:</label>
+    <select class="form-control mdb-select md-form select-tomato"
+            formControlName="types"
+            id="types"
+            multiple
+            name="types">
+      <option *ngFor="let type of allType" value="{{type}}">{{type}}</option>
     </select>
   </div>
-  <div class="form-group col-sm-12 col-md-6 col-lg-4">
-    <label for="ageGroupMax">Maximum kor:</label>
-    <select class="form-control rounded-pill select-tomato"
-            (focusout)="emitAgeGroupMax()"
-            [formControl]="ageGroupMax"
-            id="ageGroupMax"
-            name="ageGroupMax">
-      <option *ngFor="let age of getAgesArray(100), let i = index" value="{{i}}">{{i}}</option>
-    </select>
+
+  <div class="row m-0">
+    <div class="form-group col-sm-12 col-md-6 col-lg-4">
+      <label for="ageGroupMin">Minimum kor:</label>
+      <select class="form-control rounded-pill select-tomato"
+              formControlName="ageGroupMin"
+              id="ageGroupMin"
+              name="ageGroupMin">
+        <option *ngFor="let age of getAgesArray(100), let i = index" value="{{i}}">{{i}}</option>
+      </select>
+    </div>
+    <div class="form-group col-sm-12 col-md-6 col-lg-4">
+      <label for="ageGroupMax">Maximum kor:</label>
+      <select class="form-control rounded-pill select-tomato"
+              formControlName="ageGroupMax"
+              id="ageGroupMax"
+              name="ageGroupMax">
+        <option *ngFor="let age of getAgesArray(100), let i = index" value="{{i}}">{{i}}</option>
+      </select>
+    </div>
   </div>
-</div>
+</form>

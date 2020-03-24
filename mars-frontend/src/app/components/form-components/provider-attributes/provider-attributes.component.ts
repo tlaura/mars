@@ -1,5 +1,5 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {Form, FormControl, Validators} from "@angular/forms";
+import {Component, Input, OnInit} from '@angular/core';
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-provider-attributes',
@@ -12,79 +12,46 @@ export class ProviderAttributesComponent implements OnInit {
   //TODO: add new type by admin
   allType: string[] = ['diagnózis központ', 'terápia', 'fejlesztő hely', 'óvoda', 'általános iskola', 'középiskola', 'kollégium', 'munkahely', 'bentlakásos felnőtt ellátó', 'nappali foglalkoztató', 'egyéb'];
 
-  @Output()
-  passwordEmitter: EventEmitter<string>;
-  @Output()
-  providerServiceNameEmitter: EventEmitter<string>;
-  @Output()
-  ageGroupMinEmitter: EventEmitter<string>;
-  @Output()
-  ageGroupMaxEmitter: EventEmitter<string>;
-  @Output()
-  typesEmitter: EventEmitter<string[]>;
+  @Input()
+  providerAttributesFormGroup: FormGroup;
+
+  passwordAgainFormGroup: FormGroup;
 
   password: FormControl;
-  passwordAgain: FormControl;
   passwordMatch: boolean;
 
-  providerServiceName: FormControl;
-  ageGroupMin: FormControl;
-  ageGroupMax: FormControl;
-  types: FormControl;
-
   constructor() {
-    this.password = new FormControl('');
-    this.providerServiceName = new FormControl('', Validators.pattern(this.NAME_REGEX));
-    this.ageGroupMax = new FormControl(99, [Validators.min(0), Validators.max(99)]);
-    this.ageGroupMin = new FormControl(0, [Validators.min(0), Validators.max(99)]);
-    this.types = new FormControl(null, Validators.required);
-    this.passwordAgain = new FormControl('');
-    this.passwordEmitter = new EventEmitter<string>();
-    this.providerServiceNameEmitter = new EventEmitter<string>();
-    this.ageGroupMinEmitter = new EventEmitter<string>();
-    this.ageGroupMaxEmitter = new EventEmitter<string>();
-    this.typesEmitter = new EventEmitter<string[]>();
+    this.providerAttributesFormGroup = new FormGroup({});
+    this.passwordAgainFormGroup = new FormGroup({
+      password: new FormControl(''),
+    });
     this.passwordMatch = true;
   }
 
-  ngOnInit(): void {
-  }
-
-  checkPasswords() {
-    this.passwordMatch = this.password.value == this.passwordAgain.value;
-    if (this.passwordMatch) {
-      this.passwordEmitter.emit(this.password.value);
+  validatePassword = (formControl: FormControl) => {
+    let isValid: boolean = formControl.value == this.providerAttributesFormGroup.get('password').value;
+    debugger;
+    return isValid ? null : {
+      'validatePassword': true
     }
-  }
+  };
 
-  setPassword(password: string) {
-    this.password.setValue(password);
-    this.checkPasswords();
+  ngOnInit(): void {
+    this.providerAttributesFormGroup.get('password').setValidators([this.validatePassword, Validators.required]);
+    this.passwordAgainFormGroup.get('password').valueChanges.subscribe(
+      () => this.updateValidator(),
+      error => console.warn(error),
+      () => console.log("validity rechecked")
+    );
   }
-
-  setPasswordAgain(passwordAgain: string) {
-    this.passwordAgain.setValue(passwordAgain);
-    this.checkPasswords();
-  }
-
-  emitProviderServiceName() {
-    this.providerServiceNameEmitter.emit(this.providerServiceName.value);
-  }
-
-  emitAgeGroupMin() {
-    this.ageGroupMinEmitter.emit(this.ageGroupMin.value);
-  }
-
-  emitAgeGroupMax() {
-    this.ageGroupMaxEmitter.emit(this.ageGroupMax.value);
-  }
-
-  emitTypes() {
-    this.typesEmitter.emit(this.types.value);
-  }
-
 
   getAgesArray(n: number) {
     return Array(n);
+  }
+
+  updateValidator() {
+    this.providerAttributesFormGroup.get('password').setValidators([this.validatePassword, Validators.required]);
+    this.providerAttributesFormGroup.updateValueAndValidity();
+    debugger;
   }
 }

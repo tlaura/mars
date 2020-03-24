@@ -1,5 +1,5 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {FormControl, Validators} from "@angular/forms";
+import {Component, Input, OnInit} from '@angular/core';
+import {FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'app-password',
@@ -9,21 +9,13 @@ import {FormControl, Validators} from "@angular/forms";
 export class PasswordComponent implements OnInit {
   PASSWORD_REGEX = '(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{6,15})$';
 
-  @Output()
-  passwordEmitter: EventEmitter<string>;
-
-  password: FormControl;
-
+  @Input()
+  passwordFormGroup: FormGroup = new FormGroup({});
 
   constructor() {
-    this.password = new FormControl('', Validators.pattern(this.PASSWORD_REGEX));
-    this.passwordEmitter = new EventEmitter<string>();
   }
 
   ngOnInit(): void {
   }
 
-  emitPassword() {
-    this.passwordEmitter.emit(this.password.value);
-  }
 }

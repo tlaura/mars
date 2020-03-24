@@ -16,12 +16,16 @@ export class RegisterComponent implements OnInit {
   haveProviderCustomAddress: boolean = false;
   registerForm: FormGroup;
 
+  addressFormGroup: FormGroup;
+  contactsFormGroup: FormGroup;
+  providerAttributesFormGroup: FormGroup;
+
   constructor(private accountService: AccountService, private router: Router) {
     this.chooseProviderUser();
     this.registerForm = new FormGroup(
       {
         'providerServiceName': new FormControl('', Validators.required),
-        'password': new FormControl('', Validators.required),
+        'password': new FormControl(''),
         'ageGroupMin': new FormControl(0),
         'ageGroupMax': new FormControl(99),
         'types': new FormControl(null),
@@ -40,7 +44,25 @@ export class RegisterComponent implements OnInit {
         'newsletter': new FormControl(false),
         'termsAndConditions': new FormControl(false, Validators.requiredTrue)
       }
-    )
+    );
+    this.addressFormGroup = new FormGroup({
+      zipcode: this.registerForm.get('zipcode'),
+      city: this.registerForm.get('city'),
+      address: this.registerForm.get('address'),
+    });
+
+    this.contactsFormGroup = new FormGroup({
+      phone: this.registerForm.get('phone'),
+      website: this.registerForm.get('website'),
+      name: this.registerForm.get('name'),
+    });
+    this.providerAttributesFormGroup = new FormGroup({
+      providerServiceName: this.registerForm.get('providerServiceName'),
+      password: this.registerForm.get('password'),
+      ageGroupMin: this.registerForm.get('ageGroupMin'),
+      ageGroupMax: this.registerForm.get('ageGroupMax'),
+      types: this.registerForm.get('types'),
+    });
   }
 
   ngOnInit() {

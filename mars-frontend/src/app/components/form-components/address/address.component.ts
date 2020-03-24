@@ -1,5 +1,5 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {FormControl, Validators} from "@angular/forms";
+import {Component, Input, OnInit} from '@angular/core';
+import {FormControl, FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'app-address',
@@ -9,13 +9,7 @@ import {FormControl, Validators} from "@angular/forms";
 export class AddressComponent implements OnInit {
   ZIPCODE_REGEX = '^[1-9][0-9]{3}$';
 
-  @Output()
-  zipcodeEmitter: EventEmitter<number>;
-  @Output()
-  cityEmitter: EventEmitter<string>;
-  @Output()
-  addressEmitter: EventEmitter<string>;
-
+  @Input() addressFormGroup: FormGroup = new FormGroup({});
 
   zipcode: FormControl;
   city: FormControl;
@@ -23,28 +17,13 @@ export class AddressComponent implements OnInit {
 
 
   constructor() {
-    this.zipcode = new FormControl(null, [Validators.pattern(this.ZIPCODE_REGEX)]);
-    this.city = new FormControl('');
-    this.address = new FormControl('');
-    this.zipcodeEmitter = new EventEmitter<number>();
-    this.cityEmitter = new EventEmitter<string>();
-    this.addressEmitter = new EventEmitter<string>();
+    this.zipcode = new FormControl(this.addressFormGroup.get('zipcode'));
+    this.city = new FormControl(this.addressFormGroup.get('city'));
+    this.address = new FormControl(this.addressFormGroup.get('address'));
   }
 
 
   ngOnInit(): void {
-  }
-
-  emitZipcode() {
-    this.zipcodeEmitter.emit(this.zipcode.value)
-  }
-
-  emitCity() {
-    this.cityEmitter.emit(this.city.value);
-  }
-
-  emitAddress() {
-    this.addressEmitter.emit(this.address.value);
   }
 
 }

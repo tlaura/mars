@@ -18,19 +18,12 @@
         <div class="row mx-0">
           <div class="col-sm-12 col-md-6 px-0">
             <app-contacts
-              (emailEmitter)="setEmail($event)"
-              (nameEmitter)="setName($event)"
-              (phoneEmitter)="setPhone($event)"
-              (websiteEmitter)="setWebsite($event)"
+              [contactsFormGroup]="registerForm"
             ></app-contacts>
 
 
             <app-provider-attributes
-              (ageGroupMaxEmitter)="setAgeGroupMax($event)"
-              (ageGroupMinEmitter)="setAgeGroupMin($event)"
-              (passwordEmitter)="setPassword($event)"
-              (providerServiceNameEmitter)="setProviderServiceName($event)"
-              (typesEmitter)="setTypes($event)"
+              [providerAttributesFormGroup]="registerForm"
             >
             </app-provider-attributes>
 
@@ -50,9 +43,7 @@
             </div>
           </div>
           <div class="col-sm-12 col-md-6 px-0">
-            <app-address (addressEmitter)="setAddress($event)"
-                         (cityEmitter)="setCity($event)"
-                         (zipcodeEmitter)="setZipcode($event)"
+            <app-address [addressFormGroup]="addressFormGroup"
                          *ngIf="haveProviderCustomAddress"
             ></app-address>
           </div>
