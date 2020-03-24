@@ -54,16 +54,15 @@
 
     <div class="col-sm-12 col-md-6">
 
-      <div *ngFor="let array of getOpeningHours().controls;let i = index;" class="row m-0">
+      <div *ngFor="let array of getOpeningHours().controls;let i = index;" class="form-group row mx-0">
         <div class="col-sm-11">
           <app-opening-hours [openingHours]="array">
           </app-opening-hours>
         </div>
-
-        <div class="col-sm-1">
+        <div class="col-sm-1 p-0">
           <button (click)="removeOpeningHours(i)"
-                  class="btn btn-sm btn-outline-danger delete rounded-pill">
-            X
+                  class="btn rounded-pill p-0">
+            <i class="fa fa-trash fa-lg"></i>
           </button>
         </div>
       </div>

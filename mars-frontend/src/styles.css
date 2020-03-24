@@ -58,7 +58,6 @@ html * {
 
 .white-block-on-tomato-div select {
   border: 1px solid tomato;
-  color: tomato;
   outline: 0;
 }
 
@@ -94,7 +93,6 @@ html * {
 
 .blue-block-on-white-div select {
   border: 1px solid cornflowerblue !important;
-  color: cornflowerblue !important;
   outline: 0;
 }
 
@@ -133,6 +131,12 @@ h1, h2, h3, h4, h5, h6 {
 
 label {
   color: tomato;
+}
+
+textarea {
+  border: 1px solid tomato;
+  outline: 0;
+  box-shadow: none !important;
 }
 
 hr {
