@@ -55,7 +55,6 @@ public class AccountService {
         return providerAccountRepository.findByType(institutionType);
     }
 
-
     ProviderAccount findById(Long id) {
         return providerAccountRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("No account found by given id:\t" + id));
     }
@@ -63,7 +62,6 @@ public class AccountService {
     ProviderAccount findByEmail(String email) {
         return providerAccountRepository.findByEmail(email).orElseThrow(() -> new EntityNotFoundException("No account found by given email:\t" + email));
     }
-
 
     public ProviderUserDetailsEdit getProviderAccountEditDetailsByEmail(String loggedInUserEmail) {
         return new ProviderUserDetailsEdit(findByEmail(loggedInUserEmail));
@@ -101,11 +99,9 @@ public class AccountService {
         return confirmationTokenRepository.findAll();
     }
 
-
     public void removeConfirmationToken(Long id) {
         confirmationTokenRepository.deleteById(id);
     }
-
 
     public void confirmUserToken(String token) {
         ConfirmationToken userToken = confirmationTokenRepository.findByToken(token);
