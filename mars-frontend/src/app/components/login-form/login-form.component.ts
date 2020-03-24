@@ -19,6 +19,11 @@ export class LoginFormComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.loginService.loggedIn$.subscribe((userLoggedIn) => {
+      if (userLoggedIn) {
+        this.router.navigate(['']);
+      }
+    });
     this.loginForm = new FormGroup({
         'userName': new FormControl('', Validators.required),
         'password': new FormControl('', Validators.required)
