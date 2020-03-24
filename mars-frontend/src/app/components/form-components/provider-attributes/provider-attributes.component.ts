@@ -1,5 +1,5 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {FormControl, FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'app-provider-attributes',
@@ -15,6 +15,9 @@ export class ProviderAttributesComponent implements OnInit {
   @Input()
   providerAttributesFormGroup: FormGroup;
 
+  @Output()
+  isPasswordValid: EventEmitter<boolean> = new EventEmitter<boolean>();
+
   passwordAgainFormGroup: FormGroup;
 
   password: FormControl;
@@ -28,20 +31,20 @@ export class ProviderAttributesComponent implements OnInit {
     this.passwordMatch = true;
   }
 
-  validatePassword = (formControl: FormControl) => {
-    let isValid: boolean = formControl.value == this.providerAttributesFormGroup.get('password').value;
-    debugger;
-    return isValid ? null : {
-      'validatePassword': true
-    }
+  checkPassword = (): boolean => {
+    let isPasswordValid: boolean = this.providerAttributesFormGroup.get('password').value === this.passwordAgainFormGroup.get('password').value;
+    this.isPasswordValid.emit(isPasswordValid);
+    return isPasswordValid;
   };
 
   ngOnInit(): void {
-    this.providerAttributesFormGroup.get('password').setValidators([this.validatePassword, Validators.required]);
     this.passwordAgainFormGroup.get('password').valueChanges.subscribe(
-      () => this.updateValidator(),
+      () => this.checkPassword(),
       error => console.warn(error),
-      () => console.log("validity rechecked")
+    );
+    this.providerAttributesFormGroup.get('password').valueChanges.subscribe(
+      () => this.checkPassword(),
+      error => console.warn(error),
     );
   }
 
@@ -49,9 +52,4 @@ export class ProviderAttributesComponent implements OnInit {
     return Array(n);
   }
 
-  updateValidator() {
-    this.providerAttributesFormGroup.get('password').setValidators([this.validatePassword, Validators.required]);
-    this.providerAttributesFormGroup.updateValueAndValidity();
-    debugger;
-  }
 }

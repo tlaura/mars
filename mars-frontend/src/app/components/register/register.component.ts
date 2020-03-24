@@ -20,6 +20,8 @@ export class RegisterComponent implements OnInit {
   contactsFormGroup: FormGroup;
   providerAttributesFormGroup: FormGroup;
 
+  isPasswordValid: boolean = false;
+
   constructor(private accountService: AccountService, private router: Router) {
     this.chooseProviderUser();
     this.registerForm = new FormGroup(
@@ -70,7 +72,7 @@ export class RegisterComponent implements OnInit {
   }
 
   submit() {
-    if (!this.isNormalUser) {
+    if (!this.isNormalUser && this.isPasswordValid) {
       this.registerForm.markAllAsTouched();
       const formData: ProviderAccountRegisterModel = this.registerForm.value;
       this.accountService.saveProviderAccount(formData).subscribe(
@@ -172,5 +174,9 @@ export class RegisterComponent implements OnInit {
   getInstitutions() {
     return this.registerForm.get('institutions') as FormArray;
   }
+
+  setIfPasswordIsValid = (isValid: boolean) => {
+    this.isPasswordValid = isValid;
+  };
 
 }
