@@ -186,3 +186,7 @@ select#types {
 .register-div select#types::-webkit-scrollbar-thumb {
   background: tomato;
 }
+
+.delete-white {
+  color: white;
+}
