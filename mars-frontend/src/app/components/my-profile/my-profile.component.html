@@ -3,11 +3,14 @@
     <h1 style="color: black">Profil</h1>
   </div>
 
-
+  <span class="glyphicon glyphicon-pencil" style="color: black"></span>
+  <button (click)='editMode=true' class="edit-button">Edit<span class="glyphicon glyphicon-pencil"></span></button>
+  <!--  <button (click)='editMode=true' class="edit-button">Edit<span class="edit-pencil fas fa-pencil-alt"></span></button>-->
   <div class="row">
     <div class="col-sm-12 col-md-6">
       <label>Teljes név:</label>
       <div (click)='editMode=true' *ngIf='!editMode' class="col-sm-9">
+        <div class="edit-pencil glyphicon glyphicon-pencil"></div>
         <p> {{providerAccount?.name}} </p>
       </div>
       <div>
@@ -84,7 +87,7 @@
         </div>
         <div class="card-body">
           {{insitution?.description}}<br>
-          ----------
+          ---------- <br>
           {{insitution?.phone}}<br>
           {{insitution?.website}}<br>
           {{insitution?.email}}<br>
@@ -92,4 +95,5 @@
       </div>
     </div>
   </div>
+
 </div>
