@@ -1,5 +1,6 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {FormControl, Validators} from "@angular/forms";
+import {Component, Input, OnInit} from '@angular/core';
+import {FormGroup, Validators} from "@angular/forms";
+import {validatorBounds} from "../../../../environments/validatorBounds";
 
 @Component({
   selector: 'app-address',
@@ -7,44 +8,16 @@ import {FormControl, Validators} from "@angular/forms";
   styleUrls: ['./address.component.css']
 })
 export class AddressComponent implements OnInit {
-  ZIPCODE_REGEX = '^[1-9][0-9]{3}$';
+  private ZIPCODE_MIN = validatorBounds.zipcodeMin;
+  private ZIPCODE_MAX = validatorBounds.zipcodeMax;
 
-  @Output()
-  zipcodeEmitter: EventEmitter<number>;
-  @Output()
-  cityEmitter: EventEmitter<string>;
-  @Output()
-  addressEmitter: EventEmitter<string>;
-
-
-  zipcode: FormControl;
-  city: FormControl;
-  address: FormControl;
-
+  @Input() addressFormGroup: FormGroup = new FormGroup({});
 
   constructor() {
-    this.zipcode = new FormControl(null, [Validators.pattern(this.ZIPCODE_REGEX)]);
-    this.city = new FormControl('');
-    this.address = new FormControl('');
-    this.zipcodeEmitter = new EventEmitter<number>();
-    this.cityEmitter = new EventEmitter<string>();
-    this.addressEmitter = new EventEmitter<string>();
   }
-
 
   ngOnInit(): void {
-  }
-
-  emitZipcode() {
-    this.zipcodeEmitter.emit(this.zipcode.value)
-  }
-
-  emitCity() {
-    this.cityEmitter.emit(this.city.value);
-  }
-
-  emitAddress() {
-    this.addressEmitter.emit(this.address.value);
+    this.addressFormGroup.get('zipcode').setValidators([Validators.min(this.ZIPCODE_MIN), Validators.max(this.ZIPCODE_MAX)])
   }
 
 }

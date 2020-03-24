@@ -39,9 +39,14 @@ export class MapComponent implements OnInit {
     }
   };
 
-  markerClick = (id: number) => {
+  markerClick = (index: number) => {
+    let id: number = this.locations[index].id;
     this.institutionService.getInstitutionDetail(id).subscribe(
-      institutionDetail => this.institutionDetail = institutionDetail,
+      institutionDetail => {
+        this.institutionDetail = institutionDetail;
+        this.latitude = this.locations[index].latitude;
+        this.longitude = this.locations[index].longitude;
+      },
       error => console.warn(error),
       () => {
         this.show = true;

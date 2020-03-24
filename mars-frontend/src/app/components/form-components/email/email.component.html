@@ -1,8 +1,9 @@
-<label for="email">Email cím*:</label>
-<input (change)="emitEmail()" [formControl]="email" class="form-control rounded-pill" id="email" type="text">
-<div *ngIf="email.errors?.pattern">
-  <small class="text-danger-custom">
-    Érvénytelen email cím!
-  </small>
-</div>
-
+<form [formGroup]="emailFormGroup">
+  <label for="email">Email cím*:</label>
+  <input class="form-control rounded-pill" formControlName="email" id="email" type="text">
+  <div *ngIf="emailFormGroup.get('email').errors?.pattern">
+    <small class="text-danger-custom">
+      Érvénytelen email cím!
+    </small>
+  </div>
+</form>

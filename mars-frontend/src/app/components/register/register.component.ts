@@ -4,6 +4,9 @@ import {AccountService} from "../../services/account.service";
 import {Router} from "@angular/router";
 import {ProviderAccountRegisterModel} from "../../models/providerAccountRegisterModel";
 import {validationHandler} from "../../utils/validationHandler";
+import {validatorBounds} from "../../../environments/validatorBounds";
+import {InstitutionTypeModel} from "../../models/InstitutionType.model";
+import {InstitutionService} from "../../services/institution.service";
 
 
 @Component({
@@ -14,16 +17,20 @@ import {validationHandler} from "../../utils/validationHandler";
 export class RegisterComponent implements OnInit {
   isNormalUser: boolean = false;
   haveProviderCustomAddress: boolean = false;
+  isPasswordValid: boolean = false;
   registerForm: FormGroup;
+  addressFormGroup: FormGroup;
 
-  constructor(private accountService: AccountService, private router: Router) {
+  allType: Array<InstitutionTypeModel> = [];
+
+  constructor(private accountService: AccountService, private router: Router, private institutionService: InstitutionService) {
     this.chooseProviderUser();
     this.registerForm = new FormGroup(
       {
         'providerServiceName': new FormControl('', Validators.required),
-        'password': new FormControl('', Validators.required),
-        'ageGroupMin': new FormControl(0),
-        'ageGroupMax': new FormControl(99),
+        'password': new FormControl(''),
+        'ageGroupMin': new FormControl(validatorBounds.ageGroupMin),
+        'ageGroupMax': new FormControl(validatorBounds.ageGroupMax),
         'types': new FormControl(null),
 
         'name': new FormControl('', Validators.required),
@@ -40,15 +47,22 @@ export class RegisterComponent implements OnInit {
         'newsletter': new FormControl(false),
         'termsAndConditions': new FormControl(false, Validators.requiredTrue)
       }
-    )
+    );
   }
 
   ngOnInit() {
-
+    this.institutionService.getInstitutionTypes().subscribe(
+      value => this.allType = value,
+      error => console.warn(error)
+    )
   }
 
+  private loadTypes = (): void => {
+
+  };
+
   submit() {
-    if (!this.isNormalUser) {
+    if (!this.isNormalUser && this.isPasswordValid) {
       this.registerForm.markAllAsTouched();
       const formData: ProviderAccountRegisterModel = this.registerForm.value;
       this.accountService.saveProviderAccount(formData).subscribe(
@@ -99,56 +113,12 @@ export class RegisterComponent implements OnInit {
     }
   }
 
-  setEmail(email: string) {
-    this.registerForm.get('email').setValue(email);
-  }
-
-  setPhone(phone: string) {
-    this.registerForm.get('phone').setValue(phone);
-  }
-
-  setWebsite(website: string) {
-    this.registerForm.get('website').setValue(website);
-  }
-
-  setName(name: string) {
-    this.registerForm.get('name').setValue(name);
-  }
-
-  setZipcode(zipcode: number) {
-    this.registerForm.get('zipcode').setValue(zipcode);
-  }
-
-  setCity(city: string) {
-    this.registerForm.get('city').setValue(city);
-  }
-
-  setAddress(address: string) {
-    this.registerForm.get('address').setValue(address);
-  }
-
-  setPassword(password: string) {
-    this.registerForm.get('password').setValue(password);
-  }
-
-  setProviderServiceName(providerServiceName: string) {
-    this.registerForm.get('providerServiceName').setValue(providerServiceName);
-  }
-
-  setAgeGroupMax(ageGroupMax: string) {
-    this.registerForm.get('ageGroupMax').setValue(ageGroupMax);
-  }
-
-  setAgeGroupMin(ageGroupMin: string) {
-    this.registerForm.get('ageGroupMin').setValue(ageGroupMin);
-  }
-
-  setTypes(types: string[]) {
-    this.registerForm.get('types').setValue(types);
-  }
-
   getInstitutions() {
     return this.registerForm.get('institutions') as FormArray;
   }
+
+  setIfPasswordIsValid = (isValid: boolean) => {
+    this.isPasswordValid = isValid;
+  };
 
 }

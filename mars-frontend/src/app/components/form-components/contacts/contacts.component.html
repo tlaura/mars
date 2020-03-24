@@ -1,48 +1,50 @@
-<div class="row m-0">
-  <div class="form-group col-sm-12 col-md-6">
-    <label for="name">Név*:</label>
-    <input (change)="emitName()"
-           [formControl]="name"
-           class="form-control rounded-pill"
-           id="name"
-           type="text">
-    <div *ngIf="name.errors?.pattern">
-      <small class="text-danger-custom">
-        Érvénytelen név!
-      </small>
+<form [formGroup]="contactsFormGroup">
+  <div class="row m-0">
+    <div class="form-group col-sm-12 col-md-6">
+      <label for="name">Név*:</label>
+      <input
+        class="form-control rounded-pill"
+        formControlName="name"
+        id="name"
+        type="text">
+      <div *ngIf="contactsFormGroup?.get('name').errors?.pattern">
+        <small class="text-danger-custom">
+          Érvénytelen név!
+        </small>
+      </div>
     </div>
-  </div>
 
-  <div class="form-group col-sm-12 col-md-6">
-    <app-email (emailEmitter)="emitEmail($event)"></app-email>
-  </div>
-
-  <div class="form-group col-sm-12 col-md-6 ">
-    <label for="phone">Telefonszám*:</label>
-    <input (change)="emitPhone()"
-           [formControl]="phone"
-           class="form-control rounded-pill"
-           id="phone" placeholder="+36-XX-XXX-XXXX"
-           type="text">
-    <div *ngIf="phone.errors?.pattern">
-      <small class="text-danger-custom">
-        Érvénytelen telefonszám!
-      </small>
+    <div class="form-group col-sm-12 col-md-6">
+      <app-email [emailFormGroup]="contactsFormGroup"></app-email>
     </div>
-  </div>
 
-  <div class="form-group col-sm-12 col-md-6 ">
-    <label for="website">Weboldal:</label>
-    <input (change)="emitWebsite()"
-           [formControl]="website"
-           class="form-control rounded-pill"
-           id="website"
-           type="text">
-    <div *ngIf="website.errors?.pattern">
-      <small class="text-danger-custom">
-        Érvénytelen weboldal!
-      </small>
+    <div class="form-group col-sm-12 col-md-6 ">
+      <label for="phone">Telefonszám*:</label>
+      <input
+        class="form-control rounded-pill"
+        formControlName="phone"
+        id="phone" placeholder="+36-XX-XXX-XXXX"
+        type="text">
+      <div *ngIf="contactsFormGroup?.get('phone').errors?.pattern">
+        <small class="text-danger-custom">
+          Érvénytelen telefonszám!
+        </small>
+      </div>
     </div>
-  </div>
 
-</div>
+    <div class="form-group col-sm-12 col-md-6 ">
+      <label for="website">Weboldal:</label>
+      <input
+        class="form-control rounded-pill"
+        formControlName="website"
+        id="website"
+        type="text">
+      <div *ngIf="contactsFormGroup?.get('website').errors?.pattern">
+        <small class="text-danger-custom">
+          Érvénytelen weboldal!
+        </small>
+      </div>
+    </div>
+
+  </div>
+</form>
