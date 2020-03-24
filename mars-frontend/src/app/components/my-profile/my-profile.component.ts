@@ -12,7 +12,7 @@ export class MyProfileComponent implements OnInit {
 
   providerAccount: ProviderUserProfileDetailsModel;
   accountCopy: ProviderUserProfileDetailsModel;
-  loggedInUser = 'tarczi.laura@gmail.com';
+  loggedInUser;
   editMode = false;
   @Input() name: string;
   @Output() focusOut: EventEmitter<any> = new EventEmitter<any>();
@@ -25,7 +25,7 @@ export class MyProfileComponent implements OnInit {
   };
 
   ngOnInit(): void {
-    // this.loggedInUser = this.loginService.getCurrentUser()['name'];
+    this.loggedInUser = this.loginService.getCurrentUser()['name'];
     this.providerService.fetchProviderAccountDetails(this.loggedInUser).subscribe(
       (providerDetails: ProviderUserProfileDetailsModel) => {
         this.providerAccount = providerDetails;
@@ -52,8 +52,6 @@ export class MyProfileComponent implements OnInit {
 
   cancelEdit = () => {
     this.editMode = false;
-    this.providerAccount = this.accountCopy;
-    console.log(this.providerAccount);
-    console.log(this.accountCopy);
+    this.providerAccount = Object.assign({}, this.accountCopy);
   }
 }
