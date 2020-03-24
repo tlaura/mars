@@ -10,12 +10,12 @@
     <div class="row">
       <div class="profile-div col-sm-12 col-md-6">
 
-        <div *ngIf="!editMode" class="edit-div">
+        <div *ngIf="!editMode" class="button-flex">
           <button (click)='editMode=true' class="edit-button rounded-pill">
             Edit<i class="fas fa-pencil-alt"></i></button>
         </div>
 
-        <div *ngIf="editMode" class="edit-div">
+        <div *ngIf="editMode" class="button-flex">
           <button (click)='cancelEdit()' class="edit-button rounded-pill">
             Cancel
           </button>
@@ -122,7 +122,7 @@
             {{insitution?.phone}}<br>
             {{insitution?.website}}<br>
             {{insitution?.email}}<br>
-            <div>
+            <div class="button-flex">
               <button class="rounded-pill">Törlés</button>
             </div>
           </div>
