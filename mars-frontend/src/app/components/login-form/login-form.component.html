@@ -13,10 +13,17 @@
           </small>
         </div>
 
-        <div class="form-group">
-          <label for="password">Jelszó:</label>
-          <input class="form-control rounded-pill" formControlName="password" id="password" placeholder="Jelszó"
-                 type="password">
+        <div class="form-group row mx-0">
+          <div class="input-group">
+            <label class="col-sm-12 p-0" for="password">Jelszó:</label>
+            <input class="form-control col-sm-11 col-lg-10 rounded-pill" formControlName="password" id="password"
+                   placeholder="Jelszó"
+                   type="password">
+            <div class="input-group-append eye-icon col-sm-1 col-lg-2">
+              <i (click)="changePasswordVisibility()" class="fa fa-lg fa-eye btn eye-btn"></i>
+            </div>
+          </div>
+
           <small *ngIf="loginForm.get('password').invalid && loginForm.get('password').touched"
                  class="text-danger col-sm-12 col-md-12">
             A mező kitöltése közelező!

@@ -1,5 +1,6 @@
 package com.progmasters.mars.account.service;
 
+import com.google.maps.errors.NotFoundException;
 import com.progmasters.mars.account.domain.InstitutionType;
 import com.progmasters.mars.account.domain.ProviderAccount;
 import com.progmasters.mars.account.dto.ProviderAccountCreationCommand;
@@ -29,7 +30,7 @@ public class AccountInstitutionService {
         this.emailService = emailService;
     }
 
-    public void saveAccount(ProviderAccountCreationCommand providerAccountCreationCommand) {
+    public void saveAccount(ProviderAccountCreationCommand providerAccountCreationCommand) throws NotFoundException {
         ProviderAccount providerAccount = accountService.save(providerAccountCreationCommand);
         institutionOpeningHoursService.saveInstitution(providerAccountCreationCommand.getInstitutions(), providerAccount);
         emailService.sendConfirmationEmail(providerAccount);

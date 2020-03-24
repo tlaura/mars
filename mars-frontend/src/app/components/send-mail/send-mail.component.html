@@ -5,17 +5,42 @@
 
       <label class="small" for="fromEmail">Az Ön email címe*: </label>
       <input class="form-control rounded-pill" formControlName="fromEmail" id="fromEmail" name="fromEmail" type="text">
+      <div *ngIf="emailForm.get('fromEmail').errors?.pattern && emailForm.get('fromEmail').touched">
+        <small class="text-danger-custom">
+          Érvénytelen email cím!
+        </small>
+      </div>
+      <div *ngIf="emailForm.get('fromEmail').errors?.required && emailForm.get('fromEmail').touched">
+        <small class="text-danger-custom">
+          A mező kitöltése kötelező!
+        </small>
+      </div>
 
       <label class="small" for="name">Neve*:</label>
       <input class="form-control rounded-pill" formControlName="name" id="name" name="name" type="text">
+      <div *ngIf="emailForm.get('name').errors?.required && emailForm.get('name').touched">
+        <small class="text-danger-custom">
+          A mező kitöltése kötelező!
+        </small>
+      </div>
 
       <label class="small" for="subject">Tárgy*:</label>
       <input class="form-control rounded-pill" formControlName="subject" id="subject" name="subject" type="text">
+      <div *ngIf="emailForm.get('subject').errors?.required && emailForm.get('subject').touched">
+        <small class="text-danger-custom">
+          A mező kitöltése kötelező!
+        </small>
+      </div>
 
     </div>
     <div class="form-group col-sm-6 col-lg-8">
       <label class="small" for="text">Üzenet*:</label>
       <textarea class="form-control" formControlName="text" id="text" name="text" rows="6"></textarea>
+      <div *ngIf="emailForm.get('text').errors?.required && emailForm.get('text').touched">
+        <small class="text-danger-custom">
+          A mező kitöltése kötelező!
+        </small>
+      </div>
     </div>
     <input (click)="sendMail()" [disabled]="emailForm.invalid" class="btn btn-primary submit rounded-pill"
            type="submit">

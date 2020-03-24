@@ -1,6 +1,6 @@
 package com.progmasters.mars.account.controller;
 
-
+import com.google.maps.errors.NotFoundException;
 import com.progmasters.mars.account.ProviderAccountValidator;
 import com.progmasters.mars.account.domain.InstitutionType;
 import com.progmasters.mars.account.domain.ProviderAccount;
@@ -45,7 +45,12 @@ public class AccountController {
 
     @PostMapping
     public ResponseEntity<Void> createProviderAccount(@RequestBody @Valid ProviderAccountCreationCommand providerAccountCreationCommand) {
-        accountInstitutionService.saveAccount(providerAccountCreationCommand);
+        try {
+            accountInstitutionService.saveAccount(providerAccountCreationCommand);
+        } catch (NotFoundException e) {
+            logger.info("Location not found");
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
         logger.info("Provider Account creation requested!");
         return new ResponseEntity<>(HttpStatus.CREATED);
     }

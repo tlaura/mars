@@ -41,6 +41,9 @@ public class GeocodeService {
             logger.error(e.getMessage());
             throw new NotFoundException("Geocoding failed");
         }
+        if (results.length == 0) {
+            throw new NotFoundException("Location not found.");
+        }
         double latitude = results[0].geometry.location.lat;
         double longitude = results[0].geometry.location.lng;
         return new GeoLocation(longitude, latitude);
