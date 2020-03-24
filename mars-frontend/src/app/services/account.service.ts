@@ -43,6 +43,6 @@ export class AccountService {
   };
 
   deleteInstitution(id: number) {
-    return this.http.delete(this.BASE_URL + '/delete/' + id);
+    return this.http.delete(this.BASE_URL + 'delete/' + id);
   }
 }
