@@ -5,9 +5,9 @@
       <input class="form-control rounded-pill"
              formControlName="zipcode"
              id="zipcode"
+             oninput="if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+             maxlength="4"
              type="number">
-      maxlength="4"
-      oninput="if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
     </div>
 
     <div class="form-group col-sm-12 col-md-8">
