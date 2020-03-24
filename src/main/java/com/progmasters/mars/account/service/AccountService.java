@@ -15,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -139,6 +138,6 @@ public class AccountService {
         providerAccount.setNewsletter(providerUserDetails.getNewsletter());
         providerAccount.setAgeGroupMin(providerUserDetails.getAgeGroupMin());
         providerAccount.setAgeGroupMax(providerUserDetails.getAgeGroupMax());
-        providerAccount.setTypes(providerUserDetails.getTypes().stream().map(InstitutionType::getTypeByHungarianName).collect(Collectors.toList()));
+//        providerAccount.setTypes(providerUserDetails.getTypes().stream().map(InstitutionType::valueOf).collect(Collectors.toList()));
     }
 }

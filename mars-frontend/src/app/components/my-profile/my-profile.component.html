@@ -1,130 +1,95 @@
-<section class="container" *ngIf="loggedInUser">
+<div *ngIf="loggedInUser" class="container">
   <div class="row align-items-left justify-content-center">
-    <h1>Profil</h1>
+    <h1 style="color: black">Profil</h1>
   </div>
-  <section>
-    <h4 class="display-4">{{providerAccount?.name}}</h4>
-    <hr>
-  </section>
-
-    <section class="row">
-      <section class="col-6 mb-4">
-        <dl class="row">
 
 
-          <dt class="col-sm-3">
-            Teljes név:
-          </dt>
-          <dd (click)='editMode=true' *ngIf='!editMode' class="col-sm-9">
-            <p> {{providerAccount?.name}} </p>
-          </dd>
-          <input (focusout)="onFocusOut()" (focusout)="editMode=false" (keydown.enter)='$event.target.blur()'
-                 (keydown.enter)='$event.target.blur()' *ngIf='editMode'
-                 [(ngModel)]='providerAccount.name' appAutofocus class='text-dark' type='text'>
-          <br>
+  <div class="row">
+    <div class="col-sm-12 col-md-6">
+      <label>Teljes név:</label>
+      <div (click)='editMode=true' *ngIf='!editMode' class="col-sm-9">
+        <p> {{providerAccount?.name}} </p>
+      </div>
+      <div>
+        <input (focusout)="editMode=false"
+               (keydown.enter)='$event.target.blur()' *ngIf='editMode'
+               [(ngModel)]='providerAccount.name' class='text-dark' type='text'>
+      </div>
+      <br>
 
-          <dt class="col-sm-3">
-            Szolgáltatás neve:
-          </dt>
-          <dd (click)='editMode=true' *ngIf='!editMode' class="col-sm-9">
-            <p> {{providerAccount?.providerServiceName}}</p>
-          </dd>
-          <input (focusout)="onFocusOut()" (focusout)="editMode=false"
-                 (keydown.enter)='$event.target.blur()'
-                 (keydown.enter)='$event.target.blur()' *ngIf='editMode'
-                 [(ngModel)]='providerAccount.providerServiceName' appAutofocus class='text-dark' type='text'>
+      <label>Szolgáltatás neve:</label>
+      <div (click)='editMode=true' *ngIf='!editMode' class="col-sm-9">
+        <p> {{providerAccount?.providerServiceName}} </p>
+      </div>
+      <div>
+        <input (focusout)="editMode=false"
+               (keydown.enter)='$event.target.blur()' *ngIf='editMode'
+               [(ngModel)]='providerAccount.providerServiceName' class='text-dark' type='text'>
+      </div>
+      <br>
+
+      <label>Email cím:</label>
+      <div class="col-sm-9">
+        <p>{{providerAccount?.email}}</p>
+      </div>
+      <br>
+
+      <label>Telefon:</label>
+      <div (click)='editMode=true' *ngIf='!editMode' class="col-sm-9">
+        <p> {{providerAccount?.phone}} </p>
+      </div>
+      <div>
+        <input (focusout)="editMode=false"
+               (keydown.enter)='$event.target.blur()' *ngIf='editMode'
+               [(ngModel)]='providerAccount.phone' class='text-dark' type='text'>
+      </div>
+      <br>
+
+      <label>Cím:</label>
+      <div (click)='editMode=true' *ngIf='!editMode' class="col-sm-9">
+        <p> {{providerAccount?.zipcode}} </p>
+        <p>{{providerAccount?.city}}</p>
+        <p>{{providerAccount?.address}}</p>
+      </div>
+      <div>
+        <input (focusout)="editMode=false"
+               (keydown.enter)='$event.target.blur()' *ngIf='editMode'
+               [(ngModel)]='providerAccount.zipcode' class='text-dark' type='text'>
+      </div>
+      <div>
+        <input (focusout)="editMode=false"
+               (keydown.enter)='$event.target.blur()' *ngIf='editMode'
+               [(ngModel)]='providerAccount.city' class='text-dark' type='text'>
+      </div>
+      <div>
+        <input (focusout)="editMode=false"
+               (keydown.enter)='$event.target.blur()' *ngIf='editMode'
+               [(ngModel)]='providerAccount.address' class='text-dark' type='text'>
+      </div>
+      <br>
 
 
-          <dt class="col-sm-3">
-            Telefon:
-          </dt>
-          <dd (click)='editMode=true' *ngIf='!editMode' class="col-sm-9">
-            <p> {{providerAccount?.phone}}</p>
-          </dd>
-          <input (focusout)="onFocusOut()" (focusout)="editMode=false"
-                 (keydown.enter)='$event.target.blur()'
-                 (keydown.enter)='$event.target.blur()' *ngIf='editMode'
-                 [(ngModel)]='providerAccount.phone' appAutofocus class='text-dark' type='text'>
+      <button (click)="saveChanges()" class="submit btn btn-info rounded-pill" type="submit">
+        Mentés
+      </button>
 
+    </div>
 
-          <dt class="col-sm-3">
-            Email:
-          </dt>
-          <dd (click)='editMode=true' *ngIf='!editMode' class="col-sm-9">
-            <p> {{providerAccount?.email}}</p>
-          </dd>
-          <input (focusout)="onFocusOut()" (focusout)="editMode=false"
-                 (keydown.enter)='$event.target.blur()'
-                 (keydown.enter)='$event.target.blur()' *ngIf='editMode'
-                 [(ngModel)]='providerAccount.email' appAutofocus class='email' type='text'>
-
-
-          <!--          <dt class="col-sm-3">-->
-          <!--            <p class="text-dark">Teljes név:</p>-->
-          <!--          </dt>-->
-          <!--          <dd class="col-sm-9">-->
-          <!--            <p class="text-dark">{{providerAccount?.name}}</p>-->
-          <!--          </dd>-->
-
-          <!--          <dt class="col-sm-3">-->
-          <!--            <p class="text-dark">Szolgáltatás neve:</p>-->
-          <!--          </dt>-->
-          <!--          <dd class="col-sm-9">-->
-          <!--            <p class="text-dark">{{providerAccount?.providerServiceName}}</p>-->
-          <!--          </dd>-->
-
-          <!--          <dt class="col-sm-3">-->
-          <!--            <p class="text-dark">Telefon:</p>-->
-          <!--          </dt>-->
-          <!--          <dd class="col-sm-9">-->
-          <!--            <p class="text-dark">{{providerAccount?.phone}}</p>-->
-          <!--          </dd>-->
-
-          <!--          <dt class="col-sm-3">-->
-          <!--            <p class="text-dark">Email:</p>-->
-          <!--          </dt>-->
-          <!--          <dd class="col-sm-9">-->
-          <!--            <p class="text-dark">{{providerAccount?.email}}</p>-->
-          <!--          </dd>-->
-
-          <!--          <dt class="col-sm-3">Cím:</dt>-->
-          <!--          <dd class="col-sm-9">-->
-          <!--            <p class="text-dark">{{providerAccount?.zipcode}}<br>-->
-          <!--              {{providerAccount?.city}}<br>-->
-          <!--              {{providerAccount?.address}}</p>-->
-          <!--          </dd>-->
-
-          <!--          <dt class="col-sm-3">Korcsoport:</dt>-->
-          <!--          <dd class="col-sm-9">-->
-          <!--            <p class="text-dark">{{providerAccount?.ageGroupMin}} - {{providerAccount?.ageGroupMax}}</p>-->
-          <!--          </dd>-->
-
-          <!--          <dt class="col-sm-3">Szolgáltatás típusai:</dt>-->
-          <!--          <dd *ngFor="let type of providerAccount?.institutionTypes" class="col-sm-9">-->
-          <!--            <p class="text-dark">{{type}}<br>-->
-          <!--          </dd>-->
-
-        </dl>
-      </section>
-
-      <section class="m-4 text-dark">
-          Intézmények:
-        <div class="card bg-light m-4"
-             *ngFor="let insitution of providerAccount?.institutionList">
-          <div class="card-header">
-            {{insitution?.name}}
-          </div>
-          <div class="card-body">
-            {{insitution?.description}}<br>
-            ----------
-            {{insitution?.phone}}<br>
-            {{insitution?.website}}<br>
-            {{insitution?.email}}<br>
-          </div>
+    <div class="col-sm-12 col-md-6" style="padding: 30px 0">
+      Intézmények:
+      <div *ngFor="let insitution of providerAccount?.institutionList"
+           class="card bg-light m-4">
+        <div class="card-header">
+          {{insitution?.name}}
         </div>
-      </section>
-  </section>
-  <button (click)="saveChanges()" class="submit btn btn-info rounded-pill" type="submit">
-    Módosítás
-  </button>
-</section>
+        <div class="card-body">
+          {{insitution?.description}}<br>
+          ----------
+          {{insitution?.phone}}<br>
+          {{insitution?.website}}<br>
+          {{insitution?.email}}<br>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

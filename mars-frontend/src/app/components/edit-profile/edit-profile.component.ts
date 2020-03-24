@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {LoginService} from "../../services/login.service";
 import {AccountService} from "../../services/account.service";
@@ -14,9 +14,6 @@ import {validationHandler} from "../../utils/validationHandler";
 export class EditProfileComponent implements OnInit {
   providerAccountForm: FormGroup;
   loggedInUser;
-  editMode = false;
-  @Input() name: string;
-  @Output() focusOut: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(private loginService: LoginService,
               private providerService: AccountService,
@@ -35,10 +32,6 @@ export class EditProfileComponent implements OnInit {
   ngOnInit(): void {
     this.loggedInUser = this.loginService.getCurrentUser()['name'];
     this.getProviderDetails(this.loggedInUser);
-  }
-
-  onFocusOut() {
-    this.focusOut.emit(this.name);
   }
 
 
