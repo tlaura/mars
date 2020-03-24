@@ -21,4 +21,6 @@ public interface ProviderAccountRepository extends JpaRepository<ProviderAccount
 
     @Query("select p from ProviderAccount p join p.types t where t= :type")
     List<ProviderAccount> findByType(@Param("type") InstitutionType institutionType);
+
+    Long findIdByEmail(String loggedInUser);
 }

@@ -55,7 +55,7 @@ export class MyProfileComponent implements OnInit {
   };
 
   deleteInstitution = (id: number) => {
-    this.providerService.deleteInstitution(id).subscribe(
+    this.providerService.deleteInstitution(id, this.loggedInUser).subscribe(
       () => {
         console.log("Institution deleted");
       }, error => {

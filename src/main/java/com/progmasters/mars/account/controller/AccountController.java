@@ -92,4 +92,16 @@ public class AccountController {
             return new ResponseEntity<>(HttpStatus.OK);
         }
     }
+
+    @DeleteMapping("/delete/{loggedInUser}/{id}")
+    public ResponseEntity deleteInstitutionOfProviderAccount(@PathVariable String loggedInUser, @PathVariable Long id) {
+        logger.info("Provider Account Institution deletion requested");
+        boolean isDeleted = accountService.deleteInstitutionOfAccountById(loggedInUser, id);
+
+        if (isDeleted) {
+            return new ResponseEntity(HttpStatus.OK);
+        } else {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+    }
 }

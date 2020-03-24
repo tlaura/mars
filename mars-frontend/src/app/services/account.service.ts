@@ -12,37 +12,37 @@ import {ProviderAccountEditDataModel} from "../models/providerAccountEditData.mo
 })
 export class AccountService {
 
-  BASE_URL = environment.BASE_URL + '/api/providers/';
+  BASE_URL = environment.BASE_URL + '/api';
 
   constructor(private http: HttpClient) {
   }
 
   saveProviderAccount = (formData: ProviderAccountRegisterModel): Observable<any> => {
-    return this.http.post(this.BASE_URL, formData);
+    return this.http.post(this.BASE_URL + '/providers', formData);
   };
 
   fetchProviderAccountDetails = (username: string): Observable<ProviderUserProfileDetailsModel> => {
-    return this.http.get<ProviderUserProfileDetailsModel>(this.BASE_URL + username);
+    return this.http.get<ProviderUserProfileDetailsModel>(this.BASE_URL + '/providers/' + username);
   };
 
   getInstitutionByType = (name: string): Observable<Array<InstitutionListModel>> => {
-    return this.http.get<Array<InstitutionListModel>>(this.BASE_URL + "getInstitutionsByType?type=" + name);
+    return this.http.get<Array<InstitutionListModel>>(this.BASE_URL + "/providers/getInstitutionsByType?type=" + name);
   };
 
   fetchProviderAccountEditDetails = (loggedInUser: string) => {
-    return this.http.get(this.BASE_URL + 'edit/' + loggedInUser);
+    return this.http.get(this.BASE_URL + '/providers/edit/' + loggedInUser);
   };
 
   editProviderAccount = (data: ProviderAccountEditDataModel, loggedInUser: string): Observable<any> => {
     data.email = loggedInUser;
-    return this.http.patch(this.BASE_URL + loggedInUser, data);
+    return this.http.patch(this.BASE_URL + '/providers/' + loggedInUser, data);
   };
 
   editProviderAccountDetails = (data: ProviderUserProfileDetailsModel, id: number): Observable<any> => {
-    return this.http.put(this.BASE_URL + id, data);
+    return this.http.put(this.BASE_URL + '/providers/' + id, data);
   };
 
-  deleteInstitution(id: number) {
-    return this.http.delete(this.BASE_URL + 'delete/' + id);
+  deleteInstitution(id: number, loggedInUser: string) {
+    return this.http.delete(this.BASE_URL + '/delete/' + loggedInUser + '/' + id);
   }
 }

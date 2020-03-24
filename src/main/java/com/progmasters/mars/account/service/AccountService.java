@@ -8,6 +8,8 @@ import com.progmasters.mars.account.dto.ProviderAccountCreationCommand;
 import com.progmasters.mars.account.dto.ProviderUserDetails;
 import com.progmasters.mars.account.dto.ProviderUserDetailsEdit;
 import com.progmasters.mars.account.repository.ProviderAccountRepository;
+import com.progmasters.mars.institution.domain.Institution;
+import com.progmasters.mars.institution.repository.InstitutionRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,11 +24,14 @@ public class AccountService {
 
     private ProviderAccountRepository providerAccountRepository;
     private BCryptPasswordEncoder passwordEncoder;
+    private InstitutionRepository insitutionRepository;
     private final ConfirmationTokenRepository confirmationTokenRepository;
 
     public AccountService(ProviderAccountRepository providerAccountRepository,
                           BCryptPasswordEncoder passwordEncoder,
-                          ConfirmationTokenRepository confirmationTokenRepository) {
+                          ConfirmationTokenRepository confirmationTokenRepository,
+                          InstitutionRepository insitutionRepository) {
+        this.insitutionRepository = insitutionRepository;
         this.providerAccountRepository = providerAccountRepository;
         this.passwordEncoder = passwordEncoder;
         this.confirmationTokenRepository = confirmationTokenRepository;
@@ -139,5 +144,17 @@ public class AccountService {
         providerAccount.setAgeGroupMin(providerUserDetails.getAgeGroupMin());
         providerAccount.setAgeGroupMax(providerUserDetails.getAgeGroupMax());
 //        providerAccount.setTypes(providerUserDetails.getTypes().stream().map(InstitutionType::valueOf).collect(Collectors.toList()));
+    }
+
+    public boolean deleteInstitutionOfAccountById(String loggedInUser, Long institutionId) {
+        Optional<Institution> optionalInstitution = insitutionRepository.findById(institutionId);
+
+        if (optionalInstitution.isPresent()) {
+            Institution institution = optionalInstitution.get();
+            institution.setProviderAccount(null);
+            return true;
+        } else {
+            return false;
+        }
     }
 }
