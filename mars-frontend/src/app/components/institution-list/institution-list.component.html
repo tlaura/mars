@@ -30,8 +30,9 @@
         <div
           *ngFor="let institution of institutionList |filter:searchText |paginate:{itemsPerPage:size,currentPage:page};let last = last">
           <div class="row">
-            <div (click)="details(institution.id)" class="col text-left custom-link">
-              <label class="row mx-0 font-weight-bold text-uppercase">{{institution.name}}</label>
+            <div class="col text-left custom-link">
+              <a [routerLink]="'institution-details/' + institution.id"
+                 class="custom-link row mx-0 font-weight-bold text-uppercase">{{institution.name}}</a>
               <label class="row mx-0 ">{{institution.zipcode}} {{institution.city}} {{institution.address}}</label>
               <label *ngIf="institution.type" class="row mx-0">{{institution.type}}</label>
               <label class="row mx-0 small">{{institution.description}}</label>
