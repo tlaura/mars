@@ -5,7 +5,10 @@
            (change)="emitZipcode()"
            [formControl]="zipcode"
            id="zipcode"
-           type="number">
+           maxlength="4"
+           oninput="if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+           type="number"
+    >
   </div>
 
   <div class="form-group col-sm-12 col-md-8">

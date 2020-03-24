@@ -20,15 +20,12 @@ public class InstitutionOpeningHoursService {
         this.institutionService = institutionService;
     }
 
-    public void saveInstitution(List<InstitutionCreationCommand> institutionList, ProviderAccount providerAccount) {
+    public void saveInstitution(List<InstitutionCreationCommand> institutionList, ProviderAccount providerAccount) throws NotFoundException {
         for (InstitutionCreationCommand institutionCreationCommand : institutionList) {
             Institution institution = null;
-            try {
 
-                institution = institutionService.saveToAccount(institutionCreationCommand, providerAccount);
-            } catch (NotFoundException e) {
-                e.printStackTrace();
-            }
+            institution = institutionService.saveToAccount(institutionCreationCommand, providerAccount);
+
             openingHoursService.saveToInstitution(institutionCreationCommand.getOpeningHours(), institution);
 
         }

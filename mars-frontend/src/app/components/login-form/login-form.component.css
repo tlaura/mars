@@ -1,0 +1,12 @@
+.eye-icon {
+  justify-content: center;
+  align-items: center;
+  font-size: large;
+  border: none;
+  border-top-right-radius: 2rem !important;
+  border-bottom-right-radius: 2rem !important;
+}
+
+.eye-btn {
+  color: darkgrey;
+}

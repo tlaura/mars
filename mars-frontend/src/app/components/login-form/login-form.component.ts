@@ -26,6 +26,8 @@ export class LoginFormComponent implements OnInit {
     )
   }
 
+  isPasswordVisible: boolean = false;
+
   login = () => {
     const loginData = {...this.loginForm.value};
 
@@ -44,5 +46,14 @@ export class LoginFormComponent implements OnInit {
         }
       }
     )
+  };
+
+  changePasswordVisibility() {
+    this.isPasswordVisible = !this.isPasswordVisible;
+    this.isPasswordVisible ?
+      document.getElementById('password').setAttribute('type', 'text')
+      :
+      document.getElementById('password').setAttribute('type', 'password')
+
   }
 }
