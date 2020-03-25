@@ -13,6 +13,7 @@ import {InstitutionListModel} from "../../models/institutionList.model";
 })
 export class MapComponent implements OnInit {
 
+  showMap: boolean = false;
   latitude: number = institutionListIndex.mapLatitude;
   longitude: number = institutionListIndex.mapLongitude;
   zoom: number = institutionListIndex.mapZoom;
@@ -25,7 +26,10 @@ export class MapComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.mapsAPILoader.load().then(() => this.setCurrentLocation()
+    this.mapsAPILoader.load().then(() => {
+        this.setCurrentLocation();
+        this.showMap = true;
+      }
     );
   }
 
