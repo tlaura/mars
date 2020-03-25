@@ -1,4 +1,4 @@
-package com.progmasters.mars.account_institution;
+package com.progmasters.mars.account_institution.connector;
 
 import com.progmasters.mars.account_institution.account.domain.ProviderAccount;
 import com.progmasters.mars.account_institution.institution.domain.Institution;

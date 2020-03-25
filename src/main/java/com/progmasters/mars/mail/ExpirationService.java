@@ -1,8 +1,8 @@
 package com.progmasters.mars.mail;
 
-import com.progmasters.mars.account_institution.AccountInstitutionService;
 import com.progmasters.mars.account_institution.account.confirmationtoken.ConfirmationToken;
 import com.progmasters.mars.account_institution.account.service.AccountService;
+import com.progmasters.mars.account_institution.connector.AccountInstitutionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

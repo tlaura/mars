@@ -1,7 +1,7 @@
 package com.progmasters.mars.account_institution.account.domain;
 
-import com.progmasters.mars.account_institution.AccountInstitutionConnector;
 import com.progmasters.mars.account_institution.account.dto.ProviderAccountCreationCommand;
+import com.progmasters.mars.account_institution.connector.AccountInstitutionConnector;
 import com.progmasters.mars.account_institution.institution.location.GeoLocation;
 
 import javax.persistence.*;

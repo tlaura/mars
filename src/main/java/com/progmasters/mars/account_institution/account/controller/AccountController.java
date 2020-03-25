@@ -1,13 +1,13 @@
 package com.progmasters.mars.account_institution.account.controller;
 
 import com.google.maps.errors.NotFoundException;
-import com.progmasters.mars.account_institution.AccountInstitutionService;
 import com.progmasters.mars.account_institution.account.ProviderAccountValidator;
 import com.progmasters.mars.account_institution.account.domain.ProviderType;
 import com.progmasters.mars.account_institution.account.dto.ProviderAccountCreationCommand;
 import com.progmasters.mars.account_institution.account.dto.ProviderUserDetails;
 import com.progmasters.mars.account_institution.account.dto.ProviderUserDetailsEdit;
 import com.progmasters.mars.account_institution.account.service.AccountService;
+import com.progmasters.mars.account_institution.connector.AccountInstitutionService;
 import com.progmasters.mars.account_institution.institution.dto.InstitutionListData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

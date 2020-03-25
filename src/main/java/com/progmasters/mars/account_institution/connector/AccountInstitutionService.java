@@ -1,4 +1,4 @@
-package com.progmasters.mars.account_institution;
+package com.progmasters.mars.account_institution.connector;
 
 import com.google.maps.errors.NotFoundException;
 import com.progmasters.mars.account_institution.account.domain.ProviderAccount;

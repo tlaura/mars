@@ -1,10 +1,10 @@
 package com.progmasters.mars.account_institution.account.service;
 
-import com.progmasters.mars.account_institution.AccountInstitutionConnectorRepository;
-import com.progmasters.mars.account_institution.AccountInstitutionService;
 import com.progmasters.mars.account_institution.account.ProviderAccountBuilder;
 import com.progmasters.mars.account_institution.account.domain.ProviderAccount;
 import com.progmasters.mars.account_institution.account.domain.ProviderType;
+import com.progmasters.mars.account_institution.connector.AccountInstitutionConnectorRepository;
+import com.progmasters.mars.account_institution.connector.AccountInstitutionService;
 import com.progmasters.mars.account_institution.institution.dto.InstitutionListData;
 import com.progmasters.mars.account_institution.institution.location.GeocodeService;
 import com.progmasters.mars.account_institution.institution.service.InstitutionOpeningHoursService;
