@@ -27,8 +27,12 @@
         </div>
         <div>
           <input
-            *ngIf='editMode'
+            *ngIf='editMode' name="username" [formControl]="username"
             [(ngModel)]='providerAccount.name' class='text-dark' type='text'>
+          <small *ngIf="username.errors?.pattern && editMode"
+                 class="text-danger col-sm-12 col-md-12">
+            Helytelen név!
+          </small>
           <small *ngIf="!providerAccount?.name"
                  class="text-danger col-sm-12 col-md-12">
             A mező kitöltése közelező!
@@ -42,8 +46,16 @@
         </div>
         <div>
           <input
-            *ngIf='editMode'
+            *ngIf='editMode' name="providerServiceName" [formControl]="providerServiceName"
             [(ngModel)]='providerAccount.providerServiceName' class='text-dark' type='text'>
+          <small *ngIf="providerServiceName.errors?.pattern && editMode"
+                 class="text-danger col-sm-12 col-md-12">
+            Helytelen szolgáltatás név!
+          </small>
+          <small *ngIf="!providerAccount?.name"
+                 class="text-danger col-sm-12 col-md-12">
+            A mező kitöltése közelező!
+          </small>
         </div>
         <br>
 
@@ -54,13 +66,17 @@
         <br>
 
         <label>Telefon:</label>
-        <div (click)='editMode=true' *ngIf='!editMode' class="col-sm-9">
+        <div *ngIf='!editMode' class="col-sm-9">
           <p> {{providerAccount?.phone}} </p>
         </div>
         <div>
           <input
-            *ngIf='editMode'
+            *ngIf='editMode' name="phone" [formControl]="phone"
             [(ngModel)]='providerAccount.phone' class='text-dark' type='text'>
+          <small *ngIf="phone.errors?.pattern && editMode"
+                 class="text-danger col-sm-12 col-md-12">
+            Helytelen telefonszám formátum!
+          </small>
         </div>
         <br>
 
@@ -101,15 +117,33 @@
         <div class="col-sm-9">
           <p>{{providerAccount?.ageGroupMin}} - {{providerAccount?.ageGroupMax}}</p>
         </div>
+        <div *ngIf='editMode'>
+          <label>Minimum életkor:</label>
+          <input
+            [(ngModel)]='providerAccount.ageGroupMin' class='text-dark' type='number'>
+          <small *ngIf="editMode && providerAccount.ageGroupMin < 0"
+                 class="text-danger col-sm-12 col-md-12">
+            Helytelen életkor!
+          </small>
+        </div>
+        <div *ngIf='editMode'>
+          <label>Maximum életkor:</label>
+          <input
+            [(ngModel)]='providerAccount.ageGroupMax' class='text-dark' type='number'>
+          <small *ngIf="editMode && providerAccount.ageGroupMax < 0"
+                 class="text-danger col-sm-12 col-md-12">
+            Helytelen életkor!
+          </small>
+        </div>
 
-        <!--        <div>-->
-        <!--          <label for="newsletter">Hírlevél</label>-->
-        <!--          <p>-->
-        <!--            <input class="form-check-input mt-0" formControlName="newsletter" id="newsletter" type="checkbox" [checked]="providerAccount?.newsletter">-->
-        <!--          </p>-->
-        <!--        </div>-->
-        <!--        <label>Hírlevél:</label>-->
-        <!--          <input class="form-check-input mt-0" type="checkbox">-->
+        <div>
+          <p>
+            <input class="form-check-input mt-0" formControlName="newsletter" id="newsletter" type="checkbox" [checked]="providerAccount?.newsletter">
+          </p>
+          <label for="newsletter">Hírlevél</label>
+        </div>
+<!--                <label>Hírlevél:</label>-->
+<!--                  <input class="form-check-input mt-0" type="checkbox">-->
 
         <button (click)="saveChanges()" class="submit btn btn-info rounded-pill" type="submit">
           Mentés
