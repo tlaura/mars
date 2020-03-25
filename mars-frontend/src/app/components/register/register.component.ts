@@ -69,7 +69,11 @@ export class RegisterComponent implements OnInit {
         () => {
           this.router.navigate(['registration-complete']);
         },
-        error => validationHandler(error, this.registerForm)
+        error => {
+          validationHandler(error, this.registerForm);
+          (this.registerForm.get('institutions') as FormArray)
+            .controls.forEach((control) => validationHandler(error, (control as FormGroup)))
+        }
       );
     }
   }
