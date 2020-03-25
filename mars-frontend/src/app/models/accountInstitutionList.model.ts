@@ -16,4 +16,5 @@ export interface AccountInstitutionListModel {
   latitude: number,
   longitude: number,
   institutions: Array<InstitutionDetailModel>,
+
 }

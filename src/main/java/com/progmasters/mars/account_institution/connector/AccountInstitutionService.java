@@ -84,6 +84,7 @@ public class AccountInstitutionService {
         List<ProviderAccount> providerAccounts = accountService.findAllAccountsWithoutInstitution();
         List<ProviderAccount> providerAccountWithInstitution = accountService.findAllAccountsWithInstitution();
         List<Institution> institutions = institutionService.findInstitutionsWithoutProvider();
+        List<Institution> institutionsWithAccount = institutionService.findInstitutionsWithProvider();
         providerAccounts.stream().map(AccountInstitutionListData::new).forEach(allAccounts::add);
         institutions.stream().map(AccountInstitutionListData::new).forEach(allAccounts::add);
         providerAccountWithInstitution.stream().map(AccountInstitutionListData::new).forEach(allAccounts::add);

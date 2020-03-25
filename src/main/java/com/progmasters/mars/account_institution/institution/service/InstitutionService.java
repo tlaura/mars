@@ -55,6 +55,10 @@ public class InstitutionService {
         return institutionRepository.findInstitutionsWithoutProvider();
     }
 
+    public List<Institution> findInstitutionsWithProvider() {
+        return institutionRepository.findInstitutionsWithProvider();
+    }
+
 
     public InstitutionDetailsData getInstitutionDetails(Long id) {
         return new InstitutionDetailsData(findById(id));

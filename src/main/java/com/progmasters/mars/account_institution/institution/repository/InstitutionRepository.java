@@ -28,4 +28,6 @@ public interface InstitutionRepository extends JpaRepository<Institution, Long> 
     @Query("select i from Institution i where i.accountInstitutionConnectors.size = 0")
     List<Institution> findInstitutionsWithoutProvider();
 
+    @Query("select distinct i from Institution i where i.accountInstitutionConnectors.size > 0")
+    List<Institution> findInstitutionsWithProvider();
 }
