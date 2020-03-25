@@ -9,8 +9,7 @@ import org.springframework.validation.Errors;
 @Service
 public class InstitutionValidatorService {
 
-    @Value("${regex.validator.name}")
-    private String name;
+
     @Value("${regex.validator.email}")
     private String email;
     @Value("${regex.validator.phone}")
@@ -25,8 +24,6 @@ public class InstitutionValidatorService {
     public void validateFields(InstitutionCreationCommand institution, Errors errors) {
         if (institution.getName() == null) {
             errors.rejectValue("name", "name.mustGive");
-        } else if (!institution.getName().matches(name)) {
-            errors.rejectValue("name", "name.invalidFormat");
         }
         if (institution.getPhone() == null) {
             errors.rejectValue("phone", "phone.mustGive");

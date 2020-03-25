@@ -1,22 +1,22 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {InstitutionListComponent} from "./components/institution-list/institution-list.component";
-import {InstitutionFormComponent} from "./components/institution-form/institution-form.component";
-import {InstitutionDetailsComponent} from "./components/institution-details/institution-details.component";
-import {UserFormComponent} from "./components/user-form/user-form.component";
-import {RegisterComponent} from "./components/register/register.component";
-import {LoginFormComponent} from "./components/login-form/login-form.component";
-import {RegistrationCompleteComponent} from "./components/registration-complete/registration-complete.component";
-import {RegisterSuccessComponent} from "./components/register-success/register-success.component";
-import {MyProfileComponent} from "./components/my-profile/my-profile.component";
-import {InstitutionImportComponent} from "./components/institution-import/institution-import.component";
-import {InstitutionImportCompleteComponent} from "./components/institution-import-complete/institution-import-complete.component";
-import {EditProfileComponent} from "./components/edit-profile/edit-profile.component";
+import {InstitutionListComponent} from "./components/institution-components/institution-list/institution-list.component";
+import {InstitutionFormComponent} from "./components/institution-components/institution-form/institution-form.component";
+import {InstitutionDetailsComponent} from "./components/institution-components/institution-details/institution-details.component";
+import {UserFormComponent} from "./components/account-components/user-form/user-form.component";
+import {RegisterComponent} from "./components/account-components/registration-components/register/register.component";
+import {LoginFormComponent} from "./components/account-components/login-form/login-form.component";
+import {RegistrationCompleteComponent} from "./components/account-components/registration-components/registration-complete/registration-complete.component";
+import {RegisterSuccessComponent} from "./components/account-components/registration-components/register-success/register-success.component";
+import {MyProfileComponent} from "./components/account-components/my-profile/my-profile.component";
+import {InstitutionImportComponent} from "./components/institution-components/institution-import/institution-import.component";
+import {InstitutionImportCompleteComponent} from "./components/institution-components/institution-import-complete/institution-import-complete.component";
+import {EditProfileComponent} from "./components/account-components/edit-profile/edit-profile.component";
 import {HomeComponent} from "./components/home/home.component";
-import {NewPasswordComponent} from "./components/new-password-components/new-password/new-password.component";
-import {NewPasswordCompleteComponent} from "./components/new-password-components/new-password-complete/new-password-complete.component";
-import {NewPasswordFormComponent} from "./components/new-password-components/new-password-form/new-password-form.component";
-import {NewPasswordSuccessComponent} from "./components/new-password-components/new-password-success/new-password-success.component";
+import {NewPasswordComponent} from "./components/account-components/new-password-components/new-password/new-password.component";
+import {NewPasswordCompleteComponent} from "./components/account-components/new-password-components/new-password-complete/new-password-complete.component";
+import {NewPasswordFormComponent} from "./components/account-components/new-password-components/new-password-form/new-password-form.component";
+import {NewPasswordSuccessComponent} from "./components/account-components/new-password-components/new-password-success/new-password-success.component";
 
 
 const routes: Routes = [

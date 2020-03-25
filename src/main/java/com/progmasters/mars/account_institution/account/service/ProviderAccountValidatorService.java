@@ -9,8 +9,7 @@ import org.springframework.validation.Errors;
 @Service
 public class ProviderAccountValidatorService {
 
-    @Value("${regex.validator.name}")
-    private String name;
+
     @Value("${regex.validator.password}")
     private String password;
     @Value("${regex.validator.email}")
@@ -28,13 +27,9 @@ public class ProviderAccountValidatorService {
     public void validateFields(ProviderAccountCreationCommand providerAccount, Errors errors) {
         if (providerAccount.getName() == null) {
             errors.rejectValue("name", "name.mustGive");
-        } else if (!providerAccount.getName().matches(name)) {
-            errors.rejectValue("name", "name.invalidFormat");
         }
         if (providerAccount.getProviderServiceName() == null) {
             errors.rejectValue("providerServiceName", "providerServiceName.mustGive");
-        } else if (!providerAccount.getProviderServiceName().matches(name)) {
-            errors.rejectValue("providerServiceName", "providerServiceName.invalidFormat");
         }
         if (providerAccount.getPassword() == null) {
             errors.rejectValue("password", "password.mustGive");
