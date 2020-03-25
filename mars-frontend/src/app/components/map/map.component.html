@@ -2,6 +2,7 @@
   <agm-map *ngIf="showMap" [latitude]="latitude" [longitude]="longitude"
            [scrollwheel]="null"
            [zoom]="zoom"
+           [styles]="styles"
            gestureHandling="cooperative">
     <agm-marker (markerClick)="markerClick(i)" *ngFor="let location of locations; let i = index"
                 [iconUrl]="getIcon()" [latitude]="location.latitude" [longitude]="location.longitude"
