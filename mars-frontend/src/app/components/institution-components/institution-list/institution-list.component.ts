@@ -138,4 +138,12 @@ export class InstitutionListComponent implements OnInit {
   //   debugger;
   // }
 
+  isProvider(institution: AccountInstitutionListModel): boolean {
+    return institution.accountType === 'PROVIDER';
+  }
+
+  hasProviders(institution: AccountInstitutionListModel): boolean {
+    //TODO: length->provider list length...
+    return institution.providerServiceName?.length > 0 && institution.accountType != 'PROVIDER';
+  }
 }
