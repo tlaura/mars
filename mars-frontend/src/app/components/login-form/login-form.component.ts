@@ -59,6 +59,5 @@ export class LoginFormComponent implements OnInit {
       document.getElementById('password').setAttribute('type', 'text')
       :
       document.getElementById('password').setAttribute('type', 'password')
-
   }
 }

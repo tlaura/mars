@@ -11,13 +11,13 @@
       <div class="profile-div col-sm-12 col-md-6">
 
         <div *ngIf="!editMode" class="button-flex">
-          <button (click)='editMode=true' class="edit-button rounded-pill">
-            Edit<i class="fas fa-pencil-alt"></i></button>
+          <button (click)='editMode=true' class="edit-button rounded-pill btn-light">
+            Módosítás<i class="fas fa-pencil-alt"></i></button>
         </div>
 
         <div *ngIf="editMode" class="button-flex">
-          <button (click)='cancelEdit()' class="edit-button rounded-pill">
-            Cancel
+          <button (click)='cancelEdit()' class="edit-button rounded-pill btn-light">
+            Visszavonás
           </button>
         </div>
 
@@ -118,7 +118,7 @@
           </div>
           <div class="card-body">
             {{insitution?.description}}<br>
-            ---------- <br>
+            <hr>
             {{insitution?.phone}}<br>
             {{insitution?.website}}<br>
             {{insitution?.email}}<br>
@@ -129,6 +129,5 @@
         </div>
       </div>
     </div>
-
   </div>
 </div>
