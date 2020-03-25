@@ -7,6 +7,8 @@ import {institutionListIndex} from "../../../environments/institutionListIndex.p
 import {AccountService} from "../../services/account.service";
 import {SocialService} from "ngx-social-button";
 import {FormControl} from "@angular/forms";
+import {AccountInstitutionConnectorService} from "../../services/account-institution-connector.service";
+import {AccountInstitutionListModel} from "../../models/accountInstitutionList.model";
 
 @Component({
   selector: 'app-institution-list',
@@ -15,7 +17,7 @@ import {FormControl} from "@angular/forms";
 })
 export class InstitutionListComponent implements OnInit {
 
-  institutionList: Array<InstitutionListModel>;
+  institutionList: Array<AccountInstitutionListModel>;
   institutionTypeList: Array<InstitutionTypeModel>;
   page: number = institutionListIndex.startPageIndex;
   size: number = institutionListIndex.numberOfItemPerPage;
@@ -36,7 +38,8 @@ export class InstitutionListComponent implements OnInit {
               private accountService: AccountService,
               private router: Router,
               private activatedRoute: ActivatedRoute,
-              private socialService: SocialService) {
+              private socialService: SocialService,
+              private accountInstitutionService: AccountInstitutionConnectorService) {
     this.institutionType = new FormControl('all');
   }
 
@@ -65,7 +68,7 @@ export class InstitutionListComponent implements OnInit {
   loadPageByFilterType = (type: string, result: string): void => {
     switch (type) {
       case "providerType":
-        this.getInstitutionsByType(result);
+        //   this.getInstitutionsByType(result);
         break;
       case "search":
         //todo
@@ -76,7 +79,7 @@ export class InstitutionListComponent implements OnInit {
   narrowByType = (type: string) => {
     //todo refactor magic string
     if (type !== "all") {
-      this.getInstitutionsByType(type);
+      //  this.getInstitutionsByType(type);
     } else {
       this.getInstitutions();
     }
@@ -99,7 +102,7 @@ export class InstitutionListComponent implements OnInit {
   }
 
   private getInstitutions = () => {
-    this.institutionService.getInstitutionList().subscribe(
+    this.accountInstitutionService.getAllAccountConnections().subscribe(
       institutionList => this.institutionList = institutionList,
       error => console.warn(error),
     );
@@ -114,25 +117,25 @@ export class InstitutionListComponent implements OnInit {
     this.currentType = type;
   }
 
-  private getInstitutionsByType = (type: string) => {
-    this.accountService.getInstitutionByType(type).subscribe(
-      institutionList => this.institutionList = institutionList,
-      error => console.warn(error),
-    );
-  };
+  // private getInstitutionsByType = (type: string) => {
+  //   this.accountService.getInstitutionByType(type).subscribe(
+  //     institutionList => this.institutionList = institutionList,
+  //     error => console.warn(error),
+  //   );
+  // };
 
   filteredInstitutionList: Array<InstitutionListModel> = new Array<InstitutionListModel>();
 
-  createFilteredList() {
-    debugger;
-    this.filteredInstitutionList = this.institutionList.filter(institution => {
-      for (let key in institution) {
-        if (institution[key].includes(this.searchText)) {
-          return institution[key];
-        }
-      }
-    });
-    debugger;
-  }
+  // createFilteredList() {
+  //   debugger;
+  //   this.filteredInstitutionList = this.institutionList.filter(institution => {
+  //     for (let key in institution) {
+  //       if (institution[key].includes(this.searchText)) {
+  //         return institution[key];
+  //       }
+  //     }
+  //   });
+  //   debugger;
+  // }
 
 }

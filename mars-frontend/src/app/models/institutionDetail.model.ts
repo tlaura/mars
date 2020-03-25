@@ -1,3 +1,5 @@
+import {OpeningHoursModel} from "./openingHours.model";
+
 export interface InstitutionDetailModel {
   id: number,
   name: string,
@@ -6,5 +8,9 @@ export interface InstitutionDetailModel {
   address: string,
   email: string,
   description: string,
-  institutionType: string,
+  longitude: number,
+  latitude: number,
+  website: string,
+  phone: string,
+  openingHours: Array<OpeningHoursModel>
 }

@@ -1,6 +1,10 @@
 package com.progmasters.mars.account_institution.institution.dto;
 
 import com.progmasters.mars.account_institution.institution.domain.Institution;
+import com.progmasters.mars.account_institution.institution.openinghours.dto.OpeningHoursData;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class InstitutionDetailsData {
 
@@ -26,6 +30,8 @@ public class InstitutionDetailsData {
 
     private String phone;
 
+    private List<OpeningHoursData> openingHours;
+
     //todo add opening hours
 
 
@@ -41,6 +47,7 @@ public class InstitutionDetailsData {
         this.latitude = institution.getLatitude();
         this.website = institution.getWebsite();
         this.phone = institution.getPhone();
+        this.openingHours = institution.getOpeningHours().stream().map(OpeningHoursData::new).collect(Collectors.toList());
 
     }
 
@@ -100,5 +107,9 @@ public class InstitutionDetailsData {
 
     public String getPhone() {
         return phone;
+    }
+
+    public List<OpeningHoursData> getOpeningHours() {
+        return openingHours;
     }
 }

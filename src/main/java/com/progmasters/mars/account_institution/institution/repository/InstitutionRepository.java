@@ -25,4 +25,7 @@ public interface InstitutionRepository extends JpaRepository<Institution, Long> 
     @Query("select i from Institution i join i.accountInstitutionConnectors ac where ac.providerAccount= :providerAccount")
     List<Institution> getInstitutionsByAccount(@Param("providerAccount") ProviderAccount providerAccount);
 
+    @Query("select i from Institution i where i.accountInstitutionConnectors.size = 0")
+    List<Institution> findInstitutionsWithoutProvider();
+
 }

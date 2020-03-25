@@ -17,10 +17,13 @@ public interface ProviderAccountRepository extends JpaRepository<ProviderAccount
 
     Optional<ProviderAccount> findByEmail(String email);
 
-    List<ProviderAccount> findAllByName(String name);
-
     @Query("select p from ProviderAccount p join p.types t where t= :type")
     List<ProviderAccount> findByType(@Param("type") ProviderType providerType);
 
-    Long findIdByEmail(String loggedInUser);
+    @Query("select p from ProviderAccount p where p.accountInstitutionConnectors.size= 0")
+    List<ProviderAccount> findProviderAccountWithoutInstitution();
+
+    @Query("select distinct p from ProviderAccount p where p.accountInstitutionConnectors.size > 0")
+    List<ProviderAccount> findProviderAccountsWithInstitutions();
+
 }

@@ -1,5 +1,5 @@
 <ng-container>
-  <agm-map [latitude]="latitude" [longitude]="longitude"
+  <agm-map *ngIf="showMap" [latitude]="latitude" [longitude]="longitude"
            [scrollwheel]="null"
            [zoom]="zoom"
            gestureHandling="cooperative">
