@@ -5,7 +5,7 @@
            [styles]="styles"
            gestureHandling="cooperative">
     <agm-marker (markerClick)="markerClick(i)" *ngFor="let location of locations; let i = index"
-                [iconUrl]="getIcon()" [latitude]="location.latitude" [longitude]="location.longitude"
+                [iconUrl]="getIcon(location)" [latitude]="location.latitude" [longitude]="location.longitude"
     >
       <agm-snazzy-info-window #infoWindow
                               [closeWhenOthersOpen]="true"

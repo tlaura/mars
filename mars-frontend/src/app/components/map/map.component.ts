@@ -3,7 +3,7 @@ import {institutionListIndex} from "../../../environments/institutionListIndex.p
 import {MapsAPILoader} from "@agm/core";
 import {InstitutionService} from "../../services/institution.service";
 import {InstitutionDetailModel} from "../../models/institutionDetail.model";
-import {InstitutionListModel} from "../../models/institutionList.model";
+import {AccountInstitutionListModel} from "../../models/accountInstitutionList.model";
 
 
 @Component({
@@ -180,7 +180,7 @@ export class MapComponent implements OnInit {
   longitude: number = institutionListIndex.mapLongitude;
   zoom: number = institutionListIndex.mapZoom;
   @Input() show: boolean = false;
-  @Input() locations: Array<InstitutionListModel>;
+  @Input() locations: Array<AccountInstitutionListModel>;
   institutionDetail: InstitutionDetailModel;
 
   constructor(private mapsAPILoader: MapsAPILoader, private institutionService: InstitutionService) {
@@ -231,15 +231,18 @@ export class MapComponent implements OnInit {
   };
 
   icon_provider = {
-    url: 'https://svgur.com/s/JP2.',
+    url: 'https://svgshare.com/i/JP2.svg',
     scaledSize: {
       width: 40,
       height: 40
     }
   };
 
-  getIcon() {
-    //TODO: choose right icon
-    return this.icon_institution;
+  getIcon(listItem: AccountInstitutionListModel) {
+    if (listItem.accountType == 'PROVIDER') {
+      return this.icon_provider;
+    } else {
+      return this.icon_institution;
+    }
   }
 }
