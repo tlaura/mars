@@ -1,7 +1,7 @@
 package com.progmasters.mars.account_institution.account.dto;
 
 import com.progmasters.mars.account_institution.account.domain.ProviderAccount;
-import com.progmasters.mars.account_institution.institution.dto.InstitutionListData;
+import com.progmasters.mars.account_institution.account.domain.ProviderType;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,7 +21,6 @@ public class ProviderUserDetails {
     private Integer ageGroupMax;
     private List<String> types;
     private Boolean newsletter;
-    private List<InstitutionListData> institutionList;
 
     public ProviderUserDetails(ProviderAccount providerAccount) {
         this.id = providerAccount.getId();
@@ -36,11 +35,8 @@ public class ProviderUserDetails {
         this.ageGroupMin = providerAccount.getAgeGroupMin();
         this.ageGroupMax = providerAccount.getAgeGroupMax();
         this.newsletter = providerAccount.getNewsletter();
-        this.types = providerAccount.getTypes().stream().map(InstitutionType::getHungarianName).collect(Collectors.toList());
-        List<Institution> institutions = providerAccount.getInstitutions();
-        if (institutions != null) {
-            this.institutionList = institutions.stream().map(InstitutionListData::new).collect(Collectors.toList());
-        }
+        this.types = providerAccount.getTypes().stream().map(ProviderType::getHungarianName).collect(Collectors.toList());
+
     }
 
     public ProviderUserDetails() {
@@ -59,9 +55,6 @@ public class ProviderUserDetails {
         this.newsletter = newsletter;
     }
 
-    public List<InstitutionListData> getInstitutionList() {
-        return institutionList;
-    }
 
     public String getPassword() {
         return password;
