@@ -47,6 +47,7 @@ google:
 email:
   send:
     subject: Regisztráció megerősítése
+    subjectPassword: Új jelszó igénylése
     text: Az alábbi linkre kattintva aktiválhatja fiókját
     textPassword: Az alábbi linkre kattintva megadhatja új jelszavát
     confirmation: http://localhost:4200/register-success/

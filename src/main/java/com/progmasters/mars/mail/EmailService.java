@@ -31,6 +31,8 @@ public class EmailService {
 
     @Value("${email.send.subject}")
     private String subject;
+    @Value("${email.send.subject}")
+    private String subjectPassword;
     @Value("${email.send.text}")
     private String text;
     @Value("${email.send.textPassword}")
@@ -90,7 +92,7 @@ public class EmailService {
         passwordTokenRepository.save(providerAccountPasswordToken);
         long start = System.currentTimeMillis();
 
-        CompletableFuture<Long> msgSent = sendMsg(providerAccount.getEmail(), subject, textPassword + "\n" + passwordUrl + providerAccountPasswordToken.getToken());
+        CompletableFuture<Long> msgSent = sendMsg(providerAccount.getEmail(), subjectPassword, textPassword + "\n" + passwordUrl + providerAccountPasswordToken.getToken());
         try {
             logger.info("Elapsed time on message sent:\t" + (msgSent.get() - start));
         } catch (InterruptedException | ExecutionException e) {
