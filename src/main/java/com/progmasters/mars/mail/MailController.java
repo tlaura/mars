@@ -1,6 +1,6 @@
 package com.progmasters.mars.mail;
 
-import com.progmasters.mars.account.service.AccountService;
+import com.progmasters.mars.account_institution.account.service.AccountService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
