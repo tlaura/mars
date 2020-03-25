@@ -10,6 +10,7 @@ import {AccountService} from "../../services/account.service";
 })
 export class MyProfileComponent implements OnInit {
 
+
   providerAccount: ProviderUserProfileDetailsModel;
   accountCopy: ProviderUserProfileDetailsModel;
   loggedInUser;

@@ -195,4 +195,8 @@ public class AccountInstitutionListData {
     public String getWebsite() {
         return website;
     }
+
+    public List<ProviderUserDetails> getProviders() {
+        return providers;
+    }
 }

@@ -1,0 +1,17 @@
+export interface ProviderUserDetalsModel {
+  id: number,
+  providerServiceName: string,
+  name: string,
+  password: string,
+  email: string,
+  phone: string,
+  zipcode: number,
+  city: string,
+  address: string,
+  ageGroupMin: number,
+  ageGroupMax: number,
+  types: Array<string>,
+  newsletter: boolean,
+  longitude: string,
+  latitude: string,
+}
