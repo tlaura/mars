@@ -12,6 +12,7 @@ import {MyProfileComponent} from "./components/my-profile/my-profile.component";
 import {InstitutionImportComponent} from "./components/institution-import/institution-import.component";
 import {InstitutionImportCompleteComponent} from "./components/institution-import-complete/institution-import-complete.component";
 import {EditProfileComponent} from "./components/edit-profile/edit-profile.component";
+import {HomeComponent} from "./components/home/home.component";
 
 
 const routes: Routes = [
@@ -28,7 +29,7 @@ const routes: Routes = [
   {path: "institution-import-complete", component: InstitutionImportCompleteComponent},
   {path: "register-success/:token", component: RegisterSuccessComponent},
   {path: "my-profile", component: MyProfileComponent},
-  {path: "", component: InstitutionListComponent},
+  {path: "", component: HomeComponent},
   {path: "my-profile/edit-profile", component: EditProfileComponent}
 ];
 

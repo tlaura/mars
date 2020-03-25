@@ -1,0 +1,10 @@
+.home-page {
+  width: 101vw;
+  height: 125vh;
+}
+
+.iframe-container {
+  overflow: hidden;
+  margin-top: -15vh;
+  alignment: center;
+}
