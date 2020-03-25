@@ -2,7 +2,6 @@ package com.progmasters.mars.account_institution.account.domain;
 
 import com.progmasters.mars.account_institution.account.dto.ProviderAccountCreationCommand;
 import com.progmasters.mars.account_institution.connector.AccountInstitutionConnector;
-import com.progmasters.mars.account_institution.institution.location.GeoLocation;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -100,12 +99,6 @@ public class ProviderAccount {
     }
 
     public ProviderAccount() {
-    }
-
-    public ProviderAccount(ProviderAccountCreationCommand providerAccountCreationCommand, GeoLocation geoLocation) {
-        this(providerAccountCreationCommand);
-        this.latitude = geoLocation.getLatitude();
-        this.longitude = geoLocation.getLongitude();
     }
 
     public Long getId() {

@@ -37,7 +37,6 @@ public class AccountService {
         providerAccount.setPassword(passwordEncoder.encode(providerAccountCreationCommand.getPassword()));
         providerAccountRepository.save(providerAccount);
 
-
         return providerAccount;
     }
 
@@ -70,6 +69,14 @@ public class AccountService {
 
     List<ProviderAccount> findAllAccounts() {
         return providerAccountRepository.findAll();
+    }
+
+    public List<ProviderAccount> findAllAccountsWithoutInstitution() {
+        return providerAccountRepository.findProviderAccountWithoutInstitution();
+    }
+
+    public List<ProviderAccount> findAllAccountsWithInstitution() {
+        return providerAccountRepository.findProviderAccountsWithInstitutions();
     }
 
     public boolean isUserConfirmed(String email) {

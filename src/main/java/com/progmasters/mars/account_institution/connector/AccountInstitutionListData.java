@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 public class AccountInstitutionListData {
 
-    private AccountType accountType;
+    private String accountType;
     //account info
     private Long id;
 
@@ -57,7 +57,7 @@ public class AccountInstitutionListData {
     }
 
     public AccountInstitutionListData(Institution institution) {
-        this.accountType = AccountType.INSTITUTION;
+        this.accountType = AccountType.INSTITUTION.toString();
 
         this.id = institution.getId();
         this.name = institution.getName();
@@ -74,7 +74,7 @@ public class AccountInstitutionListData {
     }
 
     public AccountInstitutionListData(ProviderAccount providerAccount) {
-        this.accountType = AccountType.PROVIDER;
+        this.accountType = AccountType.PROVIDER.toString();
 
         this.id = providerAccount.getId();
         this.providerServiceName = providerAccount.getProviderServiceName();
@@ -90,19 +90,24 @@ public class AccountInstitutionListData {
         this.newsletter = providerAccount.getNewsletter();
         this.latitude = providerAccount.getLatitude();
         this.longitude = providerAccount.getLongitude();
+
+        List<AccountInstitutionConnector> accountConnectors = providerAccount.getAccountInstitutionConnectors();
+        if (accountConnectors != null) {
+            this.institutions = accountConnectors.stream().map(AccountInstitutionConnector::getInstitution).map(InstitutionDetailsData::new).collect(Collectors.toList());
+        }
     }
 
     public AccountInstitutionListData(ProviderAccount providerAccount, List<Institution> institutions) {
         this(providerAccount);
 
-        this.accountType = AccountType.PROVIDER_WITH_INSTITUTION;
+        this.accountType = AccountType.PROVIDER_WITH_INSTITUTION.toString();
 
         this.institutions = institutions.stream().map(InstitutionDetailsData::new).collect(Collectors.toList());
 
     }
 
 
-    public AccountType getAccountType() {
+    public String getAccountType() {
         return accountType;
     }
 

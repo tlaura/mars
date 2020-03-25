@@ -49,19 +49,19 @@ public class AccountInstitutionService {
     //todo read about spring boot exception handling
     public void save(ProviderAccountCreationCommand providerAccountCreationCommand) throws NotFoundException {
         String address = providerAccountCreationCommand.getZipcode() + " " + providerAccountCreationCommand.getCity() + " " + providerAccountCreationCommand.getAddress();
-        ProviderAccount savedAccount;
+        ProviderAccount savedAccount = accountService.save(providerAccountCreationCommand);
         if (address.trim().length() > 0) {
             GeoLocation geoLocation = geocodeService.getGeoLocation(address);
-            savedAccount = new ProviderAccount(providerAccountCreationCommand, geoLocation);
-        } else {
-            savedAccount = accountService.save(providerAccountCreationCommand);
+            savedAccount.setLongitude(geoLocation.getLongitude());
+            savedAccount.setLatitude(geoLocation.getLatitude());
         }
         List<InstitutionCreationCommand> institutions = providerAccountCreationCommand.getInstitutions();
-        for (InstitutionCreationCommand institutionCreationCommand : institutions) {
-            Institution savedInstitution = institutionOpeningHoursService.save(institutionCreationCommand);
-            saveAccountInstitutionConnection(savedAccount, savedInstitution);
+        if (!institutions.isEmpty()) {
+            for (InstitutionCreationCommand institutionCreationCommand : institutions) {
+                Institution savedInstitution = institutionOpeningHoursService.save(institutionCreationCommand);
+                saveAccountInstitutionConnection(savedAccount, savedInstitution);
+            }
         }
-
         emailService.sendConfirmationEmail(savedAccount);
     }
 
@@ -77,6 +77,18 @@ public class AccountInstitutionService {
         List<Institution> institutions = institutionService.getInstitutionsByAccount(foundAccount);
         institutions.forEach(institution -> accountInstitutionConnectorRepository.removeConnection(foundAccount, institution));
         accountService.removeById(foundAccount.getId());
+    }
+
+    public List<AccountInstitutionListData> getAllListItems() {
+        List<AccountInstitutionListData> allAccounts = new ArrayList<>();
+        List<ProviderAccount> providerAccounts = accountService.findAllAccountsWithoutInstitution();
+        List<ProviderAccount> providerAccountWithInstitution = accountService.findAllAccountsWithInstitution();
+        List<Institution> institutions = institutionService.findInstitutionsWithoutProvider();
+        providerAccounts.stream().map(AccountInstitutionListData::new).forEach(allAccounts::add);
+        institutions.stream().map(AccountInstitutionListData::new).forEach(allAccounts::add);
+        providerAccountWithInstitution.stream().map(AccountInstitutionListData::new).forEach(allAccounts::add);
+
+        return allAccounts;
     }
 
 
