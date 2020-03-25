@@ -2,6 +2,8 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ProviderUserProfileDetailsModel} from "../../models/providerUserProfileDetails.model";
 import {LoginService} from "../../services/login.service";
 import {AccountService} from "../../services/account.service";
+import {FormControl, Validators} from "@angular/forms";
+import {validatorBounds} from "../../../environments/validatorBounds";
 
 @Component({
   selector: 'app-my-profile',
@@ -16,6 +18,9 @@ export class MyProfileComponent implements OnInit {
   editMode = false;
   @Input() name: string;
   @Output() focusOut: EventEmitter<any> = new EventEmitter<any>();
+  username = new FormControl('', [Validators.required, Validators.pattern(validatorBounds.nameRegex)]);
+  providerServiceName = new FormControl('', [Validators.required, Validators.pattern(validatorBounds.nameRegex)]);
+  phone = new FormControl('', [Validators.required, Validators.pattern(validatorBounds.phoneRegex)]);
 
   constructor(private loginService: LoginService, public providerService: AccountService) {
   }
