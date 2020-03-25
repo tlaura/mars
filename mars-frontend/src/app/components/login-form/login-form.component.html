@@ -9,7 +9,7 @@
                  type="email">
           <small *ngIf="loginForm.get('userName').invalid && loginForm.get('userName').touched"
                  class="text-danger col-sm-12 col-md-12">
-            A mező kitöltése közelező!
+            Helytelen email cím!
           </small>
         </div>
 
@@ -33,7 +33,7 @@
         <div *ngIf="showUnauthorizedMessage" class="alert alert-danger rounded-pill">
           Helytelen felhasználónév vagy jelszó!
         </div>
-        <div *ngIf="showUncofirmedMessage" class="alert alert-danger rounded-pill">
+        <div *ngIf="showUnconfirmedMessage" class="alert alert-danger rounded-pill">
           Kérjük aktiválja fiókját az email-ben kapott üzenet alapján!
         </div>
 

@@ -29,7 +29,6 @@ public class AccountController {
     private final AccountInstitutionService accountInstitutionService;
     private final AccountService accountService;
 
-
     @Autowired
     public AccountController(ProviderAccountValidator providerAccountValidator, AccountInstitutionService accountInstitutionService, AccountService accountService) {
         this.accountInstitutionService = accountInstitutionService;
@@ -76,18 +75,14 @@ public class AccountController {
     @PutMapping("/{id}")
     public ResponseEntity<Void> updateProviderAccount(@Valid @RequestBody ProviderUserDetails providerUserDetails, @PathVariable Long id) {
         logger.info("Provider Account update requested");
-
         accountService.updateProviderAccountDetails(providerUserDetails, id);
-
         return new ResponseEntity<>(HttpStatus.OK);
-
     }
 
     @DeleteMapping("/delete/{loggedInUser}/{id}")
     public ResponseEntity<Void> removeAccountInstitutionConnection(@PathVariable String loggedInUser, @PathVariable Long id) {
         logger.info("Detach Institution by id:\t" + id + "\tfrom\t" + loggedInUser);
         accountInstitutionService.detachInstitutionFromAccount(loggedInUser, id);
-
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
