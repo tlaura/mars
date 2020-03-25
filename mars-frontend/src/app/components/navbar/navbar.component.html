@@ -31,8 +31,9 @@
                                                        routerLinkActive="active">Intézmények</a>
       </li>
 
-      <li class="nav-item font-weight-lighter mx-3"><a class="nav-link" routerLink="institution-import"
-                                                       routerLinkActive="active">Intézmények importálása</a>
+      <li *ngIf="isAdmin" class="nav-item font-weight-lighter mx-3"><a class="nav-link" routerLink="institution-import"
+                                                                       routerLinkActive="active">Intézmények
+        importálása</a>
       </li>
 
       <li class="nav-item font-weight-lighter mx-3"><a class="nav-link" routerLink="institution-form"

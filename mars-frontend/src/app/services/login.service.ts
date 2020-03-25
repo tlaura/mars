@@ -30,4 +30,5 @@ export class LoginService {
   getCurrentUser = (): LoggedInUserDetailsModel => {
     return JSON.parse(localStorage.getItem('user'));
   }
+
 }

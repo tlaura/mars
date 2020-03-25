@@ -10,12 +10,18 @@ import {BehaviorSubject} from "rxjs";
 })
 export class NavbarComponent implements OnInit {
 
+  isAdmin: boolean = false;
+
   constructor(public loginService: LoginService, private router: Router) {
+
   }
 
   ngOnInit() {
     const isUserLoggedIn = localStorage.getItem('user') === 'true';
     this.loginService.loggedIn$ = new BehaviorSubject(isUserLoggedIn);
+    this.loginService.loggedIn$.subscribe(
+      () => this.isAdmin = this.loginService.getCurrentUser()?.role == "ROLE_ADMIN"
+    )
   }
 
   logout() {
@@ -27,5 +33,6 @@ export class NavbarComponent implements OnInit {
       }
     );
   }
+
 
 }
