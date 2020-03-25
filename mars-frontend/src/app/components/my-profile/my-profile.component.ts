@@ -41,7 +41,10 @@ export class MyProfileComponent implements OnInit {
     // if(this.providerAccount.id == null) error
     this.providerService.editProviderAccountDetails(this.providerAccount, this.providerAccount.id).subscribe(
       () => {
-        this.editModeChange();
+        if (this.editMode) {
+          this.editMode = false;
+          this.accountCopy = Object.assign({}, this.providerAccount);
+        }
         console.log("Data changes saved");
       }, error => {
         console.log(error);
