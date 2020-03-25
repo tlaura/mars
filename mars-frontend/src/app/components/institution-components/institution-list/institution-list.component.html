@@ -33,9 +33,11 @@
             <div class="col text-left">
               <a [href]="'institution-details/' + institution.id"
                  class="custom-link row mx-0 font-weight-bold text-uppercase">{{institution.name}}</a>
-              <label class="row mx-0 ">{{institution.zipcode}} {{institution.city}} {{institution.address}}</label>
-              <label *ngIf="institution.type" class="row mx-0">{{institution.type}}</label>
-              <label class="row mx-0 small">{{institution.description}}</label>
+              <i class="icon-tomato fas fa-map-marker-alt"></i><label
+              class="row mx-0 ">{{institution.zipcode}} {{institution.city}} {{institution.address}}</label>
+              <i class="fas fa-at icon-tomato"></i><label class="row mx-0 small">{{institution.email}}</label>
+              <i class="fas fa-lg fa-mobile-alt icon-tomato"></i><label
+              class="row mx-0 small">{{institution.phone}}</label>
               <hr *ngIf="!last"/>
             </div>
           </div>

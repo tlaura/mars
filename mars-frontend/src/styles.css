@@ -198,3 +198,7 @@ select#types {
 .white-block-on-tomato-div .delete-white {
   color: tomato;
 }
+
+.icon-tomato {
+  color: tomato !important;
+}
