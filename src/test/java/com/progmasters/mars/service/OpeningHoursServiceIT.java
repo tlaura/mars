@@ -1,13 +1,13 @@
 package com.progmasters.mars.service;
 
 import com.google.maps.errors.NotFoundException;
-import com.progmasters.mars.institution.InstitutionBuilder;
-import com.progmasters.mars.institution.domain.Institution;
-import com.progmasters.mars.institution.dto.InstitutionCreationCommand;
-import com.progmasters.mars.institution.openinghours.dto.OpeningHoursCreationCommand;
-import com.progmasters.mars.institution.openinghours.dto.OpeningHoursData;
-import com.progmasters.mars.institution.openinghours.service.OpeningHoursService;
-import com.progmasters.mars.institution.service.InstitutionService;
+import com.progmasters.mars.account_institution.institution.InstitutionBuilder;
+import com.progmasters.mars.account_institution.institution.domain.Institution;
+import com.progmasters.mars.account_institution.institution.dto.InstitutionCreationCommand;
+import com.progmasters.mars.account_institution.institution.openinghours.dto.OpeningHoursCreationCommand;
+import com.progmasters.mars.account_institution.institution.openinghours.dto.OpeningHoursData;
+import com.progmasters.mars.account_institution.institution.openinghours.service.OpeningHoursService;
+import com.progmasters.mars.account_institution.institution.service.InstitutionService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,12 +43,12 @@ public class OpeningHoursServiceIT {
         InstitutionCreationCommand institutionCreationCommand = createInstitution();
         this.openingHoursList = createOpeningHoursList();
         try {
-            institutionService.createInstitution(institutionCreationCommand);
+            institutionService.saveInstitution(institutionCreationCommand);
         } catch (NotFoundException e) {
             e.printStackTrace();
         }
         this.institution = institutionService.findByName(institutionCreationCommand.getName());
-        openingHoursService.saveToInstitution(openingHoursList, institution);
+        openingHoursList.forEach(openingHoursCreationCommand -> openingHoursService.saveOpeningHoursToInstitution(openingHoursCreationCommand, institution));
     }
 
     @Test
