@@ -6,6 +6,7 @@ import com.progmasters.mars.account_institution.account.ProviderAccountBuilder;
 import com.progmasters.mars.account_institution.account.domain.ProviderAccount;
 import com.progmasters.mars.account_institution.account.domain.ProviderType;
 import com.progmasters.mars.account_institution.institution.dto.InstitutionListData;
+import com.progmasters.mars.account_institution.institution.location.GeocodeService;
 import com.progmasters.mars.account_institution.institution.service.InstitutionOpeningHoursService;
 import com.progmasters.mars.account_institution.institution.service.InstitutionService;
 import com.progmasters.mars.mail.EmailService;
@@ -49,9 +50,12 @@ public class AccountInstitutionServiceIT {
     @Mock
     private AccountInstitutionConnectorRepository accountInstitutionConnectorRepository;
 
+    @Mock
+    private GeocodeService geocodeService;
+
     @BeforeEach
     public void init() {
-        this.accountInstitutionService = new AccountInstitutionService(accountServiceMock, institutionServiceMock, institutionOpeningHoursServiceMock, emailServiceMock, accountInstitutionConnectorRepository);
+        this.accountInstitutionService = new AccountInstitutionService(accountServiceMock, institutionServiceMock, institutionOpeningHoursServiceMock, emailServiceMock, accountInstitutionConnectorRepository, geocodeService);
     }
 
     @Test

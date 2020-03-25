@@ -11,6 +11,6 @@ import org.springframework.stereotype.Repository;
 public interface AccountInstitutionConnectorRepository extends JpaRepository<AccountInstitutionConnector, Long> {
 
     @Query("delete from AccountInstitutionConnector c where c.providerAccount= :providerAccount and c.institution= :institution")
-    void removeConnection(@Param("account") ProviderAccount providerAccount, @Param("institution") Institution institution);
+    void removeConnection(@Param("providerAccount") ProviderAccount providerAccount, @Param("institution") Institution institution);
 
 }

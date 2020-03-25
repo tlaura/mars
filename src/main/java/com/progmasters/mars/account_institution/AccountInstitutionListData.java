@@ -45,7 +45,6 @@ public class AccountInstitutionListData {
 
     private List<InstitutionDetailsData> institutions = new ArrayList<>();
 
-
     //institution info
 
     private String description;
