@@ -1,8 +1,8 @@
 package com.progmasters.mars.mail;
 
-import com.progmasters.mars.account.confirmationtoken.ConfirmationToken;
-import com.progmasters.mars.account.service.AccountInstitutionService;
-import com.progmasters.mars.account.service.AccountService;
+import com.progmasters.mars.account_institution.AccountInstitutionService;
+import com.progmasters.mars.account_institution.account.confirmationtoken.ConfirmationToken;
+import com.progmasters.mars.account_institution.account.service.AccountService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +49,7 @@ public class ExpirationService {
             if (!confirmationToken.isConfirmed() && tokenExpired) {
                 accountService.removeConfirmationToken(confirmationToken.getId());
                 Long userId = confirmationToken.getUser().getId();
-                accountInstitutionService.deleteAccountById(userId);
+                     accountInstitutionService.deleteAccountById(userId);
                 logger.info("Account ID removed from db:\t" + userId);
             }
         }
