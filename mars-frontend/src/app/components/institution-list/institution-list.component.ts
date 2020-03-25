@@ -120,4 +120,19 @@ export class InstitutionListComponent implements OnInit {
       error => console.warn(error),
     );
   };
+
+  filteredInstitutionList: Array<InstitutionListModel> = new Array<InstitutionListModel>();
+
+  createFilteredList() {
+    debugger;
+    this.filteredInstitutionList = this.institutionList.filter(institution => {
+      for (let key in institution) {
+        if (institution[key].includes(this.searchText)) {
+          return institution[key];
+        }
+      }
+    });
+    debugger;
+  }
+
 }

@@ -10,4 +10,10 @@ export function validationHandler(error, form: FormGroup) {
       }
     }
   }
+  if (error instanceof HttpErrorResponse && error.status === 404) {
+    const formControl = form.get('address');
+    if (formControl) {
+      formControl.setErrors({serverError: 'Hibásan megadott cím!'});
+    }
+  }
 }

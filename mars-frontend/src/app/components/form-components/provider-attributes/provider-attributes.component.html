@@ -43,6 +43,10 @@
             name="types">
       <option *ngFor="let type of allType" value="{{type.displayName}}">{{type.displayName}}</option>
     </select>
+    <small *ngIf="providerAttributesFormGroup.get('types').invalid && providerAttributesFormGroup.get('types').touched"
+           class="text-danger-custom">
+      A mező kitöltése kötelező!
+    </small>
   </div>
 
   <div class="row m-0">

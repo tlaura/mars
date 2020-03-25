@@ -6,4 +6,7 @@
       Érvénytelen email cím!
     </small>
   </div>
+  <small class="text-danger-custom">
+    {{emailFormGroup.get('email').errors['serverError']}}
+  </small>
 </form>

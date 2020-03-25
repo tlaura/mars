@@ -31,11 +31,11 @@ html * {
   box-shadow: none !important;
 }
 
-.register-div.text-danger-custom {
+.register-div .text-danger-custom {
   color: tomato;
 }
 
-.register-div.select-tomato {
+.register-div .select-tomato {
   border: 1px solid tomato;
   color: tomato;
   outline: 0;
@@ -48,11 +48,11 @@ html * {
   box-shadow: #b34532 0.5rem 0.5rem;
 }
 
-.white-block-on-tomato-div.input-group-text {
-  background-color: tomato;
+.white-block-on-tomato-div .input-group-text {
+  background-color: tomato !important;
 }
 
-.white-block-on-tomato-div.text-danger-custom {
+.white-block-on-tomato-div .text-danger-custom {
   color: tomato !important;
 }
 
@@ -81,13 +81,13 @@ html * {
   color: white !important;
 }
 
-.blue-block-on-white-div.delete {
+.blue-block-on-white-div .delete {
   background-color: white !important;
   border: cornflowerblue !important;
   color: cornflowerblue !important;
 }
 
-.blue-block-on-white-div.input-group-text {
+.blue-block-on-white-div .input-group-text {
   background-color: cornflowerblue;
 }
 
