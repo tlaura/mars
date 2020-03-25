@@ -61,4 +61,8 @@ export class LoginFormComponent implements OnInit {
       :
       document.getElementById('password').setAttribute('type', 'password')
   }
+
+  forgotPassword() {
+    this.router.navigate(['new-password']);
+  }
 }

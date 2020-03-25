@@ -35,6 +35,10 @@ import {environment} from "../environments/environment";
 import {InstitutionImportCompleteComponent} from './components/institution-import-complete/institution-import-complete.component';
 import {EditProfileComponent} from './components/edit-profile/edit-profile.component';
 import {HomeComponent} from './components/home/home.component';
+import {NewPasswordComponent} from './components/new-password-components/new-password/new-password.component';
+import {NewPasswordCompleteComponent} from './components/new-password-components/new-password-complete/new-password-complete.component';
+import {NewPasswordFormComponent} from './components/new-password-components/new-password-form/new-password-form.component';
+import {NewPasswordSuccessComponent} from './components/new-password-components/new-password-success/new-password-success.component';
 
 export function getAuthServiceConfigs() {
   let config = new SocialServiceConfig()
@@ -71,6 +75,10 @@ export function getAuthServiceConfigs() {
     InstitutionImportCompleteComponent,
     EditProfileComponent,
     HomeComponent,
+    NewPasswordComponent,
+    NewPasswordCompleteComponent,
+    NewPasswordFormComponent,
+    NewPasswordSuccessComponent,
   ],
   imports: [
     BrowserModule,

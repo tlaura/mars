@@ -3,6 +3,8 @@ package com.progmasters.mars.mail;
 import com.progmasters.mars.account_institution.account.confirmationtoken.ConfirmationToken;
 import com.progmasters.mars.account_institution.account.confirmationtoken.ConfirmationTokenRepository;
 import com.progmasters.mars.account_institution.account.domain.ProviderAccount;
+import com.progmasters.mars.account_institution.account.passwordtoken.PasswordToken;
+import com.progmasters.mars.account_institution.account.passwordtoken.PasswordTokenRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,19 +26,25 @@ public class EmailService {
 
     private final JavaMailSender javaMailSender;
     private final ConfirmationTokenRepository confirmationTokenRepository;
+    private final PasswordTokenRepository passwordTokenRepository;
     private final Logger logger = LoggerFactory.getLogger(EmailService.class);
 
     @Value("${email.send.subject}")
     private String subject;
     @Value("${email.send.text}")
     private String text;
+    @Value("${email.send.textPassword}")
+    private String textPassword;
     @Value("${email.send.confirmation}")
     private String confirmationUrl;
+    @Value("${email.send.password}")
+    private String passwordUrl;
 
     @Autowired
-    public EmailService(JavaMailSender javaMailSender, ConfirmationTokenRepository confirmationTokenRepository) {
+    public EmailService(JavaMailSender javaMailSender, ConfirmationTokenRepository confirmationTokenRepository, PasswordTokenRepository passwordTokenRepository) {
         this.javaMailSender = javaMailSender;
         this.confirmationTokenRepository = confirmationTokenRepository;
+        this.passwordTokenRepository = passwordTokenRepository;
     }
 
     @Async
@@ -70,6 +78,19 @@ public class EmailService {
         long start = System.currentTimeMillis();
 
         CompletableFuture<Long> msgSent = sendMsg(user.getEmail(), subject, text + "\n" + confirmationUrl + userToken.getToken());
+        try {
+            logger.info("Elapsed time on message sent:\t" + (msgSent.get() - start));
+        } catch (InterruptedException | ExecutionException e) {
+            logger.warn(e.getMessage());
+        }
+    }
+
+    public void sendPasswordEmail(ProviderAccount providerAccount) {
+        PasswordToken providerAccountPasswordToken = new PasswordToken(providerAccount);
+        passwordTokenRepository.save(providerAccountPasswordToken);
+        long start = System.currentTimeMillis();
+
+        CompletableFuture<Long> msgSent = sendMsg(providerAccount.getEmail(), subject, textPassword + "\n" + passwordUrl + providerAccountPasswordToken.getToken());
         try {
             logger.info("Elapsed time on message sent:\t" + (msgSent.get() - start));
         } catch (InterruptedException | ExecutionException e) {

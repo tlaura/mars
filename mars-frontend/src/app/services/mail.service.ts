@@ -20,5 +20,13 @@ export class MailService {
 
   sendEmail = (mailModel: EmailModel): Observable<any> => {
     return this.http.post(this.BASE_URL, mailModel);
+  };
+
+  updatePassword = (token: string, password: string): Observable<any> => {
+    return this.http.put(this.BASE_URL + "new-password/" + token, password);
+  };
+
+  sendNewPasswordRequest = (email: string): Observable<any> => {
+    return this.http.post(this.BASE_URL + "new-password", email);
   }
 }

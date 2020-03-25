@@ -10,7 +10,8 @@ const BASE_URL: string = environment.BASE_URL + '/api/user';
   providedIn: 'root'
 })
 export class LoginService {
-  public loggedIn$: BehaviorSubject<boolean>;
+  public loggedIn$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+
 
   constructor(private http: HttpClient) {
   }

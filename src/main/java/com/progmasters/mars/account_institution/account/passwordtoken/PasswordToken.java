@@ -1,4 +1,4 @@
-package com.progmasters.mars.account_institution.account.confirmationtoken;
+package com.progmasters.mars.account_institution.account.passwordtoken;
 
 import com.progmasters.mars.account_institution.account.domain.ProviderAccount;
 
@@ -7,15 +7,15 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
-@Table(name = "confirmation_token")
-public class ConfirmationToken {
+@Table(name = "password_token")
+public class PasswordToken {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "token_id")
     private Long id;
 
-    @Column(name = "confirmation_token")
+    @Column(name = "password_token")
     private String token = UUID.randomUUID().toString();
 
     //TODO Ez itt lehetne még szebb, ha ZonedDateTime mentődne a DB-be,
@@ -27,16 +27,12 @@ public class ConfirmationToken {
     @OneToOne
     private ProviderAccount user;
 
-    private boolean confirmed = false;
-
-    public ConfirmationToken() {
+    public PasswordToken() {
     }
 
-    public ConfirmationToken(ProviderAccount user) {
+    public PasswordToken(ProviderAccount user) {
         this.user = user;
     }
-
-    //----------------------
 
     public Long getId() {
         return id;
@@ -62,15 +58,6 @@ public class ConfirmationToken {
         this.date = date;
     }
 
-
-    public boolean isConfirmed() {
-        return confirmed;
-    }
-
-    public void setConfirmed(boolean confirmed) {
-        this.confirmed = confirmed;
-    }
-
     public ProviderAccount getUser() {
         return user;
     }
@@ -78,5 +65,4 @@ public class ConfirmationToken {
     public void setUser(ProviderAccount user) {
         this.user = user;
     }
-
 }

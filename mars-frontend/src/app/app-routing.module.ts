@@ -13,6 +13,10 @@ import {InstitutionImportComponent} from "./components/institution-import/instit
 import {InstitutionImportCompleteComponent} from "./components/institution-import-complete/institution-import-complete.component";
 import {EditProfileComponent} from "./components/edit-profile/edit-profile.component";
 import {HomeComponent} from "./components/home/home.component";
+import {NewPasswordComponent} from "./components/new-password-components/new-password/new-password.component";
+import {NewPasswordCompleteComponent} from "./components/new-password-components/new-password-complete/new-password-complete.component";
+import {NewPasswordFormComponent} from "./components/new-password-components/new-password-form/new-password-form.component";
+import {NewPasswordSuccessComponent} from "./components/new-password-components/new-password-success/new-password-success.component";
 
 
 const routes: Routes = [
@@ -24,6 +28,10 @@ const routes: Routes = [
   {path: "institution-details/:id", component: InstitutionDetailsComponent},
   {path: "user-form", component: UserFormComponent},
   {path: "login", component: LoginFormComponent},
+  {path: "new-password", component: NewPasswordComponent},
+  {path: "new-password-complete", component: NewPasswordCompleteComponent},
+  {path: "new-password-success", component: NewPasswordSuccessComponent},
+  {path: "new-password/:token", component: NewPasswordFormComponent},
   {path: "register", component: RegisterComponent},
   {path: "registration-complete", component: RegistrationCompleteComponent},
   {path: "institution-import-complete", component: InstitutionImportCompleteComponent},

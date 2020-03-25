@@ -38,7 +38,9 @@
         </div>
 
         <div class="form-group">
-          <p>Elfelejtett jelszó? <a href="#">Kattints ide!</a></p>
+          <p>Elfelejtett jelszó?
+            <button (click)="forgotPassword()" class="btn btn-sm btn-link">Kattints ide!</button>
+          </p>
           <p>Még nincs fiókod? <a routerLink="/register">Regisztrálj!</a></p>
         </div>
 

@@ -81,12 +81,6 @@ html * {
   color: white !important;
 }
 
-.blue-block-on-white-div .delete {
-  background-color: white !important;
-  border: cornflowerblue !important;
-  color: cornflowerblue !important;
-}
-
 .blue-block-on-white-div .input-group-text {
   background-color: cornflowerblue;
 }
@@ -198,7 +192,7 @@ select#types {
 }
 
 .blue-block-on-white-div .delete-white {
-  color: white;
+  color: white !important;
 }
 
 .white-block-on-tomato-div .delete-white {

@@ -48,7 +48,9 @@ email:
   send:
     subject: Regisztráció megerősítése
     text: Az alábbi linkre kattintva aktiválhatja fiókját
+    textPassword: Az alábbi linkre kattintva megadhatja új jelszavát
     confirmation: http://localhost:4200/register-success/
+    password: http://localhost:4200/new-password/
   elapsed-hours: 72
 
 cors-policies: http://localhost:4200, http://127.0.0.1:4200

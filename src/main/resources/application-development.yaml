@@ -6,5 +6,6 @@ spring:
 email:
   send:
     confirmation: https://mars-demo.progmasters.hu/register-success/
+    password: https://mars-demo.progmasters.hu/new-password/
 
 cors-policies: http://54.229.84.224, https://54.229.84.224, http://mars-demo.progmasters.hu, https://mars-demo.progmasters.hu
