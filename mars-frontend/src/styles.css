@@ -197,6 +197,10 @@ select#types {
   background: tomato;
 }
 
-.delete-white {
+.blue-block-on-white-div .delete-white {
   color: white;
+}
+
+.white-block-on-tomato-div .delete-white {
+  color: tomato;
 }
