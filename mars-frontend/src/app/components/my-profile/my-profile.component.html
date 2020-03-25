@@ -29,10 +29,10 @@
           <input
             *ngIf='editMode'
             [(ngModel)]='providerAccount.name' class='text-dark' type='text'>
-          <!--        <small *ngIf="providerAccount.get('password').invalid && loginForm.get('password').touched"-->
-          <!--               class="text-danger col-sm-12 col-md-12">-->
-          <!--          A mező kitöltése közelező!-->
-          <!--        </small>-->
+          <small *ngIf="!providerAccount?.name"
+                 class="text-danger col-sm-12 col-md-12">
+            A mező kitöltése közelező!
+          </small>
         </div>
         <br>
 
@@ -101,7 +101,15 @@
         <div class="col-sm-9">
           <p>{{providerAccount?.ageGroupMin}} - {{providerAccount?.ageGroupMax}}</p>
         </div>
-        <br>
+
+        <!--        <div>-->
+        <!--          <label for="newsletter">Hírlevél</label>-->
+        <!--          <p>-->
+        <!--            <input class="form-check-input mt-0" formControlName="newsletter" id="newsletter" type="checkbox" [checked]="providerAccount?.newsletter">-->
+        <!--          </p>-->
+        <!--        </div>-->
+        <!--        <label>Hírlevél:</label>-->
+        <!--          <input class="form-check-input mt-0" type="checkbox">-->
 
         <button (click)="saveChanges()" class="submit btn btn-info rounded-pill" type="submit">
           Mentés

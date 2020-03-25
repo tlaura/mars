@@ -8,6 +8,7 @@ import com.progmasters.mars.account_institution.account.dto.ProviderAccountCreat
 import com.progmasters.mars.account_institution.account.dto.ProviderUserDetails;
 import com.progmasters.mars.account_institution.account.dto.ProviderUserDetailsEdit;
 import com.progmasters.mars.account_institution.account.repository.ProviderAccountRepository;
+import com.progmasters.mars.account_institution.account.security.AuthenticatedUserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -90,6 +91,10 @@ public class AccountService {
 
     public void removeConfirmationToken(Long id) {
         confirmationTokenRepository.deleteById(id);
+    }
+
+    public AuthenticatedUserDetails getAuthenticatedUserDetails(String email) {
+        return new AuthenticatedUserDetails(findByEmail(email));
     }
 
     public void confirmUserToken(String token) {
