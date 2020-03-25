@@ -1,6 +1,7 @@
 package com.progmasters.mars.account_institution.institution.repository;
 
 import com.progmasters.mars.account_institution.account.domain.ProviderAccount;
+import com.progmasters.mars.account_institution.account.domain.ProviderType;
 import com.progmasters.mars.account_institution.institution.domain.Institution;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -30,4 +31,7 @@ public interface InstitutionRepository extends JpaRepository<Institution, Long> 
 
     @Query("select distinct i from Institution i where i.accountInstitutionConnectors.size > 0")
     List<Institution> findInstitutionsWithProvider();
+
+    @Query("select i from Institution i join i.accountInstitutionConnectors ac join ac.providerAccount p where p.types= :type")
+    List<Institution> findInstitutionsByProviderType(@Param("type") ProviderType providerType);
 }

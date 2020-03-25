@@ -2,6 +2,7 @@ package com.progmasters.mars.account_institution.institution.service;
 
 import com.google.maps.errors.NotFoundException;
 import com.progmasters.mars.account_institution.account.domain.ProviderAccount;
+import com.progmasters.mars.account_institution.account.domain.ProviderType;
 import com.progmasters.mars.account_institution.institution.domain.Institution;
 import com.progmasters.mars.account_institution.institution.dto.InstitutionCreationCommand;
 import com.progmasters.mars.account_institution.institution.dto.InstitutionDetailsData;
@@ -45,6 +46,11 @@ public class InstitutionService {
                 .stream()
                 .map(InstitutionListData::new)
                 .collect(Collectors.toList());
+    }
+
+
+    public List<Institution> findInstitutionByProviderType(ProviderType providerType) {
+        return institutionRepository.findInstitutionsByProviderType(providerType);
     }
 
     public List<Institution> getInstitutionsByAccount(ProviderAccount providerAccount) {

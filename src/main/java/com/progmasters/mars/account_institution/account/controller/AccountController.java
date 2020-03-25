@@ -7,8 +7,8 @@ import com.progmasters.mars.account_institution.account.dto.ProviderAccountCreat
 import com.progmasters.mars.account_institution.account.dto.ProviderUserDetails;
 import com.progmasters.mars.account_institution.account.dto.ProviderUserDetailsEdit;
 import com.progmasters.mars.account_institution.account.service.AccountService;
+import com.progmasters.mars.account_institution.connector.AccountInstitutionListData;
 import com.progmasters.mars.account_institution.connector.AccountInstitutionService;
-import com.progmasters.mars.account_institution.institution.dto.InstitutionListData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +42,14 @@ public class AccountController {
         binder.addValidators(providerAccountValidator);
     }
 
+    @GetMapping("/provider-details/{id}")
+    public ResponseEntity<ProviderUserDetails> getProviderUserDetail(@PathVariable Long id) {
+        logger.info("User details is requested by id:\t" + id);
+        ProviderUserDetails foundUserDetails = accountService.getUserDetailsById(id);
+
+        return new ResponseEntity<>(foundUserDetails, HttpStatus.OK);
+    }
+
     @PostMapping
     public ResponseEntity<Void> createProviderAccount(@RequestBody @Valid ProviderAccountCreationCommand providerAccountCreationCommand) {
         try {
@@ -60,12 +68,13 @@ public class AccountController {
         return new ResponseEntity<>(accountService.getProviderAccountByEmail(username), HttpStatus.OK);
     }
 
-    @GetMapping("/getInstitutionsByType")
-    public ResponseEntity<List<InstitutionListData>> getInstitutionByType(@RequestParam("type") String type) {
+    @GetMapping("/providersByType")
+    public ResponseEntity<List<AccountInstitutionListData>> getInstitutionByType(@RequestParam("type") String type) {
         ProviderType providerType = ProviderType.valueOf(type);
-        List<InstitutionListData> institutionListData = accountInstitutionService.getInstitutionsByAccountType(providerType);
+        List<AccountInstitutionListData> providerListByTypes = accountInstitutionService.getInstitutionsByAccountType(providerType);
+
         logger.info("Institution List is requested by type!");
-        return new ResponseEntity<>(institutionListData, HttpStatus.OK);
+        return new ResponseEntity<>(providerListByTypes, HttpStatus.OK);
     }
 
     @GetMapping("/edit/{loggedInUser}")

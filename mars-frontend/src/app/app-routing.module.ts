@@ -13,11 +13,13 @@ import {InstitutionImportComponent} from "./components/institution-import/instit
 import {InstitutionImportCompleteComponent} from "./components/institution-import-complete/institution-import-complete.component";
 import {EditProfileComponent} from "./components/edit-profile/edit-profile.component";
 import {HomeComponent} from "./components/home/home.component";
+import {ProviderDetailsComponent} from "./components/provider-details/provider-details.component";
 
 
 const routes: Routes = [
 
   {path: "institution-list", component: InstitutionListComponent},
+  {path: "provider-details/:id", component: ProviderDetailsComponent},
   {path: "institution-list/:filterType/:filterResult", component: InstitutionListComponent},
   {path: "institution-form", component: InstitutionFormComponent},
   {path: "institution-import", component: InstitutionImportComponent},

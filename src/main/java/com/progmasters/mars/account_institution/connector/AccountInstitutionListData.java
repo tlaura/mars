@@ -75,7 +75,7 @@ public class AccountInstitutionListData {
         this.phone = institution.getPhone();
 
         List<AccountInstitutionConnector> institutionConnectors = institution.getAccountInstitutionConnectors();
-        if (institutionConnectors != null) {
+        if (!institutionConnectors.isEmpty()) {
             this.providers = institutionConnectors.stream().map(AccountInstitutionConnector::getProviderAccount).map(ProviderUserDetails::new).collect(Collectors.toList());
             this.accountType = AccountType.INSTITUTION_WITH_PROVIDER.toString();
         } else {
@@ -102,7 +102,7 @@ public class AccountInstitutionListData {
         this.longitude = providerAccount.getLongitude();
 
         List<AccountInstitutionConnector> accountConnectors = providerAccount.getAccountInstitutionConnectors();
-        if (accountConnectors != null) {
+        if (!accountConnectors.isEmpty()) {
             this.institutions = accountConnectors.stream().map(AccountInstitutionConnector::getInstitution).map(InstitutionDetailsData::new).collect(Collectors.toList());
             this.accountType = AccountType.PROVIDER_WITH_INSTITUTION.toString();
         } else {

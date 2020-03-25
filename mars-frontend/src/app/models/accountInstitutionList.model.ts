@@ -18,5 +18,6 @@ export interface AccountInstitutionListModel {
   longitude: number,
   institutions: Array<InstitutionDetailModel>,
   providers: Array<ProviderUserDetalsModel>,
+  website,
 
 }

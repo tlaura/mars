@@ -20,7 +20,7 @@ export class InstitutionService {
     return this.http.post(this.BASE_URL, formData);
   };
 
-  getInstitutionTypes = (): Observable<Array<InstitutionTypeModel>> => {
+  getProviderTypes = (): Observable<Array<InstitutionTypeModel>> => {
     return this.http.get<Array<InstitutionTypeModel>>(this.BASE_URL + "institutionType");
   };
 

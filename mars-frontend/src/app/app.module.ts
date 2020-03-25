@@ -35,6 +35,7 @@ import {environment} from "../environments/environment";
 import {InstitutionImportCompleteComponent} from './components/institution-import-complete/institution-import-complete.component';
 import {EditProfileComponent} from './components/edit-profile/edit-profile.component';
 import {HomeComponent} from './components/home/home.component';
+import {ProviderDetailsComponent} from './components/provider-details/provider-details.component';
 
 export function getAuthServiceConfigs() {
   let config = new SocialServiceConfig()
@@ -71,6 +72,7 @@ export function getAuthServiceConfigs() {
     InstitutionImportCompleteComponent,
     EditProfileComponent,
     HomeComponent,
+    ProviderDetailsComponent,
   ],
   imports: [
     BrowserModule,

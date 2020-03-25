@@ -1,0 +1,24 @@
+<div [ngClass]="isInInfoBox? '':'tomato-background-div'">
+  <div [ngClass]="isInInfoBox? 'white-block-on-tomato-div p-sm-1 p-md-3 col-sm-12':
+   'white-block-on-tomato-div p-sm-2 p-md-3 p-lg-4 col-sm-12 col-md-10 offset-md-1 col-lg-8 offset-lg-2'">
+    <h4 class="tomato-head font-weight-bold">{{providerUserDetail?.name}}</h4>
+    <h5
+      class="tomato-head">{{ providerUserDetail?.zipcode}} {{providerUserDetail?.city}} {{providerUserDetail?.address}}</h5>
+
+    <h6 class="tomato-head">Elérhetőség:</h6>
+    <p>{{providerUserDetail?.email}}</p>
+
+    <div class="form-group">
+      <button (click)="openMailSend()" class="btn btn-primary submit rounded-pill">Email küldés</button>
+    </div>
+
+    <app-send-mail (sent)="openMailSend()" *ngIf="mailSender" [toEmail]="providerUserDetail?.email"></app-send-mail>
+    <!--  <div class="col-md-2">-->
+    <!--    <facebook-share-button [share]="shareObj"></facebook-share-button>-->
+    <!--  </div>-->
+
+    <button (click)="backToInstitutionList()" *ngIf="!isInInfoBox" class="btn btn-primary submit rounded-pill">Vissza
+    </button>
+  </div>
+</div>
+

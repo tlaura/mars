@@ -4,8 +4,9 @@ import {Observable} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {ProviderUserProfileDetailsModel} from "../models/providerUserProfileDetails.model";
 import {environment} from "../../environments/environment";
-import {InstitutionListModel} from "../models/institutionList.model";
 import {ProviderAccountEditDataModel} from "../models/providerAccountEditData.model";
+import {ProviderUserDetalsModel} from "../models/providerUserDetals.model";
+import {AccountInstitutionListModel} from "../models/accountInstitutionList.model";
 
 @Injectable({
   providedIn: 'root'
@@ -25,8 +26,8 @@ export class AccountService {
     return this.http.get<ProviderUserProfileDetailsModel>(this.BASE_URL + '/providers/' + username);
   };
 
-  getInstitutionByType = (name: string): Observable<Array<InstitutionListModel>> => {
-    return this.http.get<Array<InstitutionListModel>>(this.BASE_URL + "/providers/getInstitutionsByType?type=" + name);
+  getProvidersByType = (name: string): Observable<Array<AccountInstitutionListModel>> => {
+    return this.http.get<Array<AccountInstitutionListModel>>(this.BASE_URL + "/providers/providersByType?type=" + name);
   };
 
   fetchProviderAccountEditDetails = (loggedInUser: string) => {
@@ -45,4 +46,8 @@ export class AccountService {
   deleteInstitution(id: number, loggedInUser: string) {
     return this.http.delete(this.BASE_URL + '/delete/' + loggedInUser + '/' + id);
   }
+
+  getProviderAccountDetails = (id: number): Observable<ProviderUserDetalsModel> => {
+    return this.http.get<ProviderUserDetalsModel>(this.BASE_URL + "/providers/provider-details/" + id);
+  };
 }

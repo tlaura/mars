@@ -3,7 +3,9 @@ import {institutionListIndex} from "../../../environments/institutionListIndex.p
 import {MapsAPILoader} from "@agm/core";
 import {InstitutionService} from "../../services/institution.service";
 import {InstitutionDetailModel} from "../../models/institutionDetail.model";
-import {InstitutionListModel} from "../../models/institutionList.model";
+import {AccountInstitutionListModel} from "../../models/accountInstitutionList.model";
+import {AccountService} from "../../services/account.service";
+import {ProviderUserDetalsModel} from "../../models/providerUserDetals.model";
 
 
 @Component({
@@ -14,14 +16,19 @@ import {InstitutionListModel} from "../../models/institutionList.model";
 export class MapComponent implements OnInit {
 
   showMap: boolean = false;
+  showInfoWindow: boolean = false;
   latitude: number = institutionListIndex.mapLatitude;
   longitude: number = institutionListIndex.mapLongitude;
   zoom: number = institutionListIndex.mapZoom;
-  @Input() show: boolean = false;
-  @Input() locations: Array<InstitutionListModel>;
+  @Input() showInstitutionDetails: boolean = false;
+  @Input() showProviderDetail: boolean = false;
+  @Input() locations: Array<AccountInstitutionListModel>;
   institutionDetail: InstitutionDetailModel;
+  providerDetail: ProviderUserDetalsModel;
 
-  constructor(private mapsAPILoader: MapsAPILoader, private institutionService: InstitutionService) {
+  constructor(private mapsAPILoader: MapsAPILoader,
+              private institutionService: InstitutionService,
+              private accountService: AccountService) {
   }
 
 
@@ -37,8 +44,8 @@ export class MapComponent implements OnInit {
 
     if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition(position => {
-        this.latitude = position.coords.latitude;
-        this.longitude = position.coords.longitude;
+        //  this.latitude = position.coords.latitude;
+        //  this.longitude = position.coords.longitude;
         this.zoom = institutionListIndex.mapZoom;
       })
     }
@@ -46,18 +53,43 @@ export class MapComponent implements OnInit {
 
   markerClick = (index: number) => {
     let id: number = this.locations[index].id;
+    let accountType = this.locations[index].accountType;
+    switch (accountType) {
+      case 'PROVIDER':
+        this.getProviderDetails(id);
+        break;
+      case 'INSTITUTION':
+        this.getInstitutionDetail(id);
+        break;
+      case 'INSTITUTION_WITH_PROVIDER':
+
+        break;
+    }
+  };
+
+  private getInstitutionDetail = (id: number): void => {
     this.institutionService.getInstitutionDetail(id).subscribe(
-      institutionDetail => {
-        this.institutionDetail = institutionDetail;
-        this.latitude = this.locations[index].latitude;
-        this.longitude = this.locations[index].longitude;
-      },
+      value => this.institutionDetail = value,
       error => console.warn(error),
       () => {
-        this.show = true;
+        this.showInstitutionDetails = true;
+        this.showProviderDetail = false;
+        this.showInfoWindow = true;
       }
     );
+  };
 
+
+  private getProviderDetails = (id: number): void => {
+    this.accountService.getProviderAccountDetails(id).subscribe(
+      value => this.providerDetail = value,
+      error => console.warn(error),
+      () => {
+        this.showProviderDetail = true;
+        this.showInstitutionDetails = false;
+        this.showInfoWindow = true;
+      }
+    );
   };
 
   icon_institution = {

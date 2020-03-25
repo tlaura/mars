@@ -51,7 +51,7 @@ export class RegisterComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.institutionService.getInstitutionTypes().subscribe(
+    this.institutionService.getProviderTypes().subscribe(
       value => this.allType = value,
       error => console.warn(error)
     )
