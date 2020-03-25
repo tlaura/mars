@@ -12,4 +12,5 @@ public interface AccountInstitutionConnectorRepository extends JpaRepository<Acc
 
     @Query("delete from AccountInstitutionConnector c where c.providerAccount= :providerAccount and c.institution= :institution")
     void removeConnection(@Param("account") ProviderAccount providerAccount, @Param("institution") Institution institution);
+
 }

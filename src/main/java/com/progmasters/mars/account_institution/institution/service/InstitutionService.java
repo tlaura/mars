@@ -1,6 +1,7 @@
 package com.progmasters.mars.account_institution.institution.service;
 
 import com.google.maps.errors.NotFoundException;
+import com.progmasters.mars.account_institution.account.domain.ProviderAccount;
 import com.progmasters.mars.account_institution.institution.domain.Institution;
 import com.progmasters.mars.account_institution.institution.dto.InstitutionCreationCommand;
 import com.progmasters.mars.account_institution.institution.dto.InstitutionDetailsData;
@@ -45,6 +46,11 @@ public class InstitutionService {
                 .map(InstitutionListData::new)
                 .collect(Collectors.toList());
     }
+
+    public List<Institution> getInstitutionsByAccount(ProviderAccount providerAccount) {
+        return institutionRepository.getInstitutionsByAccount(providerAccount);
+    }
+
 
     public InstitutionDetailsData getInstitutionDetails(Long id) {
         return new InstitutionDetailsData(findById(id));

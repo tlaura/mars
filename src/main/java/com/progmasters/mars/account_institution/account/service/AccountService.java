@@ -8,7 +8,6 @@ import com.progmasters.mars.account_institution.account.dto.ProviderAccountCreat
 import com.progmasters.mars.account_institution.account.dto.ProviderUserDetails;
 import com.progmasters.mars.account_institution.account.dto.ProviderUserDetailsEdit;
 import com.progmasters.mars.account_institution.account.repository.ProviderAccountRepository;
-import com.progmasters.mars.account_institution.institution.repository.InstitutionRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,14 +21,12 @@ public class AccountService {
 
     private ProviderAccountRepository providerAccountRepository;
     private BCryptPasswordEncoder passwordEncoder;
-    private InstitutionRepository insitutionRepository;
     private final ConfirmationTokenRepository confirmationTokenRepository;
 
     public AccountService(ProviderAccountRepository providerAccountRepository,
                           BCryptPasswordEncoder passwordEncoder,
-                          ConfirmationTokenRepository confirmationTokenRepository,
-                          InstitutionRepository insitutionRepository) {
-        this.insitutionRepository = insitutionRepository;
+                          ConfirmationTokenRepository confirmationTokenRepository
+    ) {
         this.providerAccountRepository = providerAccountRepository;
         this.passwordEncoder = passwordEncoder;
         this.confirmationTokenRepository = confirmationTokenRepository;

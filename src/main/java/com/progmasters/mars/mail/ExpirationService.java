@@ -49,7 +49,7 @@ public class ExpirationService {
             if (!confirmationToken.isConfirmed() && tokenExpired) {
                 accountService.removeConfirmationToken(confirmationToken.getId());
                 Long userId = confirmationToken.getUser().getId();
-                //     accountInstitutionService.deleteAccountById(userId);
+                     accountInstitutionService.deleteAccountById(userId);
                 logger.info("Account ID removed from db:\t" + userId);
             }
         }

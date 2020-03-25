@@ -72,6 +72,13 @@ public class AccountInstitutionService {
         accountInstitutionConnectorRepository.removeConnection(foundAccount, foundInstitution);
     }
 
+    public void deleteAccountById(Long accountId) {
+        ProviderAccount foundAccount = accountService.findById(accountId);
+        List<Institution> institutions = institutionService.getInstitutionsByAccount(foundAccount);
+        institutions.forEach(institution -> accountInstitutionConnectorRepository.removeConnection(foundAccount, institution));
+        accountService.removeById(foundAccount.getId());
+    }
+
 
     private void saveAccountInstitutionConnection(ProviderAccount savedAccount, Institution savedInstitution) {
         AccountInstitutionConnector accountInstitutionConnector = new AccountInstitutionConnector(savedAccount, savedInstitution);
