@@ -2,8 +2,8 @@ package com.progmasters.mars.account_institution.account.service;
 
 import com.progmasters.mars.account_institution.account.confirmationtoken.ConfirmationToken;
 import com.progmasters.mars.account_institution.account.confirmationtoken.ConfirmationTokenRepository;
-import com.progmasters.mars.account_institution.account.domain.InstitutionType;
 import com.progmasters.mars.account_institution.account.domain.ProviderAccount;
+import com.progmasters.mars.account_institution.account.domain.ProviderType;
 import com.progmasters.mars.account_institution.account.dto.ProviderAccountCreationCommand;
 import com.progmasters.mars.account_institution.account.dto.ProviderUserDetails;
 import com.progmasters.mars.account_institution.account.dto.ProviderUserDetailsEdit;
@@ -15,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -56,15 +55,15 @@ public class AccountService {
         return new ProviderUserDetails(findByEmail(loggedInUserEmail));
     }
 
-    public List<ProviderAccount> getAccountsByType(InstitutionType institutionType) {
-        return providerAccountRepository.findByType(institutionType);
+    public List<ProviderAccount> getAccountsByType(ProviderType providerType) {
+        return providerAccountRepository.findByType(providerType);
     }
 
     public ProviderAccount findById(Long id) {
         return providerAccountRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("No account found by given id:\t" + id));
     }
 
-    ProviderAccount findByEmail(String email) {
+    public ProviderAccount findByEmail(String email) {
         return providerAccountRepository.findByEmail(email).orElseThrow(() -> new EntityNotFoundException("No account found by given email:\t" + email));
     }
 
@@ -72,28 +71,9 @@ public class AccountService {
         return new ProviderUserDetailsEdit(findByEmail(loggedInUserEmail));
     }
 
-    public ProviderUserDetailsEdit updateProviderAccount(ProviderUserDetailsEdit providerUserDetailsEdit, String loggedInUserEmail) {
-        ProviderAccount providerAccount = findByEmail(loggedInUserEmail);
-        updateAccountFields(providerUserDetailsEdit, providerAccount);
-
-        return new ProviderUserDetailsEdit(providerAccount);
-    }
-
     List<ProviderAccount> findAllAccounts() {
         return providerAccountRepository.findAll();
     }
-
-    void updateAccountFields(ProviderUserDetailsEdit providerUserDetailsEdit, ProviderAccount providerAccount) {
-        providerAccount.setName(providerUserDetailsEdit.getName());
-        providerAccount.setProviderServiceName(providerUserDetailsEdit.getProviderServiceName());
-//        providerAccount.setPassword(providerUserDetailsEdit.getPassword());
-        providerAccount.setPhone(providerUserDetailsEdit.getPhone());
-        providerAccount.setZipcode(providerUserDetailsEdit.getZipcode());
-        providerAccount.setCity(providerUserDetailsEdit.getCity());
-        providerAccount.setAddress(providerUserDetailsEdit.getAddress());
-        providerAccount.setNewsletter(providerUserDetailsEdit.getNewsletter());
-    }
-
 
     public boolean isUserConfirmed(String email) {
         ProviderAccount account = findByEmail(email);
@@ -119,15 +99,9 @@ public class AccountService {
         }
     }
 
-    public ProviderAccount updateProviderAccountDetails(ProviderUserDetails providerUserDetails, Long id) {
-        Optional<ProviderAccount> optionalAcc = providerAccountRepository.findById(id);
-        if (optionalAcc.isPresent()) {
-            ProviderAccount providerAccount = optionalAcc.get();
-            updateDetails(providerUserDetails, providerAccount);
-            return providerAccount;
-        } else {
-            return null;
-        }
+    public void updateProviderAccountDetails(ProviderUserDetails providerUserDetails, Long id) {
+        ProviderAccount providerAccount = findById(id);
+        updateDetails(providerUserDetails, providerAccount);
     }
 
     private void updateDetails(ProviderUserDetails providerUserDetails, ProviderAccount providerAccount) {

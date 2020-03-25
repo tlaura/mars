@@ -1,9 +1,9 @@
 package com.progmasters.mars.account_institution.account;
 
-import com.progmasters.mars.account_institution.account.domain.InstitutionType;
 import com.progmasters.mars.account_institution.account.domain.ProviderAccount;
+import com.progmasters.mars.account_institution.account.domain.ProviderType;
 import com.progmasters.mars.account_institution.account.dto.ProviderAccountCreationCommand;
-import com.progmasters.mars.account_institution.account.dto.ProviderUserDetailsEdit;
+import com.progmasters.mars.account_institution.account.dto.ProviderUserDetails;
 import com.progmasters.mars.account_institution.institution.dto.InstitutionCreationCommand;
 
 import javax.validation.constraints.NotBlank;
@@ -33,7 +33,7 @@ public class ProviderAccountBuilder {
     @NotNull
     @Size(min = 1)
     private List<String> types;
-    private List<InstitutionType> institutionTypes;
+    private List<ProviderType> providerTypes;
 
     private String phone;
     private Integer zipcode;
@@ -69,8 +69,8 @@ public class ProviderAccountBuilder {
         return this;
     }
 
-    public ProviderAccountBuilder setInstitutionTypes(List<InstitutionType> types) {
-        this.institutionTypes = types;
+    public ProviderAccountBuilder setProviderTypes(List<ProviderType> types) {
+        this.providerTypes = types;
         return this;
     }
 
@@ -118,8 +118,8 @@ public class ProviderAccountBuilder {
         return new ProviderAccountCreationCommand(providerServiceName, name, password, email, types, phone, zipcode, city, address, ageGroupMin, ageGroupMax, institutions, newsletter);
     }
 
-    public ProviderUserDetailsEdit buildDetailsEdit() {
-        return new ProviderUserDetailsEdit(email, name, providerServiceName, password, phone, zipcode, city, address, newsletter);
+    public ProviderUserDetails buildDetailsEdit() {
+        return new ProviderUserDetails(email, name, providerServiceName, password, phone, zipcode, city, address, newsletter);
     }
 
     public ProviderAccount buildProviderAccount() {
@@ -128,7 +128,7 @@ public class ProviderAccountBuilder {
         providerAccount.setName(name);
         providerAccount.setPassword(password);
         providerAccount.setEmail(email);
-        providerAccount.setTypes(institutionTypes);
+        providerAccount.setTypes(providerTypes);
         providerAccount.setPhone(phone);
         providerAccount.setZipcode(zipcode);
         providerAccount.setCity(city);

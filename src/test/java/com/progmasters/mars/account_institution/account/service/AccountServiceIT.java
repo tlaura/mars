@@ -1,8 +1,8 @@
 package com.progmasters.mars.account_institution.account.service;
 
 import com.progmasters.mars.account_institution.account.ProviderAccountBuilder;
-import com.progmasters.mars.account_institution.account.domain.InstitutionType;
 import com.progmasters.mars.account_institution.account.domain.ProviderAccount;
+import com.progmasters.mars.account_institution.account.domain.ProviderType;
 import com.progmasters.mars.account_institution.account.dto.ProviderAccountCreationCommand;
 import com.progmasters.mars.account_institution.account.dto.ProviderUserDetails;
 import com.progmasters.mars.account_institution.account.dto.ProviderUserDetailsEdit;
@@ -27,15 +27,17 @@ import static org.junit.jupiter.api.Assertions.*;
 @AutoConfigureTestDatabase
 public class AccountServiceIT {
 
-    private ProviderAccountCreationCommand providerAccount;
+    private ProviderAccountCreationCommand providerAccountCreationCommand;
+
+    private ProviderAccount providerAccount;
 
     @Autowired
     private AccountService accountService;
 
     @BeforeEach
     public void init() {
-        this.providerAccount = createOneAccountCommand();
-        accountService.save(providerAccount);
+        this.providerAccountCreationCommand = createOneAccountCommand();
+        providerAccount = accountService.save(providerAccountCreationCommand);
     }
 
 
@@ -69,14 +71,14 @@ public class AccountServiceIT {
 
     @Test
     public void testGetAccountByType_shouldNotNull_giveExistingType() {
-        List<ProviderAccount> accounts = accountService.getAccountsByType(InstitutionType.DIAGNOSTIC_CENTER);
+        List<ProviderAccount> accounts = accountService.getAccountsByType(ProviderType.DIAGNOSTIC_CENTER);
 
         assertFalse(accounts.isEmpty());
     }
 
     @Test
     public void testGetAccountByType_shoulBeNull_giveNotExistingType() {
-        List<ProviderAccount> accounts = accountService.getAccountsByType(InstitutionType.DAY_CARE);
+        List<ProviderAccount> accounts = accountService.getAccountsByType(ProviderType.DAY_CARE);
 
         assertTrue(accounts.isEmpty());
     }
@@ -102,19 +104,25 @@ public class AccountServiceIT {
 
     @Test
     public void testUpdateProviderAccount() {
-        ProviderUserDetailsEdit accountDetails = creatOneUserDetailsEdit();
-        ProviderUserDetailsEdit editedAccount = accountService.updateProviderAccount(accountDetails, "pecske92@gmail.com");
+        ProviderUserDetails accountDetails = creatOneUserDetailsEdit();
+        accountService.updateProviderAccountDetails(accountDetails, providerAccount.getId());
 
-        assertEquals("PecskeTestService2", editedAccount.getProviderServiceName());
-        assertEquals("Pecske2", editedAccount.getName());
-        assertEquals("+36205851882", editedAccount.getPhone());
-        assertEquals(1056, editedAccount.getZipcode());
-        assertEquals("Budapest", editedAccount.getCity());
-        assertEquals("Irányi utca 3", editedAccount.getAddress());
-        assertTrue(editedAccount.getNewsletter());
+        assertEquals("PecskeTestService2", providerAccount.getProviderServiceName());
+        assertEquals("Pecske2", providerAccount.getName());
+        assertEquals("+36205851882", providerAccount.getPhone());
+        assertEquals(1056, providerAccount.getZipcode());
+        assertEquals("Budapest", providerAccount.getCity());
+        assertEquals("Irányi utca 3", providerAccount.getAddress());
+        assertTrue(providerAccount.getNewsletter());
     }
 
-    private ProviderUserDetailsEdit creatOneUserDetailsEdit() {
+    private ProviderAccount createOneProviderAccount() {
+        return new ProviderAccountBuilder()
+                .setAddress("")
+                .buildProviderAccount();
+    }
+
+    private ProviderUserDetails creatOneUserDetailsEdit() {
         String serviceName = "PecskeTestService2";
         String name = "Pecske2";
         String pw = "ValarMorghulis7";

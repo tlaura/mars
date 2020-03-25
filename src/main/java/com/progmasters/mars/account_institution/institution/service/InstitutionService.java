@@ -57,27 +57,6 @@ public class InstitutionService {
         institutionRepository.save(institution);
         return institution;
     }
-    //todo remove after refactor
-
-//    Institution saveToAccount(InstitutionCreationCommand institutionCreationCommand, ProviderAccount providerAccount) throws NotFoundException {
-//        Institution institution;
-//        if (institutionCreationCommand.getId() != null) {
-//            institution = findById(institutionCreationCommand.getId());
-//        } else {
-//            institution = createInstitution(institutionCreationCommand);
-//        }
-//        institution.setProviderAccount(providerAccount);
-//
-//        return institution;
-//    }
-//
-//    public Institution createInstitution(InstitutionCreationCommand institutionCreationCommand) throws NotFoundException {
-//
-//        Institution institution = new Institution(institutionCreationCommand, geoLocation);
-//        institutionRepository.save(institution);
-//
-//        return institution;
-//    }
 
     private GeoLocation getGeoLocationByAddress(String address) throws NotFoundException {
         return geocodeService.getGeoLocation(address);
@@ -104,17 +83,6 @@ public class InstitutionService {
             e.printStackTrace();
         }
     }
-
-//    public List<InstitutionListData> getInstitutionsByProviderAccount(ProviderAccount providerAccount) {
-//        List<InstitutionListData> institutionList = new ArrayList<>();
-//        providerAccount.getInstitutions().stream().map(InstitutionListData::new).forEach(institutionList::add);
-//
-//        return institutionList;
-//    }
-
-//    public void detachFromAccount(Institution institution) {
-//        institution.setProviderAccount(null);
-//    }
 
     public Institution findByName(String name) {
         return institutionRepository.findByName(name);

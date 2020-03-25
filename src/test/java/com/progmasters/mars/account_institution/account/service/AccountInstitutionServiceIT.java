@@ -3,8 +3,8 @@ package com.progmasters.mars.account_institution.account.service;
 import com.progmasters.mars.account_institution.AccountInstitutionConnectorRepository;
 import com.progmasters.mars.account_institution.AccountInstitutionService;
 import com.progmasters.mars.account_institution.account.ProviderAccountBuilder;
-import com.progmasters.mars.account_institution.account.domain.InstitutionType;
 import com.progmasters.mars.account_institution.account.domain.ProviderAccount;
+import com.progmasters.mars.account_institution.account.domain.ProviderType;
 import com.progmasters.mars.account_institution.institution.dto.InstitutionListData;
 import com.progmasters.mars.account_institution.institution.service.InstitutionOpeningHoursService;
 import com.progmasters.mars.account_institution.institution.service.InstitutionService;
@@ -61,10 +61,10 @@ public class AccountInstitutionServiceIT {
         List<ProviderAccount> accounts = new ArrayList<>();
         accounts.add(createOneProviderAccount());
 
-        when(accountServiceMock.getAccountsByType(InstitutionType.DIAGNOSTIC_CENTER)).thenReturn(accounts);
+        when(accountServiceMock.getAccountsByType(ProviderType.DIAGNOSTIC_CENTER)).thenReturn(accounts);
         //    when(institutionServiceMock.getInstitutionsByProviderAccount(any(ProviderAccount.class))).thenReturn(institutionDetails);
 
-        List<InstitutionListData> institutions = accountInstitutionService.getInstitutionsByAccountType(InstitutionType.DIAGNOSTIC_CENTER);
+        List<InstitutionListData> institutions = accountInstitutionService.getInstitutionsByAccountType(ProviderType.DIAGNOSTIC_CENTER);
 
         assertFalse(institutions.isEmpty());
 
@@ -73,16 +73,16 @@ public class AccountInstitutionServiceIT {
 
     private ProviderAccount createOneProviderAccount() {
 
-        List<InstitutionType> types = new ArrayList<>();
-        types.add(InstitutionType.DIAGNOSTIC_CENTER);
-        types.add(InstitutionType.THERAPY);
+        List<ProviderType> types = new ArrayList<>();
+        types.add(ProviderType.DIAGNOSTIC_CENTER);
+        types.add(ProviderType.THERAPY);
 
         return new ProviderAccountBuilder()
                 .setProviderServiceName("PescskeTestService")
                 .setName("Pecske")
                 .setPassword("ValarMorghulis7")
                 .setEmail("pecske92@gmail.com")
-                .setInstitutionTypes(types)
+                .setProviderTypes(types)
                 .setPhone("+36205851886")
                 .setZipcode(1089)
                 .setCity("Budapest")

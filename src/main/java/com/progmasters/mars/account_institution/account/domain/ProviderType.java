@@ -1,6 +1,6 @@
 package com.progmasters.mars.account_institution.account.domain;
 
-public enum InstitutionType {
+public enum ProviderType {
 
     //todo refactor read values from file
     DIAGNOSTIC_CENTER("Diagnostic Center", "Diagnózis központ"),
@@ -18,14 +18,14 @@ public enum InstitutionType {
     private String englishName;
     private String hungarianName;
 
-    InstitutionType(String englishName, String hungarianName) {
+    ProviderType(String englishName, String hungarianName) {
         this.englishName = englishName;
         this.hungarianName = hungarianName;
     }
 
-    public static InstitutionType getTypeByName(String name) {
-        InstitutionType foundType = null;
-        for (InstitutionType value : InstitutionType.values()) {
+    public static ProviderType getTypeByName(String name) {
+        ProviderType foundType = null;
+        for (ProviderType value : ProviderType.values()) {
             if (value.toString().equals(name)) {
                 foundType = value;
             }
@@ -33,9 +33,9 @@ public enum InstitutionType {
         return foundType;
     }
 
-    public static InstitutionType getTypeByHungarianName(String hungarianName) {
-        InstitutionType foundType = null;
-        for (InstitutionType value : InstitutionType.values()) {
+    public static ProviderType getTypeByHungarianName(String hungarianName) {
+        ProviderType foundType = null;
+        for (ProviderType value : ProviderType.values()) {
             if (value.hungarianName.equalsIgnoreCase(hungarianName)) {
                 foundType = value;
             }

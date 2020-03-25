@@ -1,13 +1,15 @@
 package com.progmasters.mars.account_institution;
 
 import com.google.maps.errors.NotFoundException;
-import com.progmasters.mars.account_institution.account.domain.InstitutionType;
 import com.progmasters.mars.account_institution.account.domain.ProviderAccount;
+import com.progmasters.mars.account_institution.account.domain.ProviderType;
 import com.progmasters.mars.account_institution.account.dto.ProviderAccountCreationCommand;
 import com.progmasters.mars.account_institution.account.service.AccountService;
 import com.progmasters.mars.account_institution.institution.domain.Institution;
 import com.progmasters.mars.account_institution.institution.dto.InstitutionCreationCommand;
 import com.progmasters.mars.account_institution.institution.dto.InstitutionListData;
+import com.progmasters.mars.account_institution.institution.location.GeoLocation;
+import com.progmasters.mars.account_institution.institution.location.GeocodeService;
 import com.progmasters.mars.account_institution.institution.service.InstitutionOpeningHoursService;
 import com.progmasters.mars.account_institution.institution.service.InstitutionService;
 import com.progmasters.mars.mail.EmailService;
@@ -26,20 +28,34 @@ public class AccountInstitutionService {
     private final InstitutionService institutionService;
     private final InstitutionOpeningHoursService institutionOpeningHoursService;
     private final EmailService emailService;
+    private final GeocodeService geocodeService;
     private final AccountInstitutionConnectorRepository accountInstitutionConnectorRepository;
 
     @Autowired
-    public AccountInstitutionService(AccountService accountService, InstitutionService institutionService, InstitutionOpeningHoursService institutionOpeningHoursService, EmailService emailService, AccountInstitutionConnectorRepository accountInstitutionConnectorRepository) {
+    public AccountInstitutionService(AccountService accountService,
+                                     InstitutionService institutionService,
+                                     InstitutionOpeningHoursService institutionOpeningHoursService,
+                                     EmailService emailService,
+                                     AccountInstitutionConnectorRepository accountInstitutionConnectorRepository,
+                                     GeocodeService geocodeService) {
         this.accountService = accountService;
         this.institutionService = institutionService;
         this.institutionOpeningHoursService = institutionOpeningHoursService;
         this.emailService = emailService;
         this.accountInstitutionConnectorRepository = accountInstitutionConnectorRepository;
+        this.geocodeService = geocodeService;
     }
 
     //todo read about spring boot exception handling
     public void save(ProviderAccountCreationCommand providerAccountCreationCommand) throws NotFoundException {
-        ProviderAccount savedAccount = accountService.save(providerAccountCreationCommand);
+        String address = providerAccountCreationCommand.getZipcode() + " " + providerAccountCreationCommand.getCity() + " " + providerAccountCreationCommand.getAddress();
+        ProviderAccount savedAccount;
+        if (address.trim().length() > 0) {
+            GeoLocation geoLocation = geocodeService.getGeoLocation(address);
+            savedAccount = new ProviderAccount(providerAccountCreationCommand, geoLocation);
+        } else {
+            savedAccount = accountService.save(providerAccountCreationCommand);
+        }
         List<InstitutionCreationCommand> institutions = providerAccountCreationCommand.getInstitutions();
         for (InstitutionCreationCommand institutionCreationCommand : institutions) {
             Institution savedInstitution = institutionOpeningHoursService.save(institutionCreationCommand);
@@ -51,6 +67,9 @@ public class AccountInstitutionService {
 
     public void detachInstitutionFromAccount(String email, Long institutionId) {
 
+        ProviderAccount foundAccount = accountService.findByEmail(email);
+        Institution foundInstitution = institutionService.findById(institutionId);
+        accountInstitutionConnectorRepository.removeConnection(foundAccount, foundInstitution);
     }
 
 
@@ -62,19 +81,11 @@ public class AccountInstitutionService {
 
     //todo revision
 
-    public List<InstitutionListData> getInstitutionsByAccountType(InstitutionType institutionType) {
+    public List<InstitutionListData> getInstitutionsByAccountType(ProviderType providerType) {
         List<InstitutionListData> institutionList = new ArrayList<>();
-        List<ProviderAccount> accounts = accountService.getAccountsByType(institutionType);
+        List<ProviderAccount> accounts = accountService.getAccountsByType(providerType);
         //  accounts.stream().map(institutionService::getInstitutionsByProviderAccount).forEach(institutionList::addAll);
 
         return institutionList;
     }
-
-//    public void deleteAccountById(Long id) {
-//        ProviderAccount account = accountService.findById(id);
-//        if (!account.getInstitutions().isEmpty()) {
-//            account.getInstitutions().forEach(institutionService::detachFromAccount);
-//        }
-//        accountService.removeById(id);
-//    }
 }

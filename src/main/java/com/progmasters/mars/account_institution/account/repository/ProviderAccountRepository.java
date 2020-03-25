@@ -1,7 +1,7 @@
 package com.progmasters.mars.account_institution.account.repository;
 
-import com.progmasters.mars.account_institution.account.domain.InstitutionType;
 import com.progmasters.mars.account_institution.account.domain.ProviderAccount;
+import com.progmasters.mars.account_institution.account.domain.ProviderType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -20,7 +20,7 @@ public interface ProviderAccountRepository extends JpaRepository<ProviderAccount
     List<ProviderAccount> findAllByName(String name);
 
     @Query("select p from ProviderAccount p join p.types t where t= :type")
-    List<ProviderAccount> findByType(@Param("type") InstitutionType institutionType);
+    List<ProviderAccount> findByType(@Param("type") ProviderType providerType);
 
     Long findIdByEmail(String loggedInUser);
 }

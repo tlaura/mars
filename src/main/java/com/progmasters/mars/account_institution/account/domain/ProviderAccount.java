@@ -2,6 +2,7 @@ package com.progmasters.mars.account_institution.account.domain;
 
 import com.progmasters.mars.account_institution.AccountInstitutionConnector;
 import com.progmasters.mars.account_institution.account.dto.ProviderAccountCreationCommand;
+import com.progmasters.mars.account_institution.institution.location.GeoLocation;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -44,7 +45,7 @@ public class ProviderAccount {
     @Enumerated(EnumType.STRING)
     @ElementCollection
     @CollectionTable(name = "provicer_account_type", joinColumns = @JoinColumn(name = "provider_account_id"))
-    private List<InstitutionType> types;
+    private List<ProviderType> types;
 
     @Column(name = "phone")
     private String phone;
@@ -73,6 +74,12 @@ public class ProviderAccount {
     @Column(name = "newsletter")
     private Boolean newsletter;
 
+    @Column(name = "latitude")
+    private Double latitude;
+
+    @Column(name = "longitude")
+    private Double longitude;
+
     @OneToMany(mappedBy = "providerAccount")
     private List<AccountInstitutionConnector> accountInstitutionConnectors;
 
@@ -87,12 +94,18 @@ public class ProviderAccount {
         this.phone = providerAccountCreationCommand.getPhone();
         this.ageGroupMin = providerAccountCreationCommand.getAgeGroupMin();
         this.ageGroupMax = providerAccountCreationCommand.getAgeGroupMax();
-        this.types = providerAccountCreationCommand.getTypes().stream().map(InstitutionType::getTypeByHungarianName).collect(Collectors.toList());
+        this.types = providerAccountCreationCommand.getTypes().stream().map(ProviderType::getTypeByHungarianName).collect(Collectors.toList());
         this.newsletter = providerAccountCreationCommand.getNewsletter();
         this.role = Role.ROLE_PROVIDER;
     }
 
     public ProviderAccount() {
+    }
+
+    public ProviderAccount(ProviderAccountCreationCommand providerAccountCreationCommand, GeoLocation geoLocation) {
+        this(providerAccountCreationCommand);
+        this.latitude = geoLocation.getLatitude();
+        this.longitude = geoLocation.getLongitude();
     }
 
     public Long getId() {
@@ -175,11 +188,11 @@ public class ProviderAccount {
         this.address = address;
     }
 
-    public List<InstitutionType> getTypes() {
+    public List<ProviderType> getTypes() {
         return types;
     }
 
-    public void setTypes(List<InstitutionType> type) {
+    public void setTypes(List<ProviderType> type) {
         this.types = type;
     }
 
@@ -213,5 +226,21 @@ public class ProviderAccount {
 
     public void setAccountInstitutionConnectors(List<AccountInstitutionConnector> accountInstitutionConnectors) {
         this.accountInstitutionConnectors = accountInstitutionConnectors;
+    }
+
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
+
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
     }
 }

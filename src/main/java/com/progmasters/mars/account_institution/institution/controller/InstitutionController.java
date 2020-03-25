@@ -1,7 +1,7 @@
 package com.progmasters.mars.account_institution.institution.controller;
 
 import com.google.maps.errors.NotFoundException;
-import com.progmasters.mars.account_institution.account.domain.InstitutionType;
+import com.progmasters.mars.account_institution.account.domain.ProviderType;
 import com.progmasters.mars.account_institution.institution.InstitutionValidator;
 import com.progmasters.mars.account_institution.institution.dto.InstitutionCreationCommand;
 import com.progmasters.mars.account_institution.institution.dto.InstitutionDetailsData;
@@ -47,15 +47,10 @@ public class InstitutionController {
 
     @GetMapping("/institutionType")
     public ResponseEntity<List<InstitutionTypeData>> getInstitutionType() {
-        List<InstitutionTypeData> institutionTypeDataList = Arrays.stream(InstitutionType.values()).map(InstitutionTypeData::new).collect(Collectors.toList());
+        List<InstitutionTypeData> institutionTypeDataList = Arrays.stream(ProviderType.values()).map(InstitutionTypeData::new).collect(Collectors.toList());
         logger.info("Institution types is requested!");
         return new ResponseEntity<>(institutionTypeDataList, HttpStatus.OK);
     }
-
-//    @GetMapping("/details")
-//    public List<InstitutionDetailsData> institutionsDetails() {
-//        return institutionService.getInstitutionDetailsDataList();
-//    }
 
     @GetMapping("/{id}")
     public ResponseEntity<InstitutionDetailsData> getInstitutionDetails(@PathVariable("id") Long id) {
@@ -79,13 +74,6 @@ public class InstitutionController {
         logger.info("Institution creation is requested!");
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
-
-//    @PutMapping("/locationUpdate/{id}")
-//    public ResponseEntity<Void> updateInstitutionLocation(@PathVariable Long id, @RequestBody GeoLocationData geoLocationData) {
-//        institutionService.updateInstitutionLocation(geoLocationData, id);
-//
-//        return new ResponseEntity<>(HttpStatus.OK);
-//    }
 
     @PostMapping("/import")
     public ResponseEntity<Void> importInstitutions(@RequestParam("file") MultipartFile excelDataFile) {

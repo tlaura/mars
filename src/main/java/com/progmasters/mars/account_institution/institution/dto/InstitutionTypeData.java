@@ -1,6 +1,6 @@
 package com.progmasters.mars.account_institution.institution.dto;
 
-import com.progmasters.mars.account_institution.account.domain.InstitutionType;
+import com.progmasters.mars.account_institution.account.domain.ProviderType;
 
 public class InstitutionTypeData {
 
@@ -10,9 +10,9 @@ public class InstitutionTypeData {
     public InstitutionTypeData() {
     }
 
-    public InstitutionTypeData(InstitutionType institutionType) {
-        this.name = institutionType.toString();
-        this.displayName = institutionType.getHungarianName();
+    public InstitutionTypeData(ProviderType providerType) {
+        this.name = providerType.toString();
+        this.displayName = providerType.getHungarianName();
     }
 
     //---------Getters------------

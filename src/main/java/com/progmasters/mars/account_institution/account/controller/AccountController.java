@@ -3,8 +3,7 @@ package com.progmasters.mars.account_institution.account.controller;
 import com.google.maps.errors.NotFoundException;
 import com.progmasters.mars.account_institution.AccountInstitutionService;
 import com.progmasters.mars.account_institution.account.ProviderAccountValidator;
-import com.progmasters.mars.account_institution.account.domain.InstitutionType;
-import com.progmasters.mars.account_institution.account.domain.ProviderAccount;
+import com.progmasters.mars.account_institution.account.domain.ProviderType;
 import com.progmasters.mars.account_institution.account.dto.ProviderAccountCreationCommand;
 import com.progmasters.mars.account_institution.account.dto.ProviderUserDetails;
 import com.progmasters.mars.account_institution.account.dto.ProviderUserDetailsEdit;
@@ -63,9 +62,8 @@ public class AccountController {
 
     @GetMapping("/getInstitutionsByType")
     public ResponseEntity<List<InstitutionListData>> getInstitutionByType(@RequestParam("type") String type) {
-        //TODO FYI Az ENUM-nak van valueOf methodja  --fixed
-        InstitutionType institutionType = InstitutionType.valueOf(type);
-        List<InstitutionListData> institutionListData = accountInstitutionService.getInstitutionsByAccountType(institutionType);
+        ProviderType providerType = ProviderType.valueOf(type);
+        List<InstitutionListData> institutionListData = accountInstitutionService.getInstitutionsByAccountType(providerType);
         logger.info("Institution List is requested by type!");
         return new ResponseEntity<>(institutionListData, HttpStatus.OK);
     }
@@ -75,34 +73,21 @@ public class AccountController {
         return new ResponseEntity<>(accountService.getProviderAccountEditDetailsByEmail(loggedInUser), HttpStatus.OK);
     }
 
-//    @PatchMapping("/{loggedInUser}")
-//    public ResponseEntity<ProviderUserDetailsEdit> updateProviderAccountDetails(@Valid @RequestBody ProviderUserDetailsEdit providerUserDetailsEdit, @PathVariable String loggedInUser) {
-//        logger.info("provider account update requested");
-//        ProviderUserDetailsEdit updatedAccount = accountService.updateProviderAccount(providerUserDetailsEdit, loggedInUser);
-//        return new ResponseEntity<>(updatedAccount, HttpStatus.OK);
-//    }
-
     @PutMapping("/{id}")
-    public ResponseEntity updateProviderAccount(@Valid @RequestBody ProviderUserDetails providerUserDetails, @PathVariable Long id) {
+    public ResponseEntity<Void> updateProviderAccount(@Valid @RequestBody ProviderUserDetails providerUserDetails, @PathVariable Long id) {
         logger.info("Provider Account update requested");
-        ProviderAccount updatedAccount = accountService.updateProviderAccountDetails(providerUserDetails, id);
-        if (updatedAccount == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } else {
-            return new ResponseEntity<>(HttpStatus.OK);
-        }
+
+        accountService.updateProviderAccountDetails(providerUserDetails, id);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+
     }
 
     @DeleteMapping("/delete/{loggedInUser}/{id}")
-    public ResponseEntity deleteInstitutionOfProviderAccount(@PathVariable String loggedInUser, @PathVariable Long id) {
-        logger.info("Provider Account Institution deletion requested");
-        boolean isDeleted = accountService.deleteInstitutionOfAccountById(loggedInUser, id);
+    public ResponseEntity<Void> removeAccountInstitutionConnection(@PathVariable String loggedInUser, @PathVariable Long id) {
+        logger.info("Detach Institution by id:\t" + id + "\tfrom\t" + loggedInUser);
+        accountInstitutionService.detachInstitutionFromAccount(loggedInUser, id);
 
-        if (isDeleted) {
-            return new ResponseEntity(HttpStatus.OK);
-        } else {
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
