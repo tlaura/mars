@@ -1,5 +1,6 @@
 package com.progmasters.mars.account.dto;
 
+import com.progmasters.mars.account.domain.InstitutionType;
 import com.progmasters.mars.account.domain.ProviderAccount;
 import com.progmasters.mars.institution.domain.Institution;
 import com.progmasters.mars.institution.dto.InstitutionListData;
@@ -37,7 +38,7 @@ public class ProviderUserDetails {
         this.ageGroupMin = providerAccount.getAgeGroupMin();
         this.ageGroupMax = providerAccount.getAgeGroupMax();
         this.newsletter = providerAccount.getNewsletter();
-        this.types = providerAccount.getTypes().stream().map(Enum::toString).collect(Collectors.toList());
+        this.types = providerAccount.getTypes().stream().map(InstitutionType::getHungarianName).collect(Collectors.toList());
         List<Institution> institutions = providerAccount.getInstitutions();
         if (institutions != null) {
             this.institutionList = institutions.stream().map(InstitutionListData::new).collect(Collectors.toList());
