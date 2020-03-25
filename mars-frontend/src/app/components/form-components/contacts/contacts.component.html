@@ -12,6 +12,9 @@
           Érvénytelen név!
         </small>
       </div>
+      <small class="text-danger-custom">
+        {{contactsFormGroup.get('name').errors?.serverError}}
+      </small>
     </div>
 
     <div class="form-group col-sm-12 col-md-6">
