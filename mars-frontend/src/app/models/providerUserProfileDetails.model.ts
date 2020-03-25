@@ -14,4 +14,5 @@ export interface ProviderUserProfileDetailsModel {
   ageGroupMax: number;
   types: string[];
   institutionList: InstitutionListModel[];
+  newsletter: boolean;
 }

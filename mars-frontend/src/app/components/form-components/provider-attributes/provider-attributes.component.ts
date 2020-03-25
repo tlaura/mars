@@ -55,5 +55,4 @@ export class ProviderAttributesComponent implements OnInit {
   getAgesArray(n: number) {
     return Array(n);
   }
-
 }

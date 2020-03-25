@@ -32,8 +32,9 @@ public class UserController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetails user = (UserDetails) authentication.getPrincipal();
         logger.info("Login is requested!");
+
+        AuthenticatedUserDetails authenticatedUserDetails = accountService.getAuthenticatedUserDetails(user.getUsername());
         ResponseEntity<AuthenticatedUserDetails> responseEntity;
-        AuthenticatedUserDetails authenticatedUserDetails = new AuthenticatedUserDetails(user);
         if (accountService.isUserConfirmed(authenticatedUserDetails.getName())) {
             responseEntity = new ResponseEntity<>(authenticatedUserDetails, HttpStatus.OK);
         } else {

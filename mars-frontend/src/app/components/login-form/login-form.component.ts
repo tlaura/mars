@@ -38,6 +38,7 @@ export class LoginFormComponent implements OnInit {
 
     this.loginService.login(loginData).subscribe(
       response => {
+        console.log(response);
         localStorage.setItem('user', JSON.stringify(response));
         this.router.navigate(['']);
         this.loginService.loggedIn$.next(true);

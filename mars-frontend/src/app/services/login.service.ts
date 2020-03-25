@@ -11,7 +11,6 @@ const BASE_URL: string = environment.BASE_URL + '/api/user';
 })
 export class LoginService {
   public loggedIn$: BehaviorSubject<boolean>;
-  public loggedInUser$: BehaviorSubject<string>;
 
   constructor(private http: HttpClient) {
   }
