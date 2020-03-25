@@ -1,12 +1,12 @@
 <form [formGroup]="emailFormGroup">
   <label for="email">Email cím*:</label>
   <input class="form-control rounded-pill" formControlName="email" id="email" type="text">
-  <div *ngIf="emailFormGroup.get('email').errors?.pattern">
+  <div *ngIf="emailFormGroup.get('email')?.errors?.pattern">
     <small class="text-danger-custom">
       Érvénytelen email cím!
     </small>
   </div>
   <small class="text-danger-custom">
-    {{emailFormGroup.get('email').errors['serverError']}}
+    {{emailFormGroup.get('email').errors?.serverError}}
   </small>
 </form>
