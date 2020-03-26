@@ -21,6 +21,8 @@ public class ProviderUserDetails {
     private Integer ageGroupMax;
     private List<String> types;
     private Boolean newsletter;
+    private Double longitude;
+    private Double latitude;
 
     public ProviderUserDetails(ProviderAccount providerAccount) {
         this.id = providerAccount.getId();
@@ -36,6 +38,8 @@ public class ProviderUserDetails {
         this.ageGroupMax = providerAccount.getAgeGroupMax();
         this.newsletter = providerAccount.getNewsletter();
         this.types = providerAccount.getTypes().stream().map(ProviderType::getHungarianName).collect(Collectors.toList());
+        this.longitude = providerAccount.getLongitude();
+        this.latitude = providerAccount.getLatitude();
 
     }
 
@@ -106,5 +110,13 @@ public class ProviderUserDetails {
 
     public Boolean getNewsletter() {
         return newsletter;
+    }
+
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public Double getLatitude() {
+        return latitude;
     }
 }

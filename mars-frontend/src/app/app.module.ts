@@ -35,6 +35,7 @@ import {environment} from "../environments/environment";
 import {InstitutionImportCompleteComponent} from './components/institution-components/institution-import-complete/institution-import-complete.component';
 import {EditProfileComponent} from './components/account-components/edit-profile/edit-profile.component';
 import {HomeComponent} from './components/home/home.component';
+import {ProviderDetailsComponent} from './components/provider-details/provider-details.component';
 import {NewPasswordComponent} from './components/account-components/new-password-components/new-password/new-password.component';
 import {NewPasswordCompleteComponent} from './components/account-components/new-password-components/new-password-complete/new-password-complete.component';
 import {NewPasswordFormComponent} from './components/account-components/new-password-components/new-password-form/new-password-form.component';
@@ -75,6 +76,7 @@ export function getAuthServiceConfigs() {
     InstitutionImportCompleteComponent,
     EditProfileComponent,
     HomeComponent,
+    ProviderDetailsComponent,
     NewPasswordComponent,
     NewPasswordCompleteComponent,
     NewPasswordFormComponent,

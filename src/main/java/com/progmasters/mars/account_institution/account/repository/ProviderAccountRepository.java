@@ -26,4 +26,5 @@ public interface ProviderAccountRepository extends JpaRepository<ProviderAccount
     @Query("select distinct p from ProviderAccount p where p.accountInstitutionConnectors.size > 0")
     List<ProviderAccount> findProviderAccountsWithInstitutions();
 
+
 }

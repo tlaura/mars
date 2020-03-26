@@ -7,7 +7,6 @@ import com.progmasters.mars.account_institution.account.dto.ProviderAccountCreat
 import com.progmasters.mars.account_institution.account.service.AccountService;
 import com.progmasters.mars.account_institution.institution.domain.Institution;
 import com.progmasters.mars.account_institution.institution.dto.InstitutionCreationCommand;
-import com.progmasters.mars.account_institution.institution.dto.InstitutionListData;
 import com.progmasters.mars.account_institution.institution.location.GeoLocation;
 import com.progmasters.mars.account_institution.institution.location.GeocodeService;
 import com.progmasters.mars.account_institution.institution.service.InstitutionOpeningHoursService;
@@ -19,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -84,6 +84,7 @@ public class AccountInstitutionService {
         List<ProviderAccount> providerAccounts = accountService.findAllAccountsWithoutInstitution();
         List<ProviderAccount> providerAccountWithInstitution = accountService.findAllAccountsWithInstitution();
         List<Institution> institutions = institutionService.findInstitutionsWithoutProvider();
+        List<Institution> institutionsWithAccount = institutionService.findInstitutionsWithProvider();
         providerAccounts.stream().map(AccountInstitutionListData::new).forEach(allAccounts::add);
         institutions.stream().map(AccountInstitutionListData::new).forEach(allAccounts::add);
         providerAccountWithInstitution.stream().map(AccountInstitutionListData::new).forEach(allAccounts::add);
@@ -100,11 +101,8 @@ public class AccountInstitutionService {
 
     //todo revision
 
-    public List<InstitutionListData> getInstitutionsByAccountType(ProviderType providerType) {
-        List<InstitutionListData> institutionList = new ArrayList<>();
-        List<ProviderAccount> accounts = accountService.getAccountsByType(providerType);
-        //  accounts.stream().map(institutionService::getInstitutionsByProviderAccount).forEach(institutionList::addAll);
+    public List<AccountInstitutionListData> getInstitutionsByAccountType(ProviderType providerType) {
 
-        return institutionList;
+        return institutionService.findInstitutionByProviderType(providerType).stream().map(AccountInstitutionListData::new).collect(Collectors.toList());
     }
 }
