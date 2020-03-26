@@ -64,6 +64,11 @@ export class MyProfileComponent implements OnInit {
   deleteInstitution = (id: number) => {
     this.providerService.deleteInstitution(id, this.loggedInUser).subscribe(
       () => {
+        let elementPos = this.providerAccount.institutionList
+          .map(inst => inst.id)
+          .indexOf(id);
+
+        this.providerAccount.institutionList.splice(elementPos, 1);
         console.log("Institution deleted");
       }, error => {
         console.log(error);

@@ -176,7 +176,7 @@
             {{institution?.website}}<br>
             {{institution?.email}}<br>
             <div class="button-flex">
-              <button (click)="deleteInstitution(institution.id)" class="rounded-pill">Törlés</button>
+              <button (click)="deleteInstitution(institution.id)" *ngIf="editMode" class="rounded-pill">Törlés</button>
             </div>
           </div>
         </div>
