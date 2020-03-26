@@ -28,15 +28,25 @@ public class SeleniumTest {
 
     @Test
     public void testFillRegisterForm() {
-        driver.get("http://localhost:4200/register");
+        //driver.get("http://localhost:4200/register");
+        driver.get("https://mars-demo.progmasters.hu/register");
 
         driver.findElement(By.id("name")).sendKeys("PecskeSelenTest");
         driver.findElement(By.id("email")).sendKeys("pecske92@gmail.com");
         driver.findElement(By.id("phone")).sendKeys("+36205851886");
+
+        try {
+            Thread.sleep(15000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         driver.findElement(By.cssSelector("body > app-root > div > app-register > div > div > div.register-div.text-left.p-sm-3.p-md-3 > form > div.row.mx-0 > div:nth-child(1) > app-provider-attributes > div.row.mx-0 > div:nth-child(1) > app-password > input")).sendKeys("Test1234");
         driver.findElement(By.cssSelector("body > app-root > div > app-register > div > div > div.register-div.text-left.p-sm-3.p-md-3 > form > div.row.mx-0 > div:nth-child(1) > app-provider-attributes > div.row.mx-0 > div:nth-child(2) > app-password > input")).sendKeys("Test1234");
 
+
         driver.findElement(By.cssSelector("body > app-root > div > app-register > div > div > div.register-div.text-left.p-sm-3.p-md-3 > form > div.form-group.col-sm-12.col-md-12 > button")).click();
+
+
     }
 
 
