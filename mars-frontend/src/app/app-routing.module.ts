@@ -17,11 +17,13 @@ import {NewPasswordComponent} from "./components/account-components/new-password
 import {NewPasswordCompleteComponent} from "./components/account-components/new-password-components/new-password-complete/new-password-complete.component";
 import {NewPasswordFormComponent} from "./components/account-components/new-password-components/new-password-form/new-password-form.component";
 import {NewPasswordSuccessComponent} from "./components/account-components/new-password-components/new-password-success/new-password-success.component";
+import {ProviderDetailsComponent} from "./components/provider-details/provider-details.component";
 
 
 const routes: Routes = [
 
   {path: "institution-list", component: InstitutionListComponent},
+  {path: "provider-details/:id", component: ProviderDetailsComponent},
   {path: "institution-list/:filterType/:filterResult", component: InstitutionListComponent},
   {path: "institution-form", component: InstitutionFormComponent},
   {path: "institution-import", component: InstitutionImportComponent},

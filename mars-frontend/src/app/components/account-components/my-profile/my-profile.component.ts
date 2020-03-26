@@ -12,6 +12,7 @@ import {validatorBounds} from "../../../../environments/validatorBounds";
 })
 export class MyProfileComponent implements OnInit {
 
+
   providerAccount: ProviderUserProfileDetailsModel;
   accountCopy: ProviderUserProfileDetailsModel;
   loggedInUser;

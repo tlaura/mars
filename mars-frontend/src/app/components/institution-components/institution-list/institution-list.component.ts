@@ -62,7 +62,7 @@ export class InstitutionListComponent implements OnInit {
         }
       },
     );
-    this.getInstitutionType();
+    this.getProviderType();
   }
 
   loadPageByFilterType = (type: string, result: string): void => {
@@ -79,7 +79,7 @@ export class InstitutionListComponent implements OnInit {
   narrowByType = (type: string) => {
     //todo refactor magic string
     if (type !== "all") {
-      //  this.getInstitutionsByType(type);
+      this.getProvidersByType(type);
     } else {
       this.getInstitutions();
     }
@@ -87,11 +87,20 @@ export class InstitutionListComponent implements OnInit {
 
   };
 
-  private getInstitutionType = () => {
-    this.institutionService.getInstitutionTypes().subscribe(
-      institutionTypeList => this.institutionTypeList = institutionTypeList,
-      error => console.warn(error)
-    );
+  details = (index: number): string => {
+
+    let id = this.institutionList[index].id;
+    let type: string = this.institutionList[index].accountType;
+    switch (type) {
+      case 'PROVIDER':
+        return "provider-details/" + id;
+      case 'INSTITUTION':
+        return "institution-details/" + id;
+      case 'INSTITUTION_WITH_PROVIDER':
+        //todo
+        return "institution-details/" + id;
+    }
+
   };
 
   shareList() {
@@ -108,21 +117,23 @@ export class InstitutionListComponent implements OnInit {
     );
   };
 
-
-  details = (id: number) => {
-    this.router.navigate(["institution-details", id]);
+  private getProviderType = () => {
+    this.institutionService.getProviderTypes().subscribe(
+      institutionTypeList => this.institutionTypeList = institutionTypeList,
+      error => console.warn(error)
+    );
   };
 
   setCurrentType(type: string) {
     this.currentType = type;
   }
 
-  // private getInstitutionsByType = (type: string) => {
-  //   this.accountService.getInstitutionByType(type).subscribe(
-  //     institutionList => this.institutionList = institutionList,
-  //     error => console.warn(error),
-  //   );
-  // };
+  private getProvidersByType = (type: string) => {
+    this.accountService.getProvidersByType(type).subscribe(
+      institutionList => this.institutionList = institutionList,
+      error => console.warn(error),
+    );
+  };
 
   filteredInstitutionList: Array<InstitutionListModel> = new Array<InstitutionListModel>();
 

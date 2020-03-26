@@ -3,6 +3,7 @@ package com.progmasters.mars.account_institution.connector;
 import com.progmasters.mars.account_institution.account.AccountType;
 import com.progmasters.mars.account_institution.account.domain.ProviderAccount;
 import com.progmasters.mars.account_institution.account.domain.ProviderType;
+import com.progmasters.mars.account_institution.account.dto.ProviderUserDetails;
 import com.progmasters.mars.account_institution.institution.domain.Institution;
 import com.progmasters.mars.account_institution.institution.dto.InstitutionDetailsData;
 import com.progmasters.mars.account_institution.institution.openinghours.dto.OpeningHoursData;
@@ -45,6 +46,8 @@ public class AccountInstitutionListData {
 
     private List<InstitutionDetailsData> institutions = new ArrayList<>();
 
+    private List<ProviderUserDetails> providers = new ArrayList<>();
+
     //institution info
 
     private String description;
@@ -57,7 +60,6 @@ public class AccountInstitutionListData {
     }
 
     public AccountInstitutionListData(Institution institution) {
-        this.accountType = AccountType.INSTITUTION.toString();
 
         this.id = institution.getId();
         this.name = institution.getName();
@@ -71,10 +73,18 @@ public class AccountInstitutionListData {
         this.openingHours = institution.getOpeningHours().stream().map(OpeningHoursData::new).collect(Collectors.toList());
         this.website = institution.getWebsite();
         this.phone = institution.getPhone();
+
+        List<AccountInstitutionConnector> institutionConnectors = institution.getAccountInstitutionConnectors();
+        if (!institutionConnectors.isEmpty()) {
+            this.providers = institutionConnectors.stream().map(AccountInstitutionConnector::getProviderAccount).map(ProviderUserDetails::new).collect(Collectors.toList());
+            this.accountType = AccountType.INSTITUTION_WITH_PROVIDER.toString();
+        } else {
+            this.accountType = AccountType.INSTITUTION.toString();
+        }
+
     }
 
     public AccountInstitutionListData(ProviderAccount providerAccount) {
-        this.accountType = AccountType.PROVIDER.toString();
 
         this.id = providerAccount.getId();
         this.providerServiceName = providerAccount.getProviderServiceName();
@@ -92,8 +102,11 @@ public class AccountInstitutionListData {
         this.longitude = providerAccount.getLongitude();
 
         List<AccountInstitutionConnector> accountConnectors = providerAccount.getAccountInstitutionConnectors();
-        if (accountConnectors != null) {
+        if (!accountConnectors.isEmpty()) {
             this.institutions = accountConnectors.stream().map(AccountInstitutionConnector::getInstitution).map(InstitutionDetailsData::new).collect(Collectors.toList());
+            this.accountType = AccountType.PROVIDER_WITH_INSTITUTION.toString();
+        } else {
+            this.accountType = AccountType.PROVIDER.toString();
         }
     }
 
@@ -181,5 +194,9 @@ public class AccountInstitutionListData {
 
     public String getWebsite() {
         return website;
+    }
+
+    public List<ProviderUserDetails> getProviders() {
+        return providers;
     }
 }

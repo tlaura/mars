@@ -1,7 +1,7 @@
 export const institutionListIndex = {
   mapLatitude: 47.4921834,
   mapLongitude: 19.0562347,
-  mapZoom: 12,
+  mapZoom: 10,
   /*
   zoom levels:
   1-4   ->  world

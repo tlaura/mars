@@ -9,14 +9,17 @@
     >
       <agm-snazzy-info-window #infoWindow
                               [closeWhenOthersOpen]="true"
-                              [isOpen]="show"
+                              [isOpen]="showInfoWindow"
                               backgroundColor="tomato"
                               borderRadius="2rem" maxHeight=""
                               maxWidth="500"
                               placement="right"
       >
         <ng-template>
-          <app-institution-details [institution]="institutionDetail" [isInInfoBox]="true"></app-institution-details>
+          <app-institution-details *ngIf="showInstitutionDetails" [institution]="institutionDetail"
+                                   [isInInfoBox]="true"></app-institution-details>
+          <app-provider-details *ngIf="showProviderDetail" [isInInfoBox]="true"
+                                [providerUserDetail]="providerDetail"></app-provider-details>
         </ng-template>
       </agm-snazzy-info-window>
       <!--    <agm-info-window #infoWindow>-->

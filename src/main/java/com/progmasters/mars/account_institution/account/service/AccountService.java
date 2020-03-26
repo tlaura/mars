@@ -64,6 +64,10 @@ public class AccountService {
         return providerAccountRepository.findByType(providerType);
     }
 
+    public ProviderUserDetails getUserDetailsById(Long id) {
+        return new ProviderUserDetails(findById(id));
+    }
+
     public ProviderAccount findById(Long id) {
         return providerAccountRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("No account found by given id:\t" + id));
     }
