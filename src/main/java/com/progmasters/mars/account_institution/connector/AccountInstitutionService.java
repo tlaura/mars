@@ -48,9 +48,9 @@ public class AccountInstitutionService {
 
     //todo read about spring boot exception handling
     public void save(ProviderAccountCreationCommand providerAccountCreationCommand) throws NotFoundException {
-        String address = providerAccountCreationCommand.getZipcode() + " " + providerAccountCreationCommand.getCity() + " " + providerAccountCreationCommand.getAddress();
         ProviderAccount savedAccount = accountService.save(providerAccountCreationCommand);
-        if (address.trim().length() > 0) {
+        if (providerAccountCreationCommand.getZipcode() != null && providerAccountCreationCommand.getCity() != null && providerAccountCreationCommand.getAddress() != null) {
+            String address = providerAccountCreationCommand.getZipcode() + " " + providerAccountCreationCommand.getCity() + " " + providerAccountCreationCommand.getAddress();
             GeoLocation geoLocation = geocodeService.getGeoLocation(address);
             savedAccount.setLongitude(geoLocation.getLongitude());
             savedAccount.setLatitude(geoLocation.getLatitude());
@@ -88,6 +88,7 @@ public class AccountInstitutionService {
         providerAccounts.stream().map(AccountInstitutionListData::new).forEach(allAccounts::add);
         institutions.stream().map(AccountInstitutionListData::new).forEach(allAccounts::add);
         providerAccountWithInstitution.stream().map(AccountInstitutionListData::new).forEach(allAccounts::add);
+        institutionsWithAccount.stream().map(AccountInstitutionListData::new).forEach(allAccounts::add);
 
         return allAccounts;
     }
