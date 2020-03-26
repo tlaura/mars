@@ -12,6 +12,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface InstitutionRepository extends JpaRepository<Institution, Long> {
@@ -21,7 +22,7 @@ public interface InstitutionRepository extends JpaRepository<Institution, Long> 
 
     List<Institution> findAllByEmail(@NotBlank @NotEmpty @Email String email);
 
-    Institution findByName(String name);
+    Optional<Institution> findByName(String name);
 
     @Query("select i from Institution i join i.accountInstitutionConnectors ac where ac.providerAccount= :providerAccount")
     List<Institution> getInstitutionsByAccount(@Param("providerAccount") ProviderAccount providerAccount);

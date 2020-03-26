@@ -47,7 +47,9 @@ public class InstitutionDetailsData {
         this.latitude = institution.getLatitude();
         this.website = institution.getWebsite();
         this.phone = institution.getPhone();
-        this.openingHours = institution.getOpeningHours().stream().map(OpeningHoursData::new).collect(Collectors.toList());
+        if (institution.getOpeningHours() != null) {
+            this.openingHours = institution.getOpeningHours().stream().map(OpeningHoursData::new).collect(Collectors.toList());
+        }
 
     }
 

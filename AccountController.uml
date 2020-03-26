@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>com.progmasters.mars.account_institution.account.controller.AccountController</OriginalElement>
+  <nodes>
+    <node x="455.44917392005163" y="0.0">com.progmasters.mars.account_institution.account.domain.Role</node>
+    <node x="214.48031914893613" y="446.0">org.springframework.web.bind.annotation.RequestMapping</node>
+    <node x="321.41781914893613" y="297.0">com.progmasters.mars.account_institution.account.confirmationtoken.ConfirmationTokenRepository</node>
+    <node x="1163.1979166666665" y="446.0">org.springframework.web.bind.annotation.RestController</node>
+    <node x="10.5" y="297.0">com.progmasters.mars.account_institution.account.dto.ProviderUserDetailsEdit</node>
+    <node x="633.6283284977435" y="218.0">com.progmasters.mars.account_institution.account.passwordtoken.PasswordToken</node>
+    <node x="1090.1283284977435" y="297.0">com.progmasters.mars.account_institution.account.dto.ProviderUserDetails</node>
+    <node x="1027.3775024177953" y="0.0">com.progmasters.mars.account_institution.account.domain.ProviderType</node>
+    <node x="678.8783284977435" y="297.0">com.progmasters.mars.account_institution.account.passwordtoken.PasswordTokenRepository</node>
+    <node x="536.6283284977436" y="545.0">com.progmasters.mars.account_institution.account.controller.AccountController</node>
+    <node x="101.0" y="0.0">com.progmasters.mars.account_institution.account.dto.ProviderAccountCreationCommand</node>
+    <node x="446.6283284977435" y="218.0">com.progmasters.mars.account_institution.account.confirmationtoken.ConfirmationToken</node>
+    <node x="547.1283284977435" y="446.0">com.progmasters.mars.account_institution.account.service.AccountService</node>
+    <node x="846.1283284977435" y="218.0">com.progmasters.mars.account_institution.account.repository.ProviderAccountRepository</node>
+    <node x="498.74917392005165" y="109.0">com.progmasters.mars.account_institution.account.domain.ProviderAccount</node>
+    <node x="332.74917392005165" y="109.0">com.progmasters.mars.account_institution.account.domain.IndividualUser</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="com.progmasters.mars.account_institution.account.service.AccountService" target="com.progmasters.mars.account_institution.account.passwordtoken.PasswordTokenRepository">
+      <point x="22.8125" y="-14.5" />
+      <point x="642.9408284977435" y="366.0" />
+      <point x="835.6283284977435" y="366.0" />
+      <point x="52.25" y="14.5" />
+    </edge>
+    <edge source="com.progmasters.mars.account_institution.account.controller.AccountController" target="com.progmasters.mars.account_institution.account.service.AccountService">
+      <point x="10.437499999999886" y="-14.5" />
+      <point x="630.5658284977435" y="495.0" />
+      <point x="656.6283284977435" y="495.0" />
+      <point x="36.5" y="14.5" />
+    </edge>
+    <edge source="com.progmasters.mars.account_institution.account.service.AccountService" target="com.progmasters.mars.account_institution.account.dto.ProviderAccountCreationCommand">
+      <point x="-50.1875" y="-14.5" />
+      <point x="569.9408284977435" y="406.0" />
+      <point x="229.99999999999994" y="406.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="com.progmasters.mars.account_institution.account.confirmationtoken.ConfirmationTokenRepository" target="com.progmasters.mars.account_institution.account.confirmationtoken.ConfirmationToken">
+      <point x="59.25" y="-14.5" />
+      <point x="499.16781914893613" y="272.0" />
+      <point x="488.3783284977435" y="272.0" />
+      <point x="-41.75" y="14.5" />
+    </edge>
+    <edge source="com.progmasters.mars.account_institution.account.service.AccountService" target="com.progmasters.mars.account_institution.account.domain.ProviderType">
+      <point x="50.1875" y="-14.5" />
+      <point x="670.3158284977435" y="396.0" />
+      <point x="1079.6283284977435" y="396.0" />
+      <point x="1079.6283284977435" y="89.0" />
+      <point x="1104.3775024177953" y="89.0" />
+      <point x="11.0" y="14.5" />
+    </edge>
+    <edge source="com.progmasters.mars.account_institution.account.passwordtoken.PasswordTokenRepository" target="com.progmasters.mars.account_institution.account.domain.ProviderAccount">
+      <point x="52.25" y="-14.5" />
+      <point x="835.6283284977435" y="178.0" />
+      <point x="616.9764466473243" y="178.0" />
+      <point x="41.72727272727275" y="14.5" />
+    </edge>
+    <edge source="com.progmasters.mars.account_institution.account.confirmationtoken.ConfirmationToken" target="com.progmasters.mars.account_institution.account.domain.ProviderAccount">
+      <point x="-41.75" y="-14.5" />
+      <point x="488.3783284977435" y="198.0" />
+      <point x="561.3400830109608" y="198.0" />
+      <point x="-13.909090909090878" y="14.5" />
+    </edge>
+    <edge source="com.progmasters.mars.account_institution.account.service.AccountService" target="com.progmasters.mars.account_institution.account.passwordtoken.PasswordToken">
+      <point x="4.5625" y="-14.5" />
+      <point x="624.6908284977435" y="346.0" />
+      <point x="668.3783284977435" y="346.0" />
+      <point x="-34.75" y="14.5" />
+    </edge>
+    <edge source="com.progmasters.mars.account_institution.account.domain.IndividualUser" target="com.progmasters.mars.account_institution.account.domain.Role">
+      <point x="-36.5" y="-14.5" />
+      <point x="369.24917392005165" y="79.0" />
+      <point x="464.94917392005163" y="79.0" />
+      <point x="-28.5" y="14.5" />
+    </edge>
+    <edge source="com.progmasters.mars.account_institution.account.confirmationtoken.ConfirmationTokenRepository" target="com.progmasters.mars.account_institution.account.domain.ProviderAccount">
+      <point x="-59.25" y="-14.5" />
+      <point x="380.66781914893613" y="188.0" />
+      <point x="547.4309921018698" y="188.0" />
+      <point x="-27.818181818181813" y="14.5" />
+    </edge>
+    <edge source="com.progmasters.mars.account_institution.account.service.AccountService" target="com.progmasters.mars.account_institution.account.domain.ProviderAccount">
+      <point x="-31.9375" y="-14.5" />
+      <point x="588.1908284977435" y="386.0" />
+      <point x="310.91781914893613" y="386.0" />
+      <point x="310.91781914893613" y="178.0" />
+      <point x="533.5219011927788" y="178.0" />
+      <point x="-41.72727272727275" y="14.5" />
+    </edge>
+    <edge source="com.progmasters.mars.account_institution.account.domain.ProviderAccount" target="com.progmasters.mars.account_institution.account.domain.ProviderType">
+      <point x="30.600000000000023" y="-14.5" />
+      <point x="605.8491739200517" y="59.0" />
+      <point x="1038.3775024177953" y="59.0" />
+      <point x="-55.0" y="14.5" />
+    </edge>
+    <edge source="com.progmasters.mars.account_institution.account.controller.AccountController" target="com.progmasters.mars.account_institution.account.dto.ProviderUserDetailsEdit">
+      <point x="-52.187500000000114" y="-14.5" />
+      <point x="567.9408284977435" y="515.0" />
+      <point x="52.30323581560276" y="515.0" />
+      <point x="52.30323581560276" y="426.0" />
+      <point x="45.33333333333337" y="426.0" />
+      <point x="-69.66666666666663" y="14.5" />
+    </edge>
+    <edge source="com.progmasters.mars.account_institution.account.service.AccountService" target="com.progmasters.mars.account_institution.account.confirmationtoken.ConfirmationToken">
+      <point x="-4.5625" y="-14.5" />
+      <point x="615.5658284977435" y="356.0" />
+      <point x="571.8783284977435" y="356.0" />
+      <point x="41.75" y="14.5" />
+    </edge>
+    <edge source="com.progmasters.mars.account_institution.account.repository.ProviderAccountRepository" target="com.progmasters.mars.account_institution.account.domain.ProviderAccount">
+      <point x="-55.75" y="-14.5" />
+      <point x="901.8783284977435" y="168.0" />
+      <point x="630.8855375564153" y="168.0" />
+      <point x="55.636363636363626" y="14.5" />
+    </edge>
+    <edge source="com.progmasters.mars.account_institution.account.service.AccountService" target="com.progmasters.mars.account_institution.account.confirmationtoken.ConfirmationTokenRepository">
+      <point x="-13.6875" y="-14.5" />
+      <point x="606.4408284977435" y="366.0" />
+      <point x="499.16781914893613" y="366.0" />
+      <point x="59.25" y="14.5" />
+    </edge>
+    <edge source="com.progmasters.mars.account_institution.account.service.AccountService" target="com.progmasters.mars.account_institution.account.dto.ProviderUserDetailsEdit">
+      <point x="-59.3125" y="-14.5" />
+      <point x="560.8158284977435" y="416.0" />
+      <point x="184.66666666666669" y="416.0" />
+      <point x="69.66666666666669" y="14.5" />
+    </edge>
+    <edge source="com.progmasters.mars.account_institution.account.controller.AccountController" target="com.progmasters.mars.account_institution.account.dto.ProviderAccountCreationCommand">
+      <point x="-73.06250000000011" y="-14.5" />
+      <point x="547.0658284977435" y="525.0" />
+      <point x="0.0" y="525.0" />
+      <point x="0.0" y="89.0" />
+      <point x="144.0" y="89.0" />
+      <point x="-86.0" y="14.5" />
+    </edge>
+    <edge source="com.progmasters.mars.account_institution.account.dto.ProviderUserDetails" target="com.progmasters.mars.account_institution.account.domain.ProviderType">
+      <point x="45.25" y="-14.5" />
+      <point x="1225.8783284977435" y="272.0" />
+      <point x="1186.1283284977435" y="272.0" />
+      <point x="1186.1283284977435" y="89.0" />
+      <point x="1126.3775024177953" y="89.0" />
+      <point x="33.0" y="14.5" />
+    </edge>
+    <edge source="com.progmasters.mars.account_institution.account.controller.AccountController" target="com.progmasters.mars.account_institution.account.domain.ProviderType">
+      <point x="73.06249999999989" y="-14.5" />
+      <point x="693.1908284977435" y="525.0" />
+      <point x="1358.9594858156029" y="525.0" />
+      <point x="1358.9594858156029" y="79.0" />
+      <point x="1148.3775024177953" y="79.0" />
+      <point x="55.0" y="14.5" />
+    </edge>
+    <edge source="com.progmasters.mars.account_institution.account.domain.ProviderAccount" target="com.progmasters.mars.account_institution.account.domain.Role">
+      <point x="-30.599999999999966" y="-14.5" />
+      <point x="544.6491739200517" y="59.0" />
+      <point x="502.94917392005163" y="59.0" />
+      <point x="9.5" y="14.5" />
+    </edge>
+    <edge source="com.progmasters.mars.account_institution.account.passwordtoken.PasswordToken" target="com.progmasters.mars.account_institution.account.domain.ProviderAccount">
+      <point x="34.75" y="-14.5" />
+      <point x="737.8783284977435" y="188.0" />
+      <point x="603.0673557382336" y="188.0" />
+      <point x="27.81818181818187" y="14.5" />
+    </edge>
+    <edge source="com.progmasters.mars.account_institution.account.domain.ProviderAccount" target="com.progmasters.mars.account_institution.account.dto.ProviderAccountCreationCommand">
+      <point x="-61.19999999999999" y="-14.5" />
+      <point x="514.0491739200517" y="69.0" />
+      <point x="316.0" y="69.0" />
+      <point x="86.0" y="14.5" />
+    </edge>
+    <edge source="com.progmasters.mars.account_institution.account.passwordtoken.PasswordTokenRepository" target="com.progmasters.mars.account_institution.account.passwordtoken.PasswordToken">
+      <point x="-52.25" y="-14.5" />
+      <point x="731.1283284977435" y="272.0" />
+      <point x="737.8783284977435" y="272.0" />
+      <point x="34.75" y="14.5" />
+    </edge>
+    <edge source="com.progmasters.mars.account_institution.account.controller.AccountController" target="org.springframework.web.bind.annotation.RestController">
+      <point x="52.187499999999886" y="-14.5" />
+      <point x="672.3158284977435" y="515.0" />
+      <point x="1236.1979166666665" y="515.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="com.progmasters.mars.account_institution.account.dto.ProviderUserDetailsEdit" target="com.progmasters.mars.account_institution.account.domain.ProviderAccount">
+      <point x="0.0" y="-14.5" />
+      <point x="115.0" y="158.0" />
+      <point x="505.7037193745971" y="158.0" />
+      <point x="-69.54545454545456" y="14.5" />
+    </edge>
+    <edge source="com.progmasters.mars.account_institution.account.repository.ProviderAccountRepository" target="com.progmasters.mars.account_institution.account.domain.ProviderType">
+      <point x="55.75" y="-14.5" />
+      <point x="1013.3783284977435" y="79.0" />
+      <point x="1082.3775024177953" y="79.0" />
+      <point x="-11.0" y="14.5" />
+    </edge>
+    <edge source="com.progmasters.mars.account_institution.account.dto.ProviderUserDetails" target="com.progmasters.mars.account_institution.account.domain.ProviderAccount">
+      <point x="-45.25" y="-14.5" />
+      <point x="1135.3783284977435" y="272.0" />
+      <point x="1175.1283284977435" y="272.0" />
+      <point x="1175.1283284977435" y="158.0" />
+      <point x="644.7946284655061" y="158.0" />
+      <point x="69.5454545454545" y="14.5" />
+    </edge>
+    <edge source="com.progmasters.mars.account_institution.account.controller.AccountController" target="com.progmasters.mars.account_institution.account.dto.ProviderUserDetails">
+      <point x="31.312499999999886" y="-14.5" />
+      <point x="651.4408284977435" y="505.0" />
+      <point x="1152.6979166666665" y="505.0" />
+      <point x="1152.6979166666665" y="426.0" />
+      <point x="1240.9616618310768" y="426.0" />
+      <point x="60.33333333333326" y="14.5" />
+    </edge>
+    <edge source="com.progmasters.mars.account_institution.account.service.AccountService" target="com.progmasters.mars.account_institution.account.repository.ProviderAccountRepository">
+      <point x="41.0625" y="-14.5" />
+      <point x="661.1908284977435" y="386.0" />
+      <point x="962.1908284977435" y="386.0" />
+      <point x="962.1908284977435" y="272.0" />
+      <point x="1013.3783284977435" y="272.0" />
+      <point x="55.75" y="14.5" />
+    </edge>
+    <edge source="com.progmasters.mars.account_institution.account.controller.AccountController" target="org.springframework.web.bind.annotation.RequestMapping">
+      <point x="-31.312500000000114" y="-14.5" />
+      <point x="588.8158284977435" y="505.0" />
+      <point x="287.48031914893613" y="505.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="com.progmasters.mars.account_institution.account.service.AccountService" target="com.progmasters.mars.account_institution.account.dto.ProviderUserDetails">
+      <point x="68.4375" y="-14.5" />
+      <point x="688.5658284977435" y="416.0" />
+      <point x="1180.6283284977435" y="416.0" />
+      <point x="0.0" y="14.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.4" x="680.3018060370986" y="232.02120183737784" />
+  <SelectedNodes />
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

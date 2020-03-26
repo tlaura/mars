@@ -66,7 +66,7 @@ public class InstitutionService {
     }
 
 
-    public InstitutionDetailsData getInstitutionDetails(Long id) {
+    public InstitutionDetailsData getInstitutionDetailsById(Long id) {
         return new InstitutionDetailsData(findById(id));
     }
 
@@ -104,7 +104,11 @@ public class InstitutionService {
         }
     }
 
+    List<Institution> findAllInstitutions() {
+        return institutionRepository.findAll();
+    }
+
     public Institution findByName(String name) {
-        return institutionRepository.findByName(name);
+        return institutionRepository.findByName(name).orElseThrow(() -> new EntityNotFoundException("no such entity found with given name"));
     }
 }
