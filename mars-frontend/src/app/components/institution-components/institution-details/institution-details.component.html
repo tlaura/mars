@@ -2,15 +2,30 @@
   <div [ngClass]="isInInfoBox? 'white-block-on-tomato-div p-sm-1 p-md-3 col-sm-12':
    'white-block-on-tomato-div p-sm-2 p-md-3 p-lg-4 col-sm-12 col-md-10 offset-md-1 col-lg-8 offset-lg-2'">
     <h4 class="tomato-head font-weight-bold">{{institution?.name}}</h4>
-    <h5 class="tomato-head">{{ institution?.zipcode}} {{institution?.city}} {{institution?.address}}</h5>
+    <div class="row mx-sm-0 my-sm-0">
+      <i class="icon-tomato fas fa-map-marker-alt"></i><h5
+      class="tomato-head mx-sm-2">{{institution.zipcode}} {{institution.city}} {{institution.address}}</h5>
+    </div>
+
     <h6 class="tomato-head">Nyitvatartás:</h6>
     <div *ngFor="let openingHour of institution?.openingHours">{{openingHour.weekDay}}: {{openingHour.openingTime}}
       -{{openingHour.closingTime}}</div>
 
     <p>{{institution?.description}}</p>
 
-    <h6 class="tomato-head">Elérhetőség:</h6>
-    <p>{{institution?.email}}</p>
+    <h6 class="tomato-head">Elérhetőségek:</h6>
+    <div class="row mx-0">
+      <i class="fas fa-at icon-tomato"></i><label class="mx-sm-2 small">{{institution.email}}</label>
+
+      <i class="fas fa-lg fa-mobile-alt icon-tomato"></i><label
+      class="mx-sm-2 small">{{institution.phone}}</label>
+
+
+      <i *ngIf="institution.website" class="fas fa-globe-europe icon-tomato"></i>
+      <a [href]="'http://' + institution.website" class="mx-sm-2 small custom-link"
+         target="_blank">{{institution.website}}</a>
+
+    </div>
 
     <div class="form-group">
       <button (click)="openMailSend()" class="btn btn-primary submit rounded-pill">Email küldés</button>

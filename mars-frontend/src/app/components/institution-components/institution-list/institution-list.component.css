@@ -21,16 +21,3 @@
   color: tomato;
 }
 
-.custom-link {
-  cursor: pointer;
-  color: tomato;
-}
-
-.provider-div label, .provider-div svg {
-  color: cornflowerblue;
-}
-
-.custom-link-provider {
-  cursor: pointer;
-  color: cornflowerblue;
-}
