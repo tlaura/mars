@@ -7,6 +7,7 @@ import com.progmasters.mars.account_institution.institution.dto.InstitutionCreat
 import com.progmasters.mars.account_institution.institution.dto.InstitutionDetailsData;
 import com.progmasters.mars.account_institution.institution.dto.InstitutionListData;
 import com.progmasters.mars.account_institution.institution.dto.InstitutionTypeData;
+import com.progmasters.mars.account_institution.institution.service.InstitutionOpeningHoursService;
 import com.progmasters.mars.account_institution.institution.service.InstitutionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,11 +30,13 @@ public class InstitutionController {
     private final InstitutionService institutionService;
     private final Logger logger = LoggerFactory.getLogger(InstitutionController.class);
     private InstitutionValidator institutionValidator;
+    private final InstitutionOpeningHoursService institutionOpeningHoursService;
 
     @Autowired
-    public InstitutionController(InstitutionService institutionService, InstitutionValidator institutionValidator) {
+    public InstitutionController(InstitutionService institutionService, InstitutionValidator institutionValidator, InstitutionOpeningHoursService institutionOpeningHoursService) {
         this.institutionService = institutionService;
         this.institutionValidator = institutionValidator;
+        this.institutionOpeningHoursService = institutionOpeningHoursService;
     }
 
     @GetMapping
@@ -66,7 +69,7 @@ public class InstitutionController {
     @PostMapping
     public ResponseEntity<Void> createInstitution(@RequestBody @Valid InstitutionCreationCommand institutionCreationCommand) {
         try {
-            institutionService.saveInstitution(institutionCreationCommand);
+            institutionOpeningHoursService.save(institutionCreationCommand);
         } catch (NotFoundException e) {
             logger.info("Location not found");
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

@@ -4,7 +4,7 @@
     <h4 class="tomato-head font-weight-bold">{{institution?.name}}</h4>
     <h5 class="tomato-head">{{ institution?.zipcode}} {{institution?.city}} {{institution?.address}}</h5>
     <h6 class="tomato-head">Nyitvatartás:</h6>
-    <div *ngFor="let openingHour of openingHours">{{openingHour.weekDay}}: {{openingHour.openingTime}}
+    <div *ngFor="let openingHour of institution?.openingHours">{{openingHour.weekDay}}: {{openingHour.openingTime}}
       -{{openingHour.closingTime}}</div>
 
     <p>{{institution?.description}}</p>

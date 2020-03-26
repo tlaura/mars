@@ -1,4 +1,5 @@
 import {InstitutionDetailModel} from "./institutionDetail.model";
+import {OpeningHoursModel} from "./openingHours.model";
 import {ProviderUserDetails} from "./providerUserDetails";
 
 export interface AccountInstitutionListModel {
@@ -17,6 +18,7 @@ export interface AccountInstitutionListModel {
   latitude: number,
   longitude: number,
   institutions: Array<InstitutionDetailModel>,
+  openingHours: Array<OpeningHoursModel>,
   providers: Array<ProviderUserDetails>,
   website,
 
