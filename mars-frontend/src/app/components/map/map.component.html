@@ -4,7 +4,7 @@
            [zoom]="zoom"
            [styles]="styles"
            gestureHandling="cooperative">
-    <agm-marker (markerClick)="markerClick(i)" *ngFor="let location of locations; let i = index"
+    <agm-marker (markerClick)="markerClick(location)" *ngFor="let location of locations; let i = index"
                 [iconUrl]="getIcon(location)" [latitude]="location.latitude" [longitude]="location.longitude"
     >
 

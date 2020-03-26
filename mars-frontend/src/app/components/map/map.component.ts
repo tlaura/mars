@@ -213,19 +213,13 @@ export class MapComponent implements OnInit {
     }
   };
 
-  markerClick = (index: number) => {
-    let id: number = this.locations[index].id;
-    let accountType = this.locations[index].accountType;
-    switch (accountType) {
-      case 'PROVIDER':
-        this.getProviderDetails(id);
-        break;
-      case 'INSTITUTION':
-        this.getInstitutionDetail(id);
-        break;
-      case 'INSTITUTION_WITH_PROVIDER':
+  markerClick = (institution: AccountInstitutionListModel) => {
+    let accountType = institution.accountType;
+    if (accountType === 'PROVIDER') {
+      this.getProviderDetails(institution.id);
+    } else {
+      this.getInstitutionDetail(institution.id);
 
-        break;
     }
   };
 

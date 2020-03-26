@@ -105,17 +105,14 @@ export class InstitutionListComponent implements OnInit {
     }
   };
 
-  details = (index: number): string => {
-    console.log(index);
-    let id = this.institutionList[index].id;
-    let type: string = this.institutionList[index].accountType;
+  details = (institution: AccountInstitutionListModel): string => {
+    console.log(institution);
+    let type: string = institution.accountType;
     if (type === 'PROVIDER') {
-      return "provider-details/" + id;
+      return "provider-details/" + institution.id;
     } else {
-      console.log(this.institutionList[index].id);
-      return "institution-details/" + id;
+      return "institution-details/" + institution.id;
     }
-
   };
 
   shareList() {
