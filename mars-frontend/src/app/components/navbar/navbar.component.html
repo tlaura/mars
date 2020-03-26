@@ -12,41 +12,36 @@
 
   <div class="navbar-collapse collapse" id="myNavbar">
     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-      <li *ngIf="!(loginService.loggedIn$ | async)" class="nav-item font-weight-lighter mx-3">
-        <a class="nav-link" routerLink="register" routerLinkActive="active">
-          Regisztráció
-        </a>
+      <li class="nav-item dropdown font-weight-lighter mx-3">
+        <a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle"
+           data-toggle="dropdown" role="button" routerLink="institution-list" routerLinkActive="active">Térképes
+          kereső</a>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" routerLink="institution-form" routerLinkActive="active">Intézmény
+            hozzáadása</a>
+          <!--div *ngIf="isAdmin" class="dropdown-divider"></div-->
+          <a class="dropdown-item" routerLink="institution-import"
+             routerLinkActive="active">Intézmények
+            importálása</a>
+        </div>
       </li>
+
+
+    </ul>
+
+    <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
       <li *ngIf="!(loginService.loggedIn$ | async)" class="nav-item font-weight-lighter mx-3">
         <a class="nav-link" routerLink="login" routerLinkActive="active">
           Bejelentkezés</a>
       </li>
-
-      <li *ngIf="loginService.loggedIn$ | async" class="nav-item font-weight-lighter mx-3">
-        <a class="nav-link" style="cursor:pointer" (click)="logout()" routerLinkActive="active">
-          Kijelentkezés</a>
-      </li>
-
-      <li class="nav-item font-weight-lighter mx-3"><a class="nav-link" routerLink="institution-list"
-                                                       routerLinkActive="active">Intézmények</a>
-      </li>
-
-      <li *ngIf="isAdmin" class="nav-item font-weight-lighter mx-3"><a class="nav-link" routerLink="institution-import"
-                                                                       routerLinkActive="active">Intézmények
-        importálása</a>
-      </li>
-
-      <li class="nav-item font-weight-lighter mx-3"><a class="nav-link" routerLink="institution-form"
-                                                       routerLinkActive="active">Intézmény
-        hozzáadása</a>
-      </li>
-    </ul>
-
-    <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
       <li *ngIf="loginService.loggedIn$ | async" class="nav-item font-weight-lighter mx-3"><a class="nav-link"
                                                                                               routerLink="my-profile"
                                                                                               routerLinkActive="active">
         {{profileName}} profilja</a>
+      </li>
+      <li *ngIf="loginService.loggedIn$ | async" class="nav-item font-weight-lighter mx-3">
+        <a (click)="logout()" class="nav-link" routerLinkActive="active" style="cursor:pointer">
+          Kijelentkezés</a>
       </li>
     </ul>
   </div>

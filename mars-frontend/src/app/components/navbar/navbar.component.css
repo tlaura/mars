@@ -10,3 +10,19 @@
 .navbar a.navbar-brand {
   font-weight: bold;
 }
+
+.dropdown-menu {
+  background-color: tomato;
+  margin: 0;
+  border-radius: 2rem;
+  border-left: none;
+  border-right: 2px solid #b34532;
+  border-top: none;
+  border-bottom: 2px solid #b34532;
+}
+
+
+.dropdown-item {
+
+}
+
