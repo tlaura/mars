@@ -277,4 +277,5 @@ export class MapComponent implements OnInit {
       return this.icon_institution;
     }
   }
+
 }

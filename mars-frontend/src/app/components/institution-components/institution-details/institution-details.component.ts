@@ -3,7 +3,6 @@ import {InstitutionDetailModel} from "../../../models/institutionDetail.model";
 import {ActivatedRoute, Router} from "@angular/router";
 import {InstitutionService} from "../../../services/institution.service";
 import {OpeningHoursService} from "../../../services/opening-hours.service";
-import {OpeningHoursModel} from "../../../models/openingHours.model";
 
 @Component({
   selector: 'app-institution-details',
@@ -15,7 +14,6 @@ export class InstitutionDetailsComponent implements OnInit {
   @Input() institution: InstitutionDetailModel;
   @Input() mailSender: boolean = false;
   @Input() isInInfoBox: boolean = false;
-  openingHours: Array<OpeningHoursModel>;
   shareUrl: string;
   shareObj = {
     //localhost-ra nem működik, elvileg élesben igen?!?!?
@@ -42,18 +40,18 @@ export class InstitutionDetailsComponent implements OnInit {
       institutionDetail => this.institution = institutionDetail,
       error => console.warn(error),
       () => {
-        this.getOpeningHours(id);
+        // this.getOpeningHours(id);
         //this.shareUrl = location.href + this.institution.id;
       }
     );
   };
 
-  getOpeningHours = (id: number): void => {
-    this.openingHoursService.getOpeningHoursByInstitutionId(id).subscribe(
-      openingHours => this.openingHours = openingHours,
-      error => console.warn(error)
-    )
-  };
+  // getOpeningHours = (id: number): void => {
+  //   this.openingHoursService.getOpeningHoursByInstitutionId(id).subscribe(
+  //     openingHours => this.openingHours = openingHours,
+  //     error => console.warn(error)
+  //   )
+  // };
 
   openMailSend = (): void => {
     this.mailSender = this.mailSender === false;
