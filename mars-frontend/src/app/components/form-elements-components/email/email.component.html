@@ -6,7 +6,7 @@
       Érvénytelen email cím!
     </small>
   </div>
-  <small class="text-danger-custom">
-    {{emailFormGroup.get('email').errors?.serverError}}
+  <small *ngIf="emailFormGroup.get('email').errors?.serverError" class="text-danger-custom">
+    Ez az email cím már foglalt!
   </small>
 </form>

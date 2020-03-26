@@ -18,6 +18,7 @@ import {NewPasswordCompleteComponent} from "./components/account-components/new-
 import {NewPasswordFormComponent} from "./components/account-components/new-password-components/new-password-form/new-password-form.component";
 import {NewPasswordSuccessComponent} from "./components/account-components/new-password-components/new-password-success/new-password-success.component";
 import {ProviderDetailsComponent} from "./components/provider-details/provider-details.component";
+import {TermsComponent} from "./components/terms/terms.component";
 
 
 const routes: Routes = [
@@ -40,6 +41,7 @@ const routes: Routes = [
   {path: "register-success/:token", component: RegisterSuccessComponent},
   {path: "my-profile", component: MyProfileComponent},
   {path: "", component: HomeComponent},
+  {path: "terms-and-conditions", component: TermsComponent},
   {path: "my-profile/edit-profile", component: EditProfileComponent}
 ];
 

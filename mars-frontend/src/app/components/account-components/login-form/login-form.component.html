@@ -34,14 +34,16 @@
           Helytelen felhasználónév vagy jelszó!
         </div>
         <div *ngIf="showUnconfirmedMessage" class="alert alert-danger rounded-pill">
-          Kérjük aktiválja fiókját az email-ben kapott üzenet alapján!
+          Kérjük, aktiváld a fiókod az email-ben kapott üzenet alapján!
         </div>
 
-        <div class="form-group">
-          <p>Elfelejtett jelszó?
-            <button (click)="forgotPassword()" class="btn btn-sm btn-link">Kattints ide!</button>
-          </p>
-          <p>Még nincs fiókod? <a routerLink="/register">Regisztrálj!</a></p>
+        <div class="form-group small">
+          <label class="row m-0">Elfelejtett jelszó?
+            <a class="nav-link d-inline p-0 ml-1" routerLink="/new-password">Kattints ide!</a>
+          </label>
+          <label class="row m-0">Még nincs fiókod?
+            <a class="nav-link d-inline p-0 ml-1" routerLink="/register">Regisztrálj!</a>
+          </label>
         </div>
 
         <button (click)="login()" [disabled]="loginForm.invalid" class="submit btn btn-primary rounded-pill"

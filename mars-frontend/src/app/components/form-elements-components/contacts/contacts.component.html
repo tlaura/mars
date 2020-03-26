@@ -12,8 +12,8 @@
           Érvénytelen név!
         </small>
       </div>
-      <small class="text-danger-custom">
-        {{contactsFormGroup.get('name').errors?.serverError}}
+      <small *ngIf="contactsFormGroup.get('name').errors?.serverError" class="text-danger-custom">
+        Ez a név már foglalt!
       </small>
     </div>
 

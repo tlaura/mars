@@ -2,13 +2,16 @@
   border-radius: 2rem;
 }
 
-.edit-button {
-  margin-right: 100px;
-  padding: 10px 20px;
+.edit-button-blue svg {
+  color: white;
 }
 
-.profile-div {
-  padding: 30px;
+.edit-button-white svg {
+  color: cornflowerblue;
+}
+
+.edit-button-white {
+  background-color: white !important;
 }
 
 .button-flex {

@@ -1,34 +1,22 @@
-<div class="tomato-background-div">
-  <div *ngIf="loggedInUser" class="container white-block-on-tomato-div">
-    <div class="row align-items-left justify-content-center">
-      <h1 class="tomato-head">
-        <hr>
-        Profil
-      </h1>
-    </div>
+<div class="tomato-background-div text-center">
+  <h4>Profil</h4>
+  <div *ngIf="loggedInUser"
+       class="white-block-on-tomato-div col-sm-12 col-md-10 offset-md-1 col-lg-8 offset-lg-2 text-left py-3">
+    <button (click)='editMode=!editMode' [ngClass]="editMode? 'edit-button-blue':'edit-button-white'"
+            class="rounded-circle btn-primary submit p-2 float-right"><i class="fas fa-lg fa-pencil-alt"></i></button>
 
-    <div class="row">
+
+    <div class="row mx-0">
       <div class="profile-div col-sm-12 col-md-6">
-
-        <div *ngIf="!editMode" class="button-flex">
-          <button (click)='editMode=true' class="edit-button rounded-pill btn-light">
-            Módosítás<i class="fas fa-pencil-alt"></i></button>
-        </div>
-
-        <div *ngIf="editMode" class="button-flex">
-          <button (click)='cancelEdit()' class="edit-button rounded-pill btn-light">
-            Visszavonás
-          </button>
-        </div>
 
         <label>Teljes név:</label>
         <div *ngIf='!editMode' class="col-sm-9">
           <p> {{providerAccount?.name}} </p>
         </div>
-        <div>
+        <div class="form-group  col-sm-12 col-md-7">
           <input
             *ngIf='editMode' name="username" [formControl]="username"
-            [(ngModel)]='providerAccount.name' class='text-dark' type='text'>
+            [(ngModel)]='providerAccount.name' class='text-dark form-control' type='text'>
           <small *ngIf="username.errors?.pattern && editMode"
                  class="text-danger col-sm-12 col-md-12">
             Helytelen név!
@@ -44,15 +32,15 @@
         <div *ngIf='!editMode' class="col-sm-9">
           <p> {{providerAccount?.providerServiceName}} </p>
         </div>
-        <div>
+        <div class="form-group col-sm-12 col-md-7">
           <input
             *ngIf='editMode' name="providerServiceName" [formControl]="providerServiceName"
-            [(ngModel)]='providerAccount.providerServiceName' class='text-dark' type='text'>
+            [(ngModel)]='providerAccount.providerServiceName' class='text-dark form-control' type='text'>
           <small *ngIf="providerServiceName.errors?.pattern && editMode"
                  class="text-danger col-sm-12 col-md-12">
             Helytelen szolgáltatás név!
           </small>
-          <small *ngIf="!providerAccount?.name"
+          <small *ngIf="!providerAccount?.providerServiceName"
                  class="text-danger col-sm-12 col-md-12">
             A mező kitöltése közelező!
           </small>
@@ -69,10 +57,10 @@
         <div *ngIf='!editMode' class="col-sm-9">
           <p> {{providerAccount?.phone}} </p>
         </div>
-        <div>
+        <div class="form-group  col-sm-12 col-md-7">
           <input
             *ngIf='editMode' name="phone" [formControl]="phone"
-            [(ngModel)]='providerAccount.phone' class='text-dark' type='text'>
+            [(ngModel)]='providerAccount.phone' class='text-dark form-control' type='text'>
           <small *ngIf="phone.errors?.pattern && editMode"
                  class="text-danger col-sm-12 col-md-12">
             Helytelen telefonszám formátum!
@@ -81,26 +69,36 @@
         <br>
 
         <label>Cím:</label>
-        <div *ngIf='!editMode' class="col-sm-9">
-          <p> {{providerAccount?.zipcode}} </p>
-          <p>{{providerAccount?.city}}</p>
-          <p>{{providerAccount?.address}}</p>
+        <div *ngIf='!editMode' class="row mx-0">
+          <div class="col-sm-4">
+            <p> {{providerAccount?.zipcode}} </p>
+          </div>
+          <div class="col-sm-8">
+            <p>{{providerAccount?.city}}</p>
+          </div>
+          <div class="col-sm-12">
+            <p>{{providerAccount?.address}}</p>
+          </div>
         </div>
-        <div>
-          <input
-            *ngIf='editMode'
-            [(ngModel)]='providerAccount.zipcode' class='text-dark' type='text'>
+
+        <div class="row m-0">
+          <div class="form-group col-sm-4">
+            <input
+              *ngIf='editMode'
+              [(ngModel)]='providerAccount.zipcode' class='text-dark form-control' type='text'>
+          </div>
+          <div class="form-group col-sm-8">
+            <input
+              *ngIf='editMode'
+              [(ngModel)]='providerAccount.city' class='text-dark form-control' type='text'>
+          </div>
+          <div class="form-group col-sm-12">
+            <input
+              *ngIf='editMode'
+              [(ngModel)]='providerAccount.address' class='text-dark form-control' type='text'>
+          </div>
         </div>
-        <div>
-          <input
-            *ngIf='editMode'
-            [(ngModel)]='providerAccount.city' class='text-dark' type='text'>
-        </div>
-        <div>
-          <input
-            *ngIf='editMode'
-            [(ngModel)]='providerAccount.address' class='text-dark' type='text'>
-        </div>
+
         <br>
 
         <label>Szolgáltatás típusai:</label>
@@ -117,38 +115,37 @@
         <div class="col-sm-9">
           <p>{{providerAccount?.ageGroupMin}} - {{providerAccount?.ageGroupMax}}</p>
         </div>
-        <div *ngIf='editMode'>
-          <label>Minimum életkor:</label>
-          <input
-            [(ngModel)]='providerAccount.ageGroupMin' class='text-dark' type='number'>
-          <small *ngIf="editMode && providerAccount.ageGroupMin < 0"
-                 class="text-danger col-sm-12 col-md-12">
-            Helytelen életkor!
-          </small>
-        </div>
-        <div *ngIf='editMode'>
-          <label>Maximum életkor:</label>
-          <input
-            [(ngModel)]='providerAccount.ageGroupMax' class='text-dark' type='number'>
-          <small *ngIf="editMode && providerAccount.ageGroupMax < 0"
-                 class="text-danger col-sm-12 col-md-12">
-            Helytelen életkor!
-          </small>
+
+        <div class="form-group row mx-0">
+          <div *ngIf='editMode' class="col-sm-6 col-md-5">
+            <label>Minimum életkor:</label>
+            <input
+              [(ngModel)]='providerAccount.ageGroupMin' class='text-dark form-control' type='number'>
+            <small *ngIf="editMode && providerAccount.ageGroupMin < 0"
+                   class="text-danger col-sm-12 col-md-12">
+              Helytelen életkor!
+            </small>
+          </div>
+          <div *ngIf='editMode' class=" col-sm-6 col-md-5">
+            <label>Maximum életkor:</label>
+            <input
+              [(ngModel)]='providerAccount.ageGroupMax' class='text-dark form-control' type='number'>
+            <small *ngIf="editMode && providerAccount.ageGroupMax < 0"
+                   class="text-danger col-sm-12 col-md-12">
+              Helytelen életkor!
+            </small>
+          </div>
         </div>
 
-        <div>
-          <p>
-            <input class="form-check-input mt-0" formControlName="newsletter" id="newsletter" type="checkbox" [checked]="providerAccount?.newsletter">
-          </p>
-          <label for="newsletter">Hírlevél</label>
+
+        <div *ngIf="editMode" class="form-group">
+          <input [checked]="providerAccount?.newsletter" class="form-check-input px-0 ml-0 "
+                 formControlName="newsletter" id="newsletter"
+                 type="checkbox">
+          <label class="ml-3" for="newsletter">Hírlevél</label>
         </div>
-<!--                <label>Hírlevél:</label>-->
-<!--                  <input class="form-check-input mt-0" type="checkbox">-->
-
-        <button (click)="saveChanges()" class="submit btn btn-info rounded-pill" type="submit">
-          Mentés
-        </button>
-
+        <!--                <label>Hírlevél:</label>-->
+        <!--                  <input class="form-check-input mt-0" type="checkbox">-->
       </div>
 
       <div class="col-sm-12 col-md-6" style="padding: 30px 0">
@@ -170,6 +167,10 @@
           </div>
         </div>
       </div>
+
+      <button (click)="saveChanges()" *ngIf="editMode" class="submit btn btn-info rounded-pill" type="submit">
+        Mentés
+      </button>
     </div>
   </div>
 </div>
