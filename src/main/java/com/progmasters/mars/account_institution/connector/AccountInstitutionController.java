@@ -1,13 +1,12 @@
 package com.progmasters.mars.account_institution.connector;
 
+import com.progmasters.mars.account_institution.account.dto.ProviderAccountCreationCommand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -29,5 +28,13 @@ public class AccountInstitutionController {
         List<AccountInstitutionListData> allListItems = accountInstitutionService.getAllListItems();
 
         return new ResponseEntity<>(allListItems, HttpStatus.OK);
+    }
+
+    @PostMapping
+    public ResponseEntity<Void> testSave(@RequestBody ProviderAccountCreationCommand providerAccountCreationCommand) {
+
+        accountInstitutionService.tempSave(providerAccountCreationCommand);
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

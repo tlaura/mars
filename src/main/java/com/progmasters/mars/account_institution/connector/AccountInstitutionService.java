@@ -65,6 +65,34 @@ public class AccountInstitutionService {
         emailService.sendConfirmationEmail(savedAccount);
     }
 
+    public void tempSave(ProviderAccountCreationCommand providerAccountCreationCommand) {
+        ProviderAccount savedAccount = accountService.save(providerAccountCreationCommand);
+        if (providerAccountCreationCommand.getZipcode() != null && providerAccountCreationCommand.getCity() != null && providerAccountCreationCommand.getAddress() != null) {
+            String address = providerAccountCreationCommand.getZipcode() + " " + providerAccountCreationCommand.getCity() + " " + providerAccountCreationCommand.getAddress();
+            GeoLocation geoLocation = null;
+            try {
+                geoLocation = geocodeService.getGeoLocation(address);
+            } catch (NotFoundException e) {
+                e.printStackTrace();
+            }
+            savedAccount.setLongitude(geoLocation.getLongitude());
+            savedAccount.setLatitude(geoLocation.getLatitude());
+        }
+        List<InstitutionCreationCommand> institutions = providerAccountCreationCommand.getInstitutions();
+        if (!institutions.isEmpty()) {
+            for (InstitutionCreationCommand institutionCreationCommand : institutions) {
+                Institution savedInstitution = null;
+                try {
+                    savedInstitution = institutionOpeningHoursService.save(institutionCreationCommand);
+                } catch (NotFoundException e) {
+                    e.printStackTrace();
+                }
+                saveAccountInstitutionConnection(savedAccount, savedInstitution);
+            }
+        }
+    }
+
+
     public void detachInstitutionFromAccount(String email, Long institutionId) {
         ProviderAccount foundAccount = accountService.findByEmail(email);
         Institution foundInstitution = institutionService.findById(institutionId);
