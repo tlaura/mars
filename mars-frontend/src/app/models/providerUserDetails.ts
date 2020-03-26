@@ -1,8 +1,10 @@
-export interface ProviderUserDetalsModel {
+import {InstitutionListModel} from "./institutionList.model";
+
+export interface ProviderUserDetails {
   id: number,
   providerServiceName: string,
   name: string,
-  password: string,
+  // password: string,
   email: string,
   phone: string,
   zipcode: number,
@@ -11,6 +13,7 @@ export interface ProviderUserDetalsModel {
   ageGroupMin: number,
   ageGroupMax: number,
   types: Array<string>,
+  institutions: Array<InstitutionListModel>,
   newsletter: boolean,
   longitude: string,
   latitude: string,

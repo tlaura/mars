@@ -5,7 +5,7 @@ import {HttpClient} from "@angular/common/http";
 import {ProviderUserProfileDetailsModel} from "../models/providerUserProfileDetails.model";
 import {environment} from "../../environments/environment";
 import {ProviderAccountEditDataModel} from "../models/providerAccountEditData.model";
-import {ProviderUserDetalsModel} from "../models/providerUserDetals.model";
+import {ProviderUserDetails} from "../models/providerUserDetails";
 import {AccountInstitutionListModel} from "../models/accountInstitutionList.model";
 
 @Injectable({
@@ -47,7 +47,7 @@ export class AccountService {
     return this.http.delete(this.BASE_URL + '/delete/' + loggedInUser + '/' + id);
   }
 
-  getProviderAccountDetails = (id: number): Observable<ProviderUserDetalsModel> => {
-    return this.http.get<ProviderUserDetalsModel>(this.BASE_URL + "/providers/provider-details/" + id);
+  getProviderAccountDetails = (id: number): Observable<ProviderUserDetails> => {
+    return this.http.get<ProviderUserDetails>(this.BASE_URL + "/providers/provider-details/" + id);
   };
 }

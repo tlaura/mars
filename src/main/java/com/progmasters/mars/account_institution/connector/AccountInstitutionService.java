@@ -66,7 +66,6 @@ public class AccountInstitutionService {
     }
 
     public void detachInstitutionFromAccount(String email, Long institutionId) {
-
         ProviderAccount foundAccount = accountService.findByEmail(email);
         Institution foundInstitution = institutionService.findById(institutionId);
         accountInstitutionConnectorRepository.removeConnection(foundAccount, foundInstitution);

@@ -128,7 +128,7 @@ public class AccountService {
     private void updateDetails(ProviderUserDetails providerUserDetails, ProviderAccount providerAccount) {
         providerAccount.setName(providerUserDetails.getName());
         providerAccount.setProviderServiceName(providerUserDetails.getProviderServiceName());
-        providerAccount.setPassword(providerUserDetails.getPassword());
+//        providerAccount.setPassword(providerUserDetails.getPassword());
         providerAccount.setPhone(providerUserDetails.getPhone());
         providerAccount.setEmail(providerUserDetails.getEmail());
         providerAccount.setZipcode(providerUserDetails.getZipcode());

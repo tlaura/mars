@@ -1,5 +1,5 @@
 import {InstitutionDetailModel} from "./institutionDetail.model";
-import {ProviderUserDetalsModel} from "./providerUserDetals.model";
+import {ProviderUserDetails} from "./providerUserDetails";
 
 export interface AccountInstitutionListModel {
   accountType: string,
@@ -17,7 +17,7 @@ export interface AccountInstitutionListModel {
   latitude: number,
   longitude: number,
   institutions: Array<InstitutionDetailModel>,
-  providers: Array<ProviderUserDetalsModel>,
+  providers: Array<ProviderUserDetails>,
   website,
 
 }

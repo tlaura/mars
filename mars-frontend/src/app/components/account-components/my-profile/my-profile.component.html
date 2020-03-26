@@ -38,7 +38,7 @@
             [(ngModel)]='providerAccount.providerServiceName' class='text-dark form-control' type='text'>
           <small *ngIf="providerServiceName.errors?.pattern && editMode"
                  class="text-danger col-sm-12 col-md-12">
-            Helytelen szolgáltatás név!
+            Érvénytelen szolgáltatás név!
           </small>
           <small *ngIf="!providerAccount?.providerServiceName"
                  class="text-danger col-sm-12 col-md-12">
@@ -63,7 +63,7 @@
             [(ngModel)]='providerAccount.phone' class='text-dark form-control' type='text'>
           <small *ngIf="phone.errors?.pattern && editMode"
                  class="text-danger col-sm-12 col-md-12">
-            Helytelen telefonszám formátum!
+            Érvénytelen telefonszám!
           </small>
         </div>
         <br>
