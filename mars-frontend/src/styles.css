@@ -61,6 +61,27 @@ html * {
   outline: 0;
 }
 
+.custom-link {
+  cursor: pointer;
+  color: tomato;
+}
+
+.custom-link {
+  display: inline-block;
+  font-size: 80%;
+  font-weight: 400;
+  margin-bottom: 8px;
+}
+
+.provider-div label, .provider-div svg {
+  color: cornflowerblue;
+}
+
+.custom-link-provider {
+  cursor: pointer;
+  color: cornflowerblue;
+}
+
 
 .blue-block-on-white-div {
   font-size: small;
