@@ -37,7 +37,7 @@
       <li *ngIf="loginService.loggedIn$ | async" class="nav-item font-weight-lighter mx-3"><a class="nav-link"
                                                                                               routerLink="my-profile"
                                                                                               routerLinkActive="active">
-        {{profileName}} profilja</a>
+        Profilom</a>
       </li>
       <li *ngIf="loginService.loggedIn$ | async" class="nav-item font-weight-lighter mx-3">
         <a (click)="logout()" class="nav-link" routerLinkActive="active" style="cursor:pointer">
