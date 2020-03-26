@@ -172,8 +172,7 @@ export class InstitutionListComponent implements OnInit {
   }
 
   hasProviders(institution: AccountInstitutionListModel): boolean {
-    //TODO: length->provider list length...
-    return institution.providerServiceName?.length > 0 && institution.accountType != 'PROVIDER';
+    return institution.providers?.length > 0 && institution.accountType != 'PROVIDER';
   }
 
   private getProvidersByType = (type: string) => {

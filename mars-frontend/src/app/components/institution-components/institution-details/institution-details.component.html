@@ -2,17 +2,45 @@
   <div [ngClass]="isInInfoBox? 'white-block-on-tomato-div p-sm-1 p-md-3 col-sm-12':
    'white-block-on-tomato-div p-sm-2 p-md-3 p-lg-4 col-sm-12 col-md-10 offset-md-1 col-lg-8 offset-lg-2'">
     <h4 class="tomato-head font-weight-bold">{{institution?.name}}</h4>
-    <h5 class="tomato-head">{{ institution?.zipcode}} {{institution?.city}} {{institution?.address}}</h5>
-    <h6 class="tomato-head">Nyitvatartás:</h6>
-    <div *ngFor="let openingHour of institution?.openingHours">{{openingHour.weekDay}}: {{openingHour.openingTime}}
-      -{{openingHour.closingTime}}</div>
+
+    <div class="row mx-sm-0 my-sm-0">
+      <i class="icon-tomato fas fa-map-marker-alt"></i><h5
+      class="tomato-head mx-sm-2">{{institution.zipcode}} {{institution.city}} {{institution.address}}</h5>
+    </div>
 
     <p>{{institution?.description}}</p>
 
-    <h6 class="tomato-head">Elérhetőség:</h6>
-    <p>{{institution?.email}}</p>
+    <div class="row mx-0">
+      <div class="col-sm-8 p-0">
+        <h6 class="tomato-head mb-1">Elérhetőségek:</h6>
+        <div class="col-sm-12">
+          <div class="row-mx-0">
+            <i class="fas fa-at icon-tomato"></i><label class="mx-sm-2 small">{{institution.email}}</label>
+          </div>
 
-    <div class="form-group">
+          <div class="row-mx-0">
+            <i class="fas fa-lg fa-mobile-alt icon-tomato"></i><label
+            class="mx-sm-2 small">{{institution.phone}}</label>
+          </div>
+
+
+          <div class="row mx-0">
+            <i *ngIf="institution.website" class="fas fa-globe-europe icon-tomato"></i>
+            <a [href]="'http://' + institution.website" class="mx-sm-2 small custom-link"
+               target="_blank">{{institution.website}}</a>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="institution?.openingHours.length" class="col-sm-4 mb-3 small">
+        <h6 class="tomato-head mb-1">Nyitvatartás:</h6>
+        <div *ngFor="let openingHour of institution?.openingHours">{{openingHour.weekDay}}: {{openingHour.openingTime}}
+          -{{openingHour.closingTime}}</div>
+      </div>
+    </div>
+
+
+    <div class="form-group mt-sm-2">
       <button (click)="openMailSend()" class="btn btn-primary submit rounded-pill">Email küldés</button>
     </div>
 

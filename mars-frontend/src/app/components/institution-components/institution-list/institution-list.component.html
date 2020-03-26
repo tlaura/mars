@@ -58,7 +58,7 @@
                    'custom-link-provider' :
                     'custom-link'"
                    class="font-weight-bold text-uppercase">{{institution.name}}</a>
-                <div *ngIf="hasProviders(institution)">
+                <div *ngIf="hasProviders(institution)" class="mx-2">
                   <i class="fas fa-user icon-blue"></i>
                 </div>
               </div>
@@ -72,11 +72,9 @@
                 <i class="fas fa-lg fa-mobile-alt icon-tomato"></i><label
                 class="mx-sm-2 small">{{institution.phone}}</label>
 
-                <div *ngIf="institution.website">
-                  <i class="fas fa-globe-europe icon-tomato"></i>
-                  <a [href]="'http://' + institution.website" class="mx-sm-2 small custom-link"
-                     target="_blank">{{institution.website}}</a>
-                </div>
+                <i *ngIf="institution.website" class="fas fa-globe-europe icon-tomato"></i>
+                <a [href]="'http://' + institution.website" class="mx-sm-2 small custom-link"
+                   target="_blank">{{institution.website}}</a>
 
               </div>
               <div *ngIf="!last" class="col-sm-12 decor-div-blue my-2"></div>

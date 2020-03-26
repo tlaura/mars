@@ -2,8 +2,23 @@
   <h4>Profil</h4>
   <div *ngIf="loggedInUser"
        class="white-block-on-tomato-div col-sm-12 col-md-10 offset-md-1 col-lg-8 offset-lg-2 text-left py-3">
-    <button (click)='editMode=!editMode' [ngClass]="editMode? 'edit-button-blue':'edit-button-white'"
-            class="rounded-circle btn-primary submit p-2 float-right"><i class="fas fa-lg fa-pencil-alt"></i></button>
+
+
+    <!--    <button (click)='editMode=!editMode' [ngClass]="editMode? 'edit-button-blue':'edit-button-white'"-->
+    <!--            class="rounded-circle btn-primary submit p-2 float-right"><i class="fas fa-lg fa-pencil-alt"></i></button>-->
+
+    <!--    <div *ngIf="!editMode" class="button-flex">-->
+    <button (click)='editMode=true' *ngIf="!editMode"
+            class="edit-button-white rounded-circle btn-primary submit p-2 float-right">
+      <i class="fas fa-pencil-alt"></i></button>
+    <!--    </div>-->
+
+    <!--    <div *ngIf="editMode" class="button-flex">-->
+    <button (click)='cancelEdit()' *ngIf="editMode"
+            class="edit-button-blue rounded-circle btn-primary submit p-2 float-right">
+      <i aria-hidden="true" class="fas fa-undo-alt"></i>
+    </button>
+    <!--    </div>-->
 
 
     <div class="row mx-0">
@@ -98,7 +113,6 @@
               [(ngModel)]='providerAccount.address' class='text-dark form-control' type='text'>
           </div>
         </div>
-
         <br>
 
         <label>Szolgáltatás típusai:</label>

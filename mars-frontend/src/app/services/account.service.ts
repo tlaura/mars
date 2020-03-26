@@ -44,7 +44,7 @@ export class AccountService {
   };
 
   deleteInstitution(id: number, loggedInUser: string) {
-    return this.http.delete(this.BASE_URL + '/delete/' + loggedInUser + '/' + id);
+    return this.http.delete(this.BASE_URL + '/providers/delete/' + loggedInUser + '/' + id);
   }
 
   getProviderAccountDetails = (id: number): Observable<ProviderUserDetails> => {
