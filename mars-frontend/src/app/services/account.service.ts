@@ -50,4 +50,8 @@ export class AccountService {
   getProviderAccountDetails = (id: number): Observable<ProviderUserDetails> => {
     return this.http.get<ProviderUserDetails>(this.BASE_URL + "/providers/provider-details/" + id);
   };
+
+  getProviderAccountsByAgeRange = (min: number, max: number): Observable<Array<AccountInstitutionListModel>> => {
+    return this.http.get<Array<AccountInstitutionListModel>>(this.BASE_URL + "/providers/ageRange?min=" + min + "&max=" + max);
+  };
 }

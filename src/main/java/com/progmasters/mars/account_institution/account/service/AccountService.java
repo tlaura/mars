@@ -11,6 +11,7 @@ import com.progmasters.mars.account_institution.account.passwordtoken.PasswordTo
 import com.progmasters.mars.account_institution.account.passwordtoken.PasswordTokenRepository;
 import com.progmasters.mars.account_institution.account.repository.ProviderAccountRepository;
 import com.progmasters.mars.account_institution.account.security.AuthenticatedUserDetails;
+import com.progmasters.mars.account_institution.connector.AccountInstitutionListData;
 import com.progmasters.mars.mail.EmailService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -54,6 +56,12 @@ public class AccountService {
         account.setTypes(null);
 
         providerAccountRepository.deleteById(id);
+    }
+
+    public List<AccountInstitutionListData> findProvidersByAgeRange(Integer min, Integer max) {
+        Integer realMin = Math.min(min, max);
+        Integer realMax = Math.max(min, max);
+        return providerAccountRepository.findProviderAccountsByAgeRange(realMin, realMax).stream().map(AccountInstitutionListData::new).collect(Collectors.toList());
     }
 
     public ProviderUserDetails getProviderAccountByEmail(String loggedInUserEmail) {

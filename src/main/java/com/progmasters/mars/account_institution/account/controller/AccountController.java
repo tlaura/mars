@@ -49,6 +49,13 @@ public class AccountController {
         return new ResponseEntity<>(foundUserDetails, HttpStatus.OK);
     }
 
+    @GetMapping("/ageRange")
+    public ResponseEntity<List<AccountInstitutionListData>> findProvidersByAgeRange(@RequestParam("min") Integer min, @RequestParam("max") Integer max) {
+        List<AccountInstitutionListData> accounts = accountService.findProvidersByAgeRange(min, max);
+
+        return new ResponseEntity<>(accounts, HttpStatus.OK);
+    }
+
     @PostMapping
     public ResponseEntity<Void> createProviderAccount(@RequestBody @Valid ProviderAccountCreationCommand providerAccountCreationCommand) {
         try {

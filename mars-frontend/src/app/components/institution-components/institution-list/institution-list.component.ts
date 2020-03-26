@@ -6,7 +6,7 @@ import {InstitutionTypeModel} from "../../../models/InstitutionType.model";
 import {institutionListIndex} from "../../../../environments/institutionListIndex.prod";
 import {AccountService} from "../../../services/account.service";
 import {SocialService} from "ngx-social-button";
-import {FormControl} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {AccountInstitutionConnectorService} from "../../../services/account-institution-connector.service";
 import {AccountInstitutionListModel} from "../../../models/accountInstitutionList.model";
 
@@ -25,6 +25,7 @@ export class InstitutionListComponent implements OnInit {
   currentType: string;
   institutionType: FormControl;
   showWindows: boolean;
+  ageRangeGroup: FormGroup;
 
   shareObj = {
     //TODO: localhost-ra nem működik, elvileg élesben igen?!?!?
@@ -39,9 +40,16 @@ export class InstitutionListComponent implements OnInit {
               private router: Router,
               private activatedRoute: ActivatedRoute,
               private socialService: SocialService,
-              private accountInstitutionService: AccountInstitutionConnectorService) {
+              private accountInstitutionService: AccountInstitutionConnectorService,
+              private formBuilder: FormBuilder) {
     this.institutionType = new FormControl('all');
+    this.ageRangeGroup = formBuilder.group({
+        ageGroupMin: new FormControl(0, Validators.required),
+        ageGroupMax: new FormControl(0, Validators.required)
+      }
+    )
   }
+
 
   setSize = (size: number) => {
     this.size = size;
@@ -76,6 +84,20 @@ export class InstitutionListComponent implements OnInit {
     }
   };
 
+
+  narrowByAgeRange = (): void => {
+    if (this.ageRangeGroup.valid) {
+      let min: number = this.ageRangeGroup.get('min').value;
+      let max: number = this.ageRangeGroup.get('max').value;
+      this.accountService.getProviderAccountsByAgeRange(min, max).subscribe(
+        value => this.institutionList = value,
+        error => console.warn(error),
+        () => this.showWindows = false
+      );
+    }
+
+  };
+
   narrowByType = (type: string) => {
     //todo refactor magic string
     if (type !== "all") {
@@ -83,8 +105,6 @@ export class InstitutionListComponent implements OnInit {
     } else {
       this.getInstitutions();
     }
-    this.showWindows = false;
-
   };
 
   details = (index: number): string => {
@@ -110,12 +130,9 @@ export class InstitutionListComponent implements OnInit {
     this.socialService.facebookSharing(this.shareObj);
   }
 
-  private getInstitutions = () => {
-    this.accountInstitutionService.getAllAccountConnections().subscribe(
-      institutionList => this.institutionList = institutionList,
-      error => console.warn(error),
-    );
-  };
+  getAgesArray(n: number): Array<number> {
+    return Array(n);
+  }
 
   private getProviderType = () => {
     this.institutionService.getProviderTypes().subscribe(
@@ -128,10 +145,11 @@ export class InstitutionListComponent implements OnInit {
     this.currentType = type;
   }
 
-  private getProvidersByType = (type: string) => {
-    this.accountService.getProvidersByType(type).subscribe(
+  private getInstitutions = () => {
+    this.accountInstitutionService.getAllAccountConnections().subscribe(
       institutionList => this.institutionList = institutionList,
       error => console.warn(error),
+      () => this.showWindows = false
     );
   };
 
@@ -157,4 +175,12 @@ export class InstitutionListComponent implements OnInit {
     //TODO: length->provider list length...
     return institution.providerServiceName?.length > 0 && institution.accountType != 'PROVIDER';
   }
+
+  private getProvidersByType = (type: string) => {
+    this.accountService.getProvidersByType(type).subscribe(
+      institutionList => this.institutionList = institutionList,
+      error => console.warn(error),
+      () => this.showWindows = false
+    );
+  };
 }

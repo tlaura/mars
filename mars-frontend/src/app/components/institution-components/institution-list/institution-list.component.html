@@ -15,6 +15,27 @@
       </select>
     </div>
   </div>
+  <div class="row m-0">
+    <form [formGroup]="ageRangeGroup">
+      <div class="form-group col-sm-12 col-md-6 col-lg-4">
+        <select class="form-control-sm rounded-pill select-tomato"
+                formControlName="ageGroupMin"
+                id="ageGroupMin"
+                name="ageGroupMin">
+          <option *ngFor="let age of getAgesArray(99), let i = index" value="{{i}}">{{i}}</option>
+        </select>
+      </div>
+      <div class="form-group col-sm-12 col-md-6 col-lg-4">
+        <select class="form-control-sm rounded-pill select-tomato"
+                formControlName="ageGroupMax"
+                id="ageGroupMax"
+                name="ageGroupMax">
+          <option *ngFor="let age of getAgesArray(99), let i = index" value="{{i}}">{{i}}</option>
+        </select>
+      </div>
+      <input (click)="narrowByAgeRange()" class="btn submit btn-primary rounded-pill" type="submit" value="Szűrés">
+    </form>
+  </div>
 
 
   <app-map [locations]="institutionList" [showInstitutionDetails]="showWindows"></app-map>
