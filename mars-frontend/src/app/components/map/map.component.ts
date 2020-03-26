@@ -4,7 +4,7 @@ import {MapsAPILoader} from "@agm/core";
 import {InstitutionService} from "../../services/institution.service";
 import {InstitutionDetailModel} from "../../models/institutionDetail.model";
 import {AccountService} from "../../services/account.service";
-import {ProviderUserDetalsModel} from "../../models/providerUserDetals.model";
+import {ProviderUserDetails} from "../../models/providerUserDetails";
 import {AccountInstitutionListModel} from "../../models/accountInstitutionList.model";
 
 
@@ -186,7 +186,7 @@ export class MapComponent implements OnInit {
   @Input() showProviderDetail: boolean = false;
   @Input() locations: Array<AccountInstitutionListModel>;
   institutionDetail: InstitutionDetailModel;
-  providerDetail: ProviderUserDetalsModel;
+  providerDetail: ProviderUserDetails;
 
   constructor(private mapsAPILoader: MapsAPILoader,
               private institutionService: InstitutionService,

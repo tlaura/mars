@@ -43,7 +43,7 @@ public class ProviderAccount {
 //    @Size(min = 1)
     @Enumerated(EnumType.STRING)
     @ElementCollection
-    @CollectionTable(name = "provicer_account_type", joinColumns = @JoinColumn(name = "provider_account_id"))
+    @CollectionTable(name = "provider_account_type", joinColumns = @JoinColumn(name = "provider_account_id"))
     private List<ProviderType> types;
 
     @Column(name = "phone")

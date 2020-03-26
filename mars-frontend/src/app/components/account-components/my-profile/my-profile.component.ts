@@ -12,10 +12,9 @@ import {validatorBounds} from "../../../../environments/validatorBounds";
 })
 export class MyProfileComponent implements OnInit {
 
-
   providerAccount: ProviderUserProfileDetailsModel;
   accountCopy: ProviderUserProfileDetailsModel;
-  loggedInUser;
+  loggedInUser = 'tarczi.laura@gmail.com';
   editMode = false;
   @Input() name: string;
   @Output() focusOut: EventEmitter<any> = new EventEmitter<any>();
@@ -31,7 +30,7 @@ export class MyProfileComponent implements OnInit {
   };
 
   ngOnInit(): void {
-    this.loggedInUser = this.loginService.getCurrentUser()['name'];
+    // this.loggedInUser = this.loginService.getCurrentUser()['name'];
     this.providerService.fetchProviderAccountDetails(this.loggedInUser).subscribe(
       (providerDetails: ProviderUserProfileDetailsModel) => {
         this.providerAccount = providerDetails;

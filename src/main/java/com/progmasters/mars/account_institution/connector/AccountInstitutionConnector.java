@@ -26,7 +26,6 @@ public class AccountInstitutionConnector {
     }
 
     public AccountInstitutionConnector(ProviderAccount providerAccount, Institution institution) {
-
         this.providerAccount = providerAccount;
         this.institution = institution;
     }

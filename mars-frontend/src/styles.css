@@ -42,7 +42,7 @@ html * {
 }
 
 .white-block-on-tomato-div {
-  font-size: small;
+  font-size: medium;
   border-radius: 2rem;
   background-color: white;
   box-shadow: #b34532 0.5rem 0.5rem;

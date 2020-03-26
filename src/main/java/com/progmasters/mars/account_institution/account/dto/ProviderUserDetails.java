@@ -2,6 +2,8 @@ package com.progmasters.mars.account_institution.account.dto;
 
 import com.progmasters.mars.account_institution.account.domain.ProviderAccount;
 import com.progmasters.mars.account_institution.account.domain.ProviderType;
+import com.progmasters.mars.account_institution.connector.AccountInstitutionConnector;
+import com.progmasters.mars.account_institution.institution.dto.InstitutionListData;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -11,7 +13,6 @@ public class ProviderUserDetails {
     private Long id;
     private String providerServiceName;
     private String name;
-    private String password;
     private String email;
     private String phone;
     private Integer zipcode;
@@ -20,6 +21,7 @@ public class ProviderUserDetails {
     private Integer ageGroupMin;
     private Integer ageGroupMax;
     private List<String> types;
+    private List<InstitutionListData> institutionList;
     private Boolean newsletter;
     private Double longitude;
     private Double latitude;
@@ -28,7 +30,6 @@ public class ProviderUserDetails {
         this.id = providerAccount.getId();
         this.providerServiceName = providerAccount.getProviderServiceName();
         this.name = providerAccount.getName();
-        this.password = providerAccount.getPassword();
         this.email = providerAccount.getEmail();
         this.phone = providerAccount.getPhone();
         this.zipcode = providerAccount.getZipcode();
@@ -38,9 +39,17 @@ public class ProviderUserDetails {
         this.ageGroupMax = providerAccount.getAgeGroupMax();
         this.newsletter = providerAccount.getNewsletter();
         this.types = providerAccount.getTypes().stream().map(ProviderType::getHungarianName).collect(Collectors.toList());
+        this.institutionList = providerAccount.getAccountInstitutionConnectors().stream().map(AccountInstitutionConnector::getInstitution).map(InstitutionListData::new).collect(Collectors.toList());
         this.longitude = providerAccount.getLongitude();
         this.latitude = providerAccount.getLatitude();
+    }
 
+    public List<InstitutionListData> getInstitutionList() {
+        return institutionList;
+    }
+
+    public void setInstitutionList(List<InstitutionListData> institutionList) {
+        this.institutionList = institutionList;
     }
 
     public ProviderUserDetails() {
@@ -51,7 +60,6 @@ public class ProviderUserDetails {
         this.email = email;
         this.name = name;
         this.providerServiceName = providerServiceName;
-        this.password = password;
         this.phone = phone;
         this.zipcode = zipcode;
         this.city = city;
@@ -60,9 +68,6 @@ public class ProviderUserDetails {
     }
 
 
-    public String getPassword() {
-        return password;
-    }
 
     public Long getId() {
         return id;
