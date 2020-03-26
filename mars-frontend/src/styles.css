@@ -82,6 +82,9 @@ html * {
   color: cornflowerblue;
 }
 
+.white-label {
+  color: white;
+}
 
 .blue-block-on-white-div {
   font-size: small;
