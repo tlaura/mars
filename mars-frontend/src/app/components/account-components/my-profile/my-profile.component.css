@@ -26,3 +26,7 @@
   box-shadow: #b3b3b3 0.5rem 0.5rem;
 }
 
+.card-header {
+  border-radius: 2rem;
+}
+

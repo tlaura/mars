@@ -20,6 +20,8 @@ export class MyProfileComponent implements OnInit {
   username = new FormControl('', [Validators.required, Validators.pattern(validatorBounds.nameRegex)]);
   providerServiceName = new FormControl('', [Validators.required, Validators.pattern(validatorBounds.nameRegex)]);
   phone = new FormControl('', [Validators.required, Validators.pattern(validatorBounds.phoneRegex)]);
+  city = new FormControl('', [Validators.required, Validators.pattern(validatorBounds.nameRegex)]);
+
 
   constructor(private loginService: LoginService, public providerService: AccountService) {
   }
