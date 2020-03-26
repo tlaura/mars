@@ -7,14 +7,18 @@
     <agm-marker (markerClick)="markerClick(i)" *ngFor="let location of locations; let i = index"
                 [iconUrl]="getIcon(location)" [latitude]="location.latitude" [longitude]="location.longitude"
     >
+
       <agm-snazzy-info-window #infoWindow
                               [closeWhenOthersOpen]="true"
                               [isOpen]="showInfoWindow"
+                              [placement]="'right'"
                               backgroundColor="tomato"
-                              borderRadius="2rem" maxHeight=""
+                              borderRadius="2rem"
+                              maxHeight=""
                               maxWidth="500"
-                              placement="right"
       >
+
+
         <ng-template>
           <app-institution-details *ngIf="showInstitutionDetails" [institution]="institutionDetail"
                                    [isInInfoBox]="true"></app-institution-details>
@@ -22,6 +26,7 @@
                                 [providerUserDetail]="providerDetail"></app-provider-details>
         </ng-template>
       </agm-snazzy-info-window>
+
       <!--    <agm-info-window #infoWindow>-->
       <!--      <app-institution-details [institution]="institutionDetail"></app-institution-details>-->
       <!--    </agm-info-window>-->
