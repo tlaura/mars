@@ -3,7 +3,6 @@ import {institutionListIndex} from "../../../environments/institutionListIndex.p
 import {MapsAPILoader} from "@agm/core";
 import {InstitutionService} from "../../services/institution.service";
 import {InstitutionDetailModel} from "../../models/institutionDetail.model";
-import {AccountInstitutionListModel} from "../../models/accountInstitutionList.model";
 import {AccountService} from "../../services/account.service";
 import {ProviderUserDetalsModel} from "../../models/providerUserDetals.model";
 import {AccountInstitutionListModel} from "../../models/accountInstitutionList.model";
