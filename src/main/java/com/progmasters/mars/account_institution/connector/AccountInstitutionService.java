@@ -102,7 +102,6 @@ public class AccountInstitutionService {
     //todo revision
 
     public List<AccountInstitutionListData> getInstitutionsByAccountType(ProviderType providerType) {
-
         return institutionService.findInstitutionByProviderType(providerType).stream().map(AccountInstitutionListData::new).collect(Collectors.toList());
     }
 }
