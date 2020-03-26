@@ -11,7 +11,6 @@ import {validatorBounds} from "../../../../environments/validatorBounds";
   styleUrls: ['./my-profile.component.css']
 })
 export class MyProfileComponent implements OnInit {
-
   providerAccount: ProviderUserProfileDetailsModel;
   accountCopy: ProviderUserProfileDetailsModel;
   loggedInUser;
