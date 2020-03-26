@@ -40,6 +40,7 @@ import {NewPasswordComponent} from './components/account-components/new-password
 import {NewPasswordCompleteComponent} from './components/account-components/new-password-components/new-password-complete/new-password-complete.component';
 import {NewPasswordFormComponent} from './components/account-components/new-password-components/new-password-form/new-password-form.component';
 import {NewPasswordSuccessComponent} from './components/account-components/new-password-components/new-password-success/new-password-success.component';
+import {TermsComponent} from './components/terms/terms.component';
 
 export function getAuthServiceConfigs() {
   let config = new SocialServiceConfig()
@@ -81,6 +82,7 @@ export function getAuthServiceConfigs() {
     NewPasswordCompleteComponent,
     NewPasswordFormComponent,
     NewPasswordSuccessComponent,
+    TermsComponent,
   ],
   imports: [
     BrowserModule,
