@@ -50,8 +50,8 @@ public class AccountController {
     }
 
     @GetMapping("/ageRange")
-    public ResponseEntity<List<AccountInstitutionListData>> findProvidersByAgeRange(@RequestParam("min") Integer min, @RequestParam("max") Integer max) {
-        List<AccountInstitutionListData> accounts = accountService.findProvidersByAgeRange(min, max);
+    public ResponseEntity<List<AccountInstitutionListData>> findProvidersByAgeRange(@RequestParam("age") Integer age) {
+        List<AccountInstitutionListData> accounts = accountService.findProvidersByAgeRange(age);
 
         return new ResponseEntity<>(accounts, HttpStatus.OK);
     }

@@ -58,10 +58,8 @@ public class AccountService {
         providerAccountRepository.deleteById(id);
     }
 
-    public List<AccountInstitutionListData> findProvidersByAgeRange(Integer min, Integer max) {
-        Integer realMin = Math.min(min, max);
-        Integer realMax = Math.max(min, max);
-        return providerAccountRepository.findProviderAccountsByAgeRange(realMin, realMax).stream().map(AccountInstitutionListData::new).collect(Collectors.toList());
+    public List<AccountInstitutionListData> findProvidersByAgeRange(Integer age) {
+        return providerAccountRepository.findProviderAccountsByAgeRange(age).stream().map(AccountInstitutionListData::new).collect(Collectors.toList());
     }
 
     public ProviderUserDetails getProviderAccountByEmail(String loggedInUserEmail) {

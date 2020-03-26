@@ -11,6 +11,6 @@ export const institutionListIndex = {
   20    ->  buildings
    */
   startPageIndex: 1,
-  numberOfItemPerPage: 10,
-  itemsPerPageArray: [10, 50, 100]
+  numberOfItemPerPage: 5,
+  itemsPerPageArray: [5, 15, 100]
 };

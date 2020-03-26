@@ -26,6 +26,6 @@ public interface ProviderAccountRepository extends JpaRepository<ProviderAccount
     @Query("select distinct p from ProviderAccount p where p.accountInstitutionConnectors.size > 0")
     List<ProviderAccount> findProviderAccountsWithInstitutions();
 
-    @Query("select p from ProviderAccount p where p.ageGroupMin >= :min and p.ageGroupMax <= :max")
-    List<ProviderAccount> findProviderAccountsByAgeRange(@Param("min") Integer min, @Param("max") Integer max);
+    @Query("select p from ProviderAccount p where p.ageGroupMin <= :age and p.ageGroupMax >= :age")
+    List<ProviderAccount> findProviderAccountsByAgeRange(@Param("age") Integer age);
 }

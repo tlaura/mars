@@ -44,8 +44,7 @@ export class InstitutionListComponent implements OnInit {
               private formBuilder: FormBuilder) {
     this.institutionType = new FormControl('all');
     this.ageRangeGroup = formBuilder.group({
-        ageGroupMin: new FormControl(0, Validators.required),
-        ageGroupMax: new FormControl(0, Validators.required)
+        age: new FormControl(0, Validators.required)
       }
     )
   }
@@ -87,9 +86,8 @@ export class InstitutionListComponent implements OnInit {
 
   narrowByAgeRange = (): void => {
     if (this.ageRangeGroup.valid) {
-      let min: number = this.ageRangeGroup.get('min').value;
-      let max: number = this.ageRangeGroup.get('max').value;
-      this.accountService.getProviderAccountsByAgeRange(min, max).subscribe(
+      let age: number = this.ageRangeGroup.get('age').value;
+      this.accountService.getProviderAccountsByAgeRange(age).subscribe(
         value => this.institutionList = value,
         error => console.warn(error),
         () => this.showWindows = false
