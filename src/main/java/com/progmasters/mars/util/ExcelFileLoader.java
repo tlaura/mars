@@ -38,12 +38,18 @@ public class ExcelFileLoader {
 
     private ExcelFileLoader(XSSFRow row) {
         name = row.getCell(name_col).getStringCellValue();
-        zipcode = Integer.parseInt(row.getCell(zipcode_col).getStringCellValue());
+        if (row.getCell(zipcode_col).getCellType() == 0) {
+            zipcode = (int) (row.getCell(zipcode_col).getNumericCellValue());
+        } else if (row.getCell(zipcode_col).getCellType() == 1) {
+            zipcode = Integer.parseInt(row.getCell(zipcode_col).getStringCellValue());
+        }
         city = row.getCell(city_col).getStringCellValue();
         address = row.getCell(address_col).getStringCellValue();
         email = row.getCell(email_col).getStringCellValue();
         description = row.getCell(description_col).getStringCellValue();
-        phone = row.getCell(phone_col).getStringCellValue();
+        if (row.getCell(phone_col).getCellType() == 1) {
+            phone = row.getCell(phone_col).getStringCellValue();
+        }
         if (row.getCell(website_col) != null) {
             website = row.getCell(website_col).getStringCellValue();
         }
