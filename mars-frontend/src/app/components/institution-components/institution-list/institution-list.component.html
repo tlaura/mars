@@ -28,11 +28,11 @@
         <!--  </div>-->
 
         <div
-          *ngFor="let institution of institutionList |filter:searchText |paginate:{itemsPerPage:size,currentPage:page};let last = last">
+          *ngFor="let institution of institutionList |filter:searchText |paginate:{itemsPerPage:size,currentPage:page};let last = last; let i = index">
           <div [ngClass]="isProvider(institution) ? 'provider-div' : '' " class="row mx-0">
             <div class="col-sm-12 text-left">
               <div class="row mx-sm-0 my-sm-2 align-items-center">
-                <a [href]="'institution-details/' + institution.id"
+                <a [href]="details(i)"
                    [ngClass]="isProvider(institution) ?
                    'custom-link-provider' :
                     'custom-link'"
