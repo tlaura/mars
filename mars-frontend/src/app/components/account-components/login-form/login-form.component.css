@@ -3,10 +3,11 @@
   align-items: center;
   font-size: large;
   border: none;
-  border-top-right-radius: 2rem !important;
-  border-bottom-right-radius: 2rem !important;
 }
 
-.eye-btn {
+.eye-icon button {
   color: darkgrey;
+  background-color: white;
+  box-shadow: none;
+  outline: 0;
 }
