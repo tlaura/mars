@@ -1,5 +1,6 @@
 package com.progmasters.mars.account_institution.institution.openinghours.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.progmasters.mars.account_institution.institution.openinghours.domain.OpeningHours;
 
 import java.time.LocalTime;
@@ -8,8 +9,10 @@ public class OpeningHoursData {
 
     private String weekDay;
 
+    @JsonFormat(pattern = "hh:mm")
     private LocalTime openingTime;
 
+    @JsonFormat(pattern = "hh:mm")
     private LocalTime closingTime;
 
     public OpeningHoursData() {
