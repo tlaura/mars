@@ -48,7 +48,7 @@
         <!--  </div>-->
 
         <div
-          *ngFor="let institution of institutionList |filter:searchText |paginate:{itemsPerPage:size,currentPage:page};let last = last; let i = index">
+          *ngFor="let institution of institutionList |filter:searchText |paginate:{itemsPerPage:size,currentPage:page};let i = index; let last = last;">
           <div [ngClass]="isProvider(institution) ? 'provider-div' : '' " class="row mx-0">
             <div class="col-sm-12 text-left">
               <div class="row mx-sm-0 my-sm-2 align-items-center">

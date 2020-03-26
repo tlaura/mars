@@ -106,17 +106,14 @@ export class InstitutionListComponent implements OnInit {
   };
 
   details = (index: number): string => {
-
+    console.log(index);
     let id = this.institutionList[index].id;
     let type: string = this.institutionList[index].accountType;
-    switch (type) {
-      case 'PROVIDER':
-        return "provider-details/" + id;
-      case 'INSTITUTION':
-        return "institution-details/" + id;
-      case 'INSTITUTION_WITH_PROVIDER':
-        //todo
-        return "institution-details/" + id;
+    if (type === 'PROVIDER') {
+      return "provider-details/" + id;
+    } else {
+      console.log(this.institutionList[index].id);
+      return "institution-details/" + id;
     }
 
   };
