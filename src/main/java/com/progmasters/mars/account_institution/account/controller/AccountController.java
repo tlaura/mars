@@ -3,6 +3,7 @@ package com.progmasters.mars.account_institution.account.controller;
 import com.google.maps.errors.NotFoundException;
 import com.progmasters.mars.account_institution.account.ProviderAccountValidator;
 import com.progmasters.mars.account_institution.account.domain.ProviderType;
+import com.progmasters.mars.account_institution.account.dto.PasswordChangeDetails;
 import com.progmasters.mars.account_institution.account.dto.ProviderAccountCreationCommand;
 import com.progmasters.mars.account_institution.account.dto.ProviderUserDetails;
 import com.progmasters.mars.account_institution.account.service.AccountService;
@@ -93,5 +94,12 @@ public class AccountController {
         log.info("Detach Institution by id:\t" + id + "\tfrom\t" + loggedInUser);
         accountInstitutionService.detachInstitutionFromAccount(loggedInUser, id);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PatchMapping("/passwordchange")
+    public ResponseEntity<Void> updatePassword(@Valid @RequestBody PasswordChangeDetails passwordChangeDetails) {
+        log.info("Password update requested");
+        boolean isChangeValid = accountService.updatePasswordOfLoggedInUser(passwordChangeDetails);
+        return isChangeValid ? new ResponseEntity<>(HttpStatus.OK) : new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 }

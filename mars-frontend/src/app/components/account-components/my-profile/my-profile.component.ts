@@ -6,6 +6,7 @@ import {FormControl, Validators} from "@angular/forms";
 import {validatorBounds} from "../../../../environments/validatorBounds";
 import {InstitutionTypeModel} from "../../../models/InstitutionType.model";
 import {InstitutionService} from "../../../services/institution.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-my-profile',
@@ -29,7 +30,10 @@ export class MyProfileComponent implements OnInit {
 
   allTypes: Array<InstitutionTypeModel> = [];
 
-  constructor(private loginService: LoginService, public providerService: AccountService, private institutionService: InstitutionService) {
+  constructor(private loginService: LoginService,
+              public providerService: AccountService,
+              private institutionService: InstitutionService,
+              private router: Router) {
   }
 
   editModeChange = () => {
@@ -91,5 +95,9 @@ export class MyProfileComponent implements OnInit {
         console.log(error);
       }
     );
+  };
+
+  changePassword() {
+    this.router.navigate(['password-change']);
   }
 }
