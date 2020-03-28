@@ -12,15 +12,13 @@
 
     gtag('js', new Date());
 
-    gtag('config', 'UA-162114317-1');
-    gtag('config', 'UA-162114317-1', {
-      'page_title': 'institution-list',
-      'page_path': '/institution-list'
-    });
-    gtag('config', 'UA-162114317-1', {
-      'page_title': 'provider-details',
-      'page_path': '/provider-details/.*'
-    });
+    gtag('config', 'UA-162114317-1',
+      {
+        'page_path': '/institution-list',
+        'page_path': '/provider-details',
+        'page_path': '/institution-details',
+      });
+
 
   </script>
   <meta charset="utf-8">
