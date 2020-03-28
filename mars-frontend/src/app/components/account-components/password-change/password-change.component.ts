@@ -5,6 +5,7 @@ import {matchingPasswords} from "../../../utils/password.validator";
 import {Router} from "@angular/router";
 import {LoginService} from "../../../services/login.service";
 import {AccountService} from "../../../services/account.service";
+import {PasswordChangeDetailsModel} from "../../../models/passwordChangeDetails.model";
 
 @Component({
   selector: 'app-password-change',
@@ -14,6 +15,7 @@ import {AccountService} from "../../../services/account.service";
 export class PasswordChangeComponent implements OnInit {
   passwordChangeForm: FormGroup;
   loggedInUser: string;
+  passwordChangeDetailsModel: PasswordChangeDetailsModel;
 
   constructor(private formBuilder: FormBuilder,
               private router: Router,
@@ -32,17 +34,20 @@ export class PasswordChangeComponent implements OnInit {
 
   changePassword() {
     if (this.passwordChangeForm.valid && this.loggedInUser) {
-      let passwordChangeDetails = {};
-      passwordChangeDetails['email'] = this.loggedInUser;
-      passwordChangeDetails['oldPassword'] = this.passwordChangeForm.value['oldPassword'];
-      passwordChangeDetails['password'] = this.passwordChangeForm.value['password'];
-      passwordChangeDetails['confirmPassword'] = this.passwordChangeForm.value['confirmPassword'];
+      this.passwordChangeDetailsModel['email'] = this.loggedInUser;
+      this.passwordChangeDetailsModel.oldPassword = this.passwordChangeForm.get('oldPassword').value;
+      this.passwordChangeDetailsModel.password = this.passwordChangeForm.get('password').value;
+      this.passwordChangeDetailsModel.confirmPassword = this.passwordChangeForm.get('confirmPassword').value;
 
-      // this.accountService.updatePassword()
+      this.accountService.updatePassword(this.passwordChangeDetailsModel).subscribe(
+        () => {
+          this.router.navigate(['my-profile']);
+        }
+      )
     }
   }
 
-  goBack() {
-    this.router.navigate(['my-profile']);
-  }
+  // goBack() {
+  //   this.router.navigate(['my-profile']);
+  // }
 }
