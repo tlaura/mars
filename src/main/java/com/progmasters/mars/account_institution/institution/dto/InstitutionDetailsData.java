@@ -36,8 +36,6 @@ public class InstitutionDetailsData {
 
     private List<OpeningHoursData> openingHours;
 
-    //todo add opening hours
-
 
     public InstitutionDetailsData(Institution institution) {
         this.id = institution.getId();
