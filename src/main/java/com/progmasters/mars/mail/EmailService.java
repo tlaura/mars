@@ -5,8 +5,7 @@ import com.progmasters.mars.account_institution.account.confirmationtoken.Confir
 import com.progmasters.mars.account_institution.account.domain.ProviderAccount;
 import com.progmasters.mars.account_institution.account.passwordtoken.PasswordToken;
 import com.progmasters.mars.account_institution.account.passwordtoken.PasswordTokenRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
@@ -18,16 +17,11 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
 @Service
+@Slf4j
 public class EmailService {
-    //TODO Az email küldés eléggé be tudja lassítani a flowt, ezért ezt sokszor érdemes külön szálra kiszervezni...
-    // Ez elég melós, főleg ha akarunk esetleg feedbacket is, hogy kiment-e rendben a levél...
-    // Viszont sokszor megéri, hiszen pl a regisztrációs oldal addig fog váratni minket, hogy sikeres volt-e, amíg a
-    // teljes levélküldés folyamat be nem fejeződött...
-
     private final JavaMailSender javaMailSender;
     private final ConfirmationTokenRepository confirmationTokenRepository;
     private final PasswordTokenRepository passwordTokenRepository;
-    private final Logger logger = LoggerFactory.getLogger(EmailService.class);
 
     @Value("${email.send.subject}")
     private String subject;
@@ -67,9 +61,9 @@ public class EmailService {
         long start = System.currentTimeMillis();
         CompletableFuture<Long> msgSent = sendMsg(mailData.getToEmail(), mailData.getName() + "(" + mailData.getFromEmail() + ")" + "-" + mailData.getSubject(), mailData.getText());
         try {
-            logger.info("Elapsed time: " + (msgSent.get() - start));
+            log.info("Elapsed time: " + (msgSent.get() - start));
         } catch (InterruptedException | ExecutionException e) {
-            logger.warn(e.getMessage());
+            log.warn(e.getMessage());
         }
     }
 
@@ -81,9 +75,9 @@ public class EmailService {
 
         CompletableFuture<Long> msgSent = sendMsg(user.getEmail(), subject, text + "\n" + confirmationUrl + userToken.getToken());
         try {
-            logger.info("Elapsed time on message sent:\t" + (msgSent.get() - start));
+            log.info("Elapsed time on message sent:\t" + (msgSent.get() - start));
         } catch (InterruptedException | ExecutionException e) {
-            logger.warn(e.getMessage());
+            log.warn(e.getMessage());
         }
     }
 
@@ -94,9 +88,9 @@ public class EmailService {
 
         CompletableFuture<Long> msgSent = sendMsg(providerAccount.getEmail(), subjectPassword, textPassword + "\n" + passwordUrl + providerAccountPasswordToken.getToken());
         try {
-            logger.info("Elapsed time on message sent:\t" + (msgSent.get() - start));
+            log.info("Elapsed time on message sent:\t" + (msgSent.get() - start));
         } catch (InterruptedException | ExecutionException e) {
-            logger.warn(e.getMessage());
+            log.warn(e.getMessage());
         }
     }
 }

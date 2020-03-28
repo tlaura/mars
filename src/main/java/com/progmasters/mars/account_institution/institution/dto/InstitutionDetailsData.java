@@ -2,10 +2,14 @@ package com.progmasters.mars.account_institution.institution.dto;
 
 import com.progmasters.mars.account_institution.institution.domain.Institution;
 import com.progmasters.mars.account_institution.institution.openinghours.dto.OpeningHoursData;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Getter
+@NoArgsConstructor
 public class InstitutionDetailsData {
 
     private Long id;
@@ -50,7 +54,6 @@ public class InstitutionDetailsData {
         if (institution.getOpeningHours() != null) {
             this.openingHours = institution.getOpeningHours().stream().map(OpeningHoursData::new).collect(Collectors.toList());
         }
-
     }
 
     public InstitutionDetailsData(Long id, String name, Integer zipcode, String city, String address, String email, String description, Double longitude, Double latitude, String website, String phone) {
@@ -65,53 +68,5 @@ public class InstitutionDetailsData {
         this.latitude = latitude;
         this.website = website;
         this.phone = phone;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public Integer getZipcode() {
-        return zipcode;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public Double getLongitude() {
-        return longitude;
-    }
-
-    public Double getLatitude() {
-        return latitude;
-    }
-
-    public String getWebsite() {
-        return website;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public List<OpeningHoursData> getOpeningHours() {
-        return openingHours;
     }
 }

@@ -7,11 +7,15 @@ import com.progmasters.mars.account_institution.account.dto.ProviderUserDetails;
 import com.progmasters.mars.account_institution.institution.domain.Institution;
 import com.progmasters.mars.account_institution.institution.dto.InstitutionDetailsData;
 import com.progmasters.mars.account_institution.institution.openinghours.dto.OpeningHoursData;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Getter
+@NoArgsConstructor
 public class AccountInstitutionListData {
 
     private String accountType;
@@ -49,15 +53,11 @@ public class AccountInstitutionListData {
     private List<ProviderUserDetails> providers = new ArrayList<>();
 
     //institution info
-
     private String description;
 
     private List<OpeningHoursData> openingHours;
 
     private String website;
-
-    public AccountInstitutionListData() {
-    }
 
     public AccountInstitutionListData(Institution institution) {
 
@@ -116,87 +116,5 @@ public class AccountInstitutionListData {
         this.accountType = AccountType.PROVIDER_WITH_INSTITUTION.toString();
 
         this.institutions = institutions.stream().map(InstitutionDetailsData::new).collect(Collectors.toList());
-
-    }
-
-
-    public String getAccountType() {
-        return accountType;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getProviderServiceName() {
-        return providerServiceName;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public List<String> getTypes() {
-        return types;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public Integer getZipcode() {
-        return zipcode;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public Integer getAgeGroupMin() {
-        return ageGroupMin;
-    }
-
-    public Integer getAgeGroupMax() {
-        return ageGroupMax;
-    }
-
-    public Boolean getNewsletter() {
-        return newsletter;
-    }
-
-    public Double getLatitude() {
-        return latitude;
-    }
-
-    public Double getLongitude() {
-        return longitude;
-    }
-
-    public List<InstitutionDetailsData> getInstitutions() {
-        return institutions;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public List<OpeningHoursData> getOpeningHours() {
-        return openingHours;
-    }
-
-    public String getWebsite() {
-        return website;
-    }
-
-    public List<ProviderUserDetails> getProviders() {
-        return providers;
     }
 }

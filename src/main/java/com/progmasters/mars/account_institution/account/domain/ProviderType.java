@@ -1,5 +1,8 @@
 package com.progmasters.mars.account_institution.account.domain;
 
+import lombok.Getter;
+
+@Getter
 public enum ProviderType {
 
     //todo refactor read values from file
@@ -41,13 +44,5 @@ public enum ProviderType {
             }
         }
         return foundType;
-    }
-
-    public String getEnglishName() {
-        return englishName;
-    }
-
-    public String getHungarianName() {
-        return hungarianName;
     }
 }

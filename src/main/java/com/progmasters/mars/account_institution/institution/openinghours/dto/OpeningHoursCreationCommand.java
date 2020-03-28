@@ -1,7 +1,12 @@
 package com.progmasters.mars.account_institution.institution.openinghours.dto;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 import java.time.LocalTime;
 
+@Getter
+@NoArgsConstructor
 public class OpeningHoursCreationCommand {
     private String weekDay;
     private LocalTime openingTime;
@@ -11,18 +16,5 @@ public class OpeningHoursCreationCommand {
         this.weekDay = weekDay;
         this.openingTime = openingTime;
         this.closingTime = closingTime;
-    }
-
-
-    public String getWeekDay() {
-        return weekDay;
-    }
-
-    public LocalTime getOpeningTime() {
-        return openingTime;
-    }
-
-    public LocalTime getClosingTime() {
-        return closingTime;
     }
 }

@@ -48,12 +48,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // Majd pl  .antMatchers(HttpMethod.POST, "/api/**").hasAnyRole('USER','ADMIN') ->Csak USER vagy ADMIN tud létrehozni
         // Majd pl  .antMatchers(HttpMethod.DELETE, "/api/**").hasRole('ADMIN') -> Csak ADMIN tud törölni BÁRMIT
 
-        // @formatter:off
+//         @formatter:off
         http
-                //TODO Ez nem kell (: ez nem azt csinálja, amire szerintem gondoltok
-//                .formLogin().loginPage("/login")
-//                .usernameParameter("email")
-//                .permitAll().and()
                 .cors().and()
                 .csrf().disable()
                 .authorizeRequests()

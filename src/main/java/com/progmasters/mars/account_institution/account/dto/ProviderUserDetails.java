@@ -4,10 +4,14 @@ import com.progmasters.mars.account_institution.account.domain.ProviderAccount;
 import com.progmasters.mars.account_institution.account.domain.ProviderType;
 import com.progmasters.mars.account_institution.connector.AccountInstitutionConnector;
 import com.progmasters.mars.account_institution.institution.dto.InstitutionListData;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Getter
+@NoArgsConstructor
 public class ProviderUserDetails {
 
     private Long id;
@@ -56,11 +60,15 @@ public class ProviderUserDetails {
         this.institutionList = institutionList;
     }
 
-    public ProviderUserDetails() {
-    }
-
-    public ProviderUserDetails(String email, String name, String providerServiceName, String password, String phone, Integer zipcode, String city, String address, Boolean newsletter) {
-
+    public ProviderUserDetails(String email,
+                               String name,
+                               String providerServiceName,
+                               String password,
+                               String phone,
+                               Integer zipcode,
+                               String city,
+                               String address,
+                               Boolean newsletter) {
         this.email = email;
         this.name = name;
         this.providerServiceName = providerServiceName;
@@ -69,63 +77,5 @@ public class ProviderUserDetails {
         this.city = city;
         this.address = address;
         this.newsletter = newsletter;
-    }
-
-
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getProviderServiceName() {
-        return providerServiceName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public Integer getZipcode() {
-        return zipcode;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public Integer getAgeGroupMin() {
-        return ageGroupMin;
-    }
-
-    public Integer getAgeGroupMax() {
-        return ageGroupMax;
-    }
-
-    public List<String> getTypes() {
-        return types;
-    }
-
-    public Boolean getNewsletter() {
-        return newsletter;
-    }
-
-    public Double getLongitude() {
-        return longitude;
-    }
-
-    public Double getLatitude() {
-        return latitude;
     }
 }

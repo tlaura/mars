@@ -82,6 +82,7 @@ public class SeleniumTest {
 
     }
 
+
     @AfterEach
     public void closeDriver() {
         driver.quit();

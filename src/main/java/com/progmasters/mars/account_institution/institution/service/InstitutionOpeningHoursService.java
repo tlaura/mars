@@ -25,7 +25,6 @@ public class InstitutionOpeningHoursService {
         saveOpeningHoursToInstitution(institution, institutionCreationCommand.getOpeningHours());
 
         return institution;
-
     }
 
     private void saveOpeningHoursToInstitution(Institution institution, List<OpeningHoursCreationCommand> openingHours) {

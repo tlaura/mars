@@ -5,24 +5,21 @@ import com.google.maps.GeocodingApi;
 import com.google.maps.errors.ApiException;
 import com.google.maps.errors.NotFoundException;
 import com.google.maps.model.GeocodingResult;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
 @Component
+@Slf4j
 public class GeocodeService {
 
-    private final Logger logger = LoggerFactory.getLogger(GeocodeService.class);
     @Value("${google.apikey}")
     private String key;
     private GeoApiContext context;
 
     private GeoApiContext getContext() {
-        // https://github.com/googlemaps/google-maps-services-java#usage
-        // context is designed to be a singleton
         if (this.context == null) {
             this.context = new GeoApiContext.Builder()
                 .apiKey(key)
@@ -38,7 +35,7 @@ public class GeocodeService {
             results = GeocodingApi.geocode(context,
                     address).await();
         } catch (ApiException | InterruptedException | IOException e) {
-            logger.error(e.getMessage());
+            log.error(e.getMessage());
             throw new NotFoundException("Geocoding failed");
         }
         if (results.length == 0) {

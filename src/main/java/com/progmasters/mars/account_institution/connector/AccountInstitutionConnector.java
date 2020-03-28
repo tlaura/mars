@@ -2,11 +2,15 @@ package com.progmasters.mars.account_institution.connector;
 
 import com.progmasters.mars.account_institution.account.domain.ProviderAccount;
 import com.progmasters.mars.account_institution.institution.domain.Institution;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "account_institution")
+@Getter
+@NoArgsConstructor
 public class AccountInstitutionConnector {
 
     @Id
@@ -22,23 +26,8 @@ public class AccountInstitutionConnector {
     @JoinColumn(name = "institution_id")
     private Institution institution;
 
-    public AccountInstitutionConnector() {
-    }
-
     public AccountInstitutionConnector(ProviderAccount providerAccount, Institution institution) {
         this.providerAccount = providerAccount;
         this.institution = institution;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public ProviderAccount getProviderAccount() {
-        return providerAccount;
-    }
-
-    public Institution getInstitution() {
-        return institution;
     }
 }

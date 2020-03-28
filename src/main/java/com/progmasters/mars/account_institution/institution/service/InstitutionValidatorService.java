@@ -9,7 +9,6 @@ import org.springframework.validation.Errors;
 @Service
 public class InstitutionValidatorService {
 
-
     @Value("${regex.validator.email}")
     private String email;
     @Value("${regex.validator.phone}")

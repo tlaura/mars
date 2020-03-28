@@ -1,5 +1,7 @@
 package com.progmasters.mars.util;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -9,7 +11,8 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.util.ArrayList;
 import java.util.List;
 
-
+@Getter
+@NoArgsConstructor
 public class ExcelFileLoader {
 
     private static int name_col;
@@ -32,9 +35,6 @@ public class ExcelFileLoader {
     private String website;
     private String description;
 
-
-    private ExcelFileLoader() {
-    }
 
     private ExcelFileLoader(XSSFRow row) {
         name = row.getCell(name_col).getStringCellValue();
@@ -111,7 +111,6 @@ public class ExcelFileLoader {
     }
 
     private static boolean isValidRow(XSSFRow row) {
-
         return mandatory_cols.stream()
                 .allMatch((index -> isValidCell(row.getCell(index))));
     }
@@ -124,38 +123,5 @@ public class ExcelFileLoader {
             return !(cell.getStringCellValue().isEmpty()
                     || cell.getStringCellValue().isBlank());
         }
-    }
-
-
-    public String getName() {
-        return name;
-    }
-
-    public Integer getZipcode() {
-        return zipcode;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public String getWebsite() {
-        return website;
-    }
-
-    public String getDescription() {
-        return description;
     }
 }

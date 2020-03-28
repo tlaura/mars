@@ -1,6 +1,8 @@
 package com.progmasters.mars.account_institution.account.dto;
 
 import com.progmasters.mars.account_institution.institution.dto.InstitutionCreationCommand;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
@@ -8,6 +10,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.List;
 
+@Getter
+@NoArgsConstructor
 public class ProviderAccountCreationCommand {
 
     @NotBlank
@@ -39,9 +43,6 @@ public class ProviderAccountCreationCommand {
     private List<InstitutionCreationCommand> institutions;
     private Boolean newsletter;
 
-    public ProviderAccountCreationCommand() {
-    }
-
     public ProviderAccountCreationCommand(@NotBlank @NotEmpty String providerServiceName, @NotBlank @NotEmpty String name, @NotBlank @NotEmpty String password, @NotBlank @NotEmpty String email, @NotNull @Size(min = 1) List<String> types, String phone, Integer zipcode, String city, String address, Integer ageGroupMin, Integer ageGroupMax, List<InstitutionCreationCommand> institutions, Boolean newsletter) {
         this.providerServiceName = providerServiceName;
         this.name = name;
@@ -56,57 +57,5 @@ public class ProviderAccountCreationCommand {
         this.ageGroupMax = ageGroupMax;
         this.institutions = institutions;
         this.newsletter = newsletter;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public Integer getZipcode() {
-        return zipcode;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public List<String> getTypes() {
-        return types;
-    }
-
-    public Integer getAgeGroupMin() {
-        return ageGroupMin;
-    }
-
-    public Integer getAgeGroupMax() {
-        return ageGroupMax;
-    }
-
-    public List<InstitutionCreationCommand> getInstitutions() {
-        return institutions;
-    }
-
-    public Boolean getNewsletter() {
-        return newsletter;
-    }
-
-    public String getProviderServiceName() {
-        return providerServiceName;
     }
 }

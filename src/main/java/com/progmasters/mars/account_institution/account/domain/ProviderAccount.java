@@ -2,6 +2,9 @@ package com.progmasters.mars.account_institution.account.domain;
 
 import com.progmasters.mars.account_institution.account.dto.ProviderAccountCreationCommand;
 import com.progmasters.mars.account_institution.connector.AccountInstitutionConnector;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -12,6 +15,9 @@ import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "provider_account")
+@Getter
+@Setter
+@NoArgsConstructor
 public class ProviderAccount {
 
     @Id
@@ -98,142 +104,4 @@ public class ProviderAccount {
         this.role = Role.ROLE_PROVIDER;
     }
 
-    public ProviderAccount() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getProviderServiceName() {
-        return providerServiceName;
-    }
-
-    public void setProviderServiceName(String providerServiceName) {
-        this.providerServiceName = providerServiceName;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
-    }
-
-    public Integer getZipcode() {
-        return zipcode;
-    }
-
-    public void setZipcode(Integer zipcode) {
-        this.zipcode = zipcode;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public List<ProviderType> getTypes() {
-        return types;
-    }
-
-    public void setTypes(List<ProviderType> type) {
-        this.types = type;
-    }
-
-    public Integer getAgeGroupMin() {
-        return ageGroupMin;
-    }
-
-    public void setAgeGroupMin(Integer ageGroupMin) {
-        this.ageGroupMin = ageGroupMin;
-    }
-
-    public Integer getAgeGroupMax() {
-        return ageGroupMax;
-    }
-
-    public void setAgeGroupMax(Integer ageGroupMax) {
-        this.ageGroupMax = ageGroupMax;
-    }
-
-    public Boolean getNewsletter() {
-        return newsletter;
-    }
-
-    public void setNewsletter(Boolean newsletter) {
-        this.newsletter = newsletter;
-    }
-
-    public List<AccountInstitutionConnector> getAccountInstitutionConnectors() {
-        return accountInstitutionConnectors;
-    }
-
-    public void setAccountInstitutionConnectors(List<AccountInstitutionConnector> accountInstitutionConnectors) {
-        this.accountInstitutionConnectors = accountInstitutionConnectors;
-    }
-
-    public Double getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(Double latitude) {
-        this.latitude = latitude;
-    }
-
-    public Double getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(Double longitude) {
-        this.longitude = longitude;
-    }
 }

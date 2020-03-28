@@ -1,6 +1,8 @@
 package com.progmasters.mars.account_institution.account.confirmationtoken;
 
 import com.progmasters.mars.account_institution.account.domain.ProviderAccount;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -8,6 +10,8 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "confirmation_token")
+@Getter
+@Setter
 public class ConfirmationToken {
 
     @Id
@@ -38,45 +42,45 @@ public class ConfirmationToken {
 
     //----------------------
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
-
-    public LocalDateTime getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDateTime date) {
-        this.date = date;
-    }
+//    public Long getId() {
+//        return id;
+//    }
+//
+//    public void setId(Long id) {
+//        this.id = id;
+//    }
+//
+//    public String getToken() {
+//        return token;
+//    }
+//
+//    public void setToken(String token) {
+//        this.token = token;
+//    }
+//
+//    public LocalDateTime getDate() {
+//        return date;
+//    }
+//
+//    public void setDate(LocalDateTime date) {
+//        this.date = date;
+//    }
 
 
     public boolean isConfirmed() {
         return confirmed;
     }
 
-    public void setConfirmed(boolean confirmed) {
-        this.confirmed = confirmed;
-    }
-
-    public ProviderAccount getUser() {
-        return user;
-    }
-
-    public void setUser(ProviderAccount user) {
-        this.user = user;
-    }
+//    public void setConfirmed(boolean confirmed) {
+//        this.confirmed = confirmed;
+//    }
+//
+//    public ProviderAccount getUser() {
+//        return user;
+//    }
+//
+//    public void setUser(ProviderAccount user) {
+//        this.user = user;
+//    }
 
 }

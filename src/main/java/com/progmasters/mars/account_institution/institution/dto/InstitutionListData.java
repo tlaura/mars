@@ -1,7 +1,11 @@
 package com.progmasters.mars.account_institution.institution.dto;
 
 import com.progmasters.mars.account_institution.institution.domain.Institution;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
+@Getter
 public class InstitutionListData {
 
     private Long id;
@@ -15,10 +19,6 @@ public class InstitutionListData {
     private String address;
     private Double longitude;
     private Double latitude;
-
-
-    public InstitutionListData() {
-    }
 
     public InstitutionListData(Institution institution) {
         this.id = institution.getId();
@@ -46,49 +46,5 @@ public class InstitutionListData {
         this.address = address;
         this.longitude = longitude;
         this.latitude = latitude;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getWebsite() {
-        return website;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public Integer getZipcode() {
-        return zipcode;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public Double getLongitude() {
-        return longitude;
-    }
-
-    public Double getLatitude() {
-        return latitude;
     }
 }

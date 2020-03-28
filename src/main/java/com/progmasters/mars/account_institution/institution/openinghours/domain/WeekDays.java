@@ -1,7 +1,9 @@
 package com.progmasters.mars.account_institution.institution.openinghours.domain;
 
-public enum WeekDays {
+import lombok.Getter;
 
+@Getter
+public enum WeekDays {
     MONDAY("Monday", "Hétfő"),
     TUESDAY("Tuesday", "Kedd"),
     WEDNESDAY("Wednesday", "Szerda"),
@@ -26,13 +28,5 @@ public enum WeekDays {
             }
         }
         return foundType;
-    }
-
-    public String getHungarianName() {
-        return hungarianName;
-    }
-
-    public String getEnglishName() {
-        return englishName;
     }
 }

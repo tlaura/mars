@@ -1,6 +1,9 @@
 package com.progmasters.mars.account_institution.account.passwordtoken;
 
 import com.progmasters.mars.account_institution.account.domain.ProviderAccount;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -8,6 +11,9 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "password_token")
+@Getter
+@Setter
+@NoArgsConstructor
 public class PasswordToken {
 
     @Id
@@ -27,42 +33,7 @@ public class PasswordToken {
     @OneToOne
     private ProviderAccount user;
 
-    public PasswordToken() {
-    }
-
     public PasswordToken(ProviderAccount user) {
-        this.user = user;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
-
-    public LocalDateTime getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDateTime date) {
-        this.date = date;
-    }
-
-    public ProviderAccount getUser() {
-        return user;
-    }
-
-    public void setUser(ProviderAccount user) {
         this.user = user;
     }
 }

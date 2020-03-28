@@ -162,16 +162,4 @@ public class AccountService {
             throw new EntityNotFoundException("not valid password reset link");
         }
     }
-
-//    public boolean deleteInstitutionOfAccountById(String loggedInUser, Long institutionId) {
-//        Optional<Institution> optionalInstitution = insitutionRepository.findById(institutionId);
-//
-//        if (optionalInstitution.isPresent()) {
-//            Institution institution = optionalInstitution.get();
-//            institution.setProviderAccount(null);
-//            return true;
-//        } else {
-//            return false;
-//        }
-//    }
 }

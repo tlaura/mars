@@ -17,7 +17,6 @@ import java.util.Optional;
 @Repository
 public interface InstitutionRepository extends JpaRepository<Institution, Long> {
 
-
     List<Institution> findAllByName(@NotBlank @NotEmpty String name);
 
     List<Institution> findAllByEmail(@NotBlank @NotEmpty @Email String email);

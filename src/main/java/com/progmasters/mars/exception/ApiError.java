@@ -11,6 +11,11 @@
 
 package com.progmasters.mars.exception;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class ApiError {
     private String errorCode;
     private String error;
@@ -19,30 +24,6 @@ public class ApiError {
     public ApiError(String errorCode, String error, String details) {
         this.errorCode = errorCode;
         this.error = error;
-        this.details = details;
-    }
-
-    public String getErrorCode() {
-        return errorCode;
-    }
-
-    public void setErrorCode(String errorCode) {
-        this.errorCode = errorCode;
-    }
-
-    public String getError() {
-        return error;
-    }
-
-    public void setError(String error) {
-        this.error = error;
-    }
-
-    public String getDetails() {
-        return details;
-    }
-
-    public void setDetails(String details) {
         this.details = details;
     }
 }

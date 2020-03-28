@@ -5,6 +5,9 @@ import com.progmasters.mars.account_institution.institution.dto.InstitutionCreat
 import com.progmasters.mars.account_institution.institution.location.GeoLocation;
 import com.progmasters.mars.account_institution.institution.openinghours.domain.OpeningHours;
 import com.progmasters.mars.util.ExcelFileLoader;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
@@ -16,6 +19,9 @@ import java.util.List;
 
 @Entity
 @Table(name = "institution")
+@Getter
+@Setter
+@NoArgsConstructor
 public class Institution {
 
     @Id
@@ -73,9 +79,6 @@ public class Institution {
     @OneToMany(mappedBy = "institution")
     private List<AccountInstitutionConnector> accountInstitutionConnectors;
 
-    public Institution() {
-    }
-
     public Institution(InstitutionCreationCommand institutionCreationCommand) {
         this.name = institutionCreationCommand.getName();
         this.zipcode = institutionCreationCommand.getZipcode();
@@ -105,109 +108,5 @@ public class Institution {
         this.description = parsedFile.getDescription();
         this.latitude = geoLocation.getLatitude();
         this.longitude = geoLocation.getLongitude();
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Integer getZipcode() {
-        return zipcode;
-    }
-
-    public void setZipcode(Integer zipcode) {
-        this.zipcode = zipcode;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Double getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(Double longitude) {
-        this.longitude = longitude;
-    }
-
-    public Double getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(Double latitude) {
-        this.latitude = latitude;
-    }
-
-    public List<OpeningHours> getOpeningHours() {
-        return openingHours;
-    }
-
-    public void setOpeningHours(List<OpeningHours> openingHours) {
-        this.openingHours = openingHours;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getWebsite() {
-        return website;
-    }
-
-    public void setWebsite(String website) {
-        this.website = website;
-    }
-
-    public List<AccountInstitutionConnector> getAccountInstitutionConnectors() {
-        return accountInstitutionConnectors;
-    }
-
-    public void setAccountInstitutionConnectors(List<AccountInstitutionConnector> accountInstitutionConnectors) {
-        this.accountInstitutionConnectors = accountInstitutionConnectors;
     }
 }
