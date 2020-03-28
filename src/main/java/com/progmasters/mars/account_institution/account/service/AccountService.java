@@ -4,6 +4,7 @@ import com.progmasters.mars.account_institution.account.confirmationtoken.Confir
 import com.progmasters.mars.account_institution.account.confirmationtoken.ConfirmationTokenRepository;
 import com.progmasters.mars.account_institution.account.domain.ProviderAccount;
 import com.progmasters.mars.account_institution.account.domain.ProviderType;
+import com.progmasters.mars.account_institution.account.dto.PasswordChangeDetails;
 import com.progmasters.mars.account_institution.account.dto.ProviderAccountCreationCommand;
 import com.progmasters.mars.account_institution.account.dto.ProviderUserDetails;
 import com.progmasters.mars.account_institution.account.passwordtoken.PasswordToken;
@@ -12,12 +13,14 @@ import com.progmasters.mars.account_institution.account.repository.ProviderAccou
 import com.progmasters.mars.account_institution.account.security.AuthenticatedUserDetails;
 import com.progmasters.mars.account_institution.connector.AccountInstitutionListData;
 import com.progmasters.mars.mail.EmailService;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -128,7 +131,6 @@ public class AccountService {
     private void updateDetails(ProviderUserDetails providerUserDetails, ProviderAccount providerAccount) {
         providerAccount.setName(providerUserDetails.getName());
         providerAccount.setProviderServiceName(providerUserDetails.getProviderServiceName());
-//        providerAccount.setPassword(providerUserDetails.getPassword());
         providerAccount.setPhone(providerUserDetails.getPhone());
         providerAccount.setEmail(providerUserDetails.getEmail());
         providerAccount.setZipcode(providerUserDetails.getZipcode());
@@ -155,5 +157,24 @@ public class AccountService {
         } else {
             throw new EntityNotFoundException("not valid password reset link");
         }
+    }
+
+    public boolean updatePasswordOfLoggedInUser(PasswordChangeDetails passwordChangeDetails) {
+        boolean isChangeConfirmed = false;
+
+        Optional<ProviderAccount> providerAccount = providerAccountRepository.findByEmail(passwordChangeDetails.getEmail());
+        if (providerAccount.isPresent()) {
+            String givenOldPassword = passwordChangeDetails.getOldPassword();
+            String oldPassword = providerAccount.get().getPassword();
+
+            boolean oldPasswordsMatch = BCrypt.checkpw(givenOldPassword, oldPassword);
+            boolean newPasswordsMatch = passwordChangeDetails.getPassword().equals(passwordChangeDetails.getConfirmPassword());
+
+            if (oldPasswordsMatch && newPasswordsMatch) {
+                providerAccount.get().setPassword(BCrypt.hashpw(passwordChangeDetails.getPassword(), BCrypt.gensalt()));
+                isChangeConfirmed = true;
+            }
+        }
+        return isChangeConfirmed;
     }
 }

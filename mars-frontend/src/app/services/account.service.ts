@@ -6,6 +6,7 @@ import {ProviderUserProfileDetailsModel} from "../models/providerUserProfileDeta
 import {environment} from "../../environments/environment";
 import {ProviderUserDetails} from "../models/providerUserDetails";
 import {AccountInstitutionListModel} from "../models/accountInstitutionList.model";
+import {PasswordChangeDetailsModel} from "../models/passwordChangeDetails.model";
 
 @Injectable({
   providedIn: 'root'
@@ -44,4 +45,8 @@ export class AccountService {
   getProviderAccountsByAgeRange = (age: number): Observable<Array<AccountInstitutionListModel>> => {
     return this.http.get<Array<AccountInstitutionListModel>>(this.BASE_URL + "/providers/ageRange?age=" + age);
   };
+
+  updatePassword(passwordChangeDetails: PasswordChangeDetailsModel) {
+    return this.http.patch(this.BASE_URL + '/providers/passwordchange', passwordChangeDetails);
+  }
 }

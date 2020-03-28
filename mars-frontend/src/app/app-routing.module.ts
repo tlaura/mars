@@ -18,6 +18,7 @@ import {NewPasswordFormComponent} from "./components/account-components/new-pass
 import {NewPasswordSuccessComponent} from "./components/account-components/new-password-components/new-password-success/new-password-success.component";
 import {ProviderDetailsComponent} from "./components/provider-details/provider-details.component";
 import {TermsComponent} from "./components/terms/terms.component";
+import {PasswordChangeComponent} from "./components/account-components/password-change/password-change.component";
 
 
 const routes: Routes = [
@@ -41,6 +42,7 @@ const routes: Routes = [
   {path: "my-profile", component: MyProfileComponent},
   {path: "", component: HomeComponent},
   {path: "terms-and-conditions", component: TermsComponent},
+  {path: "password-change", component: PasswordChangeComponent}
 ];
 
 @NgModule({
