@@ -15,6 +15,12 @@
     <div class="row mx-0">
       <div class="profile-div col-sm-12 col-md-6">
 
+        <div *ngIf="editMode" class="button-flex">
+          <button class="edit-button rounded-pill btn-light" routerLink="password-change">
+            Jelszó módosítása
+          </button>
+        </div>
+
         <label>Teljes név:</label>
         <div *ngIf='!editMode' class="col-sm-9">
           <p> {{providerAccount?.name}} </p>

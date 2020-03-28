@@ -91,5 +91,9 @@ export class MyProfileComponent implements OnInit {
         console.log(error);
       }
     );
+  };
+
+  changePassword() {
+
   }
 }
