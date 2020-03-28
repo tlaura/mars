@@ -44,8 +44,4 @@ export class PasswordChangeComponent implements OnInit {
       )
     }
   }
-
-  // goBack() {
-  //   this.router.navigate(['my-profile']);
-  // }
 }

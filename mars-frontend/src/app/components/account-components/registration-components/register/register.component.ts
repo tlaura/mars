@@ -58,7 +58,6 @@ export class RegisterComponent implements OnInit {
   }
 
   private loadTypes = (): void => {
-
   };
 
   submit() {
