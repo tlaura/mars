@@ -4,9 +4,8 @@ import com.google.maps.errors.NotFoundException;
 import com.progmasters.mars.account_institution.institution.InstitutionBuilder;
 import com.progmasters.mars.account_institution.institution.domain.Institution;
 import com.progmasters.mars.account_institution.institution.dto.InstitutionCreationCommand;
-import com.progmasters.mars.account_institution.institution.dto.InstitutionDetailsData;
 import com.progmasters.mars.account_institution.institution.openinghours.dto.OpeningHoursCreationCommand;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -14,57 +13,29 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityNotFoundException;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
 @Rollback
 @AutoConfigureTestDatabase
-public class InstitutionServiceIT {
+public class InstitutionOpeningHourServiceIT {
 
-   private InstitutionCreationCommand institutionCreationCommand;
 
     @Autowired
-    private InstitutionService institutionService;
-
-    @BeforeEach
-    public void init() throws NotFoundException {
-        institutionCreationCommand = getOneInstitutionCommand();
-        institutionService.saveInstitution(institutionCreationCommand);
-
-    }
+    private InstitutionOpeningHoursService institutionOpeningHoursService;
 
     @Test
-    public void testGetInstitutionDetailsById_shouldThrowException_givenId() {
-        assertThrows(EntityNotFoundException.class, () -> institutionService.getInstitutionDetailsById(10l));
+    public void testSave_shouldReturnInstitution() throws NotFoundException {
+        InstitutionCreationCommand institutionCreationCommand = getOneInstitutionCommand();
+
+        Institution savedInstitution = institutionOpeningHoursService.save(institutionCreationCommand);
+
+        Assertions.assertNotNull(savedInstitution);
+
     }
-
-    @Test
-    public void testGetInstitutionDetailsById_shouldCreateObject_givenId() {
-        Long id = institutionService.findByName(institutionCreationCommand.getName()).getId();
-
-        InstitutionDetailsData institutionDetails = institutionService.getInstitutionDetailsById(id);
-
-        assertNotNull(institutionDetails);
-    }
-
-    @Test
-    public void testSaveInstitution_shouldReturnCreatedInstitution() {
-        assertFalse(institutionService.findAllInstitutions().isEmpty());
-    }
-
-    @Test
-    public void testFindByName_shouldReturnFoundInstitution() {
-        Institution institution = institutionService.findByName("PecskeInstitution");
-
-        assertNotNull(institution);
-    }
-
 
     private InstitutionCreationCommand getOneInstitutionCommand() {
         String name = "PecskeInstitution";

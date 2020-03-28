@@ -26,16 +26,6 @@ public enum ProviderType {
         this.hungarianName = hungarianName;
     }
 
-    public static ProviderType getTypeByName(String name) {
-        ProviderType foundType = null;
-        for (ProviderType value : ProviderType.values()) {
-            if (value.toString().equals(name)) {
-                foundType = value;
-            }
-        }
-        return foundType;
-    }
-
     public static ProviderType getTypeByHungarianName(String hungarianName) {
         ProviderType foundType = null;
         for (ProviderType value : ProviderType.values()) {

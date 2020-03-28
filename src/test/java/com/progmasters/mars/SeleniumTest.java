@@ -1,9 +1,6 @@
 package com.progmasters.mars;
 
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -12,7 +9,7 @@ public class SeleniumTest {
 
     private WebDriver driver;
 
-    @BeforeEach
+  //  @BeforeEach
     public void startBrowser() {
         ClassLoader loadTest = SeleniumTest.class.getClassLoader();
 
@@ -26,7 +23,7 @@ public class SeleniumTest {
         driver = new ChromeDriver();
     }
 
-    @Test
+    //  @Test
     public void testFillRegisterForm() {
         //driver.get("http://localhost:4200/register");
 
@@ -72,7 +69,7 @@ public class SeleniumTest {
     }
 
 
-    @Test
+    //  @Test
     public void testFillAddInstitutionForm() {
         driver.get("http://localhost:4200/institution-form");
 
@@ -82,8 +79,7 @@ public class SeleniumTest {
 
     }
 
-
-    @AfterEach
+    //  @AfterEach
     public void closeDriver() {
         driver.quit();
     }

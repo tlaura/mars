@@ -109,12 +109,4 @@ public class AccountInstitutionListData {
             this.accountType = AccountType.PROVIDER.toString();
         }
     }
-
-    public AccountInstitutionListData(ProviderAccount providerAccount, List<Institution> institutions) {
-        this(providerAccount);
-
-        this.accountType = AccountType.PROVIDER_WITH_INSTITUTION.toString();
-
-        this.institutions = institutions.stream().map(InstitutionDetailsData::new).collect(Collectors.toList());
-    }
 }
