@@ -15,7 +15,6 @@ import {PasswordChangeDetailsModel} from "../../../models/passwordChangeDetails.
 export class PasswordChangeComponent implements OnInit {
   passwordChangeForm: FormGroup;
   loggedInUser: string;
-  passwordChangeDetailsModel: PasswordChangeDetailsModel;
 
   constructor(private formBuilder: FormBuilder,
               private router: Router,
@@ -25,6 +24,7 @@ export class PasswordChangeComponent implements OnInit {
 
   ngOnInit(): void {
     this.loggedInUser = this.loginService.getCurrentUser()['name'];
+    console.log(this.loggedInUser);
     this.passwordChangeForm = this.formBuilder.group({
       oldPassword: ['', [Validators.required, Validators.pattern(validatorBounds.passwordRegex)]],
       password: ['', [Validators.required, Validators.pattern(validatorBounds.passwordRegex)]],
@@ -33,13 +33,11 @@ export class PasswordChangeComponent implements OnInit {
   }
 
   changePassword() {
-    if (this.passwordChangeForm.valid && this.loggedInUser) {
-      this.passwordChangeDetailsModel['email'] = this.loggedInUser;
-      this.passwordChangeDetailsModel.oldPassword = this.passwordChangeForm.get('oldPassword').value;
-      this.passwordChangeDetailsModel.password = this.passwordChangeForm.get('password').value;
-      this.passwordChangeDetailsModel.confirmPassword = this.passwordChangeForm.get('confirmPassword').value;
+    if (this.passwordChangeForm.valid) {
+      const passwordChange: PasswordChangeDetailsModel = this.passwordChangeForm.value;
+      passwordChange.email = this.loggedInUser;
 
-      this.accountService.updatePassword(this.passwordChangeDetailsModel).subscribe(
+      this.accountService.updatePassword(passwordChange).subscribe(
         () => {
           this.router.navigate(['my-profile']);
         }
