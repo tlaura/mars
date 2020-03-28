@@ -105,15 +105,24 @@
               [(ngModel)]='providerAccount.address' class='text-dark form-control' type='text'>
           </div>
         </div>
-        <br>
 
         <label>Szolgáltatás típusai:</label>
-        <div>
+        <div *ngIf="!editMode" class="col-sm-9">
           <ul class="col-sm-9">
             <p *ngFor="let type of providerAccount?.types">
               {{type}}
             </p>
           </ul>
+        </div>
+        <div *ngIf="editMode" class="form-group col-sm-12">
+          <small class="row mx-0">Több szolgáltatás kiválasztásához tartsa lenyomva a Ctrl billentyűt.</small>
+          <select [(ngModel)]="providerAccount.types"
+                  class="form-control mdb-select md-form select-tomato"
+                  id="types"
+                  multiple
+                  name="types">
+            <option *ngFor="let type of allTypes" [ngValue]="type.displayName">{{type.displayName}}</option>
+          </select>
         </div>
         <br>
 
