@@ -16,7 +16,7 @@
       <div class="profile-div col-sm-12 col-md-6">
 
         <div *ngIf="editMode" class="button-flex">
-          <button class="edit-button rounded-pill btn-light" routerLink="password-change">
+          <button (click)="changePassword()" class="edit-button rounded-pill btn-light">
             Jelszó módosítása
           </button>
         </div>
