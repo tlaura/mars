@@ -106,7 +106,6 @@ export class InstitutionListComponent implements OnInit {
   };
 
   details = (institution: AccountInstitutionListModel): string => {
-    console.log(institution);
     let type: string = institution.accountType;
     if (type === 'PROVIDER') {
       return "provider-details/" + institution.id;

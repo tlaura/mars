@@ -1,17 +1,15 @@
-package com.progmasters.mars.account_institution.account.service;
+package com.progmasters.mars.account_institution.connector;
 
 import com.progmasters.mars.account_institution.account.ProviderAccountBuilder;
 import com.progmasters.mars.account_institution.account.domain.ProviderAccount;
 import com.progmasters.mars.account_institution.account.domain.ProviderType;
-import com.progmasters.mars.account_institution.connector.AccountInstitutionConnectorRepository;
-import com.progmasters.mars.account_institution.connector.AccountInstitutionService;
+import com.progmasters.mars.account_institution.account.service.AccountService;
 import com.progmasters.mars.account_institution.institution.dto.InstitutionListData;
 import com.progmasters.mars.account_institution.institution.location.GeocodeService;
 import com.progmasters.mars.account_institution.institution.service.InstitutionOpeningHoursService;
 import com.progmasters.mars.account_institution.institution.service.InstitutionService;
 import com.progmasters.mars.mail.EmailService;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -22,8 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.mockito.Mockito.when;
 
 @SpringBootTest
 @Transactional
@@ -59,23 +55,23 @@ public class AccountInstitutionServiceIT {
 
     //todo repair tests
 
-    @Test
-    public void testGetInstitutionsByAccountType_shouldReturnFalse() {
-        List<InstitutionListData> institutionDetails = new ArrayList<>();
-        institutionDetails.add(createOneInstitutionListData());
-        List<ProviderAccount> accounts = new ArrayList<>();
-        accounts.add(createOneProviderAccount());
-
-        when(accountServiceMock.getAccountsByType(ProviderType.DIAGNOSTIC_CENTER)).thenReturn(accounts);
-
-
-        //    when(institutionServiceMock.getInstitutionsByProviderAccount(any(ProviderAccount.class))).thenReturn(institutionDetails);
-
-        //  List<InstitutionListData> institutions = accountInstitutionService.getInstitutionsByAccountType(ProviderType.DIAGNOSTIC_CENTER);
-
-        //  assertFalse(institutions.isEmpty());
-
-    }
+//    @Test
+//    public void testGetInstitutionsByAccountType_shouldReturnFalse() {
+//        List<InstitutionListData> institutionDetails = new ArrayList<>();
+//        institutionDetails.add(createOneInstitutionListData());
+//        List<ProviderAccount> accounts = new ArrayList<>();
+//        accounts.add(createOneProviderAccount());
+//
+//        when(accountServiceMock.getAccountsByType(ProviderType.DIAGNOSTIC_CENTER)).thenReturn(accounts);
+//
+//
+//        //    when(institutionServiceMock.getInstitutionsByProviderAccount(any(ProviderAccount.class))).thenReturn(institutionDetails);
+//
+//        //  List<InstitutionListData> institutions = accountInstitutionService.getInstitutionsByAccountType(ProviderType.DIAGNOSTIC_CENTER);
+//
+//        //  assertFalse(institutions.isEmpty());
+//
+//    }
 
 
     private ProviderAccount createOneProviderAccount() {

@@ -58,7 +58,7 @@ public class InstitutionController {
     @GetMapping("/{id}")
     public ResponseEntity<InstitutionDetailsData> getInstitutionDetails(@PathVariable("id") Long id) {
         logger.info("Institution is requested by id: " + id);
-        return new ResponseEntity<>(institutionService.getInstitutionDetails(id), HttpStatus.OK);
+        return new ResponseEntity<>(institutionService.getInstitutionDetailsById(id), HttpStatus.OK);
     }
 
     @InitBinder("institutionCreationCommand")

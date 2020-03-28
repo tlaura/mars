@@ -38,8 +38,12 @@ public class ProviderUserDetails {
         this.ageGroupMin = providerAccount.getAgeGroupMin();
         this.ageGroupMax = providerAccount.getAgeGroupMax();
         this.newsletter = providerAccount.getNewsletter();
-        this.types = providerAccount.getTypes().stream().map(ProviderType::getHungarianName).collect(Collectors.toList());
-        this.institutionList = providerAccount.getAccountInstitutionConnectors().stream().map(AccountInstitutionConnector::getInstitution).map(InstitutionListData::new).collect(Collectors.toList());
+        if (!providerAccount.getTypes().isEmpty()) {
+            this.types = providerAccount.getTypes().stream().map(ProviderType::getHungarianName).collect(Collectors.toList());
+        }
+        if (providerAccount.getAccountInstitutionConnectors() != null) {
+            this.institutionList = providerAccount.getAccountInstitutionConnectors().stream().map(AccountInstitutionConnector::getInstitution).map(InstitutionListData::new).collect(Collectors.toList());
+        }
         this.longitude = providerAccount.getLongitude();
         this.latitude = providerAccount.getLatitude();
     }
