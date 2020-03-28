@@ -4,6 +4,8 @@ import {LoginService} from "../../../services/login.service";
 import {AccountService} from "../../../services/account.service";
 import {FormControl, Validators} from "@angular/forms";
 import {validatorBounds} from "../../../../environments/validatorBounds";
+import {InstitutionTypeModel} from "../../../models/InstitutionType.model";
+import {InstitutionService} from "../../../services/institution.service";
 
 @Component({
   selector: 'app-my-profile',
@@ -17,11 +19,17 @@ export class MyProfileComponent implements OnInit {
   editMode = false;
   @Input() name: string;
   @Output() focusOut: EventEmitter<any> = new EventEmitter<any>();
-  username = new FormControl('', [Validators.required, Validators.pattern(validatorBounds.nameRegex)]);
-  providerServiceName = new FormControl('', [Validators.required, Validators.pattern(validatorBounds.nameRegex)]);
-  phone = new FormControl('', [Validators.required, Validators.pattern(validatorBounds.phoneRegex)]);
 
-  constructor(private loginService: LoginService, public providerService: AccountService) {
+  // editGroup = new FormGroup({
+  username = new FormControl('', Validators.required);
+  providerServiceName = new FormControl('', Validators.required);
+  phone = new FormControl('', [Validators.required, Validators.pattern(validatorBounds.phoneRegex)]);
+  // types = new FormControl(null, [Validators.required, Validators.minLength(1)]);
+  // });
+
+  allTypes: Array<InstitutionTypeModel> = [];
+
+  constructor(private loginService: LoginService, public providerService: AccountService, private institutionService: InstitutionService) {
   }
 
   editModeChange = () => {
@@ -37,6 +45,8 @@ export class MyProfileComponent implements OnInit {
       }, error => {
         console.warn(error)
       //  TODO - write unauthorized validation
+      }, () => {
+        this.getAllProviderTypes();
       }
     )
   }
@@ -47,12 +57,20 @@ export class MyProfileComponent implements OnInit {
       () => {
         if (this.editMode) {
           this.editMode = false;
+          // this.providerAccount.types = this.types;
           this.accountCopy = Object.assign({}, this.providerAccount);
         }
         console.log("Data changes saved");
       }, error => {
         console.log(error);
       }
+    );
+  };
+
+  private getAllProviderTypes = () => {
+    this.institutionService.getProviderTypes().subscribe(
+      allTypes => this.allTypes = allTypes,
+      error => console.warn(error)
     );
   };
 
@@ -67,7 +85,6 @@ export class MyProfileComponent implements OnInit {
         let elementPos = this.providerAccount.institutionList
           .map(inst => inst.id)
           .indexOf(id);
-
         this.providerAccount.institutionList.splice(elementPos, 1);
         console.log("Institution deleted");
       }, error => {
