@@ -33,7 +33,6 @@ import {InstitutionComponent} from './components/form-elements-components/instit
 import {OpeningHoursComponent} from './components/form-elements-components/opening-hours/opening-hours.component';
 import {environment} from "../environments/environment";
 import {InstitutionImportCompleteComponent} from './components/institution-components/institution-import-complete/institution-import-complete.component';
-import {EditProfileComponent} from './components/account-components/edit-profile/edit-profile.component';
 import {HomeComponent} from './components/home/home.component';
 import {ProviderDetailsComponent} from './components/provider-details/provider-details.component';
 import {NewPasswordComponent} from './components/account-components/new-password-components/new-password/new-password.component';
@@ -75,7 +74,6 @@ export function getAuthServiceConfigs() {
     InstitutionComponent,
     OpeningHoursComponent,
     InstitutionImportCompleteComponent,
-    EditProfileComponent,
     HomeComponent,
     ProviderDetailsComponent,
     NewPasswordComponent,

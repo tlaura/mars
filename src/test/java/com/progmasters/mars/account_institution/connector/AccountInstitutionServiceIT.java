@@ -111,5 +111,4 @@ public class AccountInstitutionServiceIT {
 
         return new InstitutionListData(id, name, descritpion, email, website, phone, zipcode, city, address, longitude, latitude);
     }
-
 }

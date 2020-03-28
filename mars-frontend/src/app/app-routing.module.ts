@@ -11,7 +11,6 @@ import {RegisterSuccessComponent} from "./components/account-components/registra
 import {MyProfileComponent} from "./components/account-components/my-profile/my-profile.component";
 import {InstitutionImportComponent} from "./components/institution-components/institution-import/institution-import.component";
 import {InstitutionImportCompleteComponent} from "./components/institution-components/institution-import-complete/institution-import-complete.component";
-import {EditProfileComponent} from "./components/account-components/edit-profile/edit-profile.component";
 import {HomeComponent} from "./components/home/home.component";
 import {NewPasswordComponent} from "./components/account-components/new-password-components/new-password/new-password.component";
 import {NewPasswordCompleteComponent} from "./components/account-components/new-password-components/new-password-complete/new-password-complete.component";
@@ -42,7 +41,6 @@ const routes: Routes = [
   {path: "my-profile", component: MyProfileComponent},
   {path: "", component: HomeComponent},
   {path: "terms-and-conditions", component: TermsComponent},
-  {path: "my-profile/edit-profile", component: EditProfileComponent}
 ];
 
 @NgModule({

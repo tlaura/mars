@@ -6,7 +6,6 @@ import com.progmasters.mars.account_institution.account.domain.ProviderAccount;
 import com.progmasters.mars.account_institution.account.domain.ProviderType;
 import com.progmasters.mars.account_institution.account.dto.ProviderAccountCreationCommand;
 import com.progmasters.mars.account_institution.account.dto.ProviderUserDetails;
-import com.progmasters.mars.account_institution.account.dto.ProviderUserDetailsEdit;
 import com.progmasters.mars.account_institution.account.passwordtoken.PasswordToken;
 import com.progmasters.mars.account_institution.account.passwordtoken.PasswordTokenRepository;
 import com.progmasters.mars.account_institution.account.repository.ProviderAccountRepository;
@@ -30,7 +29,6 @@ public class AccountService {
     private final ConfirmationTokenRepository confirmationTokenRepository;
     private final PasswordTokenRepository passwordTokenRepository;
     private final EmailService emailService;
-
 
     public AccountService(ProviderAccountRepository providerAccountRepository,
                           BCryptPasswordEncoder passwordEncoder,
@@ -80,10 +78,6 @@ public class AccountService {
 
     public ProviderAccount findByEmail(String email) {
         return providerAccountRepository.findByEmail(email).orElseThrow(() -> new EntityNotFoundException("No account found by given email:\t" + email));
-    }
-
-    public ProviderUserDetailsEdit getProviderAccountEditDetailsByEmail(String loggedInUserEmail) {
-        return new ProviderUserDetailsEdit(findByEmail(loggedInUserEmail));
     }
 
     List<ProviderAccount> findAllAccounts() {

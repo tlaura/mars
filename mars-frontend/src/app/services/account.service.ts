@@ -4,7 +4,6 @@ import {Observable} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {ProviderUserProfileDetailsModel} from "../models/providerUserProfileDetails.model";
 import {environment} from "../../environments/environment";
-import {ProviderAccountEditDataModel} from "../models/providerAccountEditData.model";
 import {ProviderUserDetails} from "../models/providerUserDetails";
 import {AccountInstitutionListModel} from "../models/accountInstitutionList.model";
 
@@ -28,15 +27,6 @@ export class AccountService {
 
   getProvidersByType = (name: string): Observable<Array<AccountInstitutionListModel>> => {
     return this.http.get<Array<AccountInstitutionListModel>>(this.BASE_URL + "/providers/providersByType?type=" + name);
-  };
-
-  fetchProviderAccountEditDetails = (loggedInUser: string) => {
-    return this.http.get(this.BASE_URL + '/providers/edit/' + loggedInUser);
-  };
-
-  editProviderAccount = (data: ProviderAccountEditDataModel, loggedInUser: string): Observable<any> => {
-    data.email = loggedInUser;
-    return this.http.patch(this.BASE_URL + '/providers/' + loggedInUser, data);
   };
 
   editProviderAccountDetails = (data: ProviderUserProfileDetailsModel, id: number): Observable<any> => {

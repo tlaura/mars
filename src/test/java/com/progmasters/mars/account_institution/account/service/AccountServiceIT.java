@@ -5,7 +5,6 @@ import com.progmasters.mars.account_institution.account.domain.ProviderAccount;
 import com.progmasters.mars.account_institution.account.domain.ProviderType;
 import com.progmasters.mars.account_institution.account.dto.ProviderAccountCreationCommand;
 import com.progmasters.mars.account_institution.account.dto.ProviderUserDetails;
-import com.progmasters.mars.account_institution.account.dto.ProviderUserDetailsEdit;
 import com.progmasters.mars.account_institution.institution.dto.InstitutionCreationCommand;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -40,10 +39,8 @@ public class AccountServiceIT {
         providerAccount = accountService.save(providerAccountCreationCommand);
     }
 
-
     @Test
     public void testSaveProviderAccount_returnsCreatedId() {
-
         assertFalse(accountService.findAllAccounts().isEmpty());
     }
 
@@ -86,20 +83,6 @@ public class AccountServiceIT {
     @Test
     public void testFindById_shouldThrowException_giveNotExistingId() {
         assertThrows(EntityNotFoundException.class, () -> accountService.findById(2l));
-    }
-
-
-    @Test
-    public void testGetProviderAccountEditDetailsByEmail_shouldNotBeNull_givenValidEmail() {
-        ProviderUserDetailsEdit foundAccountDetails = accountService.getProviderAccountEditDetailsByEmail("pecske92@gmail.com");
-
-        assertNotNull(foundAccountDetails);
-    }
-
-    @Test
-    public void testGetProviderAccountsEditDetailsByEmail_shouldThrowException_givenNotValidEmail() {
-
-        assertThrows(EntityNotFoundException.class, () -> accountService.getProviderAccountEditDetailsByEmail("none"));
     }
 
     @Test
