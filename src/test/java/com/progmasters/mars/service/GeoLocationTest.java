@@ -26,6 +26,6 @@ public class GeoLocationTest {
         String address = "1089 Budapest Orczy út 43";
         GeoLocation geoLocation = geocodeService.getGeoLocation(address);
 
-        Assertions.assertNull(geoLocation);
+        Assertions.assertNotNull(geoLocation);
     }
 }
