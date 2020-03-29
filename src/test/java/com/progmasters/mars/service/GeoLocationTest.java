@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @Rollback
 @AutoConfigureTestDatabase
-public class GeoLocationIT {
+public class GeoLocationTest {
 
     @Autowired
     private GeocodeService geocodeService;

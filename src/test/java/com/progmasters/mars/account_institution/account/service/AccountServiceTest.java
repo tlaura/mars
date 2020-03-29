@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @Transactional
 @Rollback
 @AutoConfigureTestDatabase
-public class AccountServiceIT {
+public class AccountServiceTest {
 
     private ProviderAccountCreationCommand providerAccountCreationCommand;
 
