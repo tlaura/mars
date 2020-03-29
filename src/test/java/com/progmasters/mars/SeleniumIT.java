@@ -8,13 +8,13 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-public class SeleniumTest {
+public class SeleniumIT {
 
     private WebDriver driver;
 
     @BeforeEach
     public void startBrowser() {
-        ClassLoader loadTest = SeleniumTest.class.getClassLoader();
+        ClassLoader loadTest = SeleniumIT.class.getClassLoader();
 
         Boolean isWindows = System.getProperty("os.name").toLowerCase().contains("win");
         if (isWindows) {
