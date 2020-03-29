@@ -4,7 +4,6 @@ export interface ProviderUserDetails {
   id: number,
   providerServiceName: string,
   name: string,
-  // password: string,
   email: string,
   phone: string,
   zipcode: number,

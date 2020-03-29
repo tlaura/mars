@@ -162,6 +162,13 @@
       </div>
 
       <div class="col-sm-12 col-md-6" style="padding: 30px 0">
+        <div *ngIf="editMode" style="padding: 30px 0">
+          <button (click)="changePassword()" class="edit-button rounded-pill btn-light">
+            Jelszó módosítása
+          </button>
+        </div>
+        <br>
+
         <label>Intézmények:</label>
         <div *ngFor="let institution of providerAccount?.institutionList"
              class="card bg-light m-4 block-on-white-div">

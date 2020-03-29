@@ -21,7 +21,6 @@ export class NewPasswordComponent implements OnInit {
   ngOnInit(): void {
   }
 
-
   submit() {
     const emailData: string = this.emailFormGroup.get('email').value;
     this.mailService.sendNewPasswordRequest(emailData).subscribe(

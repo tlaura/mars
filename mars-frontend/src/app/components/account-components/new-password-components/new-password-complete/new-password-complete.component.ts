@@ -18,5 +18,4 @@ export class NewPasswordCompleteComponent implements OnInit {
   private navigateToLogin = (): void => {
     this.router.navigate(["login"]);
   };
-
 }
