@@ -26,7 +26,7 @@ import java.util.List;
 @Rollback
 @AutoConfigureTestDatabase
 @ExtendWith(MockitoExtension.class)
-public class AccountInstitutionServiceIT {
+public class AccountInstitutionServiceTest {
 
     private AccountInstitutionService accountInstitutionService;
 

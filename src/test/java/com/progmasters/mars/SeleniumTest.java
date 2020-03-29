@@ -16,7 +16,10 @@ public class SeleniumTest {
     public void startBrowser() {
         ClassLoader loadTest = SeleniumTest.class.getClassLoader();
 
-        System.setProperty("webdriver.chrome.driver", loadTest.getResource("windows/chromedriver.exe").getFile());
+        Boolean isWindows = System.getProperty("os.name").toLowerCase().contains("win");
+        if (isWindows) {
+            System.setProperty("webdriver.chrome.driver", loadTest.getResource("windows/chromedriver.exe").getFile());
+        }
 
 //        ChromeOptions options = new ChromeOptions();
 //        options.addArguments("--headless", "--disable-gpu", "--window-size=1920,1200","--ignore-certificate-errors");
