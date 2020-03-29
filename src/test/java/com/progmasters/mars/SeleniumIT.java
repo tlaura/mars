@@ -8,15 +8,18 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-public class SeleniumTest {
+public class SeleniumIT {
 
     private WebDriver driver;
 
     @BeforeEach
     public void startBrowser() {
-        ClassLoader loadTest = SeleniumTest.class.getClassLoader();
+        ClassLoader loadTest = SeleniumIT.class.getClassLoader();
 
-        System.setProperty("webdriver.chrome.driver", loadTest.getResource("windows/chromedriver.exe").getFile());
+        Boolean isWindows = System.getProperty("os.name").toLowerCase().contains("win");
+        if (isWindows) {
+            System.setProperty("webdriver.chrome.driver", loadTest.getResource("windows/chromedriver.exe").getFile());
+        }
 
 //        ChromeOptions options = new ChromeOptions();
 //        options.addArguments("--headless", "--disable-gpu", "--window-size=1920,1200","--ignore-certificate-errors");

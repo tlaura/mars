@@ -25,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @Transactional
 @Rollback
 @AutoConfigureTestDatabase
-public class InstitutionServiceIT {
+public class InstitutionServiceTest {
 
     InstitutionCreationCommand institutionCreationCommand;
 

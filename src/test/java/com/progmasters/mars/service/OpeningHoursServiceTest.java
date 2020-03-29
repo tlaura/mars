@@ -27,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 @Transactional
 @Rollback
 @AutoConfigureTestDatabase
-public class OpeningHoursServiceIT {
+public class OpeningHoursServiceTest {
 
     private Institution institution;
 
