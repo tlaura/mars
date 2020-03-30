@@ -34,11 +34,13 @@ public class UserController {
 
         AuthenticatedUserDetails authenticatedUserDetails = accountService.getAuthenticatedUserDetails(user.getUsername());
         ResponseEntity<AuthenticatedUserDetails> responseEntity;
-        if (accountService.isUserConfirmed(authenticatedUserDetails.getName())) {
+        if (accountService.isUserConfirmed(authenticatedUserDetails.getEmail())) {
             responseEntity = new ResponseEntity<>(authenticatedUserDetails, HttpStatus.OK);
         } else {
             responseEntity = new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
         return responseEntity;
     }
+
+
 }
