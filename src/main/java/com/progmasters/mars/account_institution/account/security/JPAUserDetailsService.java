@@ -38,11 +38,6 @@ public class JPAUserDetailsService implements UserDetailsService {
 
         return UserPrincipal.create(providerAccount);
 
-//        return User
-//                .withUsername(username)
-//                .authorities(authorities)
-//                .password(providerAccount.getPassword())
-//                .build();
     }
 
 }

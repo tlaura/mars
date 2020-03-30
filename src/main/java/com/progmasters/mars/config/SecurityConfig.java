@@ -1,6 +1,8 @@
 package com.progmasters.mars.config;
 
 import com.progmasters.mars.account_institution.account.security.JPAUserDetailsService;
+import com.progmasters.mars.account_institution.account.security.JwtAuthenticationEntryPoint;
+import com.progmasters.mars.account_institution.account.security.JwtAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -13,6 +15,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -31,12 +34,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private String[] corsPolicies;
     private JPAUserDetailsService jpaUserDetailsService;
     private PasswordEncoder passwordEncoder;
+    private JwtAuthenticationEntryPoint unauthorizedHandler;
 
     @Autowired
-    public SecurityConfig(JPAUserDetailsService jpaUserDetailsService, PasswordEncoder passwordEncoder) {
+    public SecurityConfig(JPAUserDetailsService jpaUserDetailsService,
+                          PasswordEncoder passwordEncoder,
+                          JwtAuthenticationEntryPoint unauthorizedHandler) {
         super();
         this.jpaUserDetailsService = jpaUserDetailsService;
         this.passwordEncoder = passwordEncoder;
+        this.unauthorizedHandler = unauthorizedHandler;
+    }
+
+    @Bean
+    public JwtAuthenticationFilter jwtAuthenticationFilter() {
+        return new JwtAuthenticationFilter();
     }
 
     @Bean(BeanIds.AUTHENTICATION_MANAGER)
@@ -79,6 +91,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and().httpBasic()
         ;
         // @formatter:on
+        http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 
     }
 
