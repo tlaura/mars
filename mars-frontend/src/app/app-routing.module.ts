@@ -20,6 +20,7 @@ import {ProviderDetailsComponent} from "./components/provider-details/provider-d
 import {TermsComponent} from "./components/terms/terms.component";
 import {PasswordChangeComponent} from "./components/account-components/new-password-components/password-change/password-change.component";
 import {PasswordChangeSuccessComponent} from "./components/account-components/new-password-components/password-change-success/password-change-success.component";
+import {EvaluateListComponent} from "./components/institution-components/evaluate-list/evaluate-list.component";
 
 
 const routes: Routes = [
@@ -44,7 +45,8 @@ const routes: Routes = [
   {path: "", component: HomeComponent},
   {path: "terms-and-conditions", component: TermsComponent},
   {path: "password-change", component: PasswordChangeComponent},
-  {path: "password-change-success", component: PasswordChangeSuccessComponent}
+  {path: "password-change-success", component: PasswordChangeSuccessComponent},
+  {path: "evaluate-list", component: EvaluateListComponent},
 ];
 
 @NgModule({

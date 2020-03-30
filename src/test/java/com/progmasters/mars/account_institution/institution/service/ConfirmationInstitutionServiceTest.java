@@ -3,7 +3,7 @@ package com.progmasters.mars.account_institution.institution.service;
 import com.progmasters.mars.account_institution.institution.domain.ConfirmationInstitution;
 import com.progmasters.mars.account_institution.institution.dto.InstitutionCreationCommand;
 import com.progmasters.mars.account_institution.institution.openinghours.dto.OpeningHoursCreationCommand;
-import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -15,6 +15,8 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+
 @SpringBootTest
 @Transactional
 @Rollback
@@ -24,19 +26,21 @@ public class ConfirmationInstitutionServiceTest {
     @Autowired
     private ConfirmationInstitutionService confirmationInstitutionService;
 
-    @Test
-    public void testSave() {
-        InstitutionCreationCommand institutionCreation = getOneInstitutionCommand();
+    @BeforeEach
+    public void init() {
+        InstitutionCreationCommand institutionCreation = buildOneInstitutionCommand();
 
         confirmationInstitutionService.save(institutionCreation);
-
-        List<ConfirmationInstitution> allConfirmations = confirmationInstitutionService.findAll();
-
-        Assertions.assertFalse(allConfirmations.isEmpty());
-
     }
 
-    private InstitutionCreationCommand getOneInstitutionCommand() {
+    @Test
+    public void testSave() {
+        List<ConfirmationInstitution> allConfirmations = confirmationInstitutionService.findAll();
+
+        assertFalse(allConfirmations.isEmpty());
+    }
+
+    private InstitutionCreationCommand buildOneInstitutionCommand() {
         String name = "PecskeInstitution";
         String email = "pecske92@gmail.com";
         Integer zipcode = 1089;

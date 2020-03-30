@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -21,6 +22,9 @@ public class ConfirmationInstitution extends TempInstitution {
 
     @OneToMany(mappedBy = "institution")
     private List<OpeningHours> openingHours;
+
+    @Column(name = "provider_email")
+    private String providerEmail;
 
     public ConfirmationInstitution(InstitutionCreationCommand institutionCreationCommand) {
         super.setName(institutionCreationCommand.getName());

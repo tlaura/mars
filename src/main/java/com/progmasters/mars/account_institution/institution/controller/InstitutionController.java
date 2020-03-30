@@ -2,10 +2,13 @@ package com.progmasters.mars.account_institution.institution.controller;
 
 import com.google.maps.errors.NotFoundException;
 import com.progmasters.mars.account_institution.account.domain.ProviderType;
+import com.progmasters.mars.account_institution.connector.AccountInstitutionService;
 import com.progmasters.mars.account_institution.institution.InstitutionValidator;
-import com.progmasters.mars.account_institution.institution.dto.*;
+import com.progmasters.mars.account_institution.institution.dto.InstitutionCreationCommand;
+import com.progmasters.mars.account_institution.institution.dto.InstitutionDetailsData;
+import com.progmasters.mars.account_institution.institution.dto.InstitutionListData;
+import com.progmasters.mars.account_institution.institution.dto.InstitutionTypeData;
 import com.progmasters.mars.account_institution.institution.service.ConfirmationInstitutionService;
-import com.progmasters.mars.account_institution.institution.service.InstitutionOpeningHoursService;
 import com.progmasters.mars.account_institution.institution.service.InstitutionService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,15 +30,18 @@ public class InstitutionController {
 
     private final InstitutionService institutionService;
     private InstitutionValidator institutionValidator;
-    private final InstitutionOpeningHoursService institutionOpeningHoursService;
     private final ConfirmationInstitutionService confirmationInstitutionService;
+    private final AccountInstitutionService accountInstitutionService;
 
     @Autowired
-    public InstitutionController(InstitutionService institutionService, InstitutionValidator institutionValidator, InstitutionOpeningHoursService institutionOpeningHoursService, ConfirmationInstitutionService confirmationInstitutionService) {
+    public InstitutionController(InstitutionService institutionService,
+                                 InstitutionValidator institutionValidator,
+                                 ConfirmationInstitutionService confirmationInstitutionService,
+                                 AccountInstitutionService accountInstitutionService) {
         this.institutionService = institutionService;
         this.institutionValidator = institutionValidator;
-        this.institutionOpeningHoursService = institutionOpeningHoursService;
         this.confirmationInstitutionService = confirmationInstitutionService;
+        this.accountInstitutionService = accountInstitutionService;
     }
 
     @GetMapping
@@ -45,14 +51,6 @@ public class InstitutionController {
         List<InstitutionListData> institutionList = institutionService.getInstitutionList();
         log.info("Institution List is requested!");
         return new ResponseEntity<>(institutionList, HttpStatus.OK);
-    }
-
-    @GetMapping
-    public ResponseEntity<List<ConfirmationInstitutionListData>> getConfirmationList() {
-        List<ConfirmationInstitutionListData> confirmationList = confirmationInstitutionService.getConfirmationListData();
-        log.info("Admin list is requested!");
-        return new ResponseEntity<>(confirmationList, HttpStatus.OK);
-
     }
 
     @GetMapping("/institutionType")
@@ -75,20 +73,36 @@ public class InstitutionController {
 
     @PostMapping
     public ResponseEntity<Void> createInstitution(@RequestBody @Valid InstitutionCreationCommand institutionCreationCommand) {
-        try {
-            institutionOpeningHoursService.save(institutionCreationCommand);
-        } catch (NotFoundException e) {
-            log.info("Location not found");
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+
+        confirmationInstitutionService.save(institutionCreationCommand);
         log.info("Institution creation is requested!");
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
+
 
     @PostMapping("/import")
     public ResponseEntity<Void> importInstitutions(@RequestParam("file") MultipartFile excelDataFile) {
         institutionService.importInstitutions(excelDataFile);
         log.info("Institution import requested!");
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/evaluationList")
+    public ResponseEntity<List<InstitutionListData>> getConfirmationList() {
+        List<InstitutionListData> confirmationList = confirmationInstitutionService.getConfirmationListData();
+        log.info("Admin list is requested!");
+        return new ResponseEntity<>(confirmationList, HttpStatus.OK);
+    }
+
+    @GetMapping("/evaluate/{id}")
+    public ResponseEntity<Void> evaluateInstitution(@PathVariable Long id, @RequestParam("accepted") Boolean accepted) {
+        try {
+            accountInstitutionService.evaluateInstitution(id, accepted);
+        } catch (NotFoundException e) {
+            log.info("Location not found");
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        log.info("Institution evaluation is requested by id:\t" + id + "\n Decision:\t" + accepted);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

@@ -40,9 +40,10 @@ public class OpeningHoursServiceTest {
     @BeforeEach
     public void init() {
         InstitutionCreationCommand institutionCreationCommand = createInstitution();
+        Institution institution = new Institution(institutionCreationCommand);
         this.openingHoursList = createOpeningHoursList();
         try {
-            institutionService.saveInstitution(institutionCreationCommand);
+            institutionService.saveInstitution(institution);
         } catch (NotFoundException e) {
             e.printStackTrace();
         }

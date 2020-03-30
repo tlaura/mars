@@ -34,7 +34,8 @@ public class InstitutionServiceTest {
     @BeforeEach
     public void init() throws NotFoundException {
         institutionCreationCommand = getOneInstitutionCommand();
-        institutionService.saveInstitution(institutionCreationCommand);
+        Institution institution = new Institution(institutionCreationCommand);
+        institutionService.saveInstitution(institution);
 
     }
 

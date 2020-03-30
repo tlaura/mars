@@ -39,4 +39,8 @@ public class OpeningHoursService {
     public List<OpeningHours> findAll() {
         return openingHoursRepository.findAll();
     }
+
+    public void removeOpeningHours(OpeningHours openingHours) {
+        openingHoursRepository.delete(openingHours);
+    }
 }
