@@ -31,13 +31,13 @@ public class JwtTokenProvider implements Serializable {
                 .compact();
     }
 
-    public Long getUserIdFromJWT(String token) {
+    public String getEmailFromJwt(String token) {
         Claims claims = Jwts.parser()
                 .setSigningKey(secret)
                 .parseClaimsJws(token)
                 .getBody();
 
-        return Long.parseLong(claims.getSubject());
+        return claims.getSubject();
     }
 
     public boolean validateToken(String authToken) {
