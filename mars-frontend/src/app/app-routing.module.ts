@@ -21,6 +21,7 @@ import {TermsComponent} from "./components/terms/terms.component";
 import {PasswordChangeComponent} from "./components/account-components/new-password-components/password-change/password-change.component";
 import {PasswordChangeSuccessComponent} from "./components/account-components/new-password-components/password-change-success/password-change-success.component";
 import {EvaluateListComponent} from "./components/institution-components/evaluate-list/evaluate-list.component";
+import {AuthGuard} from "./guards/auth/auth.guard";
 
 
 const routes: Routes = [
@@ -41,7 +42,7 @@ const routes: Routes = [
   {path: "registration-complete", component: RegistrationCompleteComponent},
   {path: "institution-import-complete", component: InstitutionImportCompleteComponent},
   {path: "register-success/:token", component: RegisterSuccessComponent},
-  {path: "my-profile", component: MyProfileComponent},
+  {path: "my-profile", component: MyProfileComponent, canActivate: [AuthGuard]},
   {path: "", component: HomeComponent},
   {path: "terms-and-conditions", component: TermsComponent},
   {path: "password-change", component: PasswordChangeComponent},
