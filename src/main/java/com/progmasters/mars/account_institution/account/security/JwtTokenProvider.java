@@ -8,13 +8,13 @@ import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashMap;
 
 @Slf4j
 @Component
 public class JwtTokenProvider implements Serializable {
 
-    public static final long JWT_TOKEN_VALIDITY = 5 * 60 * 1000;
-//    private static final long serialVersionUID = -2550185165626007488L;
+    public static final long JWT_TOKEN_VALIDITY = 30 * 60 * 1000;
 
     @Value("${jwt.secret}")
     private String secret;
@@ -25,7 +25,11 @@ public class JwtTokenProvider implements Serializable {
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + JWT_TOKEN_VALIDITY);
 
+        HashMap<String, Object> claims = new HashMap<String, Object>();
+        claims.put("role", userPrincipal.getRole());
+
         return Jwts.builder()
+                .setClaims(claims)
                 .setSubject(userPrincipal.getEmail())
                 .setIssuedAt(new Date())
                 .setExpiration(expiryDate)
