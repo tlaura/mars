@@ -44,6 +44,7 @@ import {PasswordChangeComponent} from './components/account-components/new-passw
 import {PasswordChangeSuccessComponent} from './components/account-components/new-password-components/password-change-success/password-change-success.component';
 import {JwtInterceptor} from "./utils/auth/jwt.interceptor";
 import {ErrorInterceptor} from "./utils/auth/error.interceptor";
+import {JwtHelperService, JwtModule} from "@auth0/angular-jwt";
 
 export function getAuthServiceConfigs() {
   let config = new SocialServiceConfig()
@@ -51,6 +52,10 @@ export function getAuthServiceConfigs() {
   // .addGoogle("Your-Google-Client-Id")
   //  .addLinkedIn("Your-LinkedIn-Client-Id");
   return config;
+}
+
+export function getToken(): string {
+  return localStorage.getItem('token');
 }
 
 @NgModule({
@@ -101,7 +106,12 @@ export function getAuthServiceConfigs() {
       libraries: ["places", "geometry"]
     }),
     AgmSnazzyInfoWindowModule,
-    NgxSocialButtonModule
+    NgxSocialButtonModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: getToken
+      }
+    })
   ],
   providers: [
     GoogleMapsAPIWrapper,
@@ -113,9 +123,12 @@ export function getAuthServiceConfigs() {
     {
       provide: SocialServiceConfig,
       useFactory: getAuthServiceConfigs
-    }
+    },
+    JwtHelperService
   ],
   bootstrap: [AppComponent]
 })
+
+
 export class AppModule {
 }

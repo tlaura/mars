@@ -17,7 +17,8 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit() {
     this.isUserLoggedIn = localStorage.getItem('currentUser') != null;
-    this.profileName = this.authenticationService.currentUserValue.name;
+    this.profileName = this.authenticationService.currentUserValue?.name;
+    this.isAdmin = this.authenticationService.currentUserValue?.role == 'ADMIN';
   }
 
   logout() {
