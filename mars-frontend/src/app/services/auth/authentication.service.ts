@@ -19,6 +19,13 @@ export class AuthenticationService {
   constructor(private http: HttpClient, public jwtHelper: JwtHelperService) {
     this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('token')));
     this.currentUser = this.currentUserSubject.asObservable();
+    this.currentUser.subscribe(
+      user => {
+        if (this.jwtHelper.isTokenExpired(user.token)) {
+          this.logout();
+        }
+      }
+    )
   }
 
   public get currentUserValue(): User {

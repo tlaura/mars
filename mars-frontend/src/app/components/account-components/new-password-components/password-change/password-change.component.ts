@@ -23,7 +23,6 @@ export class PasswordChangeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loggedInUser = this.authenticationService.currentUserValue.name;
     this.passwordChangeForm = this.formBuilder.group({
       oldPassword: ['', [Validators.required, Validators.pattern(validatorBounds.passwordRegex)]],
       password: ['', [Validators.required, Validators.pattern(validatorBounds.passwordRegex)]],

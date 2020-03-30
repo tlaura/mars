@@ -15,13 +15,15 @@ export class NavbarComponent implements OnInit {
 
   constructor(public authenticationService: AuthenticationService, private router: Router) {
     this.authenticationService.currentUser.subscribe(
-      () => this.isUserLoggedIn = authenticationService.isAuthenticated()
+      () => {
+        this.isUserLoggedIn = authenticationService.isAuthenticated()
+      }
     );
     this.authenticationService.currentUser.subscribe(
       token => {
         if (token) {
           const tokenPayload = decode(token);
-          this.profileName = tokenPayload?.name;
+          this.profileName = tokenPayload?.sub;
         }
       }
     );

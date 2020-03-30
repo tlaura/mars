@@ -47,7 +47,7 @@ export class MyProfileComponent implements OnInit {
     }
     const tokenPayload = decode(this.authenticationService.currentUserValue.token);
     this.loggedInUser = tokenPayload.sub;
-    debugger;
+
     this.providerService.fetchProviderAccountDetails(this.loggedInUser).subscribe(
       (providerDetails: ProviderUserProfileDetailsModel) => {
         this.providerAccount = providerDetails;
