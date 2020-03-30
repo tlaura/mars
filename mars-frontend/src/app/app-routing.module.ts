@@ -22,6 +22,7 @@ import {PasswordChangeComponent} from "./components/account-components/new-passw
 import {PasswordChangeSuccessComponent} from "./components/account-components/new-password-components/password-change-success/password-change-success.component";
 import {EvaluateListComponent} from "./components/institution-components/evaluate-list/evaluate-list.component";
 import {AuthGuard} from "./guards/auth/auth.guard";
+import {RoleGuard} from "./guards/auth/role.guard";
 
 
 const routes: Routes = [
@@ -30,7 +31,14 @@ const routes: Routes = [
   {path: "provider-details/:id", component: ProviderDetailsComponent},
   {path: "institution-list/:filterType/:filterResult", component: InstitutionListComponent},
   {path: "institution-form", component: InstitutionFormComponent},
-  {path: "institution-import", component: InstitutionImportComponent},
+  {
+    path: "institution-import",
+    component: InstitutionImportComponent,
+    canActivate: [RoleGuard],
+    data: {
+      expectedRole: 'ADMIN'
+    }
+  },
   {path: "institution-details/:id", component: InstitutionDetailsComponent},
   {path: "user-form", component: UserFormComponent},
   {path: "login", component: LoginFormComponent},
@@ -42,7 +50,11 @@ const routes: Routes = [
   {path: "registration-complete", component: RegistrationCompleteComponent},
   {path: "institution-import-complete", component: InstitutionImportCompleteComponent},
   {path: "register-success/:token", component: RegisterSuccessComponent},
-  {path: "my-profile", component: MyProfileComponent, canActivate: [AuthGuard]},
+  {
+    path: "my-profile",
+    component: MyProfileComponent,
+    canActivate: [AuthGuard]
+  },
   {path: "", component: HomeComponent},
   {path: "terms-and-conditions", component: TermsComponent},
   {path: "password-change", component: PasswordChangeComponent},
