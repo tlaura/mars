@@ -3,9 +3,9 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {validatorBounds} from "../../../../../environments/validatorBounds";
 import {matchingPasswords} from "../../../../utils/password.validator";
 import {Router} from "@angular/router";
-import {LoginService} from "../../../../services/login.service";
 import {AccountService} from "../../../../services/account.service";
 import {PasswordChangeDetailsModel} from "../../../../models/passwordChangeDetails.model";
+import {AuthenticationService} from "../../../../services/auth/authentication.service";
 
 @Component({
   selector: 'app-password-change',
@@ -18,12 +18,12 @@ export class PasswordChangeComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
               private router: Router,
-              private loginService: LoginService,
+              private authenticationService: AuthenticationService,
               private accountService: AccountService) {
   }
 
   ngOnInit(): void {
-    this.loggedInUser = this.loginService.getCurrentUser()['name'];
+    this.loggedInUser = this.authenticationService.currentUserValue.name;
     this.passwordChangeForm = this.formBuilder.group({
       oldPassword: ['', [Validators.required, Validators.pattern(validatorBounds.passwordRegex)]],
       password: ['', [Validators.required, Validators.pattern(validatorBounds.passwordRegex)]],

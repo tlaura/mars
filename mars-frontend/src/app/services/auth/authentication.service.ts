@@ -25,7 +25,10 @@ export class AuthenticationService {
   }
 
   login(username: string, password: string) {
-    return this.http.post<any>(BASE_URL + '/login', {username, password})
+    const data = username && password ? {
+      authorization: 'Basic ' + btoa(username + ':' + password),
+    } : {};
+    return this.http.post<any>(BASE_URL + '/login', data)
       .pipe(map(user => {
         // store user details and jwt token in local storage to keep user logged in between page refreshes
         localStorage.setItem('currentUser', JSON.stringify(user));
