@@ -29,8 +29,11 @@ public class UserController {
     private JwtTokenProvider jwtTokenProvider;
 
     @Autowired
-    public UserController(AccountService accountService) {
+    public UserController(AccountService accountService, AuthenticationManager authenticationManager, JwtTokenProvider jwtTokenProvider) {
         this.accountService = accountService;
+        this.authenticationManager = authenticationManager;
+        this.jwtTokenProvider = jwtTokenProvider;
+
     }
 
     @GetMapping("/login")
@@ -51,6 +54,7 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<JwtAuthenticationResponse> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
+        log.info("Login requested");
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         loginRequest.getEmail(),
