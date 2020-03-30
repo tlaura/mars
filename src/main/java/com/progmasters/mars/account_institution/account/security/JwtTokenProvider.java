@@ -4,11 +4,13 @@ import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
 import java.util.Date;
 
 @Slf4j
+@Component
 public class JwtTokenProvider implements Serializable {
 
     public static final long JWT_TOKEN_VALIDITY = 5 * 60 * 60;
