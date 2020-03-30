@@ -7,6 +7,7 @@ import {InstitutionTypeModel} from "../../../models/InstitutionType.model";
 import {InstitutionService} from "../../../services/institution.service";
 import {Router} from "@angular/router";
 import {AuthenticationService} from "../../../services/auth/authentication.service";
+import decode from 'jwt-decode';
 
 @Component({
   selector: 'app-my-profile',
@@ -41,7 +42,12 @@ export class MyProfileComponent implements OnInit {
   };
 
   ngOnInit(): void {
-    this.loggedInUser = this.authenticationService.currentUserValue.name;
+    if (!this.authenticationService.currentUserValue.token) {
+      this.router.navigate(['login']);
+    }
+    const tokenPayload = decode(this.authenticationService.currentUserValue.token);
+    this.loggedInUser = tokenPayload.sub;
+    debugger;
     this.providerService.fetchProviderAccountDetails(this.loggedInUser).subscribe(
       (providerDetails: ProviderUserProfileDetailsModel) => {
         this.providerAccount = providerDetails;
