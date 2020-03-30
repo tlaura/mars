@@ -17,7 +17,7 @@ export class AuthenticationService {
   private currentUserSubject: BehaviorSubject<User>;
 
   constructor(private http: HttpClient, public jwtHelper: JwtHelperService) {
-    this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
+    this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('token')));
     this.currentUser = this.currentUserSubject.asObservable();
   }
 
@@ -27,27 +27,23 @@ export class AuthenticationService {
 
   public isAuthenticated(): boolean {
     const token = localStorage.getItem('token');
-    // Check whether the token is expired and return
-    // true or false
     return !this.jwtHelper.isTokenExpired(token);
   }
 
-  login(username: string, password: string) {
-    const data = username && password ? {
-      authorization: 'Basic ' + btoa(username + ':' + password),
+  login(email: string, password: string) {
+    const data = email && password ? {
+      authorization: 'Basic ' + btoa(email + ':' + password),
     } : {};
     return this.http.post<any>(BASE_URL + '/login', data)
-      .pipe(map(user => {
-        // store user details and jwt token in local storage to keep user logged in between page refreshes
-        localStorage.setItem('currentUser', JSON.stringify(user));
-        this.currentUserSubject.next(user);
-        return user;
+      .pipe(map(token => {
+        localStorage.setItem('token', JSON.stringify(token));
+        this.currentUserSubject.next(token);
+        return token;
       }));
   }
 
   logout() {
-    // remove user from local storage to log user out
-    localStorage.removeItem('currentUser');
+    localStorage.removeItem('token');
     this.currentUserSubject.next(null);
   }
 }

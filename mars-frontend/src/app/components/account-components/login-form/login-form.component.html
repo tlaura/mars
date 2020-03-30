@@ -4,8 +4,8 @@
     <div class="white-block-on-tomato-div p-4  w-100 text-left">
       <form [formGroup]="loginForm">
         <div class="form-group">
-          <label for="userName">Email cím:</label>
-          <input class="form-control rounded-pill" formControlName="userName" id="userName" placeholder="Email"
+          <label for="email">Email cím:</label>
+          <input class="form-control rounded-pill" formControlName="email" id="email" placeholder="Email"
                  type="email">
           <small *ngIf="loginForm.get('userName').invalid && loginForm.get('userName').touched"
                  class="text-danger col-sm-12 col-md-12">

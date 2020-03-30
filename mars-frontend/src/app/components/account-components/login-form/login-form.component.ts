@@ -35,7 +35,7 @@ export class LoginFormComponent implements OnInit {
 
   ngOnInit() {
     this.loginForm = new FormGroup({
-      'userName': new FormControl('', [Validators.required, Validators.pattern(validatorBounds.emailRegex)]),
+      'email': new FormControl('', [Validators.required, Validators.pattern(validatorBounds.emailRegex)]),
       'password': new FormControl('', Validators.required)
     });
 
@@ -55,7 +55,7 @@ export class LoginFormComponent implements OnInit {
 
     this.loading = true;
 
-    this.authenticationService.login(this.controls.userName.value, this.controls.password.value)
+    this.authenticationService.login(this.controls.email.value, this.controls.password.value)
       .pipe(first())
       .subscribe(
         data => {

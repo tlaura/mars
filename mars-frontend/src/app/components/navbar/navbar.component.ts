@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {AuthenticationService} from "../../services/auth/authentication.service";
+import decode from 'jwt-decode';
 
 @Component({
   selector: 'app-navbar',
@@ -14,14 +15,24 @@ export class NavbarComponent implements OnInit {
 
   constructor(public authenticationService: AuthenticationService, private router: Router) {
     this.authenticationService.currentUser.subscribe(
-      user => this.isUserLoggedIn = user != null
+      () => this.isUserLoggedIn = authenticationService.isAuthenticated()
     );
     this.authenticationService.currentUser.subscribe(
-      user => this.profileName = user?.name
+      token => {
+        if (token) {
+          const tokenPayload = decode(token);
+          this.profileName = tokenPayload?.name;
+        }
+      }
     );
     this.authenticationService.currentUser.subscribe(
-      user => this.isAdmin = user?.role == 'ADMIN'
-    )
+      token => {
+        if (token) {
+          const tokenPayload = decode(token);
+          this.isAdmin = tokenPayload?.role == 'ADMIN';
+        }
+      }
+    );
   }
 
   ngOnInit() {
