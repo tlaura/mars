@@ -31,9 +31,10 @@ export class AuthenticationService {
   }
 
   login(email: string, password: string) {
-    const data = email && password ? {
-      authorization: 'Basic ' + btoa(email + ':' + password),
-    } : {};
+    /*    const data = email && password ? {
+          authorization: 'Basic ' + btoa(email + ':' + password),
+        } : {};*/
+    const data = {email: email, password: password};
     return this.http.post<any>(BASE_URL + '/login', data)
       .pipe(map(token => {
         localStorage.setItem('token', JSON.stringify(token));
