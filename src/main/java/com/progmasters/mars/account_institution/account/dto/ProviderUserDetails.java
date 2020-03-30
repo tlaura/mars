@@ -4,6 +4,8 @@ import com.progmasters.mars.account_institution.account.domain.ProviderAccount;
 import com.progmasters.mars.account_institution.account.domain.ProviderType;
 import com.progmasters.mars.account_institution.connector.AccountInstitutionConnector;
 import com.progmasters.mars.account_institution.institution.dto.InstitutionListData;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -12,6 +14,8 @@ import java.util.stream.Collectors;
 
 @Getter
 @NoArgsConstructor
+@Builder
+@AllArgsConstructor
 public class ProviderUserDetails {
 
     private Long id;
@@ -52,30 +56,4 @@ public class ProviderUserDetails {
         this.latitude = providerAccount.getLatitude();
     }
 
-    public List<InstitutionListData> getInstitutionList() {
-        return institutionList;
-    }
-
-    public void setInstitutionList(List<InstitutionListData> institutionList) {
-        this.institutionList = institutionList;
-    }
-
-    public ProviderUserDetails(String email,
-                               String name,
-                               String providerServiceName,
-                               String password,
-                               String phone,
-                               Integer zipcode,
-                               String city,
-                               String address,
-                               Boolean newsletter) {
-        this.email = email;
-        this.name = name;
-        this.providerServiceName = providerServiceName;
-        this.phone = phone;
-        this.zipcode = zipcode;
-        this.city = city;
-        this.address = address;
-        this.newsletter = newsletter;
-    }
 }

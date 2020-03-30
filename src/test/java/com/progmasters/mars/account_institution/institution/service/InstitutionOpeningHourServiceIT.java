@@ -1,7 +1,6 @@
 package com.progmasters.mars.account_institution.institution.service;
 
 import com.google.maps.errors.NotFoundException;
-import com.progmasters.mars.account_institution.institution.InstitutionBuilder;
 import com.progmasters.mars.account_institution.institution.domain.Institution;
 import com.progmasters.mars.account_institution.institution.dto.InstitutionCreationCommand;
 import com.progmasters.mars.account_institution.institution.openinghours.dto.OpeningHoursCreationCommand;
@@ -49,16 +48,17 @@ public class InstitutionOpeningHourServiceIT {
         OpeningHoursCreationCommand openingHour = new OpeningHoursCreationCommand("Hétfő", LocalTime.now(), LocalTime.now());
         openingHours.add(openingHour);
         String description = "Rövid leírás ezúttal is elmarad érdeklődés és idő hiányából adódóan!";
-        return new InstitutionBuilder()
-                .setName(name)
-                .setEmail(email)
-                .setZipcode(zipcode)
-                .setCity(city)
-                .setAddress(address)
-                .setPhone(phone)
-                .setWebsite(website)
-                .setOpeningHoursCreationCommands(openingHours)
-                .setDescription(description)
-                .buildInstitutionCreationCommand();
+
+        return InstitutionCreationCommand.builder()
+                .name(name)
+                .email(email)
+                .zipcode(zipcode)
+                .city(city)
+                .address(address)
+                .phone(phone)
+                .website(website)
+                .openingHours(openingHours)
+                .description(description)
+                .build();
     }
 }

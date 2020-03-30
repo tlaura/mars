@@ -1,9 +1,7 @@
 package com.progmasters.mars.account_institution.institution.dto;
 
 import com.progmasters.mars.account_institution.institution.openinghours.dto.OpeningHoursCreationCommand;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.Lob;
@@ -16,6 +14,8 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+@Builder
+@AllArgsConstructor
 public class InstitutionCreationCommand {
 
     private Long id;

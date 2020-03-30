@@ -1,6 +1,5 @@
 package com.progmasters.mars.account_institution.connector;
 
-import com.progmasters.mars.account_institution.account.ProviderAccountBuilder;
 import com.progmasters.mars.account_institution.account.domain.ProviderAccount;
 import com.progmasters.mars.account_institution.account.domain.ProviderType;
 import com.progmasters.mars.account_institution.account.service.AccountService;
@@ -80,20 +79,20 @@ public class AccountInstitutionServiceTest {
         types.add(ProviderType.DIAGNOSTIC_CENTER);
         types.add(ProviderType.THERAPY);
 
-        return new ProviderAccountBuilder()
-                .setProviderServiceName("PescskeTestService")
-                .setName("Pecske")
-                .setPassword("ValarMorghulis7")
-                .setEmail("pecske92@gmail.com")
-                .setProviderTypes(types)
-                .setPhone("+36205851886")
-                .setZipcode(1089)
-                .setCity("Budapest")
-                .setAddress("Orczy út 43")
-                .setAgeGroupMin(10)
-                .setAgeGroupMax(22)
-                .setNewsletter(true)
-                .buildProviderAccount();
+        return ProviderAccount.builder()
+                .providerServiceName("PecskeTestService")
+                .name("Pecske")
+                .password("ValarMorghulis7")
+                .email("pecske92@gmail.com")
+                .types(types)
+                .phone("+36205851886")
+                .zipcode(1089)
+                .city("Budapest")
+                .address("Orczy út 43")
+                .ageGroupMin(10)
+                .ageGroupMax(22)
+                .newsletter(true)
+                .build();
     }
 
     private InstitutionListData createOneInstitutionListData() {
@@ -109,6 +108,18 @@ public class AccountInstitutionServiceTest {
         String website = "none.com";
         String phone = "+3620585186";
 
-        return new InstitutionListData(id, name, descritpion, email, website, phone, zipcode, city, address, longitude, latitude);
+        return InstitutionListData.builder()
+                .id(id)
+                .name(name)
+                .zipcode(zipcode)
+                .city(city)
+                .address(address)
+                .email(email)
+                .description(descritpion)
+                .longitude(longitude)
+                .latitude(latitude)
+                .website(website)
+                .phone(phone)
+                .build();
     }
 }

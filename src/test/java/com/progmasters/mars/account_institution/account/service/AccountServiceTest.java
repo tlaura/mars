@@ -1,6 +1,5 @@
 package com.progmasters.mars.account_institution.account.service;
 
-import com.progmasters.mars.account_institution.account.ProviderAccountBuilder;
 import com.progmasters.mars.account_institution.account.domain.ProviderAccount;
 import com.progmasters.mars.account_institution.account.domain.ProviderType;
 import com.progmasters.mars.account_institution.account.dto.ProviderAccountCreationCommand;
@@ -99,16 +98,9 @@ public class AccountServiceTest {
         assertTrue(providerAccount.getNewsletter());
     }
 
-    private ProviderAccount createOneProviderAccount() {
-        return new ProviderAccountBuilder()
-                .setAddress("")
-                .buildProviderAccount();
-    }
-
     private ProviderUserDetails creatOneUserDetailsEdit() {
         String serviceName = "PecskeTestService2";
         String name = "Pecske2";
-        String pw = "ValarMorghulis7";
         String email = "pecske92@gmail.com";
         String phone = "+36205851882";
         Integer zipcode = 1056;
@@ -116,16 +108,16 @@ public class AccountServiceTest {
         String address = "Irányi utca 3";
         Boolean newsletter = true;
 
-        return new ProviderAccountBuilder().setProviderServiceName(serviceName)
-                .setName(name)
-                .setPassword(pw)
-                .setEmail(email)
-                .setPhone(phone)
-                .setZipcode(zipcode)
-                .setCity(city)
-                .setAddress(address)
-                .setNewsletter(newsletter)
-                .buildDetailsEdit();
+        return ProviderUserDetails.builder()
+                .providerServiceName(serviceName)
+                .name(name)
+                .email(email)
+                .phone(phone)
+                .zipcode(zipcode)
+                .city(city)
+                .address(address)
+                .newsletter(newsletter)
+                .build();
     }
 
     private ProviderAccountCreationCommand createOneAccountCommand() {
@@ -145,20 +137,20 @@ public class AccountServiceTest {
         List<InstitutionCreationCommand> institutions = new ArrayList<>();
         Boolean newsletter = false;
 
-        return new ProviderAccountBuilder()
-                .setProviderServiceName(serviceName)
-                .setName(name)
-                .setPassword(pw)
-                .setEmail(email)
-                .setTypes(types)
-                .setPhone(phone)
-                .setZipcode(zipcode)
-                .setCity(city)
-                .setAddress(address)
-                .setAgeGroupMax(ageGroupMax)
-                .setAgeGroupMin(ageGroupMin)
-                .setInstitutions(institutions)
-                .setNewsletter(newsletter)
-                .buildCreationCommand();
+        return ProviderAccountCreationCommand.builder()
+                .providerServiceName(serviceName)
+                .name(name)
+                .password(pw)
+                .email(email)
+                .types(types)
+                .phone(phone)
+                .zipcode(zipcode)
+                .city(city)
+                .address(address)
+                .ageGroupMin(ageGroupMin)
+                .ageGroupMax(ageGroupMax)
+                .institutions(institutions)
+                .newsletter(newsletter)
+                .build();
     }
 }
