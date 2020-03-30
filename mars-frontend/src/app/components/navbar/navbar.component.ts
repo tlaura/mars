@@ -8,17 +8,24 @@ import {AuthenticationService} from "../../services/auth/authentication.service"
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-  profileName: string;
+  profileName: string = '';
   isAdmin: boolean = false;
   isUserLoggedIn: boolean = false;
 
   constructor(public authenticationService: AuthenticationService, private router: Router) {
+    this.authenticationService.currentUser.subscribe(
+      user => this.isUserLoggedIn = user != null
+    );
+    this.authenticationService.currentUser.subscribe(
+      user => this.profileName = user?.name
+    );
+    this.authenticationService.currentUser.subscribe(
+      user => this.isAdmin = user?.role == 'ADMIN'
+    )
   }
 
   ngOnInit() {
-    this.isUserLoggedIn = localStorage.getItem('currentUser') != null;
-    this.profileName = this.authenticationService.currentUserValue?.name;
-    this.isAdmin = this.authenticationService.currentUserValue?.role == 'ADMIN';
+
   }
 
   logout() {
