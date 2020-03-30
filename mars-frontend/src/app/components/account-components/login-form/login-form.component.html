@@ -7,7 +7,7 @@
           <label for="email">Email cím:</label>
           <input class="form-control rounded-pill" formControlName="email" id="email" placeholder="Email"
                  type="email">
-          <small *ngIf="loginForm.get('userName').invalid && loginForm.get('userName').touched"
+          <small *ngIf="loginForm.get('email').invalid && loginForm.get('email').touched"
                  class="text-danger col-sm-12 col-md-12">
             Helytelen email cím!
           </small>
