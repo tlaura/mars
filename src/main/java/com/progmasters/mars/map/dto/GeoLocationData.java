@@ -1,16 +1,16 @@
-package com.progmasters.mars.account_institution.institution.location;
+package com.progmasters.mars.map.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class GeoLocation {
+public class GeoLocationData {
 
     private Double longitude;
     private Double latitude;
 
-    public GeoLocation(Double longitude, Double latitude) {
+    public GeoLocationData(Double longitude, Double latitude) {
         this.longitude = longitude;
         this.latitude = latitude;
     }

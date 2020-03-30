@@ -2,6 +2,7 @@ package com.progmasters.mars.account_institution.institution.controller;
 
 import com.google.maps.errors.NotFoundException;
 import com.google.maps.model.DistanceMatrix;
+import com.google.maps.model.TravelMode;
 import com.progmasters.mars.account_institution.account.domain.ProviderType;
 import com.progmasters.mars.account_institution.connector.AccountInstitutionService;
 import com.progmasters.mars.account_institution.institution.InstitutionValidator;
@@ -9,9 +10,9 @@ import com.progmasters.mars.account_institution.institution.dto.InstitutionCreat
 import com.progmasters.mars.account_institution.institution.dto.InstitutionDetailsData;
 import com.progmasters.mars.account_institution.institution.dto.InstitutionListData;
 import com.progmasters.mars.account_institution.institution.dto.InstitutionTypeData;
-import com.progmasters.mars.account_institution.institution.location.GeocodeService;
 import com.progmasters.mars.account_institution.institution.service.ConfirmationInstitutionService;
 import com.progmasters.mars.account_institution.institution.service.InstitutionService;
+import com.progmasters.mars.map.MapService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,7 +37,7 @@ public class InstitutionController {
     private final AccountInstitutionService accountInstitutionService;
 
     @Autowired
-    private GeocodeService geocodeService;
+    private MapService mapService;
 
     @Autowired
     public InstitutionController(InstitutionService institutionService,
@@ -113,7 +114,7 @@ public class InstitutionController {
 
     @GetMapping("/distance")
     public ResponseEntity<DistanceMatrix> getDistance(@RequestParam("origin") String origin, @RequestParam("destination") String destination) {
-        DistanceMatrix matrix = geocodeService.calculateDistance(origin, destination);
+        DistanceMatrix matrix = mapService.calculateDistanceByGivenTravelMode(origin, destination, TravelMode.TRANSIT);
 
         return new ResponseEntity<>(matrix, HttpStatus.OK);
     }

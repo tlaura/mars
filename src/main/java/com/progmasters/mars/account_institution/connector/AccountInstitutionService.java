@@ -8,13 +8,13 @@ import com.progmasters.mars.account_institution.account.service.AccountService;
 import com.progmasters.mars.account_institution.institution.domain.ConfirmationInstitution;
 import com.progmasters.mars.account_institution.institution.domain.Institution;
 import com.progmasters.mars.account_institution.institution.dto.InstitutionCreationCommand;
-import com.progmasters.mars.account_institution.institution.location.GeoLocation;
-import com.progmasters.mars.account_institution.institution.location.GeocodeService;
 import com.progmasters.mars.account_institution.institution.openinghours.domain.OpeningHours;
 import com.progmasters.mars.account_institution.institution.openinghours.service.OpeningHoursService;
 import com.progmasters.mars.account_institution.institution.service.ConfirmationInstitutionService;
 import com.progmasters.mars.account_institution.institution.service.InstitutionService;
 import com.progmasters.mars.mail.EmailService;
+import com.progmasters.mars.map.MapService;
+import com.progmasters.mars.map.dto.GeoLocationData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,7 +31,7 @@ public class AccountInstitutionService {
     private final InstitutionService institutionService;
     private final EmailService emailService;
     private final ConfirmationInstitutionService confirmationInstitutionService;
-    private final GeocodeService geocodeService;
+    private final MapService mapService;
     private final AccountInstitutionConnectorRepository accountInstitutionConnectorRepository;
     private final OpeningHoursService openingHoursService;
 
@@ -40,13 +40,13 @@ public class AccountInstitutionService {
                                      InstitutionService institutionService,
                                      EmailService emailService,
                                      AccountInstitutionConnectorRepository accountInstitutionConnectorRepository,
-                                     GeocodeService geocodeService,
+                                     MapService mapService,
                                      ConfirmationInstitutionService confirmationInstitutionService, OpeningHoursService openingHoursService) {
         this.accountService = accountService;
         this.institutionService = institutionService;
         this.emailService = emailService;
         this.accountInstitutionConnectorRepository = accountInstitutionConnectorRepository;
-        this.geocodeService = geocodeService;
+        this.mapService = mapService;
         this.confirmationInstitutionService = confirmationInstitutionService;
         this.openingHoursService = openingHoursService;
     }
@@ -67,9 +67,9 @@ public class AccountInstitutionService {
     private void saveProviderLocation(ProviderAccountCreationCommand providerAccountCreationCommand, ProviderAccount savedAccount) throws NotFoundException {
         if (providerAccountCreationCommand.getZipcode() != null && providerAccountCreationCommand.getCity() != null && providerAccountCreationCommand.getAddress() != null) {
             String address = providerAccountCreationCommand.getZipcode() + " " + providerAccountCreationCommand.getCity() + " " + providerAccountCreationCommand.getAddress();
-            GeoLocation geoLocation = geocodeService.getGeoLocation(address);
-            savedAccount.setLongitude(geoLocation.getLongitude());
-            savedAccount.setLatitude(geoLocation.getLatitude());
+            GeoLocationData geoLocationData = mapService.getGeoLocation(address);
+            savedAccount.setLongitude(geoLocationData.getLongitude());
+            savedAccount.setLatitude(geoLocationData.getLatitude());
         }
     }
 
