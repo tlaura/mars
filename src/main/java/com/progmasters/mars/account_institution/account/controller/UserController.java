@@ -1,5 +1,6 @@
 package com.progmasters.mars.account_institution.account.controller;
 
+import com.progmasters.mars.account_institution.account.dto.NormalAccountCreationCommand;
 import com.progmasters.mars.account_institution.account.security.AuthenticatedUserDetails;
 import com.progmasters.mars.account_institution.account.service.AccountService;
 import lombok.extern.slf4j.Slf4j;
@@ -9,9 +10,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 
 @RestController
@@ -40,5 +41,12 @@ public class UserController {
             responseEntity = new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
         return responseEntity;
+    }
+
+    @PostMapping()
+    public ResponseEntity<NormalAccountCreationCommand> createNormalAccount(@RequestBody @Valid NormalAccountCreationCommand normalAccountCreationCommand) {
+        //TODO: save account
+        log.info("Normal Account creation requested!");
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 }

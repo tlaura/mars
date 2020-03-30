@@ -52,7 +52,7 @@ export class AccountService {
   }
 
   saveNormalAccount = (formData: NormalAccountRegisterModel): Observable<any> => {
-    return this.http.post(this.BASE_URL + '/users', formData);
+    return this.http.post(this.BASE_URL + '/user', formData);
   };
 
 }
