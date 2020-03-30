@@ -8,7 +8,10 @@ import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
 import java.util.Date;
+
 import java.util.HashMap;
+import java.util.Map;
+
 
 @Slf4j
 @Component
@@ -25,7 +28,7 @@ public class JwtTokenProvider implements Serializable {
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + JWT_TOKEN_VALIDITY);
 
-        HashMap<String, Object> claims = new HashMap<String, Object>();
+        Map<String, Object> claims = new HashMap<>();
         claims.put("role", userPrincipal.getRole());
 
         return Jwts.builder()
