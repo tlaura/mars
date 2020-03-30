@@ -72,11 +72,9 @@ public class SeleniumIT {
     //  @Test
     public void testFillAddInstitutionForm() {
         driver.get("http://localhost:4200/institution-form");
-
         driver.findElement(By.id("name")).sendKeys("PecskeSelenTestIntézmény");
         driver.findElement(By.id("email")).sendKeys("pecske92@gmail.com");
         driver.findElement(By.id("phone")).sendKeys("+36205851886");
-
     }
 
     @AfterEach
