@@ -1,22 +1,18 @@
-<table class="table-striped">
-  <thead>
-  <tr>
-    <th>Intézmény név</th>
-    <th colspan="3">Elérhetőségek</th>
-    <th>Cím</th>
-    <th>Leírás</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr *ngFor="let institution of evaluationList">
-    <td>{{institution.name}}</td>
-    <td>{{institution.website}}</td>
-    <td>{{institution.phone}}</td>
-    <td>{{institution.email}}</td>
-    <td>{{institution.zipcode}}-{{institution.city}}-{{institution.address}}</td>
-    <td>{{institution.description}}</td>
-    <button (click)="accept(institution.id)" class="btn btn-success rounded-circle">Elfogad</button>
-    <button (click)="reject(institution.id)" class="btn btn-danger rounded-circle">Elutasít</button>
-  </tr>
-  </tbody>
-</table>
+<div class="row mx-0 p-sm-1 p-md-1 p-lg-4">
+  <div class="white-block-on-tomato-div col-md-8 offset-md-2 p-sm-0">
+    <div class="col-sm-12 py-sm-1 py-md-1 py-lg-3">
+      <div *ngFor="let institution of evaluationList">
+        <div>{{institution.name}}</div>
+        <div>{{institution.website}}</div>
+        <div>{{institution.phone}}</div>
+        <div>{{institution.email}}</div>
+        <div>{{institution.zipcode}}</div>
+        <div>{{institution.city}}</div>
+        <div>{{institution.address}}</div>
+        <div>{{institution.description}}</div>
+        <button (click)="accept(institution.id)" class="btn btn-success rounded-circle">Elfogad</button>
+        <button (click)="reject(institution.id)" class="btn btn-danger rounded-circle">Elutasít</button>
+      </div>
+    </div>
+  </div>
+</div>
