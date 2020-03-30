@@ -45,6 +45,9 @@ import {PasswordChangeSuccessComponent} from './components/account-components/ne
 import {JwtInterceptor} from "./utils/auth/jwt.interceptor";
 import {ErrorInterceptor} from "./utils/auth/error.interceptor";
 import {JwtHelperService, JwtModule} from "@auth0/angular-jwt";
+import {NormalUserComponent} from './components/account-components/registration-components/register/normal-user/normal-user.component';
+import {ProviderUserComponent} from './components/account-components/registration-components/register/provider-user/provider-user.component';
+import {UserAttributesComponent} from './components/form-elements-components/user-attributes/user-attributes.component';
 
 export function getAuthServiceConfigs() {
   let config = new SocialServiceConfig()
@@ -92,6 +95,9 @@ export function getToken(): string {
     TermsComponent,
     PasswordChangeComponent,
     PasswordChangeSuccessComponent,
+    NormalUserComponent,
+    ProviderUserComponent,
+    UserAttributesComponent,
   ],
   imports: [
     BrowserModule,

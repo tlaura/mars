@@ -7,6 +7,7 @@ import {environment} from "../../environments/environment";
 import {ProviderUserDetails} from "../models/providerUserDetails";
 import {AccountInstitutionListModel} from "../models/accountInstitutionList.model";
 import {PasswordChangeDetailsModel} from "../models/passwordChangeDetails.model";
+import {NormalAccountRegisterModel} from "../models/normalAccountRegisterModel";
 
 @Injectable({
   providedIn: 'root'
@@ -49,4 +50,9 @@ export class AccountService {
   updatePassword(passwordChangeDetails: PasswordChangeDetailsModel) {
     return this.http.patch(this.BASE_URL + '/providers/passwordchange', passwordChangeDetails);
   }
+
+  saveNormalAccount = (formData: NormalAccountRegisterModel): Observable<any> => {
+    return this.http.post(this.BASE_URL + '/users', formData);
+  };
+
 }
