@@ -3,10 +3,8 @@ package com.progmasters.mars.account_institution.institution.controller;
 import com.google.maps.errors.NotFoundException;
 import com.progmasters.mars.account_institution.account.domain.ProviderType;
 import com.progmasters.mars.account_institution.institution.InstitutionValidator;
-import com.progmasters.mars.account_institution.institution.dto.InstitutionCreationCommand;
-import com.progmasters.mars.account_institution.institution.dto.InstitutionDetailsData;
-import com.progmasters.mars.account_institution.institution.dto.InstitutionListData;
-import com.progmasters.mars.account_institution.institution.dto.InstitutionTypeData;
+import com.progmasters.mars.account_institution.institution.dto.*;
+import com.progmasters.mars.account_institution.institution.service.ConfirmationInstitutionService;
 import com.progmasters.mars.account_institution.institution.service.InstitutionOpeningHoursService;
 import com.progmasters.mars.account_institution.institution.service.InstitutionService;
 import lombok.extern.slf4j.Slf4j;
@@ -30,12 +28,14 @@ public class InstitutionController {
     private final InstitutionService institutionService;
     private InstitutionValidator institutionValidator;
     private final InstitutionOpeningHoursService institutionOpeningHoursService;
+    private final ConfirmationInstitutionService confirmationInstitutionService;
 
     @Autowired
-    public InstitutionController(InstitutionService institutionService, InstitutionValidator institutionValidator, InstitutionOpeningHoursService institutionOpeningHoursService) {
+    public InstitutionController(InstitutionService institutionService, InstitutionValidator institutionValidator, InstitutionOpeningHoursService institutionOpeningHoursService, ConfirmationInstitutionService confirmationInstitutionService) {
         this.institutionService = institutionService;
         this.institutionValidator = institutionValidator;
         this.institutionOpeningHoursService = institutionOpeningHoursService;
+        this.confirmationInstitutionService = confirmationInstitutionService;
     }
 
     @GetMapping
@@ -45,6 +45,14 @@ public class InstitutionController {
         List<InstitutionListData> institutionList = institutionService.getInstitutionList();
         log.info("Institution List is requested!");
         return new ResponseEntity<>(institutionList, HttpStatus.OK);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<ConfirmationInstitutionListData>> getConfirmationList() {
+        List<ConfirmationInstitutionListData> confirmationList = confirmationInstitutionService.getConfirmationListData();
+        log.info("Admin list is requested!");
+        return new ResponseEntity<>(confirmationList, HttpStatus.OK);
+
     }
 
     @GetMapping("/institutionType")

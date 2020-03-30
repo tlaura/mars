@@ -65,7 +65,7 @@ public class SeleniumIT {
 
         driver.findElement(By.id("termsAndConditions")).click();
 
-        driver.findElement(By.cssSelector("#common-end-fields-div > div.form-group.pl-sm-1.pl-md-3 > button")).click();
+     //   driver.findElement(By.cssSelector("#common-end-fields-div > div.form-group.pl-sm-1.pl-md-3 > button")).click();
     }
 
 
