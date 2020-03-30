@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {LoginService} from "../../../services/login.service";
-import {Router} from "@angular/router";
-import {HttpErrorResponse} from "@angular/common/http";
+import {ActivatedRoute, Router} from "@angular/router";
 import {validatorBounds} from "../../../../environments/validatorBounds";
+import {AuthenticationService} from "../../../services/auth/authentication.service";
+import {first} from "rxjs/operators";
 
 
 @Component({
@@ -15,43 +15,57 @@ export class LoginFormComponent implements OnInit {
   loginForm: FormGroup;
   showUnauthorizedMessage = false;
   showUnconfirmedMessage = false;
+  returnUrl: string;
+  loading = false;
+  submitted = false;
+  error = '';
+  isPasswordVisible: boolean = false;
 
-  constructor(private loginService: LoginService, private formBuilder: FormBuilder, private router: Router) {
+  constructor(private authenticationService: AuthenticationService, private route: ActivatedRoute, private formBuilder: FormBuilder, private router: Router) {
+    // redirect to home if already logged in
+    if (this.authenticationService.currentUserValue) {
+      this.router.navigate(['/']);
+    }
+  }
+
+  // convenience getter for easy access to form fields
+  get controls() {
+    return this.loginForm.controls;
   }
 
   ngOnInit() {
-    this.loginService.loggedIn$.subscribe((userLoggedIn) => {
-      if (userLoggedIn) {
-        this.router.navigate(['']);
-      }
-    });
     this.loginForm = new FormGroup({
-        'userName': new FormControl('', [Validators.required, Validators.pattern(validatorBounds.emailRegex)]),
-        'password': new FormControl('', Validators.required)
-      }
-    )
-  }
+      'email': new FormControl('', [Validators.required, Validators.pattern(validatorBounds.emailRegex)]),
+      'password': new FormControl('', Validators.required)
+    });
 
-  isPasswordVisible: boolean = false;
+    // get return url from route parameters or default to '/'
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '';
+  }
 
   login = () => {
     const loginData = {...this.loginForm.value};
 
-    this.loginService.login(loginData).subscribe(
-      response => {
-        localStorage.setItem('user', JSON.stringify(response));
-        this.router.navigate(['']);
-        this.loginService.loggedIn$.next(true);
-      },
-      error => {
-        console.warn(error);
-        if ((error as HttpErrorResponse).status === 403) {
-          this.showUnconfirmedMessage = true;
-        } else {
-          this.showUnauthorizedMessage = true;
-        }
-      }
-    )
+    this.submitted = true;
+
+    // stop here if form is invalid
+    if (this.loginForm.invalid) {
+      return;
+    }
+
+    this.loading = true;
+
+    this.authenticationService.login(this.controls.email.value, this.controls.password.value)
+      .pipe(first())
+      .subscribe(
+        data => {
+          this.router.navigate([this.returnUrl]);
+        },
+        error => {
+          this.error = error;
+          this.loading = false;
+        });
+
   };
 
   changePasswordVisibility() {

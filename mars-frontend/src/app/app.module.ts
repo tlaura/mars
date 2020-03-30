@@ -43,6 +43,9 @@ import {TermsComponent} from './components/terms/terms.component';
 import {PasswordChangeComponent} from './components/account-components/new-password-components/password-change/password-change.component';
 import {PasswordChangeSuccessComponent} from './components/account-components/new-password-components/password-change-success/password-change-success.component';
 import {EvaluateListComponent} from './components/institution-components/evaluate-list/evaluate-list.component';
+import {JwtInterceptor} from "./utils/auth/jwt.interceptor";
+import {ErrorInterceptor} from "./utils/auth/error.interceptor";
+import {JwtHelperService, JwtModule} from "@auth0/angular-jwt";
 
 export function getAuthServiceConfigs() {
   let config = new SocialServiceConfig()
@@ -50,6 +53,10 @@ export function getAuthServiceConfigs() {
   // .addGoogle("Your-Google-Client-Id")
   //  .addLinkedIn("Your-LinkedIn-Client-Id");
   return config;
+}
+
+export function getToken(): string {
+  return localStorage.getItem('token');
 }
 
 @NgModule({
@@ -101,19 +108,29 @@ export function getAuthServiceConfigs() {
       libraries: ["places", "geometry"]
     }),
     AgmSnazzyInfoWindowModule,
-    NgxSocialButtonModule
+    NgxSocialButtonModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: getToken
+      }
+    })
   ],
   providers: [
     GoogleMapsAPIWrapper,
     [
-      {provide: HTTP_INTERCEPTORS, useClass: HttpRequestInterceptor, multi: true}
+      {provide: HTTP_INTERCEPTORS, useClass: HttpRequestInterceptor, multi: true},
+      {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
+      {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}
     ],
     {
       provide: SocialServiceConfig,
       useFactory: getAuthServiceConfigs
-    }
+    },
+    JwtHelperService
   ],
   bootstrap: [AppComponent]
 })
+
+
 export class AppModule {
 }

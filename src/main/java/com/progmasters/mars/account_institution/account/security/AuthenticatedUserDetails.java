@@ -14,12 +14,12 @@ import java.util.stream.Collectors;
 public class AuthenticatedUserDetails {
 
     private String fullNameOfUser;
-    private String name; //Email
+    private String email; //Email
     private String role;
 
     public AuthenticatedUserDetails(ProviderAccount providerAccount) {
         this.fullNameOfUser = providerAccount.getName();
-        this.name = providerAccount.getEmail();
+        this.email = providerAccount.getEmail();
         this.role = providerAccount.getRole().name();
     }
 

@@ -1,12 +1,13 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ProviderUserProfileDetailsModel} from "../../../models/providerUserProfileDetails.model";
-import {LoginService} from "../../../services/login.service";
 import {AccountService} from "../../../services/account.service";
 import {FormControl, Validators} from "@angular/forms";
 import {validatorBounds} from "../../../../environments/validatorBounds";
 import {InstitutionTypeModel} from "../../../models/InstitutionType.model";
 import {InstitutionService} from "../../../services/institution.service";
 import {Router} from "@angular/router";
+import {AuthenticationService} from "../../../services/auth/authentication.service";
+import decode from 'jwt-decode';
 
 @Component({
   selector: 'app-my-profile',
@@ -30,7 +31,7 @@ export class MyProfileComponent implements OnInit {
 
   allTypes: Array<InstitutionTypeModel> = [];
 
-  constructor(private loginService: LoginService,
+  constructor(private authenticationService: AuthenticationService,
               public providerService: AccountService,
               private institutionService: InstitutionService,
               private router: Router) {
@@ -41,14 +42,18 @@ export class MyProfileComponent implements OnInit {
   };
 
   ngOnInit(): void {
-    this.loggedInUser = this.loginService.getCurrentUser()['name'];
+    if (!this.authenticationService.currentUserValue.token) {
+      this.router.navigate(['login']);
+    }
+    const tokenPayload = decode(this.authenticationService.currentUserValue.token);
+    this.loggedInUser = tokenPayload.sub;
+
     this.providerService.fetchProviderAccountDetails(this.loggedInUser).subscribe(
       (providerDetails: ProviderUserProfileDetailsModel) => {
         this.providerAccount = providerDetails;
         this.accountCopy = Object.assign({}, providerDetails);
       }, error => {
         console.warn(error)
-      //  TODO - write unauthorized validation
       }, () => {
         this.getAllProviderTypes();
       }

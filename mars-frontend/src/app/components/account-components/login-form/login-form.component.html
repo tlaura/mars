@@ -4,10 +4,10 @@
     <div class="white-block-on-tomato-div p-4  w-100 text-left">
       <form [formGroup]="loginForm">
         <div class="form-group">
-          <label for="userName">Email cím:</label>
-          <input class="form-control rounded-pill" formControlName="userName" id="userName" placeholder="Email"
+          <label for="email">Email cím:</label>
+          <input class="form-control rounded-pill" formControlName="email" id="email" placeholder="Email"
                  type="email">
-          <small *ngIf="loginForm.get('userName').invalid && loginForm.get('userName').touched"
+          <small *ngIf="loginForm.get('email').invalid && loginForm.get('email').touched"
                  class="text-danger col-sm-12 col-md-12">
             Helytelen email cím!
           </small>
@@ -48,10 +48,12 @@
           </label>
         </div>
 
-        <button (click)="login()" [disabled]="loginForm.invalid" class="submit btn btn-primary rounded-pill"
+        <button (click)="login()" [disabled]="loginForm.invalid || loading" class="submit btn btn-primary rounded-pill"
                 type="submit">
+          <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
           Bejelentkezés
         </button>
+        <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
       </form>
     </div>
   </div>

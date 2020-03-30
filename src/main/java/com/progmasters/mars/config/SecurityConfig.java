@@ -1,15 +1,22 @@
 package com.progmasters.mars.config;
 
 import com.progmasters.mars.account_institution.account.security.JPAUserDetailsService;
+import com.progmasters.mars.account_institution.account.security.JwtAuthenticationEntryPoint;
+import com.progmasters.mars.account_institution.account.security.JwtAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -18,17 +25,37 @@ import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(
+        securedEnabled = true, //method level security
+        jsr250Enabled = true, // roles allowed - import excel
+        prePostEnabled = true //methods that are available withoutauth
+)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Value("${cors-policies}")
     private String[] corsPolicies;
     private JPAUserDetailsService jpaUserDetailsService;
     private PasswordEncoder passwordEncoder;
+    private JwtAuthenticationEntryPoint unauthorizedHandler;
 
     @Autowired
-    public SecurityConfig(JPAUserDetailsService jpaUserDetailsService, PasswordEncoder passwordEncoder) {
+    public SecurityConfig(JPAUserDetailsService jpaUserDetailsService,
+                          PasswordEncoder passwordEncoder,
+                          JwtAuthenticationEntryPoint unauthorizedHandler) {
         super();
         this.jpaUserDetailsService = jpaUserDetailsService;
         this.passwordEncoder = passwordEncoder;
+        this.unauthorizedHandler = unauthorizedHandler;
+    }
+
+//    @Bean
+//    public JwtAuthenticationFilter jwtAuthenticationFilter() {
+//        return new JwtAuthenticationFilter();
+//    }
+
+    @Bean(BeanIds.AUTHENTICATION_MANAGER)
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
     }
 
     @Override
@@ -52,6 +79,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .cors().and()
                 .csrf().disable()
+                .exceptionHandling()
+                .authenticationEntryPoint(unauthorizedHandler)
+                .and()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
                 .authorizeRequests()
                     .antMatchers("/api/user/login").permitAll()
                     .antMatchers("/api/providers/*").permitAll()
@@ -65,7 +98,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and().httpBasic()
         ;
         // @formatter:on
-
+        http.addFilterBefore(new JwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 
     @Bean

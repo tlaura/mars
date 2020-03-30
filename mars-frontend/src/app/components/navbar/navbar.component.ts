@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {LoginService} from "../../services/login.service";
 import {Router} from "@angular/router";
-import {BehaviorSubject} from "rxjs";
+import {AuthenticationService} from "../../services/auth/authentication.service";
+import decode from 'jwt-decode';
 
 @Component({
   selector: 'app-navbar',
@@ -9,28 +9,40 @@ import {BehaviorSubject} from "rxjs";
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-  profileName: string;
+  profileName: string = '';
   isAdmin: boolean = false;
+  isUserLoggedIn: boolean = false;
 
-  constructor(public loginService: LoginService, private router: Router) {
+  constructor(public authenticationService: AuthenticationService, private router: Router) {
+    this.authenticationService.currentUser.subscribe(
+      () => {
+        this.isUserLoggedIn = authenticationService.isAuthenticated()
+      }
+    );
+    this.authenticationService.currentUser.subscribe(
+      token => {
+        if (token) {
+          const tokenPayload = decode(token);
+          this.profileName = tokenPayload?.sub;
+        }
+      }
+    );
+    this.authenticationService.currentUser.subscribe(
+      token => {
+        if (token) {
+          const tokenPayload = decode(token);
+          this.isAdmin = tokenPayload?.role == 'ADMIN';
+        }
+      }
+    );
   }
 
   ngOnInit() {
-    const isUserLoggedIn = localStorage.getItem('user') === 'true';
-    this.profileName = this.loginService.getCurrentUser()['fullNameOfUser'];
-    this.loginService.loggedIn$ = new BehaviorSubject(isUserLoggedIn);
-    this.loginService.loggedIn$.subscribe(
-      () => this.isAdmin = this.loginService.getCurrentUser()?.role == "ROLE_ADMIN"
-    )
+
   }
 
   logout() {
-    this.loginService.logout().subscribe(
-      () => {
-        localStorage.clear();
-        this.loginService.loggedIn$.next(false);
-        this.router.navigate(['/login']);
-      }
-    );
+    this.authenticationService.logout();
+    this.router.navigate(['login']);
   }
 }
