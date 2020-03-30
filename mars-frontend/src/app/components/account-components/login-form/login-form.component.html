@@ -48,10 +48,12 @@
           </label>
         </div>
 
-        <button (click)="login()" [disabled]="loginForm.invalid" class="submit btn btn-primary rounded-pill"
+        <button (click)="login()" [disabled]="loginForm.invalid || loading" class="submit btn btn-primary rounded-pill"
                 type="submit">
+          <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
           Bejelentkezés
         </button>
+        <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
       </form>
     </div>
   </div>

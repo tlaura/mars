@@ -33,16 +33,16 @@
     </ul>
 
     <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
-      <li *ngIf="!(loginService.loggedIn$ | async)" class="nav-item font-weight-lighter mx-3">
+      <li *ngIf="!(isUserLoggedIn)" class="nav-item font-weight-lighter mx-3">
         <a class="nav-link" routerLink="login" routerLinkActive="active">
           Bejelentkezés</a>
       </li>
-      <li *ngIf="loginService.loggedIn$ | async" class="nav-item font-weight-lighter mx-3"><a class="nav-link"
-                                                                                              routerLink="my-profile"
-                                                                                              routerLinkActive="active">
+      <li *ngIf="isUserLoggedIn" class="nav-item font-weight-lighter mx-3"><a class="nav-link"
+                                                                              routerLink="my-profile"
+                                                                              routerLinkActive="active">
         Profilom</a>
       </li>
-      <li *ngIf="loginService.loggedIn$ | async" class="nav-item font-weight-lighter mx-3">
+      <li *ngIf="isUserLoggedIn" class="nav-item font-weight-lighter mx-3">
         <a (click)="logout()" class="nav-link" routerLinkActive="active" style="cursor:pointer">
           Kijelentkezés</a>
       </li>
