@@ -6,10 +6,9 @@ import com.progmasters.mars.account_institution.account.domain.ProviderAccount;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -34,8 +33,8 @@ public class UserPrincipal implements UserDetails {
     }
 
     public static UserPrincipal create(ProviderAccount user) {
-        List<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority(user.getRole().name()));
+        List<GrantedAuthority> authorities = AuthorityUtils
+                .createAuthorityList(user.getRole().toString());
 
         return new UserPrincipal(
                 user.getEmail(),
