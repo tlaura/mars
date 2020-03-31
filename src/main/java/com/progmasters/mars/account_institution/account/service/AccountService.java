@@ -133,8 +133,9 @@ public class AccountService {
         ConfirmationToken userToken = confirmationTokenRepository.findByToken(token);
 
         if (userToken != null) {
-            userToken.setConfirmed(true);
-            confirmationTokenRepository.save(userToken);
+            confirmationTokenRepository.delete(userToken);
+            //    userToken.setConfirmed(true);
+            //     confirmationTokenRepository.save(userToken);
         } else {
             throw new EntityNotFoundException("not valid confirmation link");
         }
