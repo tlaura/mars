@@ -64,6 +64,7 @@ export class LoginFormComponent implements OnInit {
         error => {
           this.error = error;
           this.loading = false;
+          this.showUnauthorizedMessage = true;
         });
 
   };
@@ -75,6 +76,5 @@ export class LoginFormComponent implements OnInit {
       :
       document.getElementById('password').setAttribute('type', 'password')
   }
-
 
 }
