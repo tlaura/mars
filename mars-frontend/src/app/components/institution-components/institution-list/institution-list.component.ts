@@ -163,11 +163,13 @@ export class InstitutionListComponent implements OnInit {
   };
 
   setRange = (range: number): void => {
-    this.locationRange.range = range;
-    this.accountInstitutionService.getAccountsByRange(this.locationRange).subscribe(
-      value => this.institutionList = value,
-      error => console.warn(error)
-    )
+    if (range) {
+      this.locationRange.range = range;
+      this.accountInstitutionService.getAccountsByRange(this.locationRange).subscribe(
+        value => this.institutionList = value,
+        error => console.warn(error)
+      );
+    }
   };
 
   setCurrentPosition = (locationRange: LocationRangeModel): void => {
