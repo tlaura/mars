@@ -95,6 +95,7 @@ public class AccountServiceTest {
         assertEquals(1056, providerAccount.getZipcode());
         assertEquals("Budapest", providerAccount.getCity());
         assertEquals("Irányi utca 3", providerAccount.getAddress());
+        assertEquals("Diagnózis központ", providerAccount.getTypes().get(0).getHungarianName());
         assertTrue(providerAccount.getNewsletter());
     }
 
@@ -106,6 +107,8 @@ public class AccountServiceTest {
         Integer zipcode = 1056;
         String city = "Budapest";
         String address = "Irányi utca 3";
+        List<String> types = new ArrayList<>();
+        types.add("Diagnózis központ");
         Boolean newsletter = true;
 
         return ProviderUserDetails.builder()
@@ -116,6 +119,7 @@ public class AccountServiceTest {
                 .zipcode(zipcode)
                 .city(city)
                 .address(address)
+                .types(types)
                 .newsletter(newsletter)
                 .build();
     }
