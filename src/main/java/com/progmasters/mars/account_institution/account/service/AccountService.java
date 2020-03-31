@@ -173,37 +173,32 @@ public class AccountService {
     }
 
     public void updatePassword(String token, String newPassword) {
-        PasswordToken passwordToken = passwordTokenRepository.findByToken(token);
+        PasswordToken passwordToken = passwordTokenRepository.findByToken(token).orElseThrow(() -> new EntityNotFoundException("Given token not found: " + token));
         User user = passwordToken.getUser();
         user.setPassword(passwordEncoder.encode(newPassword));
-        if (passwordToken != null) {
             passwordTokenRepository.delete(passwordToken);
             if (user instanceof ProviderAccount) {
                 providerAccountRepository.save((ProviderAccount) user);
             } else {
                 userRepository.save(user);
             }
-        } else {
-            throw new EntityNotFoundException("not valid password reset link");
-        }
     }
 
     public boolean updatePasswordOfLoggedInUser(PasswordChangeDetails passwordChangeDetails) {
         boolean isChangeConfirmed = false;
 
-        Optional<ProviderAccount> providerAccount = providerAccountRepository.findByEmail(passwordChangeDetails.getEmail());
-        if (providerAccount.isPresent()) {
-            String givenOldPassword = passwordChangeDetails.getOldPassword();
-            String oldPassword = providerAccount.get().getPassword();
+        User user = userRepository.findByEmail(passwordChangeDetails.getEmail()).orElseThrow(() -> new EntityNotFoundException("User not found by given email: " + passwordChangeDetails.getEmail()));
 
-            boolean oldPasswordsMatch = BCrypt.checkpw(givenOldPassword, oldPassword);
-            boolean newPasswordsMatch = passwordChangeDetails.getPassword().equals(passwordChangeDetails.getConfirmPassword());
+        String givenOldPassword = passwordChangeDetails.getOldPassword();
+        String oldPassword = user.getPassword();
 
-            if (oldPasswordsMatch && newPasswordsMatch) {
-                providerAccount.get().setPassword(BCrypt.hashpw(passwordChangeDetails.getPassword(), BCrypt.gensalt()));
-                isChangeConfirmed = true;
+        boolean oldPasswordsMatch = BCrypt.checkpw(givenOldPassword, oldPassword);
+        boolean newPasswordsMatch = passwordChangeDetails.getPassword().equals(passwordChangeDetails.getConfirmPassword());
+
+        if (oldPasswordsMatch && newPasswordsMatch) {
+            user.setPassword(BCrypt.hashpw(passwordChangeDetails.getPassword(), BCrypt.gensalt()));
+            isChangeConfirmed = true;
             }
-        }
         return isChangeConfirmed;
     }
 

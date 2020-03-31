@@ -10,7 +10,7 @@ import java.util.Optional;
 public interface PasswordTokenRepository extends JpaRepository<PasswordToken, Long> {
 
     @Query("select p from PasswordToken p where p.token= :token")
-    PasswordToken findByToken(@Param("token") String token);
+    Optional<PasswordToken> findByToken(@Param("token") String token);
 
     @Query("select p from PasswordToken p where p.user= :user")
     Optional<PasswordToken> findByUser(@Param("user") ProviderAccount user);
