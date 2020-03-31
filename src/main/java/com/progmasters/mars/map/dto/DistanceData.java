@@ -1,17 +1,26 @@
 package com.progmasters.mars.map.dto;
 
+import com.google.maps.model.Duration;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 
 @Getter
+@Setter
 @NoArgsConstructor
 public class DistanceData {
 
-    private String travelTimeByDriving;
+    private Duration travelTimeByDriving;
 
-    private String travelTimeByWalking;
+    private Long distanceByDriving;
 
-    private String travelTimeByTransit;
+    private Duration travelTimeByWalking;
 
-    private Long distance;
+    private Long distanceByWalking;
+
+    private Duration travelTimeByTransit;
+
+    private Long distanceByTransit;
+
 }

@@ -1,6 +1,9 @@
 package com.progmasters.mars.account_institution.connector;
 
 import com.google.maps.errors.NotFoundException;
+import com.google.maps.model.DistanceMatrix;
+import com.google.maps.model.Duration;
+import com.google.maps.model.TravelMode;
 import com.progmasters.mars.account_institution.account.domain.ProviderAccount;
 import com.progmasters.mars.account_institution.account.domain.ProviderType;
 import com.progmasters.mars.account_institution.account.dto.ProviderAccountCreationCommand;
@@ -14,7 +17,9 @@ import com.progmasters.mars.account_institution.institution.service.Confirmation
 import com.progmasters.mars.account_institution.institution.service.InstitutionService;
 import com.progmasters.mars.mail.EmailService;
 import com.progmasters.mars.map.MapService;
+import com.progmasters.mars.map.dto.DistanceData;
 import com.progmasters.mars.map.dto.GeoLocationData;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,7 +30,10 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
+@Slf4j
 public class AccountInstitutionService {
+
+    private static final Integer M_TO_KM = 1000;
 
     private final AccountService accountService;
     private final InstitutionService institutionService;
@@ -95,10 +103,51 @@ public class AccountInstitutionService {
         providerAccounts.stream().map(AccountInstitutionListData::new).forEach(allAccounts::add);
         institutions.stream().map(AccountInstitutionListData::new).forEach(allAccounts::add);
         institutionsWithAccount.stream().map(AccountInstitutionListData::new).forEach(allAccounts::add);
-
         return allAccounts;
     }
 
+    public List<AccountInstitutionListData> getListItemsByDistance(Double originLng, Double originLat, Long maxDistance) {
+        List<AccountInstitutionListData> allAccounts = getAllListItems();
+        List<AccountInstitutionListData> accountsWithingRange = new ArrayList<>();
+
+        for (AccountInstitutionListData account : allAccounts) {
+            if (account.getZipcode() != null && account.getCity() != null && account.getAddress() != null) {
+                String destination = account.getZipcode() + " " + account.getCity() + " " + account.getAddress();
+                DistanceData distanceData = getDistance(originLng, originLat, destination);
+                log.info(distanceData.getDistanceByDriving().toString());
+                if (distanceData.getDistanceByDriving() < maxDistance || distanceData.getDistanceByTransit() < maxDistance || distanceData.getDistanceByWalking() < maxDistance) {
+                    accountsWithingRange.add(account);
+                }
+            }
+
+        }
+        return accountsWithingRange;
+    }
+
+    private DistanceData getDistance(Double originLng, Double originLat, String destination) {
+        DistanceData distanceData = new DistanceData();
+        List<TravelMode> travelModeList = List.of(TravelMode.DRIVING, TravelMode.WALKING, TravelMode.TRANSIT);
+        for (TravelMode travelMode : travelModeList) {
+            DistanceMatrix matrix = mapService.calculateDistanceByGivenTravelMode(originLng, originLat, destination, travelMode);
+            Long distance = matrix.rows[0].elements[0].distance.inMeters;
+            Duration duration = matrix.rows[0].elements[0].duration;
+            switch (travelMode) {
+                case TRANSIT:
+                    distanceData.setDistanceByTransit(distance / M_TO_KM);
+                    distanceData.setTravelTimeByTransit(duration);
+                    break;
+                case DRIVING:
+                    distanceData.setDistanceByDriving(distance / M_TO_KM);
+                    distanceData.setTravelTimeByDriving(duration);
+                    break;
+                case WALKING:
+                    distanceData.setDistanceByWalking(distance / M_TO_KM);
+                    distanceData.setTravelTimeByWalking(duration);
+                    break;
+            }
+        }
+        return distanceData;
+    }
 
     public void evaluateInstitution(Long id, Boolean accepted) throws NotFoundException {
         ConfirmationInstitution confirmationInstitution = confirmationInstitutionService.findById(id);

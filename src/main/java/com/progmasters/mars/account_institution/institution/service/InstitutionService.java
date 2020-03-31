@@ -111,4 +111,5 @@ public class InstitutionService {
     public Institution findByName(String name) {
         return institutionRepository.findByName(name).orElseThrow(() -> new EntityNotFoundException("no such entity found with given name"));
     }
+
 }

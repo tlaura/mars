@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {institutionListIndex} from "../../../environments/institutionListIndex.prod";
 import {MapsAPILoader} from "@agm/core";
 import {InstitutionService} from "../../services/institution.service";
@@ -6,6 +6,7 @@ import {InstitutionDetailModel} from "../../models/institutionDetail.model";
 import {AccountService} from "../../services/account.service";
 import {ProviderUserDetails} from "../../models/providerUserDetails";
 import {AccountInstitutionListModel} from "../../models/accountInstitutionList.model";
+import {LocationRangeModel} from "../../models/locationRange.model";
 
 
 @Component({
@@ -182,11 +183,16 @@ export class MapComponent implements OnInit {
   latitude: number = institutionListIndex.mapLatitude;
   longitude: number = institutionListIndex.mapLongitude;
   zoom: number = institutionListIndex.mapZoom;
-  @Input() showInstitutionDetails: boolean = false;
-  @Input() showProviderDetail: boolean = false;
-  @Input() locations: Array<AccountInstitutionListModel>;
+  @Input()
+  showInstitutionDetails: boolean = false;
+  @Input()
+  showProviderDetail: boolean = false;
+  @Input()
+  locations: Array<AccountInstitutionListModel>;
   institutionDetail: InstitutionDetailModel;
   providerDetail: ProviderUserDetails;
+  @Output()
+  locationRangeEmitter: EventEmitter<LocationRangeModel> = new EventEmitter<LocationRangeModel>();
 
   constructor(private mapsAPILoader: MapsAPILoader,
               private institutionService: InstitutionService,
@@ -196,7 +202,7 @@ export class MapComponent implements OnInit {
 
   ngOnInit(): void {
     this.mapsAPILoader.load().then(() => {
-        this.setCurrentLocation();
+      this.setCurrentLocation();
         this.showMap = true;
       }
     );
@@ -206,6 +212,14 @@ export class MapComponent implements OnInit {
 
     if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition(position => {
+        let locationRange: LocationRangeModel = new class implements LocationRangeModel {
+          latitude: number;
+          longitude: number;
+          range: number;
+        };
+        locationRange.latitude = position.coords.latitude;
+        locationRange.longitude = position.coords.longitude;
+        this.locationRangeEmitter.emit(locationRange);
         //  this.latitude = position.coords.latitude;
         //  this.longitude = position.coords.longitude;
         this.zoom = institutionListIndex.mapZoom;

@@ -5,10 +5,7 @@ import com.google.maps.GeoApiContext;
 import com.google.maps.GeocodingApi;
 import com.google.maps.errors.ApiException;
 import com.google.maps.errors.NotFoundException;
-import com.google.maps.model.DistanceMatrix;
-import com.google.maps.model.GeocodingResult;
-import com.google.maps.model.TravelMode;
-import com.google.maps.model.Unit;
+import com.google.maps.model.*;
 import com.progmasters.mars.map.dto.GeoLocationData;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -42,10 +39,10 @@ public class MapService {
         return new GeoLocationData(longitude, latitude);
     }
 
-    public DistanceMatrix calculateDistanceByGivenTravelMode(String origin, String destination, TravelMode travelMode) {
+    public DistanceMatrix calculateDistanceByGivenTravelMode(Double originLng, Double originLat, String destination, TravelMode travelMode) {
         DistanceMatrix matrix = null;
         try {
-            matrix = DistanceMatrixApi.newRequest(context).origins(origin)
+            matrix = DistanceMatrixApi.newRequest(context).origins(new LatLng(originLat, originLng))
                     .destinations(destination)
                     .units(Unit.METRIC)
                     .mode(travelMode)

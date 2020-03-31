@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {InstitutionService} from "../../../services/institution.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {InstitutionListModel} from "../../../models/institutionList.model";
 import {InstitutionTypeModel} from "../../../models/InstitutionType.model";
 import {institutionListIndex} from "../../../../environments/institutionListIndex.prod";
 import {AccountService} from "../../../services/account.service";
@@ -9,6 +8,7 @@ import {SocialService} from "ngx-social-button";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {AccountInstitutionConnectorService} from "../../../services/account-institution-connector.service";
 import {AccountInstitutionListModel} from "../../../models/accountInstitutionList.model";
+import {LocationRangeModel} from "../../../models/locationRange.model";
 
 @Component({
   selector: 'app-institution-list',
@@ -26,6 +26,8 @@ export class InstitutionListComponent implements OnInit {
   institutionType: FormControl;
   showWindows: boolean;
   ageRangeGroup: FormGroup;
+  test: number;
+  locationRange: LocationRangeModel;
 
   shareObj = {
     //TODO: localhost-ra nem működik, elvileg élesben igen?!?!?
@@ -144,20 +146,6 @@ export class InstitutionListComponent implements OnInit {
     );
   };
 
-  filteredInstitutionList: Array<InstitutionListModel> = new Array<InstitutionListModel>();
-
-  // createFilteredList() {
-  //   debugger;
-  //   this.filteredInstitutionList = this.institutionList.filter(institution => {
-  //     for (let key in institution) {
-  //       if (institution[key].includes(this.searchText)) {
-  //         return institution[key];
-  //       }
-  //     }
-  //   });
-  //   debugger;
-  // }
-
   isProvider(institution: AccountInstitutionListModel): boolean {
     return institution.accountType === 'PROVIDER';
   }
@@ -173,4 +161,20 @@ export class InstitutionListComponent implements OnInit {
       () => this.showWindows = false
     );
   };
+
+  setRange = (range: number): void => {
+    this.locationRange.range = range;
+    this.accountInstitutionService.getAccountsByRange(this.locationRange).subscribe(
+      value => this.institutionList = value,
+      error => console.warn(error)
+    )
+  };
+
+  setCurrentPosition = (locationRange: LocationRangeModel): void => {
+    this.locationRange = locationRange;
+  };
+
+  reset = (): void => {
+    this.getInstitutions();
+  }
 }

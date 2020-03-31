@@ -1,8 +1,6 @@
 package com.progmasters.mars.account_institution.institution.controller;
 
 import com.google.maps.errors.NotFoundException;
-import com.google.maps.model.DistanceMatrix;
-import com.google.maps.model.TravelMode;
 import com.progmasters.mars.account_institution.account.domain.ProviderType;
 import com.progmasters.mars.account_institution.connector.AccountInstitutionService;
 import com.progmasters.mars.account_institution.institution.InstitutionValidator;
@@ -110,12 +108,5 @@ public class InstitutionController {
         }
         log.info("Institution evaluation is requested by id:\t" + id + "\n Decision:\t" + accepted);
         return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @GetMapping("/distance")
-    public ResponseEntity<DistanceMatrix> getDistance(@RequestParam("origin") String origin, @RequestParam("destination") String destination) {
-        DistanceMatrix matrix = mapService.calculateDistanceByGivenTravelMode(origin, destination, TravelMode.TRANSIT);
-
-        return new ResponseEntity<>(matrix, HttpStatus.OK);
     }
 }
