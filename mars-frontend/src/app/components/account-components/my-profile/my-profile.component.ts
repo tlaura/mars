@@ -22,12 +22,9 @@ export class MyProfileComponent implements OnInit {
   @Input() name: string;
   @Output() focusOut: EventEmitter<any> = new EventEmitter<any>();
 
-  // editGroup = new FormGroup({
   username = new FormControl('', Validators.required);
   providerServiceName = new FormControl('', Validators.required);
   phone = new FormControl('', [Validators.required, Validators.pattern(validatorBounds.phoneRegex)]);
-  // types = new FormControl(null, [Validators.required, Validators.minLength(1)]);
-  // });
 
   allTypes: Array<InstitutionTypeModel> = [];
 
