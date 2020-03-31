@@ -30,3 +30,14 @@
   border-radius: 2rem;
 }
 
+.delete-profile-div-container {
+  width: 100%;
+  text-align: right;
+}
+
+.delete-button {
+  background-color: tomato;
+  padding: 15px;
+}
+
+

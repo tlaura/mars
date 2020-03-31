@@ -194,6 +194,13 @@
               type="submit">
         Mentés
       </button>
+
+      <div *ngIf="editMode" class="delete-profile-div-container">
+        <button (click)="confirmDeletion()" class="delete-button btn float-right rounded-pill" type="button">Fiók
+          törlése
+        </button>
+      </div>
+
     </div>
   </div>
 </div>
