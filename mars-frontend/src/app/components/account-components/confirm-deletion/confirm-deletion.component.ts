@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {AuthenticationService} from "../../../services/auth/authentication.service";
 import decode from 'jwt-decode';
+import {AccountService} from "../../../services/account.service";
 
 @Component({
   selector: 'app-confirm-deletion',
@@ -11,7 +12,7 @@ import decode from 'jwt-decode';
 export class ConfirmDeletionComponent implements OnInit {
   loggedInUser: string;
 
-  constructor(private router: Router, private authenticationService: AuthenticationService) {
+  constructor(private router: Router, private authenticationService: AuthenticationService, private accountService: AccountService) {
   }
 
   ngOnInit(): void {
@@ -23,7 +24,7 @@ export class ConfirmDeletionComponent implements OnInit {
   }
 
   deleteUser() {
-
+    // this.accountService.
   }
 
   goBack() {

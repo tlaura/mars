@@ -101,4 +101,8 @@ export class MyProfileComponent implements OnInit {
   changePassword() {
     this.router.navigate(['password-change']);
   }
+
+  confirmDeletion() {
+    this.router.navigate(['my-profile/confirm-deletion']);
+  }
 }
