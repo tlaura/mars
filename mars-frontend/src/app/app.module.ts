@@ -49,6 +49,8 @@ import {JwtHelperService, JwtModule} from "@auth0/angular-jwt";
 import {NormalUserComponent} from "./components/account-components/registration-components/register/normal-user/normal-user.component";
 import {ProviderUserComponent} from "./components/account-components/registration-components/register/provider-user/provider-user.component";
 import {UserAttributesComponent} from "./components/form-elements-components/user-attributes/user-attributes.component";
+import {ConfirmDeletionComponent} from './components/account-components/confirm-deletion/confirm-deletion.component';
+import {DeletionSuccessComponent} from './components/account-components/deletion-success/deletion-success.component';
 
 export function getAuthServiceConfigs() {
   let config = new SocialServiceConfig()
@@ -100,6 +102,8 @@ export function getToken(): string {
     PasswordChangeSuccessComponent,
     EvaluateListComponent,
     UserAttributesComponent,
+    ConfirmDeletionComponent,
+    DeletionSuccessComponent,
   ],
   imports: [
     BrowserModule,
@@ -136,7 +140,6 @@ export function getToken(): string {
   ],
   bootstrap: [AppComponent]
 })
-
 
 export class AppModule {
 }

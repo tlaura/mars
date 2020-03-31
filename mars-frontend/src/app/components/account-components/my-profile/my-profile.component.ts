@@ -63,7 +63,6 @@ export class MyProfileComponent implements OnInit {
       () => {
         if (this.editMode) {
           this.editMode = false;
-          // this.providerAccount.types = this.types;
           this.accountCopy = Object.assign({}, this.providerAccount);
         }
         console.log("Data changes saved");
@@ -101,5 +100,9 @@ export class MyProfileComponent implements OnInit {
 
   changePassword() {
     this.router.navigate(['password-change']);
+  }
+
+  confirmDeletion() {
+    this.router.navigate(['my-profile/confirm-deletion']);
   }
 }
