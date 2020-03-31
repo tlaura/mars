@@ -1,6 +1,6 @@
 package com.progmasters.mars.account_institution.account.controller;
 
-import com.progmasters.mars.account_institution.account.dto.NormalAccountCreationCommand;
+import com.progmasters.mars.account_institution.account.dto.UserCreationCommand;
 import com.progmasters.mars.account_institution.account.security.AuthenticatedUserDetails;
 import com.progmasters.mars.account_institution.account.service.AccountService;
 import lombok.extern.slf4j.Slf4j;
@@ -44,7 +44,7 @@ public class UserController {
     }
 
     @PostMapping()
-    public ResponseEntity<NormalAccountCreationCommand> createNormalAccount(@RequestBody @Valid NormalAccountCreationCommand normalAccountCreationCommand) {
+    public ResponseEntity<UserCreationCommand> createAccount(@RequestBody @Valid UserCreationCommand userCreationCommand) {
         //TODO: save account
         log.info("Normal Account creation requested!");
         return new ResponseEntity<>(HttpStatus.CREATED);

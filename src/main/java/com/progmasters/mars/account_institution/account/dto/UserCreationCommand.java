@@ -10,7 +10,7 @@ import javax.validation.constraints.NotEmpty;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class NormalAccountCreationCommand {
+public class UserCreationCommand {
 
     @NotBlank
     @NotEmpty
