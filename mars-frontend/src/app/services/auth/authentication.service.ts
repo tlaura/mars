@@ -5,6 +5,7 @@ import {User} from "../../models/auth/user";
 import {environment} from "../../../environments/environment";
 import {map} from "rxjs/operators";
 import {JwtHelperService} from "@auth0/angular-jwt";
+import decode from 'jwt-decode';
 
 const BASE_URL: string = environment.BASE_URL + '/api/user';
 
@@ -53,5 +54,16 @@ export class AuthenticationService {
   logout() {
     localStorage.removeItem('token');
     this.currentUserSubject.next(null);
+  }
+
+  isAdmin() {
+    const token = localStorage.getItem('token');
+    debugger;
+    if (token) {
+      const tokenPayload = decode(token);
+      debugger;
+      return tokenPayload.role === 'ROLE_ADMIN';
+    }
+    return false;
   }
 }

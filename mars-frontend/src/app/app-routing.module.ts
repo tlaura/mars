@@ -36,7 +36,7 @@ const routes: Routes = [
     component: InstitutionImportComponent,
     canActivate: [RoleGuard],
     data: {
-      expectedRole: 'ADMIN'
+      expectedRole: 'ROLE_ADMIN'
     }
   },
   {path: "institution-details/:id", component: InstitutionDetailsComponent},
@@ -59,7 +59,14 @@ const routes: Routes = [
   {path: "terms-and-conditions", component: TermsComponent},
   {path: "password-change", component: PasswordChangeComponent},
   {path: "password-change-success", component: PasswordChangeSuccessComponent},
-  {path: "evaluate-list", component: EvaluateListComponent},
+  {
+    path: "evaluate-list",
+    component: EvaluateListComponent,
+    canActivate: [RoleGuard],
+    data: {
+      expectedRole: 'ROLE_ADMIN'
+    }
+  },
 ];
 
 @NgModule({

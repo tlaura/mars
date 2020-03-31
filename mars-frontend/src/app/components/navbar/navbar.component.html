@@ -20,17 +20,13 @@
           <a class="dropdown-item" routerLink="institution-form" routerLinkActive="active">Intézmény
             hozzáadása</a>
 
-          <!--div *ngIf="isAdmin" class="dropdown-divider"></div-->
-          <a class="dropdown-item" routerLink="institution-import"
+
+          <a *ngIf="isAdmin" class="dropdown-item" routerLink="institution-import"
              routerLinkActive="active">Intézmények
             importálása</a>
-          <a class="dropdown-item" routerLink="evaluate-list"
+          <a *ngIf="isAdmin" class="dropdown-item" routerLink="evaluate-list"
              routerLinkActive="active">Intézmények
             elbírálása</a>
-          <div *ngIf="isAdmin" class="dropdown-divider">
-            <a class="dropdown-item" routerLink="institution-import"
-               routerLinkActive="active">Intézmények
-              importálása</a></div>
         </div>
       </li>
 
