@@ -23,6 +23,7 @@ import {PasswordChangeSuccessComponent} from "./components/account-components/ne
 import {EvaluateListComponent} from "./components/institution-components/evaluate-list/evaluate-list.component";
 import {AuthGuard} from "./guards/auth/auth.guard";
 import {RoleGuard} from "./guards/auth/role.guard";
+import {ConfirmDeletionComponent} from "./components/account-components/confirm-deletion/confirm-deletion.component";
 
 
 const routes: Routes = [
@@ -67,6 +68,7 @@ const routes: Routes = [
       expectedRole: 'ROLE_ADMIN'
     }
   },
+  {path: "my-profile/confirm-deletion", component: ConfirmDeletionComponent}
 ];
 
 @NgModule({

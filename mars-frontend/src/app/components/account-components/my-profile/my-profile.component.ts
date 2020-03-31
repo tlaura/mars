@@ -63,7 +63,6 @@ export class MyProfileComponent implements OnInit {
       () => {
         if (this.editMode) {
           this.editMode = false;
-          // this.providerAccount.types = this.types;
           this.accountCopy = Object.assign({}, this.providerAccount);
         }
         console.log("Data changes saved");
