@@ -2,6 +2,7 @@ package com.progmasters.mars.account_institution.account.service;
 
 import com.progmasters.mars.account_institution.account.dto.ProviderAccountCreationCommand;
 import com.progmasters.mars.account_institution.account.repository.ProviderAccountRepository;
+import com.progmasters.mars.account_institution.account.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.Errors;
@@ -18,9 +19,11 @@ public class ProviderAccountValidatorService {
     private String phone;
 
     private ProviderAccountRepository providerAccountRepository;
+    private UserRepository userRepository;
 
-    public ProviderAccountValidatorService(ProviderAccountRepository providerAccountRepository) {
+    public ProviderAccountValidatorService(ProviderAccountRepository providerAccountRepository, UserRepository userRepository) {
         this.providerAccountRepository = providerAccountRepository;
+        this.userRepository = userRepository;
     }
 
     //    TODO more validators
@@ -55,6 +58,6 @@ public class ProviderAccountValidatorService {
     }
 
     public boolean emailIsTaken(String email) {
-        return !providerAccountRepository.findAllByEmail(email).isEmpty();
+        return !userRepository.findAllByEmail(email).isEmpty();
     }
 }

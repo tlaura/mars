@@ -69,7 +69,7 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<UserCreationCommand> createAccount(@RequestBody @Valid UserCreationCommand userCreationCommand) {
-        //TODO: save account
+        accountService.save(userCreationCommand);
         log.info("Normal Account creation requested!");
         return new ResponseEntity<>(HttpStatus.CREATED);
     }

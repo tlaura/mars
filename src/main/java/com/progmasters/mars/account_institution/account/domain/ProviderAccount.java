@@ -50,6 +50,7 @@ public class ProviderAccount extends User {
 
     public ProviderAccount(ProviderAccountCreationCommand providerAccountCreationCommand) {
         this.providerServiceName = providerAccountCreationCommand.getProviderServiceName();
+        super.setPassword(providerAccountCreationCommand.getPassword());
         super.setName(providerAccountCreationCommand.getName());
         super.setZipcode(providerAccountCreationCommand.getZipcode());
         super.setCity(providerAccountCreationCommand.getCity());

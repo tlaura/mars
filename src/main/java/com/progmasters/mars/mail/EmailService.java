@@ -2,7 +2,7 @@ package com.progmasters.mars.mail;
 
 import com.progmasters.mars.account_institution.account.confirmationtoken.ConfirmationToken;
 import com.progmasters.mars.account_institution.account.confirmationtoken.ConfirmationTokenRepository;
-import com.progmasters.mars.account_institution.account.domain.ProviderAccount;
+import com.progmasters.mars.account_institution.account.domain.User;
 import com.progmasters.mars.account_institution.account.passwordtoken.PasswordToken;
 import com.progmasters.mars.account_institution.account.passwordtoken.PasswordTokenRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -67,7 +67,7 @@ public class EmailService {
         }
     }
 
-    public void sendConfirmationEmail(ProviderAccount user) {
+    public void sendConfirmationEmail(User user) {
 
         ConfirmationToken userToken = new ConfirmationToken(user);
         confirmationTokenRepository.save(userToken);
@@ -81,12 +81,12 @@ public class EmailService {
         }
     }
 
-    public void sendPasswordEmail(ProviderAccount providerAccount) {
-        PasswordToken providerAccountPasswordToken = new PasswordToken(providerAccount);
-        passwordTokenRepository.save(providerAccountPasswordToken);
+    public void sendPasswordEmail(User user) {
+        PasswordToken userPasswordToken = new PasswordToken(user);
+        passwordTokenRepository.save(userPasswordToken);
         long start = System.currentTimeMillis();
 
-        CompletableFuture<Long> msgSent = sendMsg(providerAccount.getEmail(), subjectPassword, textPassword + "\n" + passwordUrl + providerAccountPasswordToken.getToken());
+        CompletableFuture<Long> msgSent = sendMsg(user.getEmail(), subjectPassword, textPassword + "\n" + passwordUrl + userPasswordToken.getToken());
         try {
             log.info("Elapsed time on message sent:\t" + (msgSent.get() - start));
         } catch (InterruptedException | ExecutionException e) {

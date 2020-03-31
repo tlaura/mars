@@ -35,7 +35,7 @@ public class AccountServiceTest {
     @BeforeEach
     public void init() {
         this.providerAccountCreationCommand = createOneAccountCommand();
-        providerAccount = accountService.save(providerAccountCreationCommand);
+        providerAccount = (ProviderAccount) accountService.save(providerAccountCreationCommand);
     }
 
     @Test
@@ -45,7 +45,7 @@ public class AccountServiceTest {
 
     @Test
     public void testRemoveById_shouldReturnTrue() {
-        ProviderAccount account = accountService.findByEmail("pecske92@gmail.com");
+        ProviderAccount account = (ProviderAccount) accountService.findByEmail("pecske92@gmail.com");
         accountService.removeById(account.getId());
 
         assertTrue(accountService.findAllAccounts().isEmpty());

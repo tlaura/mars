@@ -1,7 +1,7 @@
 package com.progmasters.mars.account_institution.account.security;
 
-import com.progmasters.mars.account_institution.account.domain.ProviderAccount;
-import com.progmasters.mars.account_institution.account.repository.ProviderAccountRepository;
+import com.progmasters.mars.account_institution.account.domain.User;
+import com.progmasters.mars.account_institution.account.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -17,12 +17,12 @@ import java.util.List;
 @Service
 public class JPAUserDetailsService implements UserDetailsService {
 
-    private ProviderAccountRepository providerAccountRepository;
+    private UserRepository userRepository;
 //    private IndividualUserRepository individualUserRepository;
 
     @Autowired
-    public JPAUserDetailsService(ProviderAccountRepository providerAccountRepository) {
-        this.providerAccountRepository = providerAccountRepository;
+    public JPAUserDetailsService(UserRepository userRepository) {
+        this.userRepository = userRepository;
 //        this.individualUserRepository = userRepository;
     }
 
@@ -30,13 +30,13 @@ public class JPAUserDetailsService implements UserDetailsService {
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 //        com.progmasters.mars.domain.User user = individualUserRepository.findByEmail(username);
-        ProviderAccount providerAccount = providerAccountRepository.findByEmail(username).orElseThrow(() -> new EntityNotFoundException("No account found"));
+        User user = userRepository.findByEmail(username).orElseThrow(() -> new EntityNotFoundException("No account found"));
 
 
         List<GrantedAuthority> authorities = AuthorityUtils
-                .createAuthorityList(providerAccount.getRole().toString());
+                .createAuthorityList(user.getRole().toString());
 
-        return UserPrincipal.create(providerAccount);
+        return UserPrincipal.create(user);
 
     }
 

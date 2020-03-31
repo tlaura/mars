@@ -14,7 +14,6 @@ import com.progmasters.mars.account_institution.institution.openinghours.domain.
 import com.progmasters.mars.account_institution.institution.openinghours.service.OpeningHoursService;
 import com.progmasters.mars.account_institution.institution.service.ConfirmationInstitutionService;
 import com.progmasters.mars.account_institution.institution.service.InstitutionService;
-import com.progmasters.mars.mail.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,7 +28,6 @@ public class AccountInstitutionService {
 
     private final AccountService accountService;
     private final InstitutionService institutionService;
-    private final EmailService emailService;
     private final ConfirmationInstitutionService confirmationInstitutionService;
     private final GeocodeService geocodeService;
     private final AccountInstitutionConnectorRepository accountInstitutionConnectorRepository;
@@ -38,13 +36,11 @@ public class AccountInstitutionService {
     @Autowired
     public AccountInstitutionService(AccountService accountService,
                                      InstitutionService institutionService,
-                                     EmailService emailService,
                                      AccountInstitutionConnectorRepository accountInstitutionConnectorRepository,
                                      GeocodeService geocodeService,
                                      ConfirmationInstitutionService confirmationInstitutionService, OpeningHoursService openingHoursService) {
         this.accountService = accountService;
         this.institutionService = institutionService;
-        this.emailService = emailService;
         this.accountInstitutionConnectorRepository = accountInstitutionConnectorRepository;
         this.geocodeService = geocodeService;
         this.confirmationInstitutionService = confirmationInstitutionService;
@@ -53,7 +49,7 @@ public class AccountInstitutionService {
 
     //todo read about spring boot exception handling
     public void save(ProviderAccountCreationCommand providerAccountCreationCommand) throws NotFoundException {
-        ProviderAccount savedAccount = accountService.save(providerAccountCreationCommand);
+        ProviderAccount savedAccount = (ProviderAccount) accountService.save(providerAccountCreationCommand);
         saveProviderLocation(providerAccountCreationCommand, savedAccount);
         List<InstitutionCreationCommand> institutions = providerAccountCreationCommand.getInstitutions();
         if (!institutions.isEmpty()) {
@@ -61,7 +57,6 @@ public class AccountInstitutionService {
                 confirmationInstitutionService.save(institutionCreationCommand, providerAccountCreationCommand.getEmail());
             }
         }
-        emailService.sendConfirmationEmail(savedAccount);
     }
 
     private void saveProviderLocation(ProviderAccountCreationCommand providerAccountCreationCommand, ProviderAccount savedAccount) throws NotFoundException {
@@ -75,7 +70,7 @@ public class AccountInstitutionService {
 
 
     public void detachInstitutionFromAccount(String email, Long institutionId) {
-        ProviderAccount foundAccount = accountService.findByEmail(email);
+        ProviderAccount foundAccount = (ProviderAccount) accountService.findByEmail(email);
         Institution foundInstitution = institutionService.findById(institutionId);
         accountInstitutionConnectorRepository.removeConnection(foundAccount, foundInstitution);
     }
@@ -119,7 +114,7 @@ public class AccountInstitutionService {
         confirmationInstitutionService.delete(confirmationInstitution);
         Institution savedInstitution = institutionService.saveInstitution(createdInstitution);
         if (confirmationInstitution.getProviderEmail() != null) {
-            ProviderAccount savedAccount = accountService.findByEmail(confirmationInstitution.getProviderEmail());
+            ProviderAccount savedAccount = (ProviderAccount) accountService.findByEmail(confirmationInstitution.getProviderEmail());
             AccountInstitutionConnector accountInstitutionConnector = new AccountInstitutionConnector(savedAccount, savedInstitution);
             accountInstitutionConnectorRepository.save(accountInstitutionConnector);
         }

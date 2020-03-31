@@ -2,7 +2,7 @@ package com.progmasters.mars.account_institution.account.security;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.progmasters.mars.account_institution.account.domain.ProviderAccount;
+import com.progmasters.mars.account_institution.account.domain.User;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -35,7 +35,7 @@ public class UserPrincipal implements UserDetails {
         this.authorities = authorities;
     }
 
-    public static UserPrincipal create(ProviderAccount user) {
+    public static UserPrincipal create(User user) {
         List<GrantedAuthority> authorities = AuthorityUtils
                 .createAuthorityList(user.getRole().toString());
 
