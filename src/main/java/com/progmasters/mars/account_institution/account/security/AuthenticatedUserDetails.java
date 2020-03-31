@@ -1,6 +1,6 @@
 package com.progmasters.mars.account_institution.account.security;
 
-import com.progmasters.mars.account_institution.account.domain.ProviderAccount;
+import com.progmasters.mars.account_institution.account.domain.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -17,10 +17,10 @@ public class AuthenticatedUserDetails {
     private String email; //Email
     private String role;
 
-    public AuthenticatedUserDetails(ProviderAccount providerAccount) {
-        this.fullNameOfUser = providerAccount.getName();
-        this.email = providerAccount.getEmail();
-        this.role = providerAccount.getRole().name();
+    public AuthenticatedUserDetails(User user) {
+        this.fullNameOfUser = user.getName();
+        this.email = user.getEmail();
+        this.role = user.getRole().name();
     }
 
     private String findRole(UserDetails userDetails) {

@@ -2,109 +2,18 @@
   <div class="col-sm-12 col-md-10 offset-md-1 col-lg-8 offset-lg-2 text-center">
     <h4>Regisztráció</h4>
 
-    <!--div>
-      <button (click)="chooseNormalUser()" class="user-option-chooser btn w-50 mb-0"
-              disabled>Felhasználó
+    <div>
+      <button (click)="chooseNormalUser()" [ngClass]="isNormalUser ? 'active' : 'inactive'"
+              class="user-option-chooser btn w-50 mb-0">Felhasználó
       </button>
       <button (click)="chooseProviderUser()" [ngClass]="!isNormalUser ? 'active' : 'inactive'"
               class="user-option-chooser btn w-50 mb-0">Szolgáltatás
       </button>
-    </div-->
+    </div>
 
-
-    <div class="white-block-on-tomato-div text-left p-sm-3 p-md-3">
-      <form [formGroup]="registerForm" autocomplete="off">
-
-        <div class="row mx-0">
-          <div class="col-sm-12 col-md-6 px-0">
-            <app-contacts
-              [contactsFormGroup]="registerForm"
-            ></app-contacts>
-
-            <app-provider-attributes
-              [allType]="allType"
-              [providerAttributesFormGroup]="registerForm"
-              (isPasswordValid)="setIfPasswordIsValid($event)"
-            >
-            </app-provider-attributes>
-
-            <!-- CUSTOM ADDRESS CHECK DIV -->
-
-            <div *ngIf="!isNormalUser" id="custom-address-check-div">
-              <div class="row m-0">
-                <div class="form-group col-sm-12 col-md-12">
-                  <label for="customAddress">Cím hozzáadása a szolgáltatáshoz:</label>
-                  <input (change)="changeProviderAddress()"
-                         class="form-check-input m-1"
-                         id="customAddress"
-                         type="checkbox">
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-sm-12 col-md-6 px-0">
-            <app-address [addressFormGroup]="registerForm"
-                         *ngIf="haveProviderCustomAddress"
-            ></app-address>
-          </div>
-        </div>
-
-        <!-- INSTITUTIONS -->
-
-        <div class="form-group col-sm-12 col-md-12">
-          <label>Intézmények:</label>
-
-          <button (click)="addNewInstitution()"
-                  class="btn rounded-pill btn-light btn-sm mx-sm-1 mx-sm-2"
-          >
-            Intézmény hozzáadása
-          </button>
-        </div>
-
-        <div *ngFor="let array of getInstitutions().controls;let i = index;"
-             class="row m-0 blue-block-on-white-div my-md-4 p-md-1 p-lg-3">
-          <app-institution *ngIf="!isNormalUser" [institutionForm]="array">
-          </app-institution>
-
-          <div class="form-group col-sm-12 col-md-1">
-            <button (click)="removeInstitution(i)" class="btn rounded-pill p-0">
-              <i class="fa fa-trash delete-white fa-lg"></i>
-            </button>
-          </div>
-        </div>
-        <!-- COMMON END FIELDS DIV -->
-
-        <div id="common-end-fields-div">
-          <div class="pl-sm-1 pl-md-3 mb-sm-1 mb-md-3">
-            <div class="form-group col-sm-12 col-md-12 my-0 small">
-              <input class="form-check-input mt-0" formControlName="newsletter" id="newsletter" type="checkbox">
-              <label class="mb-1" for="newsletter">Feliratkozom a hírlevélre. </label>
-            </div>
-
-            <div class="form-group col-sm-12 col-md-12 my-0 small">
-              <input class="form-check-input mt-0" formControlName="termsAndConditions"
-                     id="termsAndConditions"
-                     type="checkbox">
-              <label class="mb-1" for="termsAndConditions">Elolvastam és elfogadom az
-                <a class="nav-link d-inline p-0" href="/terms-and-conditions" target="_blank">Adatvédelmi
-                  Nyilatkozatot</a>*.</label>
-            </div>
-            <small
-              *ngIf="registerForm.get('termsAndConditions').invalid && registerForm.get('termsAndConditions').dirty"
-              class="text-danger-custom col-sm-12 col-md-12">
-              A mező kitöltése közelező!
-            </small>
-          </div>
-
-          <div class="form-group pl-sm-1 pl-md-3">
-            <button (click)="submit()" [disabled]="registerForm.invalid || !isPasswordValid"
-                    class="submit btn btn-primary rounded-pill"
-                    type="submit">
-              Regisztráció
-            </button>
-          </div>
-        </div>
-      </form>
+    <div class="register-div text-left p-sm-3 p-md-3">
+      <app-provider-user *ngIf="!isNormalUser"></app-provider-user>
+      <app-normal-user *ngIf="isNormalUser"></app-normal-user>
     </div>
   </div>
 </div>

@@ -1,6 +1,6 @@
 package com.progmasters.mars.mail;
 
-import com.progmasters.mars.account_institution.account.domain.ProviderAccount;
+import com.progmasters.mars.account_institution.account.domain.User;
 import com.progmasters.mars.account_institution.account.service.AccountService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,8 +32,8 @@ public class MailController {
 
     @PostMapping("new-password")
     public ResponseEntity<Void> newPasswordRequest(@RequestBody String email) {
-        ProviderAccount providerAccount = accountService.findByEmail(email);
-        if (providerAccount != null) {
+        User user = accountService.findByEmail(email);
+        if (user != null) {
             accountService.setNewPassword(email);
             log.info("New password is requested for:" + email);
         } else {

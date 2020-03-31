@@ -2,6 +2,7 @@ package com.progmasters.mars.account_institution.account.controller;
 
 import com.progmasters.mars.account_institution.account.dto.JwtAuthenticationResponse;
 import com.progmasters.mars.account_institution.account.dto.LoginRequest;
+import com.progmasters.mars.account_institution.account.dto.UserCreationCommand;
 import com.progmasters.mars.account_institution.account.security.AuthenticatedUserDetails;
 import com.progmasters.mars.account_institution.account.security.JwtTokenProvider;
 import com.progmasters.mars.account_institution.account.service.AccountService;
@@ -64,5 +65,12 @@ public class UserController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtTokenProvider.generateToken(authentication);
         return new ResponseEntity<>(new JwtAuthenticationResponse(jwt), HttpStatus.OK);
+    }
+
+    @PostMapping
+    public ResponseEntity<UserCreationCommand> createAccount(@RequestBody @Valid UserCreationCommand userCreationCommand) {
+        accountService.save(userCreationCommand);
+        log.info("Normal Account creation requested!");
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 }

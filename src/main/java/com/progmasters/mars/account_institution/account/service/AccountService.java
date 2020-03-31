@@ -4,12 +4,15 @@ import com.progmasters.mars.account_institution.account.confirmationtoken.Confir
 import com.progmasters.mars.account_institution.account.confirmationtoken.ConfirmationTokenRepository;
 import com.progmasters.mars.account_institution.account.domain.ProviderAccount;
 import com.progmasters.mars.account_institution.account.domain.ProviderType;
+import com.progmasters.mars.account_institution.account.domain.User;
 import com.progmasters.mars.account_institution.account.dto.PasswordChangeDetails;
 import com.progmasters.mars.account_institution.account.dto.ProviderAccountCreationCommand;
 import com.progmasters.mars.account_institution.account.dto.ProviderUserDetails;
+import com.progmasters.mars.account_institution.account.dto.UserCreationCommand;
 import com.progmasters.mars.account_institution.account.passwordtoken.PasswordToken;
 import com.progmasters.mars.account_institution.account.passwordtoken.PasswordTokenRepository;
 import com.progmasters.mars.account_institution.account.repository.ProviderAccountRepository;
+import com.progmasters.mars.account_institution.account.repository.UserRepository;
 import com.progmasters.mars.account_institution.account.security.AuthenticatedUserDetails;
 import com.progmasters.mars.account_institution.connector.AccountInstitutionListData;
 import com.progmasters.mars.mail.EmailService;
@@ -28,28 +31,37 @@ import java.util.stream.Collectors;
 public class AccountService {
 
     private ProviderAccountRepository providerAccountRepository;
+    private UserRepository userRepository;
     private BCryptPasswordEncoder passwordEncoder;
     private final ConfirmationTokenRepository confirmationTokenRepository;
     private final PasswordTokenRepository passwordTokenRepository;
     private final EmailService emailService;
 
     public AccountService(ProviderAccountRepository providerAccountRepository,
-                          BCryptPasswordEncoder passwordEncoder,
+                          UserRepository userRepository, BCryptPasswordEncoder passwordEncoder,
                           ConfirmationTokenRepository confirmationTokenRepository,
                           PasswordTokenRepository passwordTokenRepository, EmailService emailService) {
         this.providerAccountRepository = providerAccountRepository;
+        this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.confirmationTokenRepository = confirmationTokenRepository;
         this.passwordTokenRepository = passwordTokenRepository;
         this.emailService = emailService;
     }
 
-    public ProviderAccount save(ProviderAccountCreationCommand providerAccountCreationCommand) {
-        ProviderAccount providerAccount = new ProviderAccount(providerAccountCreationCommand);
-        providerAccount.setPassword(passwordEncoder.encode(providerAccountCreationCommand.getPassword()));
-        providerAccountRepository.save(providerAccount);
-
-        return providerAccount;
+    public User save(UserCreationCommand userCreationCommand) {
+        userCreationCommand.setPassword(passwordEncoder.encode(userCreationCommand.getPassword()));
+        User user;
+        if (userCreationCommand instanceof ProviderAccountCreationCommand) {
+            ProviderAccount providerAccount = new ProviderAccount((ProviderAccountCreationCommand) userCreationCommand);
+            user = providerAccount;
+            providerAccountRepository.save(providerAccount);
+        } else {
+            user = new User(userCreationCommand);
+            userRepository.save(user);
+        }
+        emailService.sendConfirmationEmail(user);
+        return user;
     }
 
     public void removeById(Long id) {
@@ -64,7 +76,12 @@ public class AccountService {
     }
 
     public ProviderUserDetails getProviderAccountByEmail(String loggedInUserEmail) {
-        return new ProviderUserDetails(findByEmail(loggedInUserEmail));
+        ProviderUserDetails providerUserDetails = null;
+        User loggedInUser = findByEmail(loggedInUserEmail);
+        if (loggedInUser instanceof ProviderAccount) {
+            providerUserDetails = new ProviderUserDetails((ProviderAccount) loggedInUser);
+        }
+        return providerUserDetails;
     }
 
     public List<ProviderAccount> getAccountsByType(ProviderType providerType) {
@@ -79,8 +96,8 @@ public class AccountService {
         return providerAccountRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("No account found by given id:\t" + id));
     }
 
-    public ProviderAccount findByEmail(String email) {
-        return providerAccountRepository.findByEmail(email).orElseThrow(() -> new EntityNotFoundException("No account found by given email:\t" + email));
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email).orElseThrow(() -> new EntityNotFoundException("No account found by given email:\t" + email));
     }
 
     List<ProviderAccount> findAllAccounts() {
@@ -96,8 +113,8 @@ public class AccountService {
     }
 
     public boolean isUserConfirmed(String email) {
-        ProviderAccount account = findByEmail(email);
-        return confirmationTokenRepository.findByUser(account).orElseThrow(() -> new EntityNotFoundException("No account found by given email")).isConfirmed();
+        User user = findByEmail(email);
+        return confirmationTokenRepository.findByUser(user).orElseThrow(() -> new EntityNotFoundException("No account found by given email")).isConfirmed();
     }
 
     public List<ConfirmationToken> findAllConfirmationToken() {
@@ -151,11 +168,15 @@ public class AccountService {
 
     public void updatePassword(String token, String newPassword) {
         PasswordToken passwordToken = passwordTokenRepository.findByToken(token);
-        ProviderAccount providerAccount = passwordToken.getUser();
-        providerAccount.setPassword(passwordEncoder.encode(newPassword));
+        User user = passwordToken.getUser();
+        user.setPassword(passwordEncoder.encode(newPassword));
         if (passwordToken != null) {
             passwordTokenRepository.delete(passwordToken);
-            providerAccountRepository.save(providerAccount);
+            if (user instanceof ProviderAccount) {
+                providerAccountRepository.save((ProviderAccount) user);
+            } else {
+                userRepository.save(user);
+            }
         } else {
             throw new EntityNotFoundException("not valid password reset link");
         }

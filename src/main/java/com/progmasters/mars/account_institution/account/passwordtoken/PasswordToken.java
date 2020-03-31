@@ -1,6 +1,6 @@
 package com.progmasters.mars.account_institution.account.passwordtoken;
 
-import com.progmasters.mars.account_institution.account.domain.ProviderAccount;
+import com.progmasters.mars.account_institution.account.domain.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -31,9 +31,9 @@ public class PasswordToken {
 
     @JoinColumn(name = "user_id")
     @OneToOne
-    private ProviderAccount user;
+    private User user;
 
-    public PasswordToken(ProviderAccount user) {
+    public PasswordToken(User user) {
         this.user = user;
     }
 }

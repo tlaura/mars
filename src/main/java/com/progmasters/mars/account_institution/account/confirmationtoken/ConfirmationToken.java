@@ -1,6 +1,6 @@
 package com.progmasters.mars.account_institution.account.confirmationtoken;
 
-import com.progmasters.mars.account_institution.account.domain.ProviderAccount;
+import com.progmasters.mars.account_institution.account.domain.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -31,11 +31,11 @@ public class ConfirmationToken {
 
     @JoinColumn(name = "user_id")
     @OneToOne
-    private ProviderAccount user;
+    private User user;
 
     private boolean confirmed = false;
 
-    public ConfirmationToken(ProviderAccount user) {
+    public ConfirmationToken(User user) {
         this.user = user;
     }
 
