@@ -141,6 +141,5 @@ export function getToken(): string {
   bootstrap: [AppComponent]
 })
 
-
 export class AppModule {
 }
