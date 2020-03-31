@@ -2,6 +2,7 @@ package com.progmasters.mars.account_institution.account.confirmationtoken;
 
 import com.progmasters.mars.account_institution.account.domain.ProviderAccount;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -12,6 +13,7 @@ import java.util.UUID;
 @Table(name = "confirmation_token")
 @Getter
 @Setter
+@NoArgsConstructor
 public class ConfirmationToken {
 
     @Id
@@ -33,54 +35,13 @@ public class ConfirmationToken {
 
     private boolean confirmed = false;
 
-    public ConfirmationToken() {
-    }
-
     public ConfirmationToken(ProviderAccount user) {
         this.user = user;
     }
-
-    //----------------------
-
-//    public Long getId() {
-//        return id;
-//    }
-//
-//    public void setId(Long id) {
-//        this.id = id;
-//    }
-//
-//    public String getToken() {
-//        return token;
-//    }
-//
-//    public void setToken(String token) {
-//        this.token = token;
-//    }
-//
-//    public LocalDateTime getDate() {
-//        return date;
-//    }
-//
-//    public void setDate(LocalDateTime date) {
-//        this.date = date;
-//    }
-
 
     public boolean isConfirmed() {
         return confirmed;
     }
 
-//    public void setConfirmed(boolean confirmed) {
-//        this.confirmed = confirmed;
-//    }
-//
-//    public ProviderAccount getUser() {
-//        return user;
-//    }
-//
-//    public void setUser(ProviderAccount user) {
-//        this.user = user;
-//    }
 
 }

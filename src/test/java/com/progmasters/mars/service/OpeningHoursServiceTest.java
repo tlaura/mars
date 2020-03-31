@@ -1,7 +1,6 @@
 package com.progmasters.mars.service;
 
 import com.google.maps.errors.NotFoundException;
-import com.progmasters.mars.account_institution.institution.InstitutionBuilder;
 import com.progmasters.mars.account_institution.institution.domain.Institution;
 import com.progmasters.mars.account_institution.institution.dto.InstitutionCreationCommand;
 import com.progmasters.mars.account_institution.institution.openinghours.dto.OpeningHoursCreationCommand;
@@ -41,9 +40,10 @@ public class OpeningHoursServiceTest {
     @BeforeEach
     public void init() {
         InstitutionCreationCommand institutionCreationCommand = createInstitution();
+        Institution institution = new Institution(institutionCreationCommand);
         this.openingHoursList = createOpeningHoursList();
         try {
-            institutionService.saveInstitution(institutionCreationCommand);
+            institutionService.saveInstitution(institution);
         } catch (NotFoundException e) {
             e.printStackTrace();
         }
@@ -73,16 +73,16 @@ public class OpeningHoursServiceTest {
 
     private InstitutionCreationCommand createInstitution() {
 
-        return new InstitutionBuilder().setName("ElzaTestInstitution")
-                .setEmail("test@test.com")
-                .setZipcode(3700)
-                .setCity("Kazincbarcika")
-                .setAddress("Május 1 út 12.")
-                .setDescription("This is a small test description for institution.")
-                .setPhone("+36303334444")
-                .setWebsite("www.test.com")
-                .setOpeningHoursCreationCommands(new ArrayList<>())
-                .buildInstitutionCreationCommand();
-
+        return InstitutionCreationCommand.builder()
+                .name("ElzaTestInstitution")
+                .email("test@test.com")
+                .zipcode(3700)
+                .city("Kazincbarcika")
+                .address("Május 1 út 12.")
+                .description("This is a small test description for institution.")
+                .phone("+36303334444")
+                .website("www.test.com")
+                .openingHours(new ArrayList<>())
+                .build();
     }
 }

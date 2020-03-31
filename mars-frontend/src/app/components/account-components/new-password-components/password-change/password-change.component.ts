@@ -6,6 +6,7 @@ import {Router} from "@angular/router";
 import {AccountService} from "../../../../services/account.service";
 import {PasswordChangeDetailsModel} from "../../../../models/passwordChangeDetails.model";
 import {AuthenticationService} from "../../../../services/auth/authentication.service";
+import decode from 'jwt-decode';
 
 @Component({
   selector: 'app-password-change',
@@ -23,7 +24,6 @@ export class PasswordChangeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loggedInUser = this.authenticationService.currentUserValue.name;
     this.passwordChangeForm = this.formBuilder.group({
       oldPassword: ['', [Validators.required, Validators.pattern(validatorBounds.passwordRegex)]],
       password: ['', [Validators.required, Validators.pattern(validatorBounds.passwordRegex)]],
@@ -34,7 +34,12 @@ export class PasswordChangeComponent implements OnInit {
   changePassword() {
     if (this.passwordChangeForm.valid) {
       const passwordChange: PasswordChangeDetailsModel = this.passwordChangeForm.value;
-      passwordChange.email = this.loggedInUser;
+      const token = localStorage.getItem('token');
+      if (token) {
+        const tokenPayload = decode(token);
+        this.loggedInUser = tokenPayload.sub;
+        passwordChange.email = this.loggedInUser;
+      }
 
       this.accountService.updatePassword(passwordChange).subscribe(
         () => {

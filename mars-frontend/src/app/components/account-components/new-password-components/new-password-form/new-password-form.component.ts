@@ -29,7 +29,6 @@ export class NewPasswordFormComponent implements OnInit {
 
   submit() {
     const password: string = this.passwordFormGroup.get('password').value;
-    debugger;
     this.mailService.updatePassword(this.token, password).subscribe(
       () => {
         this.router.navigate(["new-password-success"]);

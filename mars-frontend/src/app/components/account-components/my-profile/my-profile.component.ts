@@ -7,6 +7,7 @@ import {InstitutionTypeModel} from "../../../models/InstitutionType.model";
 import {InstitutionService} from "../../../services/institution.service";
 import {Router} from "@angular/router";
 import {AuthenticationService} from "../../../services/auth/authentication.service";
+import decode from 'jwt-decode';
 
 @Component({
   selector: 'app-my-profile',
@@ -21,12 +22,9 @@ export class MyProfileComponent implements OnInit {
   @Input() name: string;
   @Output() focusOut: EventEmitter<any> = new EventEmitter<any>();
 
-  // editGroup = new FormGroup({
   username = new FormControl('', Validators.required);
   providerServiceName = new FormControl('', Validators.required);
   phone = new FormControl('', [Validators.required, Validators.pattern(validatorBounds.phoneRegex)]);
-  // types = new FormControl(null, [Validators.required, Validators.minLength(1)]);
-  // });
 
   allTypes: Array<InstitutionTypeModel> = [];
 
@@ -41,7 +39,12 @@ export class MyProfileComponent implements OnInit {
   };
 
   ngOnInit(): void {
-    this.loggedInUser = this.authenticationService.currentUserValue.name;
+    if (!this.authenticationService.currentUserValue.token) {
+      this.router.navigate(['login']);
+    }
+    const tokenPayload = decode(this.authenticationService.currentUserValue.token);
+    this.loggedInUser = tokenPayload.sub;
+
     this.providerService.fetchProviderAccountDetails(this.loggedInUser).subscribe(
       (providerDetails: ProviderUserProfileDetailsModel) => {
         this.providerAccount = providerDetails;

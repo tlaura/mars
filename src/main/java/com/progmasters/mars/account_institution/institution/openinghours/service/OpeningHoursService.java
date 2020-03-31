@@ -31,12 +31,16 @@ public class OpeningHoursService {
         return openingHoursRepository.getOpeningHoursByInstitutionId(id).stream().map(OpeningHoursData::new).collect(Collectors.toList());
     }
 
-    private void updateAndSave(OpeningHours openingHours, Institution institution) {
-        openingHours.setInstitution(institution);
-        openingHoursRepository.save(openingHours);
-    }
+//    private void updateAndSave(OpeningHours openingHours, Institution institution) {
+//        openingHours.setInstitution(institution);
+//        openingHoursRepository.save(openingHours);
+//    }
 
     public List<OpeningHours> findAll() {
         return openingHoursRepository.findAll();
+    }
+
+    public void removeOpeningHours(OpeningHours openingHours) {
+        openingHoursRepository.delete(openingHours);
     }
 }

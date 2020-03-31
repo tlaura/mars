@@ -19,10 +19,14 @@
         <div class="dropdown-menu">
           <a class="dropdown-item" routerLink="institution-form" routerLinkActive="active">Intézmény
             hozzáadása</a>
-          <div *ngIf="isAdmin" class="dropdown-divider">
-            <a class="dropdown-item" routerLink="institution-import"
-               routerLinkActive="active">Intézmények
-              importálása</a></div>
+
+
+          <a *ngIf="isAdmin" class="dropdown-item" routerLink="institution-import"
+             routerLinkActive="active">Intézmények
+            importálása</a>
+          <a *ngIf="isAdmin" class="dropdown-item" routerLink="evaluate-list"
+             routerLinkActive="active">Intézmények
+            elbírálása</a>
         </div>
       </li>
 
@@ -37,7 +41,7 @@
       <li *ngIf="isUserLoggedIn" class="nav-item font-weight-lighter mx-3"><a class="nav-link"
                                                                               routerLink="my-profile"
                                                                               routerLinkActive="active">
-        {{profileName}} profilja</a>
+        Profilom</a>
       </li>
       <li *ngIf="isUserLoggedIn" class="nav-item font-weight-lighter mx-3">
         <a (click)="logout()" class="nav-link" routerLinkActive="active" style="cursor:pointer">

@@ -5,6 +5,7 @@ import {InstitutionTypeModel} from "../models/InstitutionType.model";
 import {InstitutionDetailModel} from "../models/institutionDetail.model";
 import {environment} from "../../environments/environment";
 import {Institution} from "../models/institution";
+import {InstitutionListModel} from "../models/institutionList.model";
 
 @Injectable({
   providedIn: 'root'
@@ -31,5 +32,13 @@ export class InstitutionService {
 
   import = (importData: any) => {
     return this.http.post(this.BASE_URL + 'import', importData)
+  };
+
+  getEvaluationList = (): Observable<Array<InstitutionListModel>> => {
+    return this.http.get<Array<InstitutionListModel>>(this.BASE_URL + "evaluationList");
+  };
+
+  evalueateInstitution = (accepted: boolean, id: number): Observable<any> => {
+    return this.http.get(this.BASE_URL + "evaluate/" + id + "?accepted=" + accepted);
   };
 }

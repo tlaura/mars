@@ -139,7 +139,9 @@ public class AccountService {
         providerAccount.setNewsletter(providerUserDetails.getNewsletter());
         providerAccount.setAgeGroupMin(providerUserDetails.getAgeGroupMin());
         providerAccount.setAgeGroupMax(providerUserDetails.getAgeGroupMax());
-//        providerAccount.setTypes(providerUserDetails.getTypes().stream().map(InstitutionType::valueOf).collect(Collectors.toList()));
+        if (!providerUserDetails.getTypes().isEmpty()) {
+            providerAccount.setTypes(providerUserDetails.getTypes().stream().map(ProviderType::getTypeByHungarianName).collect(Collectors.toList()));
+        }
     }
 
     public void setNewPassword(String email) {

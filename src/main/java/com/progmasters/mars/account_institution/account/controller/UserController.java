@@ -1,12 +1,17 @@
 package com.progmasters.mars.account_institution.account.controller;
 
+import com.progmasters.mars.account_institution.account.dto.JwtAuthenticationResponse;
+import com.progmasters.mars.account_institution.account.dto.LoginRequest;
 import com.progmasters.mars.account_institution.account.dto.UserCreationCommand;
 import com.progmasters.mars.account_institution.account.security.AuthenticatedUserDetails;
+import com.progmasters.mars.account_institution.account.security.JwtTokenProvider;
 import com.progmasters.mars.account_institution.account.service.AccountService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,10 +26,15 @@ import javax.validation.Valid;
 public class UserController {
 
     private final AccountService accountService;
+    private AuthenticationManager authenticationManager;
+    private JwtTokenProvider jwtTokenProvider;
 
     @Autowired
-    public UserController(AccountService accountService) {
+    public UserController(AccountService accountService, AuthenticationManager authenticationManager, JwtTokenProvider jwtTokenProvider) {
         this.accountService = accountService;
+        this.authenticationManager = authenticationManager;
+        this.jwtTokenProvider = jwtTokenProvider;
+
     }
 
     @GetMapping("/login")
@@ -35,7 +45,7 @@ public class UserController {
 
         AuthenticatedUserDetails authenticatedUserDetails = accountService.getAuthenticatedUserDetails(user.getUsername());
         ResponseEntity<AuthenticatedUserDetails> responseEntity;
-        if (accountService.isUserConfirmed(authenticatedUserDetails.getName())) {
+        if (accountService.isUserConfirmed(authenticatedUserDetails.getEmail())) {
             responseEntity = new ResponseEntity<>(authenticatedUserDetails, HttpStatus.OK);
         } else {
             responseEntity = new ResponseEntity<>(HttpStatus.FORBIDDEN);
@@ -43,7 +53,21 @@ public class UserController {
         return responseEntity;
     }
 
-    @PostMapping()
+    @PostMapping("/login")
+    public ResponseEntity<JwtAuthenticationResponse> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
+        log.info("Login requested");
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        loginRequest.getEmail(),
+                        loginRequest.getPassword()
+                )
+        );
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        String jwt = jwtTokenProvider.generateToken(authentication);
+        return new ResponseEntity<>(new JwtAuthenticationResponse(jwt), HttpStatus.OK);
+    }
+
+    @PostMapping
     public ResponseEntity<UserCreationCommand> createAccount(@RequestBody @Valid UserCreationCommand userCreationCommand) {
         //TODO: save account
         log.info("Normal Account creation requested!");

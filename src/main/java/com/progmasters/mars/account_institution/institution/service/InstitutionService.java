@@ -4,7 +4,6 @@ import com.google.maps.errors.NotFoundException;
 import com.progmasters.mars.account_institution.account.domain.ProviderAccount;
 import com.progmasters.mars.account_institution.account.domain.ProviderType;
 import com.progmasters.mars.account_institution.institution.domain.Institution;
-import com.progmasters.mars.account_institution.institution.dto.InstitutionCreationCommand;
 import com.progmasters.mars.account_institution.institution.dto.InstitutionDetailsData;
 import com.progmasters.mars.account_institution.institution.dto.InstitutionListData;
 import com.progmasters.mars.account_institution.institution.location.GeoLocation;
@@ -70,10 +69,11 @@ public class InstitutionService {
         return new InstitutionDetailsData(findById(id));
     }
 
-    public Institution saveInstitution(InstitutionCreationCommand institutionCreationCommand) throws NotFoundException {
-        String address = institutionCreationCommand.getZipcode() + " " + institutionCreationCommand.getCity() + " " + institutionCreationCommand.getAddress();
+    public Institution saveInstitution(Institution institution) throws NotFoundException {
+        String address = institution.getZipcode() + " " + institution.getCity() + " " + institution.getAddress();
         GeoLocation geoLocation = getGeoLocationByAddress(address);
-        Institution institution = new Institution(institutionCreationCommand, geoLocation);
+        institution.setLatitude(geoLocation.getLatitude());
+        institution.setLongitude(geoLocation.getLongitude());
         institutionRepository.save(institution);
         return institution;
     }
