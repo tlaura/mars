@@ -186,11 +186,7 @@
             </div>
           </div>
         </div>
-        <!--      <div class="fixed-bottom">-->
-        <button (click)="confirmDeletion()" class="btn btn-secondary float-right" type="button">Fiók törlése</button>
-        <!--      </div>-->
       </div>
-
 
       <button (click)="saveChanges()" *ngIf="editMode"
               [disabled]="username.invalid || providerServiceName.invalid || phone.invalid || providerAccount.ageGroupMin < 0 ||providerAccount.ageGroupMax > 99"
@@ -198,7 +194,13 @@
               type="submit">
         Mentés
       </button>
-    </div>
 
+      <div *ngIf="editMode" class="delete-profile-div-container">
+        <button (click)="confirmDeletion()" class="btn btn-secondary float-right rounded-pill" type="button">Fiók
+          törlése
+        </button>
+      </div>
+
+    </div>
   </div>
 </div>

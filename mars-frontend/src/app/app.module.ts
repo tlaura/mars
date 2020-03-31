@@ -50,6 +50,7 @@ import {NormalUserComponent} from "./components/account-components/registration-
 import {ProviderUserComponent} from "./components/account-components/registration-components/register/provider-user/provider-user.component";
 import {UserAttributesComponent} from "./components/form-elements-components/user-attributes/user-attributes.component";
 import {ConfirmDeletionComponent} from './components/account-components/confirm-deletion/confirm-deletion.component';
+import {DeletionSuccessComponent} from './components/account-components/deletion-success/deletion-success.component';
 
 export function getAuthServiceConfigs() {
   let config = new SocialServiceConfig()
@@ -102,6 +103,7 @@ export function getToken(): string {
     EvaluateListComponent,
     UserAttributesComponent,
     ConfirmDeletionComponent,
+    DeletionSuccessComponent,
   ],
   imports: [
     BrowserModule,
