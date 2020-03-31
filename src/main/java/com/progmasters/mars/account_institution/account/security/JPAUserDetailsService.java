@@ -32,12 +32,10 @@ public class JPAUserDetailsService implements UserDetailsService {
 //        com.progmasters.mars.domain.User user = individualUserRepository.findByEmail(username);
         User user = userRepository.findByEmail(username).orElseThrow(() -> new EntityNotFoundException("No account found"));
 
-
         List<GrantedAuthority> authorities = AuthorityUtils
                 .createAuthorityList(user.getRole().toString());
 
         return UserPrincipal.create(user);
-
     }
 
 }

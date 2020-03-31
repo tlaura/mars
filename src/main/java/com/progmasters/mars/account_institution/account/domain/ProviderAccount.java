@@ -47,7 +47,6 @@ public class ProviderAccount extends User {
     @OneToMany(mappedBy = "providerAccount")
     private List<AccountInstitutionConnector> accountInstitutionConnectors;
 
-
     public ProviderAccount(ProviderAccountCreationCommand providerAccountCreationCommand) {
         this.providerServiceName = providerAccountCreationCommand.getProviderServiceName();
         super.setPassword(providerAccountCreationCommand.getPassword());

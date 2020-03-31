@@ -14,6 +14,7 @@ import com.progmasters.mars.account_institution.account.passwordtoken.PasswordTo
 import com.progmasters.mars.account_institution.account.repository.ProviderAccountRepository;
 import com.progmasters.mars.account_institution.account.repository.UserRepository;
 import com.progmasters.mars.account_institution.account.security.AuthenticatedUserDetails;
+import com.progmasters.mars.account_institution.connector.AccountInstitutionConnectorRepository;
 import com.progmasters.mars.account_institution.connector.AccountInstitutionListData;
 import com.progmasters.mars.mail.EmailService;
 import org.springframework.security.crypto.bcrypt.BCrypt;
@@ -36,17 +37,21 @@ public class AccountService {
     private final ConfirmationTokenRepository confirmationTokenRepository;
     private final PasswordTokenRepository passwordTokenRepository;
     private final EmailService emailService;
+    private AccountInstitutionConnectorRepository accountInstitutionConnectorRepository;
 
     public AccountService(ProviderAccountRepository providerAccountRepository,
                           UserRepository userRepository, BCryptPasswordEncoder passwordEncoder,
                           ConfirmationTokenRepository confirmationTokenRepository,
-                          PasswordTokenRepository passwordTokenRepository, EmailService emailService) {
+                          PasswordTokenRepository passwordTokenRepository,
+                          EmailService emailService,
+                          AccountInstitutionConnectorRepository accountInstitutionConnectorRepository) {
         this.providerAccountRepository = providerAccountRepository;
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.confirmationTokenRepository = confirmationTokenRepository;
         this.passwordTokenRepository = passwordTokenRepository;
         this.emailService = emailService;
+        this.accountInstitutionConnectorRepository = accountInstitutionConnectorRepository;
     }
 
     public User save(UserCreationCommand userCreationCommand) {
@@ -207,8 +212,9 @@ public class AccountService {
         Optional<ProviderAccount> optionalAccount = providerAccountRepository.findByEmail(loggedInUser);
         if (optionalAccount.isPresent()) {
             ProviderAccount providerAccount = optionalAccount.get();
+            Long id = providerAccount.getId();
             providerAccount.setTypes(null);
-            providerAccount.setAccountInstitutionConnectors(null);
+            accountInstitutionConnectorRepository.removeAllByProviderAccountId(id);
             providerAccountRepository.delete(providerAccount);
             isDeleted = true;
         } else {
