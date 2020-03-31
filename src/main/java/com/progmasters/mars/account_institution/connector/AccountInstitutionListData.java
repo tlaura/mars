@@ -7,6 +7,7 @@ import com.progmasters.mars.account_institution.account.dto.ProviderUserDetails;
 import com.progmasters.mars.account_institution.institution.domain.Institution;
 import com.progmasters.mars.account_institution.institution.dto.InstitutionDetailsData;
 import com.progmasters.mars.account_institution.institution.openinghours.dto.OpeningHoursData;
+import com.progmasters.mars.map.dto.DistanceData;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -59,6 +60,8 @@ public class AccountInstitutionListData {
 
     private String website;
 
+    private DistanceData distanceData;
+
     public AccountInstitutionListData(Institution institution) {
 
         this.id = institution.getId();
@@ -108,5 +111,9 @@ public class AccountInstitutionListData {
         } else {
             this.accountType = AccountType.PROVIDER.toString();
         }
+    }
+
+    public void setDistanceData(DistanceData distanceData) {
+        this.distanceData = distanceData;
     }
 }

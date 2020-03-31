@@ -1,8 +1,8 @@
 package com.progmasters.mars.service;
 
 import com.google.maps.errors.NotFoundException;
-import com.progmasters.mars.account_institution.institution.location.GeoLocation;
-import com.progmasters.mars.account_institution.institution.location.GeocodeService;
+import com.progmasters.mars.map.MapService;
+import com.progmasters.mars.map.dto.GeoLocationData;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,17 +15,17 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @Rollback
 @AutoConfigureTestDatabase
-public class GeoLocationTest {
+public class GeoLocationDataTest {
 
     @Autowired
-    private GeocodeService geocodeService;
+    private MapService mapService;
 
 
     @Test
     public void getGeoLocationTest() throws NotFoundException {
         String address = "1089 Budapest Orczy út 43";
-        GeoLocation geoLocation = geocodeService.getGeoLocation(address);
+        GeoLocationData geoLocationData = mapService.getGeoLocation(address);
 
-        Assertions.assertNotNull(geoLocation);
+        Assertions.assertNotNull(geoLocationData);
     }
 }

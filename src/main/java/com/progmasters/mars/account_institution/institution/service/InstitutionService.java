@@ -6,9 +6,9 @@ import com.progmasters.mars.account_institution.account.domain.ProviderType;
 import com.progmasters.mars.account_institution.institution.domain.Institution;
 import com.progmasters.mars.account_institution.institution.dto.InstitutionDetailsData;
 import com.progmasters.mars.account_institution.institution.dto.InstitutionListData;
-import com.progmasters.mars.account_institution.institution.location.GeoLocation;
-import com.progmasters.mars.account_institution.institution.location.GeocodeService;
 import com.progmasters.mars.account_institution.institution.repository.InstitutionRepository;
+import com.progmasters.mars.map.MapService;
+import com.progmasters.mars.map.dto.GeoLocationData;
 import com.progmasters.mars.util.ExcelFileLoader;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,12 +26,12 @@ import java.util.stream.Collectors;
 public class InstitutionService {
 
     private final InstitutionRepository institutionRepository;
-    private final GeocodeService geocodeService;
+    private final MapService mapService;
 
     @Autowired
-    public InstitutionService(InstitutionRepository institutionRepository, GeocodeService geocodeService) {
+    public InstitutionService(InstitutionRepository institutionRepository, MapService mapService) {
         this.institutionRepository = institutionRepository;
-        this.geocodeService = geocodeService;
+        this.mapService = mapService;
     }
 
     public List<InstitutionListData> getInstitutionList() {
@@ -71,15 +71,15 @@ public class InstitutionService {
 
     public Institution saveInstitution(Institution institution) throws NotFoundException {
         String address = institution.getZipcode() + " " + institution.getCity() + " " + institution.getAddress();
-        GeoLocation geoLocation = getGeoLocationByAddress(address);
-        institution.setLatitude(geoLocation.getLatitude());
-        institution.setLongitude(geoLocation.getLongitude());
+        GeoLocationData geoLocationData = getGeoLocationByAddress(address);
+        institution.setLatitude(geoLocationData.getLatitude());
+        institution.setLongitude(geoLocationData.getLongitude());
         institutionRepository.save(institution);
         return institution;
     }
 
-    private GeoLocation getGeoLocationByAddress(String address) throws NotFoundException {
-        return geocodeService.getGeoLocation(address);
+    private GeoLocationData getGeoLocationByAddress(String address) throws NotFoundException {
+        return mapService.getGeoLocation(address);
     }
 
     public Institution findById(Long id) {
@@ -92,8 +92,8 @@ public class InstitutionService {
             List<ExcelFileLoader> rows = ExcelFileLoader.getRowList(workbook);
             for (ExcelFileLoader row : rows) {
                 String address = row.getZipcode() + " " + row.getCity() + " " + row.getAddress();
-                GeoLocation geoLocation = getGeoLocationByAddress(address);
-                Institution institution = new Institution(row, geoLocation);
+                GeoLocationData geoLocationData = getGeoLocationByAddress(address);
+                Institution institution = new Institution(row, geoLocationData);
                 if (institutionRepository.findAllByName(institution.getName()).isEmpty()
                         && institutionRepository.findAllByEmail(institution.getEmail()).isEmpty()) {
                     institutionRepository.save(institution);
@@ -111,4 +111,5 @@ public class InstitutionService {
     public Institution findByName(String name) {
         return institutionRepository.findByName(name).orElseThrow(() -> new EntityNotFoundException("no such entity found with given name"));
     }
+
 }

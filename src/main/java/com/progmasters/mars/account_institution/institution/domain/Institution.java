@@ -2,8 +2,8 @@ package com.progmasters.mars.account_institution.institution.domain;
 
 import com.progmasters.mars.account_institution.connector.AccountInstitutionConnector;
 import com.progmasters.mars.account_institution.institution.dto.InstitutionCreationCommand;
-import com.progmasters.mars.account_institution.institution.location.GeoLocation;
 import com.progmasters.mars.account_institution.institution.openinghours.domain.OpeningHours;
+import com.progmasters.mars.map.dto.GeoLocationData;
 import com.progmasters.mars.util.ExcelFileLoader;
 import lombok.*;
 
@@ -39,10 +39,10 @@ public class Institution extends TempInstitution {
         super.setWebsite(institutionCreationCommand.getWebsite());
     }
 
-    public Institution(InstitutionCreationCommand institutionCreationCommand, GeoLocation geoLocation) {
+    public Institution(InstitutionCreationCommand institutionCreationCommand, GeoLocationData geoLocationData) {
         this(institutionCreationCommand);
-        super.setLongitude(geoLocation.getLongitude());
-        super.setLatitude(geoLocation.getLatitude());
+        super.setLongitude(geoLocationData.getLongitude());
+        super.setLatitude(geoLocationData.getLatitude());
 
     }
 
@@ -58,7 +58,7 @@ public class Institution extends TempInstitution {
         this.openingHours = confirmationInstitution.getOpeningHours();
     }
 
-    public Institution(ExcelFileLoader parsedFile, GeoLocation geoLocation) {
+    public Institution(ExcelFileLoader parsedFile, GeoLocationData geoLocationData) {
         super.setName(parsedFile.getName());
         super.setZipcode(parsedFile.getZipcode());
         super.setCity(parsedFile.getCity());
@@ -67,7 +67,7 @@ public class Institution extends TempInstitution {
         super.setDescription(parsedFile.getDescription());
         super.setPhone(parsedFile.getPhone());
         super.setWebsite(parsedFile.getWebsite());
-        super.setLongitude(geoLocation.getLongitude());
-        super.setLatitude(geoLocation.getLatitude());
+        super.setLongitude(geoLocationData.getLongitude());
+        super.setLatitude(geoLocationData.getLatitude());
     }
 }

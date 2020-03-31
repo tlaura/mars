@@ -10,6 +10,7 @@ import com.progmasters.mars.account_institution.institution.dto.InstitutionListD
 import com.progmasters.mars.account_institution.institution.dto.InstitutionTypeData;
 import com.progmasters.mars.account_institution.institution.service.ConfirmationInstitutionService;
 import com.progmasters.mars.account_institution.institution.service.InstitutionService;
+import com.progmasters.mars.map.MapService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,6 +33,9 @@ public class InstitutionController {
     private InstitutionValidator institutionValidator;
     private final ConfirmationInstitutionService confirmationInstitutionService;
     private final AccountInstitutionService accountInstitutionService;
+
+    @Autowired
+    private MapService mapService;
 
     @Autowired
     public InstitutionController(InstitutionService institutionService,
