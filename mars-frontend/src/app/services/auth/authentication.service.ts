@@ -58,10 +58,8 @@ export class AuthenticationService {
 
   isAdmin() {
     const token = localStorage.getItem('token');
-    debugger;
     if (token) {
       const tokenPayload = decode(token);
-      debugger;
       return tokenPayload.role === 'ROLE_ADMIN';
     }
     return false;
