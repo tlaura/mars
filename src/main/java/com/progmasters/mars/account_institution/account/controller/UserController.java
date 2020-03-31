@@ -34,7 +34,6 @@ public class UserController {
         this.accountService = accountService;
         this.authenticationManager = authenticationManager;
         this.jwtTokenProvider = jwtTokenProvider;
-
     }
 
     @GetMapping("/login")
@@ -72,5 +71,15 @@ public class UserController {
         accountService.save(userCreationCommand);
         log.info("Normal Account creation requested!");
         return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/delete/{loggedInUser}")
+    public ResponseEntity<String> deleteUser(@PathVariable String loggedInUser) {
+        boolean isAccountDeleted = accountService.deleteUser(loggedInUser);
+        if (isAccountDeleted) {
+            return new ResponseEntity<>("Account deleted", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("User not found", HttpStatus.BAD_REQUEST);
+        }
     }
 }

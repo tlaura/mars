@@ -29,6 +29,9 @@ export class ConfirmDeletionComponent implements OnInit {
         console.log("user deleted");
         localStorage.clear();
       },
+      (error) => {
+        console.warn(error);
+      }
     );
     this.router.navigate(['deletion-success']);
   }

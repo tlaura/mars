@@ -56,6 +56,6 @@ export class AccountService {
   };
 
   deleteAccount(loggedInUser: string) {
-    return this.http.delete(this.BASE_URL + '/user/delete');
+    return this.http.delete(this.BASE_URL + '/user/delete/' + loggedInUser);
   }
 }

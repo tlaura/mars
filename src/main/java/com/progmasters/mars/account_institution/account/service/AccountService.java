@@ -200,4 +200,24 @@ public class AccountService {
         }
         return isChangeConfirmed;
     }
+
+    public boolean deleteUser(String loggedInUser) {
+        boolean isDeleted = false;
+        Optional<ProviderAccount> optionalAccount = providerAccountRepository.findByEmail(loggedInUser);
+        if (optionalAccount.isPresent()) {
+            ProviderAccount providerAccount = optionalAccount.get();
+            providerAccount.setTypes(null);
+            providerAccount.setAccountInstitutionConnectors(null);
+            providerAccountRepository.delete(providerAccount);
+            isDeleted = true;
+        } else {
+            Optional<User> optionalUser = userRepository.findByEmail(loggedInUser);
+            if (optionalUser.isPresent()) {
+                User user = optionalUser.get();
+                userRepository.delete(user);
+                isDeleted = true;
+            }
+        }
+        return isDeleted;
+    }
 }
