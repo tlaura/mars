@@ -27,7 +27,6 @@ import java.util.stream.Collectors;
 @Service
 @Transactional
 public class AccountService {
-
     private ProviderAccountRepository providerAccountRepository;
     private UserRepository userRepository;
     private BCryptPasswordEncoder passwordEncoder;

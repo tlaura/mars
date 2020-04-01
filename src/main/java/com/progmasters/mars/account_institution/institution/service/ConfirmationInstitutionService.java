@@ -49,6 +49,4 @@ public class ConfirmationInstitutionService {
     public void delete(ConfirmationInstitution confirmationInstitution) {
         confirmationInstitutionRepository.delete(confirmationInstitution);
     }
-
-
 }
