@@ -38,8 +38,8 @@ public class ContactController {
 
     @GetMapping("/history")
     public ResponseEntity<List<MessageData>> getChatHistory(@RequestParam("fromEmail") String fromEmail, @RequestParam("toEmail") String toEmail) {
-        chatService.getChatHistory(fromEmail, toEmail);
+        List<MessageData> chatHistory = chatService.getChatHistory(fromEmail, toEmail);
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(chatHistory, HttpStatus.OK);
     }
 }
