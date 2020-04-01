@@ -39,7 +39,7 @@
       <li *ngIf="isUserLoggedIn" class="nav-item font-weight-lighter mx-3"><a class="nav-link"
                                                                               routerLink="my-profile"
                                                                               routerLinkActive="active">
-        Profilom</a>
+        {{currentUser.name}} profilja</a>
       </li>
       <li *ngIf="isUserLoggedIn" class="nav-item font-weight-lighter mx-3">
         <a (click)="logout()" class="nav-link" routerLinkActive="active" style="cursor:pointer">

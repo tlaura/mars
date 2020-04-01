@@ -73,14 +73,12 @@ export class AuthenticationService {
     const token = localStorage.getItem('token');
     let user: User = null;
     if (token) {
-      user = {
-        email: '',
-        name: ''
-      };
       const tokenPayload = decode(token);
-      user.email = tokenPayload.sub;
-      user.name = tokenPayload.name;
-      //TODO: check token fields...
+      user = {
+        email: tokenPayload.sub,
+        name: tokenPayload.name
+      };
+      debugger;
     }
     return user;
   }

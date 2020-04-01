@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {AuthenticationService} from "../../services/auth/authentication.service";
+import {User} from "../../models/chat/user";
 
 @Component({
   selector: 'app-navbar',
@@ -11,12 +12,14 @@ export class NavbarComponent implements OnInit {
   profileName: string = '';
   isAdmin: boolean = false;
   isUserLoggedIn: boolean = false;
+  currentUser: User;
 
   constructor(public authenticationService: AuthenticationService, private router: Router) {
     this.authenticationService.currentToken.subscribe(
       () => {
         this.isUserLoggedIn = authenticationService.isAuthenticated();
         this.isAdmin = authenticationService.isAdmin();
+        this.currentUser = this.authenticationService.getCurrentUser();
       });
   }
 
