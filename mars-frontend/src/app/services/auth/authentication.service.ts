@@ -22,8 +22,10 @@ export class AuthenticationService {
     this.currentUser = this.currentUserSubject.asObservable();
     this.currentUser.subscribe(
       user => {
-        if (this.jwtHelper.isTokenExpired(user.token)) {
-          this.logout();
+        if (user) {
+          if (this.jwtHelper.isTokenExpired(user.token)) {
+            this.logout();
+          }
         }
       }
     )

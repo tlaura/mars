@@ -17,34 +17,24 @@
   </div>
 
   <div class="col-sm-12 col-md-6 offset-md-3">
-    <form [formGroup]="ageRangeGroup">
       <div class="row m-0">
-        <div class="form-group">
+        <div class="form-group row mx-0 mb-sm-3">
           <label class="white-label" for="age">Kor:</label>
-          <select class="form-control-sm rounded-pill select-tomato"
-                  formControlName="age"
+          <select (change)="setAge(age)" [(ngModel)]="age" class="form-control-sm rounded-pill select-tomato mr-2"
                   id="age"
                   name="age">
             <option *ngFor="let age of getAgesArray(99), let i = index" value="{{i}}">{{i}}</option>
           </select>
-        </div>
-        <div class="form-group mx-2">
-          <input (click)="narrowByAgeRange()" class="btn submit btn-primary rounded-pill" type="submit" value="Szűrés">
+          <label class="white-label">Távolság:</label>
+          <input (ngModelChange)="setRange(test)" [(ngModel)]="test" class="rangeFilter mx-2" id="rangeFilter" max="10"
+                 min="0"
+                 step="1"
+                 type="range">
+          <label class="white-label mr-2" for="rangeFilter">{{test}} km</label>
+          <button (click)="reset()" class="btn submit btn-primary rounded-pill float-right">Minden mutatása</button>
         </div>
       </div>
-    </form>
-    <div>
-      <input (ngModelChange)="setRange(test)" [(ngModel)]="test" class="rangeFilter" id="rangeFilter" max="10" min="0"
-             step="1"
-             type="range">{{locationRange?.range}} km
-      <label for="rangeFilter"></label>
-    </div>
   </div>
-
-  <div>
-    <input (click)="reset()" class="btn submit btn-primary rounded-pill" value="Minden mutatása">
-  </div>
-
 
   <app-map (locationRangeEmitter)="setCurrentPosition($event)" [locations]="institutionList"
            [showInstitutionDetails]="showWindows"></app-map>

@@ -1,17 +1,19 @@
-<div class="row mx-0 p-sm-1 p-md-1 p-lg-4">
-  <div class="white-block-on-tomato-div col-md-8 offset-md-2 p-sm-0">
-    <div class="col-sm-12 py-sm-1 py-md-1 py-lg-3">
-      <div *ngFor="let institution of evaluationList">
-        <div>{{institution.name}}</div>
-        <div>{{institution.website}}</div>
-        <div>{{institution.phone}}</div>
-        <div>{{institution.email}}</div>
-        <div>{{institution.zipcode}}</div>
-        <div>{{institution.city}}</div>
-        <div>{{institution.address}}</div>
-        <div>{{institution.description}}</div>
-        <button (click)="accept(institution.id)" class="btn btn-success rounded-circle">Elfogad</button>
-        <button (click)="reject(institution.id)" class="btn btn-danger rounded-circle">Elutasít</button>
+<div class="tomato-background-div">
+  <div *ngFor="let institution of evaluationList">
+    <div class="white-block-on-tomato-div col-md-8 offset-md-2 p-sm-0 mb-3">
+      <div class="row mx-0 p-sm-1 p-md-2 p-lg-3">
+        <div class="col-sm-12"><label class="font-weight-bold">{{institution.name}}</label></div>
+        <div class="decor-div-blue col-sm-12"></div>
+        <div *ngIf="institution.website" class="col-sm-12"><label class="small">{{institution.website}}</label></div>
+        <div class="col-sm-12"><label class="small">{{institution.phone}}</label></div>
+        <div class="col-sm-12"><label class="small">{{institution.email}}</label></div>
+        <div class="col-sm-12 col-md-12"><label>{{institution.zipcode}}, {{institution.city}}
+          , {{institution.address}}</label></div>
+        <div class="col-sm-12"><label class="text-break">{{institution.description}}</label></div>
+        <button (click)="accept(institution.id)" class="btn rounded-circle yes-btn"><i
+          class="fas fa-lg fa-check-circle"></i></button>
+        <button (click)="reject(institution.id)" class="btn rounded-circle no-btn"><i
+          class="fas fa-lg fa-times-circle"></i></button>
       </div>
     </div>
   </div>
