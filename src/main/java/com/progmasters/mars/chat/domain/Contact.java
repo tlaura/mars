@@ -21,13 +21,18 @@ public class Contact {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "from_email", referencedColumnName = "email", insertable = false, updatable = false)
-    private User fromUser;
+    @JoinColumn(name = "user_email", referencedColumnName = "email", insertable = false, updatable = false)
+    private User user;
 
     @ManyToOne
-    @JoinColumn(name = "to_email", referencedColumnName = "email", insertable = false, updatable = false)
-    private User toUser;
+    @JoinColumn(name = "provider_email", referencedColumnName = "email", insertable = false, updatable = false)
+    private User provider;
 
     @OneToMany(mappedBy = "contact")
     private List<Message> messages;
+
+    public Contact(User user, User provider) {
+        this.user = user;
+        this.provider = provider;
+    }
 }

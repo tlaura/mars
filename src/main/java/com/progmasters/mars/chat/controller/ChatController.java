@@ -6,22 +6,23 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
-import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 
 @Controller
 @Slf4j
 public class ChatController {
 
+    private final SimpMessagingTemplate simpMessagingTemplate;
     private final ChatService chatService;
 
     @Autowired
-    public ChatController(ChatService chatService) {
+    public ChatController(SimpMessagingTemplate simpMessagingTemplate, ChatService chatService) {
+        this.simpMessagingTemplate = simpMessagingTemplate;
         this.chatService = chatService;
     }
 
-    @MessageMapping("/sendMessage")
-    @SendTo("/topic")
+    @MessageMapping("/send/message")
     public MessageData sendMessage(@Payload MessageData messageData) {
 
         chatService.saveMessage(messageData);
