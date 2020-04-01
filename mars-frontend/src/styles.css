@@ -25,6 +25,13 @@ html * {
   left: 0;
 }
 
+.white-block-on-blue-div {
+  font-size: medium;
+  border-radius: 2rem;
+  background-color: white;
+  box-shadow: rgba(32, 167, 209, 0.2) 0.5rem 0.5rem 2rem;
+}
+
 .register-div input {
   border: 1px solid rgb(255, 72, 0);
   outline: 0;

@@ -52,6 +52,7 @@ import {UserAttributesComponent} from "./components/form-elements-components/use
 import {ConfirmDeletionComponent} from './components/account-components/confirm-deletion/confirm-deletion.component';
 import {DeletionSuccessComponent} from './components/account-components/deletion-success/deletion-success.component';
 import {ChatComponent} from './components/chat/chat.component';
+import {MessageWindowComponent} from './components/chat/message-window/message-window.component';
 
 export function getAuthServiceConfigs() {
   let config = new SocialServiceConfig()
@@ -106,6 +107,7 @@ export function getToken(): string {
     ConfirmDeletionComponent,
     DeletionSuccessComponent,
     ChatComponent,
+    MessageWindowComponent,
   ],
   imports: [
     BrowserModule,

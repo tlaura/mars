@@ -5,15 +5,44 @@
   box-shadow: #2e2e2e 0.5rem 0.5rem 2rem;
 }
 
+.msg-background-div {
+  background-color: rgb(32, 167, 209);
+  border-radius: 2rem;
+  box-shadow: #2e2e2e 0.5rem 0.5rem 2rem;
+  z-index: 1;
+}
+
+.msg-window {
+  height: auto;
+  max-height: 90vh;
+}
+
+.transparent-btn {
+  background: none;
+  border: none;
+}
+
+.window-close {
+  color: white;
+}
+
 .chat-lg {
   height: auto;
   max-height: 90vh;
 }
 
 .chat-sm {
-  height: 4vh;
+  height: 5vh;
 }
 
-.msg-btn {
+.label-btn {
   cursor: pointer;
+}
+
+.circle-online {
+  color: greenyellow;
+}
+
+.circle-offline {
+  color: lightsteelblue;
 }

@@ -66,4 +66,13 @@ export class AuthenticationService {
     }
     return false;
   }
+
+  getCurrentUserEmail(): string {
+    const token = localStorage.getItem('token');
+    if (token) {
+      const tokenPayload = decode(token);
+      return tokenPayload.sub;
+    }
+    return null;
+  }
 }

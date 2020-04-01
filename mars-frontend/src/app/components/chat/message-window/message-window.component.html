@@ -1,0 +1,7 @@
+<div *ngFor="let message of messages" class="white-block-on-blue-div p-2">
+  <div class="message-div">
+    <label class="small m-0">{{message.when | date:'yyyy-MM-dd-hh-mm'}}</label>
+    <label class="font-weight-bold row m-0">{{message.from}}:</label>
+    <label>{{message.text}}</label>
+  </div>
+</div>
