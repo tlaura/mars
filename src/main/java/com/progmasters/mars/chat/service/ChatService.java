@@ -3,6 +3,7 @@ package com.progmasters.mars.chat.service;
 import com.progmasters.mars.account_institution.account.domain.User;
 import com.progmasters.mars.account_institution.account.service.AccountService;
 import com.progmasters.mars.chat.domain.Contact;
+import com.progmasters.mars.chat.domain.LoginState;
 import com.progmasters.mars.chat.domain.Message;
 import com.progmasters.mars.chat.dto.ContactCreationCommand;
 import com.progmasters.mars.chat.dto.ContactsData;
@@ -33,6 +34,8 @@ public class ChatService {
 
     public void saveMessage(MessageData messageData) {
         Contact connectionByUsers = contactRepository.findConnectionByUsers(messageData.getFromEmail(), messageData.getToEmail());
+        LoginState loginState = LoginState.valueOf(messageData.getLoginState());
+        accountService.setLoginState(messageData.getFromEmail(), loginState);
         Message message = new Message(messageData.getText());
         message.setContact(connectionByUsers);
 
@@ -42,8 +45,11 @@ public class ChatService {
     public void saveContact(ContactCreationCommand contactCreationCommand) {
         User fromUser = accountService.findByEmail(contactCreationCommand.getFromEmail());
         User toUser = accountService.findByEmail(contactCreationCommand.getToEmail());
-        Contact contact = new Contact(fromUser, toUser);
-        contactRepository.save(contact);
+        List<Contact> multipleContacts = contactRepository.findMultipleContacts(fromUser, toUser);
+        if (multipleContacts.isEmpty()) {
+            Contact contact = new Contact(fromUser, toUser);
+            contactRepository.save(contact);
+        }
     }
 
     public List<ContactsData> getContactsByEmail(String email) {

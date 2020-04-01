@@ -2,6 +2,7 @@ package com.progmasters.mars.account_institution.account.domain;
 
 import com.progmasters.mars.account_institution.account.dto.UserCreationCommand;
 import com.progmasters.mars.chat.domain.Contact;
+import com.progmasters.mars.chat.domain.LoginState;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -62,6 +63,10 @@ public class User implements Serializable {
 
     @OneToMany(mappedBy = "toAccount")
     private List<Contact> toAccount;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "state")
+    private LoginState state;
 
     public User(UserCreationCommand userCreationCommand) {
         this.name = userCreationCommand.getName();

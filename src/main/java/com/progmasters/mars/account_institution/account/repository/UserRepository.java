@@ -21,4 +21,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query("select fUser from User u join u.toAccount tAccount join tAccount.fromAccount fUser where u.email= :email")
     List<User> findProposingUserByEmail(@Param("email") String email);
+
+    @Query("select u from User u join u.fromAccount fromA join fromA.toAccount toA where u.email= :fromEmail and toA.email= :toEmail")
+    List<User> findIfExistByEmail(@Param("fromEmail") String fromEmail, @Param("toEmail") String toEmail);
 }
