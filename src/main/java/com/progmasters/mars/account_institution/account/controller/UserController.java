@@ -74,12 +74,12 @@ public class UserController {
     }
 
     @DeleteMapping("/delete/{loggedInUser}")
-    public ResponseEntity<String> deleteUser(@PathVariable String loggedInUser) {
+    public ResponseEntity<Void> deleteUser(@PathVariable String loggedInUser) {
         boolean isAccountDeleted = accountService.deleteUser(loggedInUser);
         if (isAccountDeleted) {
-            return new ResponseEntity<>("Account deleted", HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.OK);
         } else {
-            return new ResponseEntity<>("User not found", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 }
