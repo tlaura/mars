@@ -12,8 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -42,7 +42,18 @@ public class ChatService {
     }
 
     public List<ContactsData> getContactsByEmail(String email) {
-        return accountService.getProvidersByUserEmail(email).stream().map(ContactsData::new).collect(Collectors.toList());
+        List<ContactsData> contactsDataList = new ArrayList<>();
+
+        accountService.getRecievingUsersByEmail(email).stream().map(ContactsData::new).forEach(contactsDataList::add);
+        accountService.getProposingUsersByEmail(email).stream().map(ContactsData::new).forEach(contactsDataList::add);
+
+        return contactsDataList;
+    }
+
+    public List<MessageData> getChatHistory(String fromEmail, String toEmail) {
+        Contact connection = contactRepository.findConnectionByUsers(fromEmail, toEmail);
+
+        return null;
     }
 
 

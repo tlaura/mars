@@ -15,9 +15,11 @@ public class ContactsData {
     private String email;
 
     public ContactsData(User user) {
-        ProviderAccount providerAccount = (ProviderAccount) user;
-        this.providerName = providerAccount.getProviderServiceName();
-        this.name = providerAccount.getName();
-        this.email = providerAccount.getEmail();
+        if (user instanceof ProviderAccount) {
+            ProviderAccount providerAccount = (ProviderAccount) user;
+            this.providerName = providerAccount.getProviderServiceName();
+        }
+        this.name = user.getName();
+        this.email = user.getEmail();
     }
 }

@@ -57,11 +57,11 @@ public class User implements Serializable {
     @Column(name = "newsletter")
     private Boolean newsletter;
 
-    @OneToMany(mappedBy = "user")
-    private List<Contact> users;
+    @OneToMany(mappedBy = "fromAccount")
+    private List<Contact> fromAccount;
 
-    @OneToMany(mappedBy = "provider")
-    private List<Contact> providers;
+    @OneToMany(mappedBy = "toAccount")
+    private List<Contact> toAccount;
 
     public User(UserCreationCommand userCreationCommand) {
         this.name = userCreationCommand.getName();

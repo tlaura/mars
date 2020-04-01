@@ -223,7 +223,12 @@ public class AccountService {
         return isDeleted;
     }
 
-    public List<User> getProvidersByUserEmail(String email) {
-        return userRepository.findUsersByContactEmail(email);
+    public List<User> getRecievingUsersByEmail(String email) {
+        return userRepository.findRecievingUsersByEmail(email);
     }
+
+    public List<User> getProposingUsersByEmail(String email) {
+        return userRepository.findProposingUserByEmail(email);
+    }
+
 }

@@ -22,17 +22,17 @@ public class Contact {
 
     @ManyToOne
     @JoinColumn(name = "user_email", referencedColumnName = "email", insertable = false, updatable = false)
-    private User user;
+    private User fromAccount;
 
     @ManyToOne
     @JoinColumn(name = "provider_email", referencedColumnName = "email", insertable = false, updatable = false)
-    private User provider;
+    private User toAccount;
 
     @OneToMany(mappedBy = "contact")
     private List<Message> messages;
 
-    public Contact(User user, User provider) {
-        this.user = user;
-        this.provider = provider;
+    public Contact(User fromAccount, User toAccount) {
+        this.fromAccount = fromAccount;
+        this.toAccount = toAccount;
     }
 }
