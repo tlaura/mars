@@ -82,14 +82,14 @@ export class ChatComponent implements OnInit {
         date: new Date(),
         text: message
       };
-      this.stompClient.send(this.serverUrl + "/chat/send/message", {}, JSON.stringify(payload));
+      this.stompClient.send("/chat/send/message", {}, JSON.stringify(payload));
     }
   }
 
   openSocket() {
     if (this.isLoaded) {
       this.isCustomSocketOpened = true;
-      this.stompClient.subscribe('/chat/' + this.from.email, (message) => {
+      this.stompClient.subscribe('/topic/' + this.from.email, (message) => {
         this.handleResult(message);
       });
     }
@@ -122,7 +122,6 @@ export class ChatComponent implements OnInit {
     this.contactsService.fetchContacts(from.email).subscribe(
       (contacts) => {
         this.contacts = contacts;
-        debugger;
         console.log('Contacts listed.')
       },
       (error) => console.log(error)

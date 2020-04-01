@@ -23,7 +23,6 @@ export class ContactsService {
   };
 
   fetchContacts = (userEmail: string): Observable<any> => {
-    debugger;
     return this.http.get(this.BASE_URL + '/contacts?email=' + userEmail);
   };
 

@@ -1,6 +1,5 @@
 package com.progmasters.mars.chat.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,7 +19,7 @@ public class MessageData {
 
     private String toEmail;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+ //   @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime date;
 
     private String text;

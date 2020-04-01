@@ -23,7 +23,7 @@ public class ChatController {
     }
 
 
-    @MessageMapping("/api/chat/send/message")
+    @MessageMapping("/send/message")
     public MessageData sendMessage(@Payload MessageData messageData) {
         chatService.saveMessage(messageData);
         if (messageData.getToEmail() != null && !messageData.getToEmail().equals("")) {
