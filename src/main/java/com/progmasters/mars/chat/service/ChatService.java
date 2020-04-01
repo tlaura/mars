@@ -34,8 +34,10 @@ public class ChatService {
 
     public void saveMessage(MessageData messageData) {
         Contact connectionByUsers = contactRepository.findConnectionByUsers(messageData.getFromEmail(), messageData.getToEmail());
-        LoginState loginState = LoginState.valueOf(messageData.getLoginState());
-        accountService.setLoginState(messageData.getFromEmail(), loginState);
+        if (messageData.getLoginState() != null) {
+            LoginState loginState = LoginState.valueOf(messageData.getLoginState());
+            accountService.setLoginState(messageData.getFromEmail(), loginState);
+        }
         Message message = new Message(messageData.getText());
         message.setContact(connectionByUsers);
 
