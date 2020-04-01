@@ -28,6 +28,7 @@ public class JwtTokenProvider implements Serializable {
         Date expiryDate = new Date(now.getTime() + JWT_TOKEN_VALIDITY);
 
         Map<String, Object> claims = new HashMap<>();
+        claims.put("name", userPrincipal.getUsername());
         claims.put("role", userPrincipal.getRole());
 
         return Jwts.builder()

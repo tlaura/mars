@@ -2,6 +2,7 @@ package com.progmasters.mars.account_institution.account.service;
 
 import com.progmasters.mars.account_institution.account.domain.ProviderAccount;
 import com.progmasters.mars.account_institution.account.domain.ProviderType;
+import com.progmasters.mars.account_institution.account.dto.PasswordChangeDetails;
 import com.progmasters.mars.account_institution.account.dto.ProviderAccountCreationCommand;
 import com.progmasters.mars.account_institution.account.dto.ProviderUserDetails;
 import com.progmasters.mars.account_institution.institution.dto.InstitutionCreationCommand;
@@ -44,6 +45,12 @@ public class AccountServiceTest {
     }
 
     @Test
+    public void testDeleteProviderAccount_shouldThrowException_givenAccountEmail() {
+        accountService.deleteUser("pecske92@gmail.com");
+        assertThrows(EntityNotFoundException.class, () -> accountService.getProviderAccountByEmail("pecske92@gmail.com"));
+    }
+
+    @Test
     public void testRemoveById_shouldReturnTrue() {
         ProviderAccount account = (ProviderAccount) accountService.findByEmail("pecske92@gmail.com");
         accountService.removeById(account.getId());
@@ -70,6 +77,20 @@ public class AccountServiceTest {
         List<ProviderAccount> accounts = accountService.getAccountsByType(ProviderType.DIAGNOSTIC_CENTER);
 
         assertFalse(accounts.isEmpty());
+    }
+
+    @Test
+    public void testPasswordChange_shouldReturnTrue_givenCorrectNewPassword() {
+        PasswordChangeDetails passwordChangeDetails = new PasswordChangeDetails("pecske92@gmail.com", "ValarMorghulis7", "NewValarMorghulis777", "NewValarMorghulis777");
+        boolean isPasswordChanged = accountService.updatePasswordOfLoggedInUser(passwordChangeDetails);
+        assertTrue(isPasswordChanged);
+    }
+
+    @Test
+    public void testPasswordChange_shouldReturnFalse_givenIncorrectOldPassword() {
+        PasswordChangeDetails passwordChangeDetails = new PasswordChangeDetails("pecske92@gmail.com", "ValarMorghul7", "NewValarMorghulis777", "NewValarMorghulis777");
+        boolean isPasswordChanged = accountService.updatePasswordOfLoggedInUser(passwordChangeDetails);
+        assertFalse(isPasswordChanged);
     }
 
     @Test
@@ -157,4 +178,5 @@ public class AccountServiceTest {
                 .newsletter(newsletter)
                 .build();
     }
+
 }

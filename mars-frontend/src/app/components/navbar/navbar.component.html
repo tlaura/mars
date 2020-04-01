@@ -29,6 +29,8 @@
             elbírálása</a>
         </div>
       </li>
+
+
     </ul>
 
     <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
@@ -36,7 +38,7 @@
         <a class="nav-link" routerLink="login" routerLinkActive="active">
           Bejelentkezés</a>
       </li>
-      <li *ngIf="isUserLoggedIn" class="nav-item font-weight-lighter mx-3"><a class="nav-link"
+      <li *ngIf="isUserLoggedIn && !isAdmin" class="nav-item font-weight-lighter mx-3"><a class="nav-link"
                                                                               routerLink="my-profile"
                                                                               routerLinkActive="active">
         {{currentUser.name}} profilja</a>

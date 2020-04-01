@@ -27,8 +27,8 @@ public class UserPrincipal implements UserDetails {
     @JsonIgnore  // ignore during serialization
     private String password;
 
-    public UserPrincipal(String email, String password, String role, Collection<? extends GrantedAuthority> authorities) {
-        this.username = email;
+    public UserPrincipal(String username, String email, String password, String role, Collection<? extends GrantedAuthority> authorities) {
+        this.username = username;
         this.email = email;
         this.role = role;
         this.password = password;
@@ -40,6 +40,7 @@ public class UserPrincipal implements UserDetails {
                 .createAuthorityList(user.getRole().toString());
 
         return new UserPrincipal(
+                user.getName(),
                 user.getEmail(),
                 user.getPassword(),
                 user.getRole().name(),

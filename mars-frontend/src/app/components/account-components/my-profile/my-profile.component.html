@@ -16,37 +16,47 @@
       <div class="profile-div col-sm-12 col-md-6">
 
         <label>Teljes név:</label>
-        <div *ngIf='!editMode' class="col-sm-9">
+        <div *ngIf='!editMode && isProvider' class="col-sm-9">
           <p> {{providerAccount?.name}} </p>
+        </div>
+        <div *ngIf='!editMode && !isProvider' class="col-sm-9">
+          <p> {{indUser?.name}} </p>
         </div>
         <div class="form-group  col-sm-12 col-md-7">
           <input
-            *ngIf='editMode' name="username" [formControl]="username"
+            *ngIf='editMode && isProvider' [formControl]="username" name="username"
             [(ngModel)]='providerAccount.name' class='text-dark form-control' type='text'>
-          <small *ngIf="username.errors?.required && editMode"
+          <input
+            *ngIf='editMode && !isProvider' [(ngModel)]='indUser.name' [formControl]="username"
+            class='text-dark form-control' name="username" type='text'>
+          <small *ngIf="username?.errors?.required && editMode"
                  class="text-danger col-sm-12 col-md-12">
             Helytelen név!
           </small>
-          <small *ngIf="!providerAccount?.name"
+          <small *ngIf="!providerAccount?.name && isProvider"
+                 class="text-danger col-sm-12 col-md-12">
+            A mező kitöltése közelező!
+          </small>
+          <small *ngIf="!indUser?.name && !isProvider"
                  class="text-danger col-sm-12 col-md-12">
             A mező kitöltése közelező!
           </small>
         </div>
         <br>
 
-        <label>Szolgáltatás neve:</label>
-        <div *ngIf='!editMode' class="col-sm-9">
+        <label *ngIf="isProvider">Szolgáltatás neve:</label>
+        <div *ngIf='!editMode && isProvider' class="col-sm-9">
           <p> {{providerAccount?.providerServiceName}} </p>
         </div>
         <div class="form-group col-sm-12 col-md-7">
           <input
-            *ngIf='editMode' name="providerServiceName" [formControl]="providerServiceName"
+            *ngIf='editMode && isProvider' [formControl]="providerServiceName" name="providerServiceName"
             [(ngModel)]='providerAccount.providerServiceName' class='text-dark form-control' type='text'>
-          <small *ngIf="providerServiceName.errors?.required && editMode"
+          <small *ngIf="providerServiceName.errors?.required && editMode && isProvider"
                  class="text-danger col-sm-12 col-md-12">
             Érvénytelen szolgáltatás név!
           </small>
-          <small *ngIf="!providerAccount?.providerServiceName"
+          <small *ngIf="!providerAccount?.providerServiceName && isProvider"
                  class="text-danger col-sm-12 col-md-12">
             A mező kitöltése közelező!
           </small>
@@ -55,18 +65,23 @@
 
         <label>Email cím:</label>
         <div class="col-sm-9">
-          <p>{{providerAccount?.email}}</p>
+          <p *ngIf="isProvider">{{providerAccount?.email}}</p>
+          <p *ngIf="!isProvider">{{indUser?.email}}</p>
         </div>
         <br>
 
         <label>Telefon:</label>
         <div *ngIf='!editMode' class="col-sm-9">
-          <p> {{providerAccount?.phone}} </p>
+          <p *ngIf="isProvider"> {{providerAccount?.phone}} </p>
+          <p *ngIf="!isProvider"> {{indUser?.phone}} </p>
         </div>
         <div class="form-group  col-sm-12 col-md-7">
           <input
-            *ngIf='editMode' name="phone" [formControl]="phone"
+            *ngIf='editMode && isProvider' [formControl]="phone" name="phone"
             [(ngModel)]='providerAccount.phone' class='text-dark form-control' type='text'>
+          <input
+            *ngIf='editMode && !isProvider' [(ngModel)]='indUser.phone' [formControl]="phone"
+            class='text-dark form-control' name="phone" type='text'>
           <small *ngIf="phone.errors?.pattern && editMode"
                  class="text-danger col-sm-12 col-md-12">
             Érvénytelen telefonszám!
@@ -77,43 +92,55 @@
         <label>Cím:</label>
         <div *ngIf='!editMode' class="row mx-0">
           <div class="col-sm-4">
-            <p> {{providerAccount?.zipcode}} </p>
+            <p *ngIf="isProvider"> {{providerAccount?.zipcode}} </p>
+            <p *ngIf="!isProvider"> {{indUser?.zipcode}} </p>
           </div>
           <div class="col-sm-8">
-            <p>{{providerAccount?.city}}</p>
+            <p *ngIf="isProvider">{{providerAccount?.city}}</p>
+            <p *ngIf="!isProvider">{{indUser?.city}}</p>
           </div>
           <div class="col-sm-12">
-            <p>{{providerAccount?.address}}</p>
+            <p *ngIf="isProvider">{{providerAccount?.address}}</p>
+            <p *ngIf="!isProvider">{{indUser?.address}}</p>
           </div>
         </div>
 
         <div class="row m-0">
           <div class="form-group col-sm-4">
             <input
-              *ngIf='editMode'
+              *ngIf='editMode && isProvider'
               [(ngModel)]='providerAccount.zipcode' class='text-dark form-control' type='text'>
+            <input
+              *ngIf='editMode && !isProvider'
+              [(ngModel)]='indUser.zipcode' class='text-dark form-control' type='text'>
           </div>
           <div class="form-group col-sm-8">
             <input
-              *ngIf='editMode'
+              *ngIf='editMode && isProvider'
               [(ngModel)]='providerAccount.city' class='text-dark form-control' type='text'>
+            <input
+              *ngIf='editMode && !isProvider'
+              [(ngModel)]='indUser.city' class='text-dark form-control' type='text'>
           </div>
           <div class="form-group col-sm-12">
             <input
-              *ngIf='editMode'
+              *ngIf='editMode && isProvider'
               [(ngModel)]='providerAccount.address' class='text-dark form-control' type='text'>
+            <input
+              *ngIf='editMode && !isProvider'
+              [(ngModel)]='indUser.address' class='text-dark form-control' type='text'>
           </div>
         </div>
 
-        <label>Szolgáltatás típusai:</label>
-        <div *ngIf="!editMode" class="col-sm-9">
+        <label *ngIf="isProvider">Szolgáltatás típusai:</label>
+        <div *ngIf="!editMode && isProvider" class="col-sm-9">
           <ul class="col-sm-9">
             <p *ngFor="let type of providerAccount?.types">
               {{type}}
             </p>
           </ul>
         </div>
-        <div *ngIf="editMode" class="form-group col-sm-12">
+        <div *ngIf="editMode && isProvider" class="form-group col-sm-12">
           <small class="row mx-0">Több szolgáltatás kiválasztásához tartsa lenyomva a Ctrl billentyűt.</small>
           <select [(ngModel)]="providerAccount.types"
                   class="form-control mdb-select md-form select-tomato"
@@ -125,13 +152,13 @@
         </div>
         <br>
 
-        <label>Korcsoport:</label>
-        <div class="col-sm-9">
+        <label *ngIf="isProvider">Korcsoport:</label>
+        <div *ngIf="isProvider" class="col-sm-9">
           <p *ngIf="!editMode">{{providerAccount?.ageGroupMin}} - {{providerAccount?.ageGroupMax}}</p>
           <p *ngIf="editMode">{{accountCopy?.ageGroupMin}} - {{accountCopy.ageGroupMax}}</p>
         </div>
 
-        <div class="form-group row mx-0">
+        <div *ngIf="isProvider" class="form-group row mx-0">
           <div *ngIf='editMode' class="col-sm-6 col-md-5">
             <label>Minimum életkor:</label>
             <input
@@ -152,7 +179,7 @@
           </div>
         </div>
 
-        <div *ngIf="editMode" class="form-group">
+        <div *ngIf="editMode && isProvider" class="form-group">
           <input [checked]="providerAccount?.newsletter" class="form-check-input px-0 ml-0 "
                  [(ngModel)]="providerAccount.newsletter"
                  id="newsletter"
@@ -169,27 +196,36 @@
         </div>
         <br>
 
-        <label>Intézmények:</label>
-        <div *ngFor="let institution of providerAccount?.institutionList"
-             class="card bg-light m-4 block-on-white-div">
-          <div class="card-header">
-            {{institution?.name}}
-          </div>
-          <div class="card-body">
-            {{institution?.description}}<br>
-            <hr>
-            {{institution?.phone}}<br>
-            {{institution?.website}}<br>
-            {{institution?.email}}<br>
-            <div class="button-flex">
-              <button (click)="deleteInstitution(institution.id)" *ngIf="editMode" class="rounded-pill">Törlés</button>
+        <label *ngIf="isProvider">Intézmények:</label>
+        <div *ngIf="isProvider">
+          <div *ngFor="let institution of providerAccount?.institutionList"
+               class="card bg-light m-4 block-on-white-div">
+            <div class="card-header">
+              {{institution?.name}}
+            </div>
+            <div class="card-body">
+              {{institution?.description}}<br>
+              <hr>
+              {{institution?.phone}}<br>
+              {{institution?.website}}<br>
+              {{institution?.email}}<br>
+              <div class="button-flex">
+                <button (click)="deleteInstitution(institution.id)" *ngIf="editMode" class="rounded-pill">Törlés
+                </button>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      <button (click)="saveChanges()" *ngIf="editMode"
+      <button (click)="saveChanges()" *ngIf="editMode && isProvider"
               [disabled]="username.invalid || providerServiceName.invalid || phone.invalid || providerAccount.ageGroupMin < 0 ||providerAccount.ageGroupMax > 99"
+              class="submit btn btn-info rounded-pill"
+              type="submit">
+        Mentés
+      </button>
+      <button (click)="saveChanges()" *ngIf="editMode && !isProvider"
+              [disabled]="username.invalid ||phone.invalid"
               class="submit btn btn-info rounded-pill"
               type="submit">
         Mentés

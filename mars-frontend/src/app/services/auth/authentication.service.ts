@@ -82,4 +82,12 @@ export class AuthenticationService {
     }
     return user;
   }
+
+  getRole = (): string => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      const tokenPayload = decode(token);
+      return tokenPayload.role;
+    }
+  };
 }
