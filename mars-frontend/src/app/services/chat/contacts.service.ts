@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Observable} from "rxjs";
+import {BehaviorSubject, Observable} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
 import {ContactCreation} from "../../models/chat/contactCreation";
@@ -11,6 +11,9 @@ import {AuthenticationService} from "../auth/authentication.service";
 export class ContactsService {
   BASE_URL = environment.BASE_URL + '/api';
 
+  private contactSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
+  contactObservable = this.contactSubject.asObservable();
+
   constructor(private http: HttpClient, private authenticationService: AuthenticationService) {
   }
 
@@ -19,6 +22,7 @@ export class ContactsService {
       fromEmail: this.authenticationService.getCurrentUser().email,
       toEmail: email
     };
+    this.contactSubject.next('New contact added');
     return this.http.post(this.BASE_URL + '/contacts', contactCreation);
   };
 
