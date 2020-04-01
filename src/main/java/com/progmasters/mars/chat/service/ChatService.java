@@ -3,6 +3,7 @@ package com.progmasters.mars.chat.service;
 import com.progmasters.mars.account_institution.account.domain.User;
 import com.progmasters.mars.account_institution.account.service.AccountService;
 import com.progmasters.mars.chat.domain.Contact;
+import com.progmasters.mars.chat.domain.Message;
 import com.progmasters.mars.chat.dto.ContactCreationCommand;
 import com.progmasters.mars.chat.dto.ContactsData;
 import com.progmasters.mars.chat.dto.MessageData;
@@ -51,9 +52,15 @@ public class ChatService {
     }
 
     public List<MessageData> getChatHistory(String fromEmail, String toEmail) {
+        List<MessageData> chatHistory = new ArrayList<>();
         Contact connection = contactRepository.findConnectionByUsers(fromEmail, toEmail);
-
-        return null;
+        String fromName = connection.getFromAccount().getName();
+        String toName = connection.getToAccount().getName();
+        for (Message message : connection.getMessages()) {
+            MessageData messageData = new MessageData(fromName, fromEmail, toName, toEmail, message.getDate(), message.getText());
+            chatHistory.add(messageData);
+        }
+        return chatHistory;
     }
 
 

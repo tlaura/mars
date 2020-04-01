@@ -24,5 +24,8 @@ public class Message {
     private Contact contact;
 
     @Column(name = "message_sent_time")
-    private LocalDateTime date;
+    private LocalDateTime date = LocalDateTime.now();
+
+    @Column(name = "text")
+    private String text;
 }
