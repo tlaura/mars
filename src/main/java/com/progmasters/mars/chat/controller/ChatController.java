@@ -22,12 +22,16 @@ public class ChatController {
         this.chatService = chatService;
     }
 
+
     @MessageMapping("/send/message")
     public MessageData sendMessage(@Payload MessageData messageData) {
-
         chatService.saveMessage(messageData);
-
+        if (messageData.getToEmail() != null && !messageData.getToEmail().equals("")) {
+            this.simpMessagingTemplate.convertAndSend("/chat/" + messageData.getToEmail(), messageData);
+            this.simpMessagingTemplate.convertAndSend("/chat/" + messageData.getFromEmail(), messageData);
+        }
         return messageData;
     }
+
 
 }
