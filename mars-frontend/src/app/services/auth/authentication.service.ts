@@ -78,7 +78,6 @@ export class AuthenticationService {
         email: tokenPayload.sub,
         name: tokenPayload.name
       };
-      debugger;
     }
     return user;
   }

@@ -16,13 +16,14 @@ export class ContactsService {
 
   addContact = (email: string): Observable<any> => {
     let contactCreation: ContactCreation = {
-      userEmail: this.authenticationService.getCurrentUser().email,
-      providerEmail: email
+      fromEmail: this.authenticationService.getCurrentUser().email,
+      toEmail: email
     };
     return this.http.post(this.BASE_URL + '/contacts', contactCreation);
   };
 
   fetchContacts = (userEmail: string): Observable<any> => {
+    debugger;
     return this.http.get(this.BASE_URL + '/contacts?email=' + userEmail);
   };
 

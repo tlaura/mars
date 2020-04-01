@@ -29,9 +29,13 @@ export class ChatComponent implements OnInit {
   private stompClient;
 
   constructor(private socketService: SocketService, private authenticationService: AuthenticationService, private contactsService: ContactsService) {
+
+  }
+
+  ngOnInit(): void {
     this.authenticationService.currentToken.subscribe(
       () => {
-        this.from = authenticationService.getCurrentUser();
+        this.from = this.authenticationService.getCurrentUser();
         if (!this.from) {
           this.closeMessageWindow();
           this.closeChat();
@@ -41,10 +45,6 @@ export class ChatComponent implements OnInit {
         }
       }
     );
-
-  }
-
-  ngOnInit(): void {
   }
 
   changeDisplay() {
@@ -122,6 +122,7 @@ export class ChatComponent implements OnInit {
     this.contactsService.fetchContacts(from.email).subscribe(
       (contacts) => {
         this.contacts = contacts;
+        debugger;
         console.log('Contacts listed.')
       },
       (error) => console.log(error)

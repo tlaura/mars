@@ -1,4 +1,4 @@
 export interface ContactCreation {
-  userEmail: string,
-  providerEmail: string
+  fromEmail: string,
+  toEmail: string
 }

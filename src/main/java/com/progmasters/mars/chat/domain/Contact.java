@@ -21,11 +21,11 @@ public class Contact {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "user_email", referencedColumnName = "email", insertable = false, updatable = false)
+    @JoinColumn(name = "user_email", referencedColumnName = "email")
     private User fromAccount;
 
     @ManyToOne
-    @JoinColumn(name = "provider_email", referencedColumnName = "email", insertable = false, updatable = false)
+    @JoinColumn(name = "provider_email", referencedColumnName = "email")
     private User toAccount;
 
     @OneToMany(mappedBy = "contact")
