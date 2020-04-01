@@ -7,6 +7,7 @@ import {environment} from "../../../environments/environment";
 import {User} from "../../models/chat/user";
 import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
+import {ContactsService} from "../../services/chat/contacts.service";
 
 @Component({
   selector: 'app-chat',
@@ -27,7 +28,7 @@ export class ChatComponent implements OnInit {
   private serverUrl = environment.BASE_URL + '/api/chat';
   private stompClient;
 
-  constructor(private socketService: SocketService, private authenticationService: AuthenticationService) {
+  constructor(private socketService: SocketService, private authenticationService: AuthenticationService, private contactsService: ContactsService) {
     this.authenticationService.currentToken.subscribe(
       () => {
         this.from = authenticationService.getCurrentUser();
@@ -35,7 +36,7 @@ export class ChatComponent implements OnInit {
           this.closeMessageWindow();
           this.closeChat();
         } else {
-          //TODO: fetch contacts list
+          this.fetchContacts(this.from);
           this.initializeWebSocketConnection();
         }
       }
@@ -60,7 +61,10 @@ export class ChatComponent implements OnInit {
   }
 
   fetchMessages(from: User, to: Contact): Message[] {
-    //TODO: fetch messages from server...
+    this.contactsService.fetchMessages(from.email, to.email).subscribe(
+      (messages: Message[]) => this.messages = messages,
+      (error) => console.log(error)
+    );
     return null;
   }
 
@@ -113,5 +117,15 @@ export class ChatComponent implements OnInit {
       that.isLoaded = true;
       that.openSocket()
     });
+  }
+
+  private fetchContacts(from: User) {
+    this.contactsService.fetchContacts(from.email).subscribe(
+      (contacts) => {
+        this.contacts = contacts;
+        console.log('Contacts listed.')
+      },
+      (error) => console.log(error)
+    )
   }
 }
