@@ -28,4 +28,8 @@ public class Message {
 
     @Column(name = "text")
     private String text;
+
+    public Message(String text) {
+        this.text = text;
+    }
 }

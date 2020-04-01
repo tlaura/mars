@@ -32,7 +32,11 @@ public class ChatService {
     }
 
     public void saveMessage(MessageData messageData) {
+        Contact connectionByUsers = contactRepository.findConnectionByUsers(messageData.getFromEmail(), messageData.getToEmail());
+        Message message = new Message(messageData.getText());
+        message.setContact(connectionByUsers);
 
+        messageRepository.save(message);
     }
 
     public void saveContact(ContactCreationCommand contactCreationCommand) {
