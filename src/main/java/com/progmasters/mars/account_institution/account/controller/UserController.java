@@ -3,6 +3,7 @@ package com.progmasters.mars.account_institution.account.controller;
 import com.progmasters.mars.account_institution.account.dto.JwtAuthenticationResponse;
 import com.progmasters.mars.account_institution.account.dto.LoginRequest;
 import com.progmasters.mars.account_institution.account.dto.UserCreationCommand;
+import com.progmasters.mars.account_institution.account.dto.UserDetailsData;
 import com.progmasters.mars.account_institution.account.security.AuthenticatedUserDetails;
 import com.progmasters.mars.account_institution.account.security.JwtTokenProvider;
 import com.progmasters.mars.account_institution.account.service.AccountService;
@@ -81,5 +82,12 @@ public class UserController {
         } else {
             return new ResponseEntity<>("User not found", HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @GetMapping("/details/{email}")
+    public ResponseEntity<UserDetailsData> getUserDetailsById(@PathVariable String email) {
+        UserDetailsData userDetails = accountService.getUserDetails(email);
+
+        return new ResponseEntity<>(userDetails, HttpStatus.OK);
     }
 }

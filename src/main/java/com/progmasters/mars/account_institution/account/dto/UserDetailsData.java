@@ -1,0 +1,43 @@
+package com.progmasters.mars.account_institution.account.dto;
+
+import com.progmasters.mars.account_institution.account.domain.User;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
+@Getter
+public class UserDetailsData {
+
+    private Long id;
+
+    private String name;
+
+    private String password;
+
+    private String email;
+
+    private String phone;
+
+    private String role;
+
+    private Integer zipcode;
+
+    private String city;
+
+    private String address;
+
+    private Boolean newsletter;
+
+    public UserDetailsData(User user) {
+        this.id = user.getId();
+        this.name = user.getName();
+        this.password = user.getPassword();
+        this.email = user.getEmail();
+        this.phone = user.getPhone();
+        this.role = user.getRole().toString();
+        this.zipcode = user.getZipcode();
+        this.city = user.getCity();
+        this.address = user.getAddress();
+        this.newsletter = user.getNewsletter();
+    }
+}

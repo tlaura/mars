@@ -5,10 +5,7 @@ import com.progmasters.mars.account_institution.account.confirmationtoken.Confir
 import com.progmasters.mars.account_institution.account.domain.ProviderAccount;
 import com.progmasters.mars.account_institution.account.domain.ProviderType;
 import com.progmasters.mars.account_institution.account.domain.User;
-import com.progmasters.mars.account_institution.account.dto.PasswordChangeDetails;
-import com.progmasters.mars.account_institution.account.dto.ProviderAccountCreationCommand;
-import com.progmasters.mars.account_institution.account.dto.ProviderUserDetails;
-import com.progmasters.mars.account_institution.account.dto.UserCreationCommand;
+import com.progmasters.mars.account_institution.account.dto.*;
 import com.progmasters.mars.account_institution.account.passwordtoken.PasswordToken;
 import com.progmasters.mars.account_institution.account.passwordtoken.PasswordTokenRepository;
 import com.progmasters.mars.account_institution.account.repository.ProviderAccountRepository;
@@ -176,12 +173,12 @@ public class AccountService {
         PasswordToken passwordToken = passwordTokenRepository.findByToken(token).orElseThrow(() -> new EntityNotFoundException("Given token not found: " + token));
         User user = passwordToken.getUser();
         user.setPassword(passwordEncoder.encode(newPassword));
-            passwordTokenRepository.delete(passwordToken);
-            if (user instanceof ProviderAccount) {
-                providerAccountRepository.save((ProviderAccount) user);
-            } else {
-                userRepository.save(user);
-            }
+        passwordTokenRepository.delete(passwordToken);
+        if (user instanceof ProviderAccount) {
+            providerAccountRepository.save((ProviderAccount) user);
+        } else {
+            userRepository.save(user);
+        }
     }
 
     public boolean updatePasswordOfLoggedInUser(PasswordChangeDetails passwordChangeDetails) {
@@ -198,7 +195,7 @@ public class AccountService {
         if (oldPasswordsMatch && newPasswordsMatch) {
             user.setPassword(BCrypt.hashpw(passwordChangeDetails.getPassword(), BCrypt.gensalt()));
             isChangeConfirmed = true;
-            }
+        }
         return isChangeConfirmed;
     }
 
@@ -221,5 +218,12 @@ public class AccountService {
             }
         }
         return isDeleted;
+    }
+
+    public UserDetailsData getUserDetails(String email) {
+
+        User user = userRepository.findByEmail(email).orElseThrow(() -> new EntityNotFoundException("Account not found by give email: " + email));
+
+        return new UserDetailsData(user);
     }
 }
