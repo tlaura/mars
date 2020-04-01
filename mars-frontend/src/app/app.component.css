@@ -1,0 +1,6 @@
+.chat-div {
+  position: fixed;
+  right: -1vw;
+  bottom: 0px;
+  z-index: 1;
+}

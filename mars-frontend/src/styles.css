@@ -45,7 +45,7 @@ html * {
   font-size: medium;
   border-radius: 2rem;
   background-color: white;
-  box-shadow: #b34532 0.5rem 0.5rem;
+  box-shadow: #b34532 0.5rem 0.5rem 2rem;
 }
 
 .white-block-on-tomato-div .input-group-text {
@@ -90,7 +90,7 @@ html * {
   font-size: small;
   border-radius: 2rem;
   background-color: cornflowerblue;
-  box-shadow: #b3b3b3 0.5rem 0.5rem;
+  box-shadow: #b3b3b3 0.5rem 0.5rem 2rem;
 }
 
 .blue-block-on-white-div label {
