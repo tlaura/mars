@@ -15,6 +15,7 @@ export class ChatComponent implements OnInit {
   messages: Message[] = [];
   isMessageWindowOpen: boolean = false;
   from: string = 'test';
+  //currentUser: string;
 
   constructor(private authenticationService: AuthenticationService) {
     this.authenticationService.currentUser.subscribe(
@@ -51,17 +52,55 @@ export class ChatComponent implements OnInit {
     //TODO: fetch messages from server...
     return [
       {
-        from: from,
-        to: to,
-        when: new Date(),
+        fromName: from,
+        fromEmail: from,
+        toName: to,
+        toEmail: to,
+        date: new Date(),
         text: 'Szia ' + to + ' :) '
       },
       {
-        from: to,
-        to: from,
-        when: new Date(),
+        fromName: to,
+        fromEmail: to,
+        toName: from,
+        toEmail: from,
+        date: new Date(),
         text: 'Szia ' + from + ' :) '
+      },
+      {
+        fromName: to,
+        fromEmail: to,
+        toName: from,
+        toEmail: from,
+        date: new Date(),
+        text: 'Hogy vagy ma?'
+      },
+      {
+        fromName: to,
+        fromEmail: to,
+        toName: from,
+        toEmail: from,
+        date: new Date(),
+        text: 'Vagy most épp nem vagy gépnél? '
+      },
+      {
+        fromName: from,
+        fromEmail: from,
+        toName: to,
+        toEmail: to,
+        date: new Date(),
+        text: ' De! Itt vagyok, bocsi!'
+      },
+      {
+        fromName: to,
+        fromEmail: to,
+        toName: from,
+        toEmail: from,
+        date: new Date(),
+        text: 'Semmi gond. '
       }
+
+
     ]
   }
 

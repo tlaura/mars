@@ -1,7 +1,18 @@
-<div *ngFor="let message of messages" class="white-block-on-blue-div p-2">
-  <div class="message-div">
-    <label class="small m-0">{{message.when | date:'yyyy-MM-dd-hh-mm'}}</label>
-    <label class="font-weight-bold row m-0">{{message.from}}:</label>
-    <label>{{message.text}}</label>
+<div class="all-message-div">
+  <div *ngFor="let message of messages, let index = index, let first = first">
+    <!--TODO: current user to right-->
+    <div [ngClass]="currentUser==message.fromName? 'message-from-me-align':'message-to-me-align'">
+      <div *ngIf="!(!first && message.fromName == messages[index-1].fromName)">
+        <label *ngIf="currentUser!=message.fromName"
+               class="font-weight-bold small mt-2 mb-0 white-label">{{message.fromName}}:</label>
+        <label *ngIf="currentUser==message.fromName" class="font-weight-bold small mt-2 mb-0 white-label">Én:</label>
+      </div>
+      <div [ngClass]="currentUser==message.fromName? 'message-from-me-div':'message-to-me-div'"
+           class="white-block-on-blue-div p-2 my-0 message-div small text-left">
+        <label class="text-break">{{message.text}}</label>
+      </div>
+      <label class="date-label white-label mb-2 mt-0">{{message.date | date:'yyyy-MM-dd-hh-mm'}}</label>
+    </div>
   </div>
 </div>
+

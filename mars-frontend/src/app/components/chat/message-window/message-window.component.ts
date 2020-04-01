@@ -10,6 +10,8 @@ export class MessageWindowComponent implements OnInit {
 
   @Input()
   messages: Message[] = [];
+  @Input()
+  currentUser: string;
 
   constructor() {
   }

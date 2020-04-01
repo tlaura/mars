@@ -1,6 +1,8 @@
 export interface Message {
-  from: string,
-  to: string,
-  when: Date,
+  fromName: string,
+  fromEmail: string;
+  toName: string,
+  toEmail: string,
+  date: Date,
   text: string
 }

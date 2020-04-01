@@ -1,3 +1,28 @@
 .message-div label {
   color: rgb(32, 167, 209);
 }
+
+.all-message-div {
+  overflow-y: scroll;
+  max-height: 35vh;
+}
+
+.message-to-me-align {
+  text-align: left;
+}
+
+.message-from-me-align {
+  text-align: right;
+}
+
+.message-to-me-div {
+  border-top-left-radius: 0;
+}
+
+.message-from-me-div {
+  border-top-right-radius: 0;
+}
+
+.date-label {
+  font-size: xx-small;
+}
