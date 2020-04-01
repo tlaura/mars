@@ -96,7 +96,7 @@ public class AccountController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PatchMapping("/passwordChange")
+    @PatchMapping("/password-change")
     public ResponseEntity<Void> updatePassword(@Valid @RequestBody PasswordChangeDetails passwordChangeDetails) {
         log.info("Password update requested");
         boolean isChangeValid = accountService.updatePasswordOfLoggedInUser(passwordChangeDetails);

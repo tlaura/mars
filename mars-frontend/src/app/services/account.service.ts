@@ -48,7 +48,7 @@ export class AccountService {
   };
 
   updatePassword(passwordChangeDetails: PasswordChangeDetailsModel) {
-    return this.http.patch(this.BASE_URL + '/providers/passwordChange', passwordChangeDetails);
+    return this.http.patch(this.BASE_URL + '/providers/password-change', passwordChangeDetails);
   }
 
   saveNormalAccount = (formData: NormalAccountRegisterModel): Observable<any> => {
