@@ -45,12 +45,12 @@ export class ChatComponent implements OnInit {
         }
       }
     );
-    this.contactsService.contactObservable.subscribe(
+    this.contactsService.contactSubject.subscribe(
       () => {
-        debugger;
         this.fetchContacts(this.from);
       },
       (error) => console.log(error))
+
   }
 
   changeDisplay() {

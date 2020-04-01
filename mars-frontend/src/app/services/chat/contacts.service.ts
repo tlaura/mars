@@ -11,8 +11,8 @@ import {AuthenticationService} from "../auth/authentication.service";
 export class ContactsService {
   BASE_URL = environment.BASE_URL + '/api';
 
-  private contactSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
-  contactObservable = this.contactSubject.asObservable();
+  contactSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
+
 
   constructor(private http: HttpClient, private authenticationService: AuthenticationService) {
   }
@@ -22,7 +22,6 @@ export class ContactsService {
       fromEmail: this.authenticationService.getCurrentUser().email,
       toEmail: email
     };
-    this.contactSubject.next('New contact added');
     return this.http.post(this.BASE_URL + '/contacts', contactCreation);
   };
 
