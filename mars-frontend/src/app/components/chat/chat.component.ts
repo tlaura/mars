@@ -15,6 +15,7 @@ export class ChatComponent implements OnInit {
   messages: Message[] = [];
   isMessageWindowOpen: boolean = false;
   from: string = 'test';
+  to: string = '';
   //currentUser: string;
 
   constructor(private authenticationService: AuthenticationService) {
@@ -35,7 +36,6 @@ export class ChatComponent implements OnInit {
   ngOnInit(): void {
   }
 
-
   changeDisplay() {
     this.isSmall = !this.isSmall;
     if (this.isSmall) {
@@ -45,11 +45,12 @@ export class ChatComponent implements OnInit {
 
   openMessageWindow(to: string) {
     this.isMessageWindowOpen = true;
+    this.to = to;
     this.messages = this.fetchMessages(this.from, to);
   }
 
   fetchMessages(from: string, to: string) {
-    //TODO: fetch messages from server...
+    //TODO: fetch messages from server...ú
     return [
       {
         fromName: from,
@@ -102,9 +103,24 @@ export class ChatComponent implements OnInit {
 
 
     ]
+
   }
 
   closeMessageWindow() {
     this.isMessageWindowOpen = false;
+  }
+
+  sendMessage(message: string) {
+    //TODO: send message to server...
+    this.messages.push(
+      {
+        fromName: this.from,
+        fromEmail: this.from,
+        toName: this.to,
+        toEmail: this.to,
+        date: new Date(),
+        text: message
+      }
+    )
   }
 }

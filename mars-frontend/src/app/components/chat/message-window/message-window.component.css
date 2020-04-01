@@ -2,6 +2,16 @@
   color: rgb(32, 167, 209);
 }
 
+.message-send-div input {
+  border: none !important;
+}
+
+.message-send-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .all-message-div {
   overflow-y: scroll;
   max-height: 35vh;
@@ -25,4 +35,8 @@
 
 .date-label {
   font-size: xx-small;
+}
+
+.send-icon {
+  color: white;
 }

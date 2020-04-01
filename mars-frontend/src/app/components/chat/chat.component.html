@@ -5,6 +5,7 @@
         <i class="window-close fas fa-times-circle"></i>
       </button>
       <app-message-window
+        (messageEmitter)="sendMessage($event)"
         [currentUser]="from"
         [messages]="messages"></app-message-window>
     </div>

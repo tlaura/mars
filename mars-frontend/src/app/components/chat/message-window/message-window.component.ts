@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Message} from "../../../models/chat/message";
 
 @Component({
@@ -12,11 +12,28 @@ export class MessageWindowComponent implements OnInit {
   messages: Message[] = [];
   @Input()
   currentUser: string;
+  @Output()
+  messageEmitter: EventEmitter<string> = new EventEmitter<string>();
+  message: string;
 
   constructor() {
   }
 
   ngOnInit(): void {
+    this.scrollDown();
   }
 
+  sendMessage() {
+    this.messageEmitter.emit(this.message);
+    this.message = '';
+    this.scrollDown();
+  }
+
+  scrollDown() {
+    //TODO: scroll down when fetch complete?
+    setTimeout(() => {
+      const element = document.getElementById("messages");
+      element.scrollTop = element.scrollHeight;
+    }, 100)
+  }
 }
