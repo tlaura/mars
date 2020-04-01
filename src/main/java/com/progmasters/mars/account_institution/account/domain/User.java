@@ -34,8 +34,8 @@ public class User {
 
     @NotBlank
     @NotEmpty
-    @Column(name = "email")
-    private String email;
+    @Column(name = "email", unique = true)
+    protected String email;
 
     @Column(name = "phone")
     private String phone;
