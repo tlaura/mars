@@ -40,7 +40,7 @@ export class AccountService {
   }
 
   getProviderAccountDetails = (id: number): Observable<ProviderUserDetails> => {
-    return this.http.get<ProviderUserDetails>(this.BASE_URL + "/providers/provider-details/" + id);
+    return this.http.get<ProviderUserDetails>(this.BASE_URL + "/providers/providerDetails/" + id);
   };
 
   getProviderAccountsByAgeRange = (age: number): Observable<Array<AccountInstitutionListModel>> => {
@@ -48,7 +48,7 @@ export class AccountService {
   };
 
   updatePassword(passwordChangeDetails: PasswordChangeDetailsModel) {
-    return this.http.patch(this.BASE_URL + '/providers/password-change', passwordChangeDetails);
+    return this.http.patch(this.BASE_URL + '/providers/passwordChange', passwordChangeDetails);
   }
 
   saveNormalAccount = (formData: NormalAccountRegisterModel): Observable<any> => {

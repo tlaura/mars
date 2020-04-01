@@ -23,10 +23,10 @@ export class MailService {
   };
 
   updatePassword = (token: string, password: string): Observable<any> => {
-    return this.http.put(this.BASE_URL + "new-password/" + token, password);
+    return this.http.put(this.BASE_URL + "newPassword/" + token, password);
   };
 
   sendNewPasswordRequest = (email: string): Observable<any> => {
-    return this.http.post(this.BASE_URL + "new-password", email);
+    return this.http.post(this.BASE_URL + "newPassword", email);
   }
 }

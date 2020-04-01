@@ -30,7 +30,7 @@ public class MailController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PostMapping("new-password")
+    @PostMapping("newPassword")
     public ResponseEntity<Void> newPasswordRequest(@RequestBody String email) {
         User user = accountService.findByEmail(email);
         if (user != null) {
@@ -43,7 +43,7 @@ public class MailController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PutMapping("new-password/{token}")
+    @PutMapping("newPassword/{token}")
     public ResponseEntity<Void> createNewPassword(@PathVariable String token, @RequestBody String newPassword) {
         accountService.updatePassword(token, newPassword);
         log.info("");
