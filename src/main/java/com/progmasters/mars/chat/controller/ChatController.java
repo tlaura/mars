@@ -13,7 +13,6 @@ public class ChatController {
     @SendTo("/topic")
     public MessageData sendMessage(@Payload MessageData messageData) {
 
-
         return messageData;
     }
 
