@@ -48,7 +48,8 @@ public class ChatService {
         User fromUser = accountService.findByEmail(contactCreationCommand.getFromEmail());
         User toUser = accountService.findByEmail(contactCreationCommand.getToEmail());
         List<Contact> multipleContacts = contactRepository.findMultipleContacts(fromUser, toUser);
-        if (multipleContacts.isEmpty()) {
+        boolean isSelfMessaging = contactCreationCommand.getFromEmail().equalsIgnoreCase(contactCreationCommand.getToEmail());
+        if (multipleContacts.isEmpty() && !isSelfMessaging) {
             Contact contact = new Contact(fromUser, toUser);
             contactRepository.save(contact);
         }
