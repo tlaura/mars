@@ -3,6 +3,7 @@ package com.progmasters.mars.account_institution.account.controller;
 import com.progmasters.mars.account_institution.account.dto.JwtAuthenticationResponse;
 import com.progmasters.mars.account_institution.account.dto.LoginRequest;
 import com.progmasters.mars.account_institution.account.dto.UserCreationCommand;
+import com.progmasters.mars.account_institution.account.dto.UserDetailsData;
 import com.progmasters.mars.account_institution.account.security.AuthenticatedUserDetails;
 import com.progmasters.mars.account_institution.account.security.JwtTokenProvider;
 import com.progmasters.mars.account_institution.account.service.AccountService;
@@ -81,5 +82,19 @@ public class UserController {
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @GetMapping("/details/{email}")
+    public ResponseEntity<UserDetailsData> getUserDetailsByEmail(@PathVariable String email) {
+        UserDetailsData userDetails = accountService.getUserDetails(email);
+        log.info("UserDetails is requested by email: " + email);
+        return new ResponseEntity<>(userDetails, HttpStatus.OK);
+    }
+
+    @PutMapping("/{email}")
+    public ResponseEntity<UserDetailsData> updateUserDetailsByEmail(@PathVariable String email, @RequestBody UserDetailsData userDetailsData) {
+        UserDetailsData modified = accountService.updateUser(userDetailsData, email);
+
+        return new ResponseEntity<>(modified, HttpStatus.OK);
     }
 }
