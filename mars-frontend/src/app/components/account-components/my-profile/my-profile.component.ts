@@ -39,10 +39,10 @@ export class MyProfileComponent implements OnInit {
   };
 
   ngOnInit(): void {
-    if (!this.authenticationService.currentUserValue.token) {
+    if (!this.authenticationService.currentTokenValue.token) {
       this.router.navigate(['login']);
     }
-    const tokenPayload = decode(this.authenticationService.currentUserValue.token);
+    const tokenPayload = decode(this.authenticationService.currentTokenValue.token);
     this.loggedInUser = tokenPayload.sub;
 
     this.providerService.fetchProviderAccountDetails(this.loggedInUser).subscribe(

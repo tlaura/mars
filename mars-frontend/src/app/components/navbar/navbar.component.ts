@@ -13,7 +13,7 @@ export class NavbarComponent implements OnInit {
   isUserLoggedIn: boolean = false;
 
   constructor(public authenticationService: AuthenticationService, private router: Router) {
-    this.authenticationService.currentUser.subscribe(
+    this.authenticationService.currentToken.subscribe(
       () => {
         this.isUserLoggedIn = authenticationService.isAuthenticated();
         this.isAdmin = authenticationService.isAdmin();

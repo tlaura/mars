@@ -1,12 +1,13 @@
 <div class="all-message-div" id="messages">
   <div *ngFor="let message of messages, let index = index, let first = first">
-    <div [ngClass]="currentUser==message.fromName? 'message-from-me-align':'message-to-me-align'">
+    <div [ngClass]="currentUser.name==message.fromName? 'message-from-me-align':'message-to-me-align'">
       <div *ngIf="!(!first && message.fromName == messages[index-1].fromName)">
-        <label *ngIf="currentUser!=message.fromName"
+        <label *ngIf="currentUser.name!=message.fromName"
                class="font-weight-bold small mt-2 mb-0 white-label">{{message.fromName}}:</label>
-        <label *ngIf="currentUser==message.fromName" class="font-weight-bold small mt-2 mb-0 white-label">Én:</label>
+        <label *ngIf="currentUser.name==message.fromName"
+               class="font-weight-bold small mt-2 mb-0 white-label">Én:</label>
       </div>
-      <div [ngClass]="currentUser==message.fromName? 'message-from-me-div':'message-to-me-div'"
+      <div [ngClass]="currentUser.name==message.fromName? 'message-from-me-div':'message-to-me-div'"
            class="white-block-on-blue-div p-2 my-0 message-div small text-left">
         <label class="text-break">{{message.text}}</label>
       </div>

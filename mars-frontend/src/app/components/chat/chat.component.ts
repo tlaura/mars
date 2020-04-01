@@ -2,6 +2,11 @@ import {Component, OnInit} from '@angular/core';
 import {Contact} from "../../models/chat/contact";
 import {Message} from "../../models/chat/message";
 import {AuthenticationService} from "../../services/auth/authentication.service";
+import {SocketService} from "../../services/chat/socket.service";
+import {environment} from "../../../environments/environment";
+import * as Stomp from 'stompjs';
+import * as SockJS from 'sockjs-client';
+import {User} from "../../models/chat/user";
 
 @Component({
   selector: 'app-chat',
@@ -10,27 +15,32 @@ import {AuthenticationService} from "../../services/auth/authentication.service"
 })
 export class ChatComponent implements OnInit {
 
+  isLoaded: boolean = false;
+  isCustomSocketOpened = false;
+  from: User;
+  to: Contact;
+
   isSmall: boolean = true;
   contacts: Contact[] = [];
   messages: Message[] = [];
   isMessageWindowOpen: boolean = false;
-  from: string = 'test';
-  to: string = '';
-  //currentUser: string;
+  private serverUrl = environment.BASE_URL + '/api/chat';
+  private stompClient;
 
-  constructor(private authenticationService: AuthenticationService) {
-    this.authenticationService.currentUser.subscribe(
-      () => this.from = authenticationService.getCurrentUserEmail()
+  constructor(private socketService: SocketService, private authenticationService: AuthenticationService) {
+    this.authenticationService.currentToken.subscribe(
+      () => {
+        this.from = authenticationService.getCurrentUser();
+        if (!this.from) {
+          this.closeMessageWindow();
+          this.closeChat();
+        } else {
+          //TODO: fetch contacts list
+          this.initializeWebSocketConnection();
+        }
+      }
     );
-    this.contacts.push(
-      {name: 'Laura', email: '', online: false},
-      {name: 'Peti', email: '', online: true},
-      {name: 'Elza', email: '', online: false},
-      {name: 'Castiel', email: '', online: true},
-      {name: 'Ezekiel', email: '', online: true},
-      {name: 'Gabriel', email: '', online: false},
-      {name: 'Uriel', email: '', online: false},
-    )
+
   }
 
   ngOnInit(): void {
@@ -43,67 +53,15 @@ export class ChatComponent implements OnInit {
     }
   }
 
-  openMessageWindow(to: string) {
+  openMessageWindow(contactId: number) {
     this.isMessageWindowOpen = true;
-    this.to = to;
-    this.messages = this.fetchMessages(this.from, to);
+    this.to = this.contacts[contactId];
+    this.messages = this.fetchMessages(this.from, this.to);
   }
 
-  fetchMessages(from: string, to: string) {
-    //TODO: fetch messages from server...ú
-    return [
-      {
-        fromName: from,
-        fromEmail: from,
-        toName: to,
-        toEmail: to,
-        date: new Date(),
-        text: 'Szia ' + to + ' :) '
-      },
-      {
-        fromName: to,
-        fromEmail: to,
-        toName: from,
-        toEmail: from,
-        date: new Date(),
-        text: 'Szia ' + from + ' :) '
-      },
-      {
-        fromName: to,
-        fromEmail: to,
-        toName: from,
-        toEmail: from,
-        date: new Date(),
-        text: 'Hogy vagy ma?'
-      },
-      {
-        fromName: to,
-        fromEmail: to,
-        toName: from,
-        toEmail: from,
-        date: new Date(),
-        text: 'Vagy most épp nem vagy gépnél? '
-      },
-      {
-        fromName: from,
-        fromEmail: from,
-        toName: to,
-        toEmail: to,
-        date: new Date(),
-        text: ' De! Itt vagyok, bocsi!'
-      },
-      {
-        fromName: to,
-        fromEmail: to,
-        toName: from,
-        toEmail: from,
-        date: new Date(),
-        text: 'Semmi gond. '
-      }
-
-
-    ]
-
+  fetchMessages(from: User, to: Contact): Message[] {
+    //TODO: fetch messages from server...
+    return null;
   }
 
   closeMessageWindow() {
@@ -111,16 +69,49 @@ export class ChatComponent implements OnInit {
   }
 
   sendMessage(message: string) {
-    //TODO: send message to server...
-    this.messages.push(
-      {
-        fromName: this.from,
-        fromEmail: this.from,
-        toName: this.to,
-        toEmail: this.to,
+    if (message) {
+      let payload: Message = {
+        fromName: this.from.name,
+        fromEmail: this.from.email,
+        toName: this.to.name,
+        toEmail: this.to.email,
         date: new Date(),
         text: message
-      }
-    )
+      };
+      this.stompClient.send(this.serverUrl + "/send/message", {}, JSON.stringify(payload));
+    }
+  }
+
+  openSocket() {
+    if (this.isLoaded) {
+      this.isCustomSocketOpened = true;
+      this.stompClient.subscribe((message) => {
+        this.handleResult(message);
+      });
+    }
+  }
+
+  handleResult(message) {
+    if (message.body) {
+      let messageResult: Message = JSON.parse(message.body);
+      console.log(messageResult);
+      this.messages.push(messageResult);
+    }
+  }
+
+  private closeChat() {
+    this.isSmall = true;
+    this.contacts = [];
+    this.messages = [];
+  }
+
+  private initializeWebSocketConnection() {
+    let ws = new SockJS(this.serverUrl + '/' + this.from.email);
+    this.stompClient = Stomp.over(ws);
+    let that = this;
+    this.stompClient.connect({}, function (frame) {
+      that.isLoaded = true;
+      that.openSocket()
+    });
   }
 }

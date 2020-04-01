@@ -23,7 +23,7 @@ export class LoginFormComponent implements OnInit {
 
   constructor(private authenticationService: AuthenticationService, private route: ActivatedRoute, private formBuilder: FormBuilder, private router: Router) {
     // redirect to home if already logged in
-    if (this.authenticationService.currentUserValue) {
+    if (this.authenticationService.currentTokenValue) {
       this.router.navigate(['/']);
     }
   }
