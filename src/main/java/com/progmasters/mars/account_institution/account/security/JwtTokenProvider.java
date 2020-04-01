@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
 import java.util.Date;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,7 +15,7 @@ import java.util.Map;
 @Slf4j
 @Component
 public class JwtTokenProvider implements Serializable {
-
+    private static final long serialVersionUID = 1L;
     public static final long JWT_TOKEN_VALIDITY = 30 * 60 * 1000;
 
     @Value("${jwt.secret}")

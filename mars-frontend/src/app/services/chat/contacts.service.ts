@@ -27,6 +27,6 @@ export class ContactsService {
   };
 
   fetchMessages = (from: string, to: string): Observable<any> => {
-    return this.http.get(this.BASE_URL + '/contacts?fromEmail=' + from + '&toEmail=' + to);
+    return this.http.get(this.BASE_URL + '/contacts/history?fromEmail=' + from + '&toEmail=' + to);
   }
 }
