@@ -13,6 +13,7 @@ import com.progmasters.mars.account_institution.account.repository.UserRepositor
 import com.progmasters.mars.account_institution.account.security.AuthenticatedUserDetails;
 import com.progmasters.mars.account_institution.connector.AccountInstitutionConnectorRepository;
 import com.progmasters.mars.account_institution.connector.AccountInstitutionListData;
+import com.progmasters.mars.chat.domain.LoginState;
 import com.progmasters.mars.mail.EmailService;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -254,5 +255,11 @@ public class AccountService {
         user.setCity(userDetailsData.getCity());
         user.setAddress(userDetailsData.getAddress());
         user.setNewsletter(userDetailsData.getNewsletter());
+    }
+
+    public void setLoginState(String email, LoginState loginState) {
+        User user = findByEmail(email);
+        user.setState(loginState);
+        userRepository.save(user);
     }
 }
