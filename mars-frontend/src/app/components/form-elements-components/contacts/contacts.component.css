@@ -3,32 +3,32 @@ input::placeholder {
 }
 
 input {
-  border: 1px solid tomato;
+  border: 1px solid rgb(255, 72, 0);
   outline: 0;
   box-shadow: none !important;
 }
 
 select {
-  border: 1px solid tomato;
+  border: 1px solid rgb(255, 72, 0);
   outline: 0;
   box-shadow: none !important;
 }
 
 h1 {
-  color: tomato;
+  color: rgb(255, 72, 0);
   margin-top: 5rem;
   margin-bottom: 2rem;
 }
 
 label {
-  color: tomato;
+  color: rgb(255, 72, 0);
 }
 
 hr {
   display: block;
   height: 1px;
   border: 0;
-  border-top: 1px solid black;
+  border-top: 1px solid rgb(255, 72, 0);
   margin: 1em 0;
   padding: 0;
 }

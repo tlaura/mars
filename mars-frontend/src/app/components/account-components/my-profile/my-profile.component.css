@@ -7,7 +7,7 @@
 }
 
 .edit-button-white svg {
-  color: cornflowerblue;
+  color: rgb(32, 167, 209);
 }
 
 .edit-button-white {
@@ -36,7 +36,7 @@
 }
 
 .delete-button {
-  background-color: tomato;
+  background-color: rgb(255, 72, 0);
   padding: 15px;
 }
 
