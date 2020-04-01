@@ -23,7 +23,7 @@
           <input
             *ngIf='editMode' name="username" [formControl]="username"
             [(ngModel)]='providerAccount.name' class='text-dark form-control' type='text'>
-          <small *ngIf="username.errors?.required && editMode"
+          <small *ngIf="username?.errors?.required && editMode"
                  class="text-danger col-sm-12 col-md-12">
             Helytelen név!
           </small>

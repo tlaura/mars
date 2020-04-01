@@ -25,9 +25,15 @@ export class ConfirmDeletionComponent implements OnInit {
 
   deleteUser() {
     this.accountService.deleteAccount(this.loggedInUser).subscribe(
-      () => this.router.navigate(['deletion-success']),
-      error => console.warn(error),
-      () => localStorage.clear()
+      () => {
+        debugger;
+        this.router.navigate(['deletion-success']);
+        debugger;
+        localStorage.clear();
+      },
+      (error) => {
+        console.warn(error)
+      },
     );
   }
 
