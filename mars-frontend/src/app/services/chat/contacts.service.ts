@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Observable} from "rxjs";
+import {BehaviorSubject, Observable} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
 import {ContactCreation} from "../../models/chat/contactCreation";
@@ -10,6 +10,9 @@ import {AuthenticationService} from "../auth/authentication.service";
 })
 export class ContactsService {
   BASE_URL = environment.BASE_URL + '/api';
+
+  contactSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
+
 
   constructor(private http: HttpClient, private authenticationService: AuthenticationService) {
   }
