@@ -19,10 +19,12 @@ public class MessageData {
 
     private String toEmail;
 
- //   @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+    //   @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime date;
 
     private String text;
+
+    private String loginState;
 
 
 }

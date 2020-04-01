@@ -1,4 +1,4 @@
-package com.progmasters.mars.config;
+package com.progmasters.mars.chat;
 
 import com.progmasters.mars.chat.dto.MessageData;
 import lombok.extern.slf4j.Slf4j;
