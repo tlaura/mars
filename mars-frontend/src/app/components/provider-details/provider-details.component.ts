@@ -52,7 +52,8 @@ export class ProviderDetailsComponent implements OnInit {
 
   addContact(email: string) {
     this.contactsService.addContact(email).subscribe(
-
+      () => console.log('Contact added.'),
+      (error) => console.log(error)
     )
   }
 }

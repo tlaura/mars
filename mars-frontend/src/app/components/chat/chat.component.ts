@@ -7,6 +7,7 @@ import {environment} from "../../../environments/environment";
 import {User} from "../../models/chat/user";
 import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
+import {ContactsService} from "../../services/chat/contacts.service";
 
 @Component({
   selector: 'app-chat',
@@ -24,10 +25,10 @@ export class ChatComponent implements OnInit {
   contacts: Contact[] = [];
   messages: Message[] = [];
   isMessageWindowOpen: boolean = false;
-  private serverUrl = environment.BASE_URL + '/api/chat';
+  private serverUrl = environment.BASE_URL + '/api';
   private stompClient;
 
-  constructor(private socketService: SocketService, private authenticationService: AuthenticationService) {
+  constructor(private socketService: SocketService, private authenticationService: AuthenticationService, private contactsService: ContactsService) {
     this.authenticationService.currentToken.subscribe(
       () => {
         this.from = authenticationService.getCurrentUser();
@@ -35,7 +36,7 @@ export class ChatComponent implements OnInit {
           this.closeMessageWindow();
           this.closeChat();
         } else {
-          //TODO: fetch contacts list
+          this.fetchContacts(this.from);
           this.initializeWebSocketConnection();
         }
       }
@@ -60,7 +61,10 @@ export class ChatComponent implements OnInit {
   }
 
   fetchMessages(from: User, to: Contact): Message[] {
-    //TODO: fetch messages from server...
+    this.contactsService.fetchMessages(from.email, to.email).subscribe(
+      (messages: Message[]) => this.messages = messages,
+      (error) => console.log(error)
+    );
     return null;
   }
 
@@ -78,14 +82,14 @@ export class ChatComponent implements OnInit {
         date: new Date(),
         text: message
       };
-      this.stompClient.send(this.serverUrl + "/send/message", {}, JSON.stringify(payload));
+      this.stompClient.send(this.serverUrl + "/chat/send/message", {}, JSON.stringify(payload));
     }
   }
 
   openSocket() {
     if (this.isLoaded) {
       this.isCustomSocketOpened = true;
-      this.stompClient.subscribe('/' + this.from.email, (message) => {
+      this.stompClient.subscribe('/chat/' + this.from.email, (message) => {
         this.handleResult(message);
       });
     }
@@ -94,7 +98,6 @@ export class ChatComponent implements OnInit {
   handleResult(message) {
     if (message.body) {
       let messageResult: Message = JSON.parse(message.body);
-      console.log(messageResult);
       this.messages.push(messageResult);
     }
   }
@@ -113,5 +116,15 @@ export class ChatComponent implements OnInit {
       that.isLoaded = true;
       that.openSocket()
     });
+  }
+
+  private fetchContacts(from: User) {
+    this.contactsService.fetchContacts(from.email).subscribe(
+      (contacts) => {
+        this.contacts = contacts;
+        console.log('Contacts listed.')
+      },
+      (error) => console.log(error)
+    )
   }
 }

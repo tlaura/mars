@@ -20,5 +20,13 @@ export class ContactsService {
       providerEmail: email
     };
     return this.http.post(this.BASE_URL + '/contacts', contactCreation);
+  };
+
+  fetchContacts = (userEmail: string): Observable<any> => {
+    return this.http.get(this.BASE_URL + '/contacts?email=' + userEmail);
+  };
+
+  fetchMessages = (from: string, to: string): Observable<any> => {
+    return this.http.get(this.BASE_URL + '/contacts/history?fromEmail=' + from + '&toEmail=' + to);
   }
 }
