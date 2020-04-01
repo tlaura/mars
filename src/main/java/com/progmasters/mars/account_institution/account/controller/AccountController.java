@@ -40,7 +40,7 @@ public class AccountController {
         binder.addValidators(providerAccountValidator);
     }
 
-    @GetMapping("/provider-details/{id}")
+    @GetMapping("/providerDetails/{id}")
     public ResponseEntity<ProviderUserDetails> getProviderUserDetail(@PathVariable Long id) {
         log.info("User details is requested by id:\t" + id);
         ProviderUserDetails foundUserDetails = accountService.getUserDetailsById(id);
