@@ -1,0 +1,19 @@
+.chat-background-div {
+  background-color: cornflowerblue;
+  border-top-left-radius: 2rem;
+  border-top-right-radius: 2rem;
+  box-shadow: #2e2e2e 0.5rem 0.5rem 2rem;
+}
+
+.chat-lg {
+  height: auto;
+  max-height: 90vh;
+}
+
+.chat-sm {
+  height: 4vh;
+}
+
+.msg-btn {
+  cursor: pointer;
+}
