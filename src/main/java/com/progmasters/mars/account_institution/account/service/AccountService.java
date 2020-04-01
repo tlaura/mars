@@ -168,8 +168,8 @@ public class AccountService {
     }
 
     public void setNewPassword(String email) {
-        ProviderAccount providerAccount = providerAccountRepository.findByEmail(email).orElseThrow(() -> new EntityNotFoundException("No account found by given email:\t" + email));
-        emailService.sendPasswordEmail(providerAccount);
+        User user = userRepository.findByEmail(email).orElseThrow(() -> new EntityNotFoundException("No account found by given email:\t" + email));
+        emailService.sendPasswordEmail(user);
     }
 
     public void updatePassword(String token, String newPassword) {
