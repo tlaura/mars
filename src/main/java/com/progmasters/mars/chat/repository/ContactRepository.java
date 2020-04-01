@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ContactRepository extends JpaRepository<Contact, Long> {
 
-    @Query("select c from Contact c where (c.user.email= :fromEmail and c.provider.email= :toEmail) or (c.provider.email= :fromEmail and c.user.email= :toEmail)")
+    @Query("select c from Contact c where (c.fromAccount.email= :fromEmail and c.toAccount.email= :toEmail) or (c.toAccount.email= :fromEmail and c.fromAccount.email= :toEmail)")
     Contact findConnectionByUsers(@Param("fromEmail") String fromEmail, @Param("toEmail") String toEmail);
+
 }

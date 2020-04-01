@@ -176,12 +176,12 @@ public class AccountService {
         PasswordToken passwordToken = passwordTokenRepository.findByToken(token).orElseThrow(() -> new EntityNotFoundException("Given token not found: " + token));
         User user = passwordToken.getUser();
         user.setPassword(passwordEncoder.encode(newPassword));
-            passwordTokenRepository.delete(passwordToken);
-            if (user instanceof ProviderAccount) {
-                providerAccountRepository.save((ProviderAccount) user);
-            } else {
-                userRepository.save(user);
-            }
+        passwordTokenRepository.delete(passwordToken);
+        if (user instanceof ProviderAccount) {
+            providerAccountRepository.save((ProviderAccount) user);
+        } else {
+            userRepository.save(user);
+        }
     }
 
     public boolean updatePasswordOfLoggedInUser(PasswordChangeDetails passwordChangeDetails) {
@@ -198,7 +198,7 @@ public class AccountService {
         if (oldPasswordsMatch && newPasswordsMatch) {
             user.setPassword(BCrypt.hashpw(passwordChangeDetails.getPassword(), BCrypt.gensalt()));
             isChangeConfirmed = true;
-            }
+        }
         return isChangeConfirmed;
     }
 
@@ -222,4 +222,13 @@ public class AccountService {
         }
         return isDeleted;
     }
+
+    public List<User> getRecievingUsersByEmail(String email) {
+        return userRepository.findRecievingUsersByEmail(email);
+    }
+
+    public List<User> getProposingUsersByEmail(String email) {
+        return userRepository.findProposingUserByEmail(email);
+    }
+
 }

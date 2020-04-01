@@ -2,6 +2,7 @@ package com.progmasters.mars.chat.controller;
 
 import com.progmasters.mars.chat.dto.ContactCreationCommand;
 import com.progmasters.mars.chat.dto.ContactsData;
+import com.progmasters.mars.chat.dto.MessageData;
 import com.progmasters.mars.chat.service.ChatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,5 +34,12 @@ public class ContactController {
         List<ContactsData> contactsData = chatService.getContactsByEmail(email);
 
         return new ResponseEntity<>(contactsData, HttpStatus.OK);
+    }
+
+    @GetMapping("/history")
+    public ResponseEntity<List<MessageData>> getChatHistory(@RequestParam("fromEmail") String fromEmail, @RequestParam("toEmail") String toEmail) {
+        chatService.getChatHistory(fromEmail, toEmail);
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

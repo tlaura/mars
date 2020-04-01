@@ -42,10 +42,18 @@ public class ChatService {
     }
 
     public List<ContactsData> getContactsByEmail(String email) {
-        User user = accountService.findByEmail(email);
-        List<ContactsData> contactsData = new ArrayList<>();
+        List<ContactsData> contactsDataList = new ArrayList<>();
 
-        return contactsData;
+        accountService.getRecievingUsersByEmail(email).stream().map(ContactsData::new).forEach(contactsDataList::add);
+        accountService.getProposingUsersByEmail(email).stream().map(ContactsData::new).forEach(contactsDataList::add);
+
+        return contactsDataList;
+    }
+
+    public List<MessageData> getChatHistory(String fromEmail, String toEmail) {
+        Contact connection = contactRepository.findConnectionByUsers(fromEmail, toEmail);
+
+        return null;
     }
 
 
