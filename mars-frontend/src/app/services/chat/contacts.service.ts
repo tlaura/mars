@@ -12,6 +12,7 @@ export class ContactsService {
   BASE_URL = environment.BASE_URL + '/api';
 
   contactSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
+  messageSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
 
 
   constructor(private http: HttpClient, private authenticationService: AuthenticationService) {

@@ -48,9 +48,10 @@ export class ChatComponent implements OnInit {
     this.contactsService.contactSubject.subscribe(
       () => {
         this.fetchContacts(this.from);
+        this.isSmall = false;
       },
-      (error) => console.log(error))
-
+      (error) => console.log(error)
+    )
   }
 
   changeDisplay() {
@@ -97,6 +98,7 @@ export class ChatComponent implements OnInit {
       this.isCustomSocketOpened = true;
       this.stompClient.subscribe('/topic/' + this.from.email, (message) => {
         this.handleResult(message);
+        this.fetchContacts(this.from);
       });
     }
   }
@@ -126,8 +128,11 @@ export class ChatComponent implements OnInit {
 
   private fetchContacts(from: User) {
     this.contactsService.fetchContacts(from.email).subscribe(
-      (contacts) => {
+      (contacts: Contact[]) => {
         this.contacts = contacts;
+        if (contacts.length > this.contacts.length) {
+          this.isSmall = false;
+        }
         console.log('Contacts listed.')
       },
       (error) => console.log(error)
