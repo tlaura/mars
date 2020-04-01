@@ -58,7 +58,7 @@ export class AccountService {
 
   deleteAccount = (loggedInUser: string): Observable<any> => {
     return this.http.delete(this.BASE_URL + '/user/delete/' + loggedInUser);
-  }
+  };
 
   getUserDetails = (email: string): Observable<UserDetailsModel> => {
     return this.http.get<UserDetailsModel>(this.BASE_URL + "/user/details/" + email);

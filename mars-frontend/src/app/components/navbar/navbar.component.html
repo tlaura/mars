@@ -38,9 +38,9 @@
         <a class="nav-link" routerLink="login" routerLinkActive="active">
           Bejelentkezés</a>
       </li>
-      <li *ngIf="isUserLoggedIn" class="nav-item font-weight-lighter mx-3"><a class="nav-link"
-                                                                              routerLink="my-profile"
-                                                                              routerLinkActive="active">
+      <li *ngIf="isUserLoggedIn && !isAdmin" class="nav-item font-weight-lighter mx-3"><a class="nav-link"
+                                                                                          routerLink="my-profile"
+                                                                                          routerLinkActive="active">
         Profilom</a>
       </li>
       <li *ngIf="isUserLoggedIn" class="nav-item font-weight-lighter mx-3">
