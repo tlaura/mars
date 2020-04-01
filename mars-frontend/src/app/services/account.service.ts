@@ -8,6 +8,7 @@ import {ProviderUserDetails} from "../models/providerUserDetails";
 import {AccountInstitutionListModel} from "../models/accountInstitutionList.model";
 import {PasswordChangeDetailsModel} from "../models/passwordChangeDetails.model";
 import {NormalAccountRegisterModel} from "../models/normalAccountRegisterModel";
+import {UserDetailsModel} from "../models/userDetails.model";
 
 @Injectable({
   providedIn: 'root'
@@ -57,5 +58,13 @@ export class AccountService {
 
   deleteAccount(loggedInUser: string) {
     return this.http.delete(this.BASE_URL + '/user/delete/' + loggedInUser);
+  }
+
+  getUserDetails = (email: string): Observable<UserDetailsModel> => {
+    return this.http.get<UserDetailsModel>(this.BASE_URL + "/user/details/" + email);
+  };
+
+  updateUserDetails = (userDetails: UserDetailsModel): Observable<any> => {
+    return this.http.put(this.BASE_URL + "/user/" + userDetails.email, userDetails);
   }
 }

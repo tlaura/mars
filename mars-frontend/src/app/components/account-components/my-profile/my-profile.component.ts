@@ -5,9 +5,10 @@ import {FormControl, Validators} from "@angular/forms";
 import {validatorBounds} from "../../../../environments/validatorBounds";
 import {InstitutionTypeModel} from "../../../models/InstitutionType.model";
 import {InstitutionService} from "../../../services/institution.service";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {AuthenticationService} from "../../../services/auth/authentication.service";
 import decode from 'jwt-decode';
+import {UserDetailsModel} from "../../../models/userDetails.model";
 
 @Component({
   selector: 'app-my-profile',
@@ -17,6 +18,9 @@ import decode from 'jwt-decode';
 export class MyProfileComponent implements OnInit {
   providerAccount: ProviderUserProfileDetailsModel;
   accountCopy: ProviderUserProfileDetailsModel;
+  indUser: UserDetailsModel;
+  indUserCopy: UserDetailsModel;
+  isProvider: boolean;
   loggedInUser;
   editMode = false;
   @Input() name: string;
@@ -31,7 +35,8 @@ export class MyProfileComponent implements OnInit {
   constructor(private authenticationService: AuthenticationService,
               public providerService: AccountService,
               private institutionService: InstitutionService,
-              private router: Router) {
+              private router: Router,
+              private activatedRoute: ActivatedRoute) {
   }
 
   editModeChange = () => {
@@ -45,31 +50,63 @@ export class MyProfileComponent implements OnInit {
     const tokenPayload = decode(this.authenticationService.currentUserValue.token);
     this.loggedInUser = tokenPayload.sub;
 
-    this.providerService.fetchProviderAccountDetails(this.loggedInUser).subscribe(
-      (providerDetails: ProviderUserProfileDetailsModel) => {
-        this.providerAccount = providerDetails;
-        this.accountCopy = Object.assign({}, providerDetails);
-      }, error => {
-        console.warn(error)
-      }, () => {
-        this.getAllProviderTypes();
+    this.activatedRoute.paramMap.subscribe(
+      () => {
+        const role = this.authenticationService.getRole();
+        if (role === 'ROLE_IND') {
+          this.isProvider = false;
+          this.providerService.getUserDetails(this.loggedInUser).subscribe(
+            userDetails => {
+              this.indUser = userDetails;
+              this.indUserCopy = Object.assign({}, userDetails);
+            },
+            error => console.warn(error),
+          );
+        } else {
+          this.isProvider = true;
+          this.providerService.fetchProviderAccountDetails(this.loggedInUser).subscribe(
+            (providerDetails: ProviderUserProfileDetailsModel) => {
+              this.providerAccount = providerDetails;
+              this.accountCopy = Object.assign({}, providerDetails);
+            }, error => {
+              console.warn(error)
+            }, () => {
+              this.getAllProviderTypes();
+            }
+          );
+        }
       }
-    )
+    );
+
+
   }
 
   saveChanges = () => {
     // if(this.providerAccount.id == null) error
-    this.providerService.editProviderAccountDetails(this.providerAccount, this.providerAccount.id).subscribe(
-      () => {
-        if (this.editMode) {
-          this.editMode = false;
-          this.accountCopy = Object.assign({}, this.providerAccount);
+    if (this.isProvider) {
+      this.providerService.editProviderAccountDetails(this.providerAccount, this.providerAccount.id).subscribe(
+        () => {
+          if (this.editMode) {
+            this.editMode = false;
+            this.accountCopy = Object.assign({}, this.providerAccount);
+          }
+        }, error => {
+          console.log(error);
         }
-        console.log("Data changes saved");
-      }, error => {
-        console.log(error);
-      }
-    );
+      );
+    } else {
+      this.providerService.updateUserDetails(this.indUser).subscribe(
+        value => {
+          if (this.editMode) {
+            this.editMode = false;
+            this.indUser = value;
+            this.indUserCopy = value;
+          }
+        },
+        error => console.warn(error)
+      );
+    }
+
   };
 
   private getAllProviderTypes = () => {
@@ -82,6 +119,7 @@ export class MyProfileComponent implements OnInit {
   cancelEdit = () => {
     this.editMode = false;
     this.providerAccount = Object.assign({}, this.accountCopy);
+    this.indUser = Object.assign({}, this.indUserCopy);
   };
 
   deleteInstitution = (id: number) => {

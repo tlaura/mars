@@ -85,9 +85,16 @@ public class UserController {
     }
 
     @GetMapping("/details/{email}")
-    public ResponseEntity<UserDetailsData> getUserDetailsById(@PathVariable String email) {
+    public ResponseEntity<UserDetailsData> getUserDetailsByEmail(@PathVariable String email) {
         UserDetailsData userDetails = accountService.getUserDetails(email);
-
+        log.info("UserDetails is requested by email: " + email);
         return new ResponseEntity<>(userDetails, HttpStatus.OK);
+    }
+
+    @PutMapping("/{email}")
+    public ResponseEntity<UserDetailsData> updateUserDetailsByEmail(@PathVariable String email, @RequestBody UserDetailsData userDetailsData) {
+        UserDetailsData modified = accountService.updateUser(userDetailsData, email);
+
+        return new ResponseEntity<>(modified, HttpStatus.OK);
     }
 }

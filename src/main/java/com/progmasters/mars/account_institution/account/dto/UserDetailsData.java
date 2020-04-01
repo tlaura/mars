@@ -8,8 +8,6 @@ import lombok.NoArgsConstructor;
 @Getter
 public class UserDetailsData {
 
-    private Long id;
-
     private String name;
 
     private String password;
@@ -29,7 +27,6 @@ public class UserDetailsData {
     private Boolean newsletter;
 
     public UserDetailsData(User user) {
-        this.id = user.getId();
         this.name = user.getName();
         this.password = user.getPassword();
         this.email = user.getEmail();

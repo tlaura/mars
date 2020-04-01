@@ -222,8 +222,25 @@ public class AccountService {
 
     public UserDetailsData getUserDetails(String email) {
 
-        User user = userRepository.findByEmail(email).orElseThrow(() -> new EntityNotFoundException("Account not found by give email: " + email));
+        User user = findByEmail(email);
 
         return new UserDetailsData(user);
+    }
+
+    public UserDetailsData updateUser(UserDetailsData userDetailsData, String email) {
+        User foundUser = findByEmail(email);
+        updateUserDetails(foundUser, userDetailsData);
+        userRepository.save(foundUser);
+        return new UserDetailsData(foundUser);
+    }
+
+    private void updateUserDetails(User user, UserDetailsData userDetailsData) {
+        user.setName(userDetailsData.getName());
+        user.setEmail(userDetailsData.getEmail());
+        user.setPhone(userDetailsData.getPhone());
+        user.setZipcode(userDetailsData.getZipcode());
+        user.setCity(userDetailsData.getCity());
+        user.setAddress(userDetailsData.getAddress());
+        user.setNewsletter(userDetailsData.getNewsletter());
     }
 }
