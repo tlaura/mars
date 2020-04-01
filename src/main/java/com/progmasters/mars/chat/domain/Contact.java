@@ -1,6 +1,5 @@
 package com.progmasters.mars.chat.domain;
 
-import com.progmasters.mars.account_institution.account.domain.ProviderAccount;
 import com.progmasters.mars.account_institution.account.domain.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,12 +21,12 @@ public class Contact {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "user_email", referencedColumnName = "email", insertable = false, updatable = false)
-    private User user;
+    @JoinColumn(name = "from_email", referencedColumnName = "email", insertable = false, updatable = false)
+    private User fromUser;
 
     @ManyToOne
-    @JoinColumn(name = "provider_email", referencedColumnName = "email", insertable = false, updatable = false)
-    private ProviderAccount providerAccount;
+    @JoinColumn(name = "to_email", referencedColumnName = "email", insertable = false, updatable = false)
+    private User toUser;
 
     @OneToMany(mappedBy = "contact")
     private List<Message> messages;

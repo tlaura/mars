@@ -56,8 +56,11 @@ public class User {
     @Column(name = "newsletter")
     private Boolean newsletter;
 
-    @OneToMany(mappedBy = "user")
-    private List<Contact> contacts;
+    @OneToMany(mappedBy = "fromUser")
+    private List<Contact> fromContacts;
+
+    @OneToMany(mappedBy = "toUser")
+    private List<Contact> toContacts;
 
     public User(UserCreationCommand userCreationCommand) {
         this.name = userCreationCommand.getName();

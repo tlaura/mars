@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "message")
@@ -21,4 +22,7 @@ public class Message {
     @ManyToOne
     @JoinColumn(name = "message_id")
     private Contact contact;
+
+    @Column(name = "message_sent_time")
+    private LocalDateTime date;
 }
