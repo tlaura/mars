@@ -14,7 +14,7 @@
 
 .all-message-div {
   overflow-y: scroll;
-  max-height: 35vh;
+  max-height: 25vh;
 }
 
 .message-to-me-align {

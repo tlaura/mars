@@ -27,8 +27,8 @@ public class ChatController {
     public MessageData sendMessage(@Payload MessageData messageData) {
         chatService.saveMessage(messageData);
         if (messageData.getToEmail() != null && !messageData.getToEmail().equals("")) {
-            this.simpMessagingTemplate.convertAndSend(messageData.getToEmail(), messageData);
-            this.simpMessagingTemplate.convertAndSend(messageData.getFromEmail(), messageData);
+            this.simpMessagingTemplate.convertAndSend("/topic/" + messageData.getToEmail(), messageData);
+            this.simpMessagingTemplate.convertAndSend("/topic/" + messageData.getFromEmail(), messageData);
         }
         return messageData;
     }
