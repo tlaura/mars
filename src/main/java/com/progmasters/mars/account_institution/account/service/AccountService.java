@@ -32,8 +32,12 @@ public class AccountService {
     private BCryptPasswordEncoder passwordEncoder;
     private final ConfirmationTokenRepository confirmationTokenRepository;
     private final PasswordTokenRepository passwordTokenRepository;
-    private final EmailService emailService;
+    private EmailService emailService;
     private AccountInstitutionConnectorRepository accountInstitutionConnectorRepository;
+
+    public void setEmailService(EmailService emailService) {
+        this.emailService = emailService;
+    }
 
     public AccountService(ProviderAccountRepository providerAccountRepository,
                           UserRepository userRepository, BCryptPasswordEncoder passwordEncoder,

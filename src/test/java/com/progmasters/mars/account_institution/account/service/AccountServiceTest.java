@@ -2,12 +2,15 @@ package com.progmasters.mars.account_institution.account.service;
 
 import com.progmasters.mars.account_institution.account.domain.ProviderAccount;
 import com.progmasters.mars.account_institution.account.domain.ProviderType;
+import com.progmasters.mars.account_institution.account.domain.User;
 import com.progmasters.mars.account_institution.account.dto.PasswordChangeDetails;
 import com.progmasters.mars.account_institution.account.dto.ProviderAccountCreationCommand;
 import com.progmasters.mars.account_institution.account.dto.ProviderUserDetails;
 import com.progmasters.mars.account_institution.institution.dto.InstitutionCreationCommand;
+import com.progmasters.mars.mail.EmailService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,6 +22,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.mock;
 
 @SpringBootTest
 @Transactional
@@ -33,9 +39,15 @@ public class AccountServiceTest {
     @Autowired
     private AccountService accountService;
 
+    @Mock
+    private EmailService emailService;
+
     @BeforeEach
     public void init() {
         this.providerAccountCreationCommand = createOneAccountCommand();
+        emailService = mock(EmailService.class);
+        doNothing().when(emailService).sendConfirmationEmail(any(User.class));
+        this.accountService.setEmailService(emailService);
         providerAccount = (ProviderAccount) accountService.save(providerAccountCreationCommand);
     }
 
