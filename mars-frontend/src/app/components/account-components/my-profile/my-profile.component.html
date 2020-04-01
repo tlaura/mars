@@ -26,7 +26,6 @@
           <input
             *ngIf='editMode && isProvider' [formControl]="username" name="username"
             [(ngModel)]='providerAccount.name' class='text-dark form-control' type='text'>
-          <small *ngIf="username?.errors?.required && editMode"
           <input
             *ngIf='editMode && !isProvider' [(ngModel)]='indUser.name' [formControl]="username"
             class='text-dark form-control' name="username" type='text'>
