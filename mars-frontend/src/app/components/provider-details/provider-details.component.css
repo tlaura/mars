@@ -1,0 +1,18 @@
+.contact-icon {
+  color: rgb(32, 167, 209);
+}
+
+.btn-trans {
+  background: none !important;
+  border: none !important;
+}
+
+.name-div {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+}
+
+.name-div h4 {
+  margin: 0;
+}

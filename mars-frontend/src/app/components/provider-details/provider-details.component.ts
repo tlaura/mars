@@ -2,6 +2,8 @@ import {Component, Input, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {AccountService} from "../../services/account.service";
 import {ProviderUserDetails} from "../../models/providerUserDetails";
+import {ContactsService} from "../../services/chat/contacts.service";
+import {AuthenticationService} from "../../services/auth/authentication.service";
 
 @Component({
   selector: 'app-provider-details',
@@ -13,9 +15,11 @@ export class ProviderDetailsComponent implements OnInit {
   @Input() mailSender: boolean = false;
   @Input() isInInfoBox: boolean = false;
   @Input() providerUserDetail: ProviderUserDetails;
+  isLoggedIn: boolean;
 
   constructor(private activatedRoute: ActivatedRoute, private accountService: AccountService,
-              private router: Router) {
+              private router: Router, private contactsService: ContactsService, private authenticationService: AuthenticationService) {
+
   }
 
   ngOnInit(): void {
@@ -27,6 +31,7 @@ export class ProviderDetailsComponent implements OnInit {
         }
       }
     );
+    this.isLoggedIn = this.authenticationService.isAuthenticated();
   }
 
   openMailSend = (): void => {
@@ -44,4 +49,10 @@ export class ProviderDetailsComponent implements OnInit {
     )
   };
 
+
+  addContact(email: string) {
+    this.contactsService.addContact(email).subscribe(
+
+    )
+  }
 }
