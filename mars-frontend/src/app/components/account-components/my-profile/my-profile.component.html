@@ -33,7 +33,11 @@
                  class="text-danger col-sm-12 col-md-12">
             Helytelen név!
           </small>
-          <small *ngIf="!providerAccount?.name"
+          <small *ngIf="!providerAccount?.name && isProvider"
+                 class="text-danger col-sm-12 col-md-12">
+            A mező kitöltése közelező!
+          </small>
+          <small *ngIf="!indUser?.name && !isProvider"
                  class="text-danger col-sm-12 col-md-12">
             A mező kitöltése közelező!
           </small>
