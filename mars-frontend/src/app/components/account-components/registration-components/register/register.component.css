@@ -1,7 +1,7 @@
 .register-div {
-  border-right: 1px solid tomato;
-  border-left: 1px solid tomato;
-  border-bottom: 1px solid tomato;
+  border-right: 1px solid rgb(255, 72, 0);
+  border-left: 1px solid rgb(255, 72, 0);
+  border-bottom: 1px solid rgb(255, 72, 0);
   border-bottom-left-radius: 2rem;
   border-bottom-right-radius: 2rem;
   font-size: small;
@@ -10,14 +10,14 @@
 }
 
 .user-option-chooser {
-  background-color: rgba(255, 99, 71, 0.9);
+  background-color: rgba(255, 72, 0, 0.9);
   color: white;
   border-radius: 50rem 50rem 0 0;
   appearance: none;
 }
 
 .user-option-chooser:hover {
-  background-color: rgba(255, 99, 71, 1);
+  background-color: rgba(255, 72, 0, 1);
   color: white;
 }
 
@@ -25,18 +25,18 @@
   outline: 0;
   box-shadow: none !important;
   background-color: white;
-  color: tomato;
-  border-right: 1px solid tomato;
-  border-left: 1px solid tomato;
-  border-top: 1px solid tomato;
+  color: rgb(255, 72, 0);
+  border-right: 1px solid rgb(255, 72, 0);
+  border-left: 1px solid rgb(255, 72, 0);
+  border-top: 1px solid rgb(255, 72, 0);
 }
 
 .user-option-chooser:focus {
   outline: 0;
   box-shadow: none !important;
   background-color: white;
-  color: tomato;
-  border-right: 1px solid tomato;
-  border-left: 1px solid tomato;
-  border-top: 1px solid tomato;
+  color: rgb(255, 72, 0);
+  border-right: 1px solid rgb(255, 72, 0);
+  border-left: 1px solid rgb(255, 72, 0);
+  border-top: 1px solid rgb(255, 72, 0);
 }

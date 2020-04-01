@@ -9,12 +9,12 @@ input[type=time]::-webkit-inner-spin-button {
 #openingTime {
   border-top-right-radius: 0 !important;
   border-bottom-right-radius: 0 !important;
-  border: 1px solid tomato;
+  border: 1px solid rgb(255, 72, 0);
 }
 
 #closingTime {
   border-top-left-radius: 0 !important;
   border-bottom-left-radius: 0 !important;
-  border: 1px solid tomato;
+  border: 1px solid rgb(255, 72, 0);
 }
 

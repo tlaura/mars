@@ -9,7 +9,7 @@
 }
 
 .my-pagination /deep/ .ngx-pagination .current {
-  background: tomato;
+  background: rgb(255, 72, 0);
   border-radius: 2rem;
 }
 
@@ -18,5 +18,5 @@
 }
 
 .my-pagination /deep/ .ngx-pagination li {
-  color: tomato;
+  color: rgb(255, 72, 0);
 }

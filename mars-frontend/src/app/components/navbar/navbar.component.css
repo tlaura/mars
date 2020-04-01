@@ -1,5 +1,5 @@
 .navbar {
-  background: tomato;
+  background: rgb(255, 72, 0);
 }
 
 .navbar a {
@@ -12,7 +12,7 @@
 }
 
 .dropdown-menu {
-  background-color: tomato;
+  background-color: rgb(255, 72, 0);
   margin: 0;
   border-radius: 2rem;
   border-left: none;
@@ -25,6 +25,6 @@
 .dropdown a:hover {
   border-radius: 2rem;
   background-color: white;
-  color: tomato;
+  color: rgb(255, 72, 0);
 }
 

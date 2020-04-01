@@ -6,7 +6,7 @@ html * {
 
 
 .tomato-background-div {
-  background-color: tomato;
+  background-color: rgb(255, 72, 0);
   width: 100%;
   min-height: 100vh;
   margin: 0;
@@ -16,7 +16,7 @@ html * {
 }
 
 .blue-background-div {
-  background-color: cornflowerblue;
+  background-color: rgb(32, 167, 209);
   width: 100%;
   min-height: 100vh;
   margin: 0;
@@ -26,18 +26,18 @@ html * {
 }
 
 .register-div input {
-  border: 1px solid tomato;
+  border: 1px solid rgb(255, 72, 0);
   outline: 0;
   box-shadow: none !important;
 }
 
 .register-div .text-danger-custom {
-  color: tomato;
+  color: rgb(255, 72, 0);
 }
 
 .register-div .select-tomato {
-  border: 1px solid tomato;
-  color: tomato;
+  border: 1px solid rgb(255, 72, 0);
+  color: rgb(255, 72, 0);
   outline: 0;
 }
 
@@ -49,21 +49,21 @@ html * {
 }
 
 .white-block-on-tomato-div .input-group-text {
-  background-color: tomato !important;
+  background-color: rgb(255, 72, 0) !important;
 }
 
 .white-block-on-tomato-div .text-danger-custom {
-  color: tomato !important;
+  color: rgb(255, 72, 0) !important;
 }
 
 .white-block-on-tomato-div select {
-  border: 1px solid tomato;
+  border: 1px solid rgb(255, 72, 0);
   outline: 0;
 }
 
 .custom-link {
   cursor: pointer;
-  color: tomato;
+  color: rgb(255, 72, 0);
 }
 
 .custom-link {
@@ -74,12 +74,12 @@ html * {
 }
 
 .provider-div label, .provider-div svg {
-  color: cornflowerblue;
+  color: rgb(32, 167, 209);
 }
 
 .custom-link-provider {
   cursor: pointer;
-  color: cornflowerblue;
+  color: rgb(32, 167, 209);
 }
 
 .white-label {
@@ -89,8 +89,8 @@ html * {
 .blue-block-on-white-div {
   font-size: small;
   border-radius: 2rem;
-  background-color: cornflowerblue;
-  box-shadow: #b3b3b3 0.5rem 0.5rem;
+  background-color: rgb(32, 167, 209);
+  box-shadow: #b3b3b3 0.5rem 0.5rem 2rem;
 }
 
 .blue-block-on-white-div label {
@@ -98,7 +98,7 @@ html * {
 }
 
 .blue-block-on-white-div input {
-  border: 1px solid cornflowerblue !important;
+  border: 1px solid rgb(32, 167, 209) !important;
 }
 
 .blue-block-on-white-div .text-danger-custom {
@@ -106,16 +106,16 @@ html * {
 }
 
 .blue-block-on-white-div .input-group-text {
-  background-color: cornflowerblue;
+  background-color: rgb(32, 167, 209);
 }
 
 .blue-block-on-white-div select {
-  border: 1px solid cornflowerblue !important;
+  border: 1px solid rgb(32, 167, 209) !important;
   outline: 0;
 }
 
 .blue-block-on-white-div textarea {
-  border: 1px solid cornflowerblue !important;
+  border: 1px solid rgb(32, 167, 209) !important;
 }
 
 .input-group-text {
@@ -127,8 +127,8 @@ html * {
 }
 
 .submit {
-  border-color: cornflowerblue !important;
-  background-color: cornflowerblue !important;
+  border-color: rgb(32, 167, 209) !important;
+  background-color: rgb(32, 167, 209) !important;
 }
 
 input::placeholder {
@@ -136,19 +136,19 @@ input::placeholder {
 }
 
 select {
-  border: 1px solid tomato !important;
+  border: 1px solid rgb(255, 72, 0) !important;
   outline: 0;
   box-shadow: none !important;
 }
 
 input {
-  border: 1px solid tomato !important;
+  border: 1px solid rgb(255, 72, 0) !important;
   outline: 0;
   box-shadow: none !important;
 }
 
 textarea {
-  border: 1px solid tomato !important;
+  border: 1px solid rgb(255, 72, 0) !important;
   outline: 0;
   box-shadow: none !important;
 }
@@ -159,25 +159,25 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .tomato-head {
-  color: tomato;
+  color: rgb(255, 72, 0);
   margin-bottom: 2rem;
 }
 
 label {
-  color: tomato;
+  color: rgb(255, 72, 0);
 }
 
 hr {
   display: block;
   height: 1px;
   border: 0;
-  border-top: 1px solid tomato;
+  border-top: 1px solid rgb(255, 72, 0);
   margin: 1em 0;
   padding: 0;
 }
 
 select#types::-webkit-scrollbar-thumb {
-  background: tomato;
+  background: rgb(255, 72, 0);
   border-radius: 2rem;
 }
 
@@ -187,32 +187,32 @@ select#types::-webkit-scrollbar {
 }
 
 select#types {
-  scrollbar-color: tomato white;
+  scrollbar-color: rgb(255, 72, 0) white;
   scrollbar-width: thin;
 }
 
 .blue-background-div select#types {
-  scrollbar-color: cornflowerblue white;
+  scrollbar-color: rgb(32, 167, 209) white;
 }
 
 .blue-background-div select#types::-webkit-scrollbar-thumb {
-  background: cornflowerblue;
+  background: rgb(32, 167, 209);
 }
 
 .white-block-on-tomato-div select#types {
-  scrollbar-color: tomato white;
+  scrollbar-color: rgb(255, 72, 0) white;
 }
 
 .white-block-on-tomato-div select#types::-webkit-scrollbar-thumb {
-  background: tomato;
+  background: rgb(255, 72, 0);
 }
 
 .register-div select#types {
-  scrollbar-color: tomato white;
+  scrollbar-color: rgb(255, 72, 0) white;
 }
 
 .register-div select#types::-webkit-scrollbar-thumb {
-  background: tomato;
+  background: rgb(255, 72, 0);
 }
 
 .blue-block-on-white-div .delete-white {
@@ -220,24 +220,24 @@ select#types {
 }
 
 .white-block-on-tomato-div .delete-white {
-  color: tomato;
+  color: rgb(255, 72, 0);
 }
 
 .icon-tomato {
-  color: tomato;
+  color: rgb(255, 72, 0);
 }
 
 .icon-blue {
-  color: cornflowerblue;
+  color: rgb(32, 167, 209);
 }
 
 .decor-div-tomato {
-  background-color: rgba(255, 99, 71, 0.2);
+  background-color: rgba(255, 72, 0, 0.2);
   height: 0.5rem;
 }
 
 .decor-div-blue {
-  background-color: rgba(100, 149, 237, 0.2);
+  background-color: rgba(32, 167, 209, 0.2);
   height: 0.5rem;
 }
 

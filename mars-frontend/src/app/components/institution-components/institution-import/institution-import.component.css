@@ -1,13 +1,13 @@
 label {
-  color: cornflowerblue;
+  color: rgb(32, 167, 209);
 }
 
 a {
-  color: cornflowerblue;
+  color: rgb(32, 167, 209);
 }
 
 p {
-  color: cornflowerblue;
+  color: rgb(32, 167, 209);
 }
 
 .custom-file-input ~ .custom-file-label::after {
