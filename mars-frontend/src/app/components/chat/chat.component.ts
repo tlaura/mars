@@ -4,9 +4,9 @@ import {Message} from "../../models/chat/message";
 import {AuthenticationService} from "../../services/auth/authentication.service";
 import {SocketService} from "../../services/chat/socket.service";
 import {environment} from "../../../environments/environment";
+import {User} from "../../models/chat/user";
 import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
-import {User} from "../../models/chat/user";
 
 @Component({
   selector: 'app-chat',
@@ -85,7 +85,7 @@ export class ChatComponent implements OnInit {
   openSocket() {
     if (this.isLoaded) {
       this.isCustomSocketOpened = true;
-      this.stompClient.subscribe((message) => {
+      this.stompClient.subscribe('/' + this.from.email, (message) => {
         this.handleResult(message);
       });
     }
@@ -106,7 +106,7 @@ export class ChatComponent implements OnInit {
   }
 
   private initializeWebSocketConnection() {
-    let ws = new SockJS(this.serverUrl + '/' + this.from.email);
+    let ws = new SockJS(this.serverUrl);
     this.stompClient = Stomp.over(ws);
     let that = this;
     this.stompClient.connect({}, function (frame) {
