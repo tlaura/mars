@@ -2,6 +2,7 @@ package com.progmasters.mars.account_institution.account.domain;
 
 import com.progmasters.mars.account_institution.account.dto.ProviderAccountCreationCommand;
 import com.progmasters.mars.account_institution.connector.AccountInstitutionConnector;
+import com.progmasters.mars.chat.domain.Contact;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -46,6 +47,9 @@ public class ProviderAccount extends User {
 
     @OneToMany(mappedBy = "providerAccount")
     private List<AccountInstitutionConnector> accountInstitutionConnectors;
+
+    @OneToMany(mappedBy = "providerAccount")
+    private List<Contact> contacts;
 
 
     public ProviderAccount(ProviderAccountCreationCommand providerAccountCreationCommand) {
