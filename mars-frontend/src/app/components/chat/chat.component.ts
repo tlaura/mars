@@ -112,7 +112,7 @@ export class ChatComponent implements OnInit {
   handleResult(message) {
     if (message.body) {
       let messageResult: Message = JSON.parse(message.body);
-      //tőle kapom vagy én küldöm neki...
+      this.fetchContacts(this.from);
       if ((messageResult.fromEmail == this.to.email && messageResult.toEmail == this.from.email) ||
         (messageResult.fromEmail == this.from.email && messageResult.toEmail == this.to.email)) {
         this.messages.push(messageResult);
