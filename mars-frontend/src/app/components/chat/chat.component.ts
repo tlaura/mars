@@ -163,10 +163,11 @@ export class ChatComponent implements OnInit {
 
 
   scrollDown() {
-    //TODO: scroll down when fetch complete?
     setTimeout(() => {
       const element = document.getElementById("messages");
-      element.scrollTop = element.scrollHeight;
+      if (element) {
+        element.scrollTop = element.scrollHeight;
+      }
     }, 100)
   }
 
