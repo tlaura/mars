@@ -38,7 +38,7 @@ public class ChatService {
             LoginState loginState = LoginState.valueOf(messageData.getLoginState());
             accountService.setLoginState(messageData.getFromEmail(), loginState);
         }
-        Message message = new Message(messageData.getText());
+        Message message = new Message(messageData.getText(), messageData.getFromName(), messageData.getFromEmail(), messageData.getToName(), messageData.getToEmail());
         message.setContact(connectionByUsers);
         messageRepository.save(message);
     }

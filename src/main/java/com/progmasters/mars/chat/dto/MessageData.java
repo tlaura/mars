@@ -19,6 +19,14 @@ public class MessageData {
 
     private String toEmail;
 
+    private String proposingName;
+
+    private String proposingEmail;
+
+    private String recieverName;
+
+    private String recieverEmail;
+
     //   @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime date;
 

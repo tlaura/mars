@@ -29,7 +29,23 @@ public class Message {
     @Column(name = "text")
     private String text;
 
-    public Message(String text) {
+    @Column(name = "proposing_name")
+    private String proposingName;
+
+    @Column(name = "proposing_email")
+    private String proposingEmail;
+
+    @Column(name = "reciever_name")
+    private String recieverName;
+
+    @Column(name = "reciever_email")
+    private String recieverEmail;
+
+    public Message(String text, String proposingName, String proposingEmail, String recieverName, String recieverEmail) {
         this.text = text;
+        this.proposingName = proposingName;
+        this.proposingEmail = proposingEmail;
+        this.recieverName = recieverName;
+        this.recieverEmail = recieverEmail;
     }
 }

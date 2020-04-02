@@ -1,7 +1,6 @@
 package com.progmasters.mars.account_institution.connector;
 
 import com.google.maps.errors.NotFoundException;
-import com.google.maps.model.Distance;
 import com.google.maps.model.DistanceMatrix;
 import com.google.maps.model.Duration;
 import com.google.maps.model.TravelMode;
@@ -124,10 +123,11 @@ public class AccountInstitutionService {
         List<TravelMode> travelModeList = List.of(TravelMode.DRIVING, TravelMode.WALKING, TravelMode.TRANSIT);
         for (TravelMode travelMode : travelModeList) {
             DistanceMatrix matrix = mapService.calculateDistanceByGivenTravelMode(originLng, originLat, destination, travelMode);
-            Distance rawDistance = matrix.rows[0].elements[0].distance;
-            Duration duration = matrix.rows[0].elements[0].duration;
-            if (rawDistance != null && duration != null) {
-                Long distance = rawDistance.inMeters;
+            boolean matrixFound = matrix.rows[0].elements[0].toString().equals("ZERO_RESULTS");
+            log.info("" + matrixFound);
+            if (matrixFound) {
+                Duration duration = matrix.rows[0].elements[0].duration;
+                Long distance = matrix.rows[0].elements[0].distance.inMeters;
                 switch (travelMode) {
                     case TRANSIT:
                         distanceData.setDistanceByTransit(distance / M_TO_KM);
