@@ -28,7 +28,6 @@ public class MessageData {
 
 
     public MessageData(String fromName, String fromEmail, String toName, String toEmail, LocalDateTime date, String text) {
-
         this.fromName = fromName;
         this.fromEmail = fromEmail;
         this.toName = toName;
