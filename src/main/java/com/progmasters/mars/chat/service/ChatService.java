@@ -68,16 +68,10 @@ public class ChatService {
         Contact connection = contactRepository.findConnectionByUsers(fromEmail, toEmail);
         String fromName = connection.getFromAccount().getName();
         String toName = connection.getToAccount().getName();
-        List<Message> messages = connection.getMessages();
-        for (int i = 0; i < 50; i++) {
-            Message message = messages.get(i);
+        for (Message message : connection.getMessages()) {
             MessageData messageData = new MessageData(fromName, fromEmail, toName, toEmail, message.getDate(), message.getText());
             chatHistory.add(messageData);
         }
-//        for (Message message : connection.getMessages()) {
-//            MessageData messageData = new MessageData(fromName, fromEmail, toName, toEmail, message.getDate(), message.getText());
-//            chatHistory.add(messageData);
-//        }
         return chatHistory;
     }
 }
