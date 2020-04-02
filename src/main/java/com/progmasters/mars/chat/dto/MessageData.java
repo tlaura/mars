@@ -34,12 +34,20 @@ public class MessageData {
 
     private String loginState;
 
-    public MessageData(String fromName, String fromEmail, String toName, String toEmail, LocalDateTime date, String text) {
-        this.fromName = fromName;
-        this.fromEmail = fromEmail;
-        this.toName = toName;
-        this.toEmail = toEmail;
-        this.date = date;
+    public MessageData(String text, String proposingName, String proposingEmail, String recieverName, String recieverEmail) {
+        this.fromName = proposingName;
+        this.fromEmail = proposingEmail;
+        this.toName = recieverName;
+        this.toEmail = recieverEmail;
         this.text = text;
+    }
+
+    public MessageData(String text, String proposingName, String proposingEmail, String recieverName, String recieverEmail, LocalDateTime date) {
+        this.text = text;
+        this.proposingName = proposingName;
+        this.proposingEmail = proposingEmail;
+        this.recieverName = recieverName;
+        this.recieverEmail = recieverEmail;
+        this.date = date;
     }
 }

@@ -66,10 +66,8 @@ public class ChatService {
     public List<MessageData> getChatHistory(String fromEmail, String toEmail) {
         List<MessageData> chatHistory = new ArrayList<>();
         Contact connection = contactRepository.findConnectionByUsers(fromEmail, toEmail);
-        String fromName = connection.getFromAccount().getName();
-        String toName = connection.getToAccount().getName();
         for (Message message : connection.getMessages()) {
-            MessageData messageData = new MessageData(fromName, fromEmail, toName, toEmail, message.getDate(), message.getText());
+            MessageData messageData = new MessageData(message.getText(), message.getProposingName(), message.getProposingEmail(), message.getRecieverName(), message.getRecieverEmail(), message.getDate());
             chatHistory.add(messageData);
         }
         return chatHistory;
