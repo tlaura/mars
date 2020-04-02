@@ -64,10 +64,10 @@ export class ChatComponent implements OnInit {
 
   openMessageWindow(contactId: number) {
     this.messages = [];
+    this.unreadMessages[contactId] = false;
     this.isMessageWindowOpen = true;
     this.to = this.contacts[contactId];
     this.messages = this.fetchMessages(this.from, this.to);
-    this.unreadMessages[contactId] = false;
   }
 
   fetchMessages(from: User, to: Contact): Message[] {
@@ -117,6 +117,11 @@ export class ChatComponent implements OnInit {
         (messageResult.fromEmail == this.from.email && messageResult.toEmail == this.to.email)) {
         this.messages.push(messageResult);
         this.scrollDown();
+      } else {
+        let otherEmail = messageResult.fromEmail;
+        let otherContact = this.contacts.find(contact => contact.email == otherEmail);
+        let index = this.contacts.indexOf(otherContact);
+        this.unreadMessages[index] = true;
       }
     }
   }
