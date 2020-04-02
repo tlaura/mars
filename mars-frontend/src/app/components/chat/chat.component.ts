@@ -68,7 +68,6 @@ export class ChatComponent implements OnInit {
     this.to = this.contacts[contactId];
     this.messages = this.fetchMessages(this.from, this.to);
     this.unreadMessages[contactId] = false;
-    debugger;
   }
 
   fetchMessages(from: User, to: Contact): Message[] {
