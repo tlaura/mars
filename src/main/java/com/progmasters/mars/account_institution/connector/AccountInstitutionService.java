@@ -108,9 +108,13 @@ public class AccountInstitutionService {
         for (AccountInstitutionListData account : allAccounts) {
             if (account.getZipcode() != null && account.getCity() != null && account.getAddress() != null) {
                 String destination = account.getZipcode() + " " + account.getCity() + " " + account.getAddress();
-                DistanceData distanceData = getDistance(originLng, originLat, destination);
-                if (distanceData.getDistanceByDriving() < maxDistance || distanceData.getDistanceByTransit() < maxDistance || distanceData.getDistanceByWalking() < maxDistance) {
-                    accountsWithingRange.add(account);
+                try {
+                    DistanceData distanceData = getDistance(originLng, originLat, destination);
+                    if (distanceData.getDistanceByDriving() < maxDistance || distanceData.getDistanceByTransit() < maxDistance || distanceData.getDistanceByWalking() < maxDistance) {
+                        accountsWithingRange.add(account);
+                    }
+                } catch (DistanceCalculationException e) {
+                    log.info(e.getMessage());
                 }
             }
 
@@ -118,7 +122,7 @@ public class AccountInstitutionService {
         return accountsWithingRange;
     }
 
-    private DistanceData getDistance(Double originLng, Double originLat, String destination) {
+    private DistanceData getDistance(Double originLng, Double originLat, String destination) throws DistanceCalculationException {
         DistanceData distanceData = new DistanceData();
         List<TravelMode> travelModeList = List.of(TravelMode.DRIVING, TravelMode.WALKING, TravelMode.TRANSIT);
         for (TravelMode travelMode : travelModeList) {
@@ -147,7 +151,7 @@ public class AccountInstitutionService {
         if (distanceData.getDistanceByWalking() != null || distanceData.getDistanceByTransit() != null || distanceData.getDistanceByDriving() != null) {
             return distanceData;
         } else {
-            throw new RuntimeException("Distance calculation cannot be done");
+            throw new DistanceCalculationException("Distance calculation not found");
         }
     }
 
