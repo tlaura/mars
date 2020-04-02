@@ -26,11 +26,12 @@ public class MessageData {
 
     private String loginState;
 
-    public MessageData(String text, String proposingName, String proposingEmail, String recieverName, String recieverEmail) {
+    public MessageData(String text, String proposingName, String proposingEmail, String recieverName, String recieverEmail, LocalDateTime localDateTime) {
         this.fromName = proposingName;
         this.fromEmail = proposingEmail;
         this.toName = recieverName;
         this.toEmail = recieverEmail;
         this.text = text;
+        this.date = localDateTime;
     }
 }
