@@ -124,6 +124,10 @@ public class AccountInstitutionService {
         List<TravelMode> travelModeList = List.of(TravelMode.DRIVING, TravelMode.WALKING, TravelMode.TRANSIT);
         for (TravelMode travelMode : travelModeList) {
             DistanceMatrix matrix = mapService.calculateDistanceByGivenTravelMode(originLng, originLat, destination, travelMode);
+            log.info("Matrix 0. sora: " + matrix.rows[0].toString());
+            if (matrix.rows[0] != null) {
+                log.info("Matrix 0. sor 0. elem:    " + matrix.rows[0].elements[0].toString());
+            }
             Long distance = matrix.rows[0].elements[0].distance.inMeters;
             Duration duration = matrix.rows[0].elements[0].duration;
             switch (travelMode) {

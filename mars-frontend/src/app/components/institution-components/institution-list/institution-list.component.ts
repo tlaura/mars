@@ -11,158 +11,163 @@ import {AccountInstitutionListModel} from "../../../models/accountInstitutionLis
 import {LocationRangeModel} from "../../../models/locationRange.model";
 
 @Component({
-    selector: 'app-institution-list',
-    templateUrl: './institution-list.component.html',
-    styleUrls: ['./institution-list.component.css']
+  selector: 'app-institution-list',
+  templateUrl: './institution-list.component.html',
+  styleUrls: ['./institution-list.component.css']
 })
 export class InstitutionListComponent implements OnInit {
 
-    institutionList: Array<AccountInstitutionListModel>;
-    institutionTypeList: Array<InstitutionTypeModel>;
-    page: number = institutionListIndex.startPageIndex;
-    size: number = institutionListIndex.numberOfItemPerPage;
-    searchText: string;
-    currentType: string;
-    institutionType: FormControl;
-    showWindows: boolean;
-    ageRangeGroup: FormGroup;
-    test: number = 5;
-    age: number = 0;
-    locationRange: LocationRangeModel;
+  institutionList: Array<AccountInstitutionListModel>;
+  institutionTypeList: Array<InstitutionTypeModel>;
+  page: number = institutionListIndex.startPageIndex;
+  size: number = institutionListIndex.numberOfItemPerPage;
+  institutionType: FormControl;
+  showWindows: boolean;
+  ageRangeGroup: FormGroup;
+  range: number = 5;
+  age: number = 0;
+  searchText: string;
+  currentType: string;
 
-    shareObj = {
-        //TODO: localhost-ra nem működik, elvileg élesben igen?!?!?
-        href: "",
-        hashtag: "#NONE"
-    };
+  locationRange: LocationRangeModel;
 
-    sizeArray: Array<number> = institutionListIndex.itemsPerPageArray;
+  shareObj = {
+    //TODO: localhost-ra nem működik, elvileg élesben igen?!?!?
+    href: "",
+    hashtag: "#NONE"
+  };
 
-    constructor(private institutionService: InstitutionService,
-                private accountService: AccountService,
-                private router: Router,
-                private activatedRoute: ActivatedRoute,
-                private socialService: SocialService,
-                private accountInstitutionService: AccountInstitutionConnectorService,
-                private formBuilder: FormBuilder) {
-        this.institutionType = new FormControl('all');
-        this.ageRangeGroup = formBuilder.group({
-                age: new FormControl(0, Validators.required)
-            }
-        )
-    }
+  sizeArray: Array<number> = institutionListIndex.itemsPerPageArray;
+
+  constructor(private institutionService: InstitutionService,
+              private accountService: AccountService,
+              private router: Router,
+              private activatedRoute: ActivatedRoute,
+              private socialService: SocialService,
+              private accountInstitutionService: AccountInstitutionConnectorService,
+              private formBuilder: FormBuilder) {
+    this.institutionType = new FormControl('all');
+    this.ageRangeGroup = formBuilder.group({
+        age: new FormControl(0, Validators.required)
+      }
+    )
+  }
 
 
-    setSize = (size: number) => {
-        this.size = size;
-        this.page = institutionListIndex.startPageIndex;
-        this.getInstitutions();
-    };
+  setSize = (size: number) => {
+    this.size = size;
+    this.page = institutionListIndex.startPageIndex;
+    this.getInstitutions();
+  };
 
-    ngOnInit() {
-        this.activatedRoute.paramMap.subscribe(
-            param => {
-                const filterType: string = param.get('filterType');
-                if (filterType) {
-                    this.institutionType.setValue(filterType);
-                } else {
-                    this.getInstitutions();
-                }
-            },
-        );
-        this.getProviderType();
-
-    }
-
-    narrowByType = (type: string) => {
-        //todo refactor magic string
-        if (type !== "all") {
-            this.getProvidersByType(type);
+  ngOnInit() {
+    this.activatedRoute.paramMap.subscribe(
+      param => {
+        const filterType: string = param.get('filterType');
+        if (filterType) {
+          this.institutionType.setValue(filterType);
         } else {
-            this.getInstitutions();
+          this.getInstitutions();
         }
-    };
+      },
+    );
+    this.getProviderType();
 
-    details = (institution: AccountInstitutionListModel): string => {
-        let type: string = institution.accountType;
-        if (type === 'PROVIDER') {
-            return "provider-details/" + institution.id;
-        } else {
-            return "institution-details/" + institution.id;
-        }
-    };
+  }
 
-    shareList() {
-        if (this.currentType != "all") {
-            this.shareObj.href = "http://localhost:4200/institution-list/providerType/" + this.currentType;
-        }
-        this.socialService.facebookSharing(this.shareObj);
+  narrowByType = (type: string) => {
+    //todo refactor magic string
+    if (type !== "all") {
+      this.getProvidersByType(type);
+    } else {
+      this.getInstitutions();
     }
+  };
 
-    getAgesArray(n: number): Array<number> {
-        return Array(n);
+  details = (institution: AccountInstitutionListModel): string => {
+    let type: string = institution.accountType;
+    if (type === 'PROVIDER') {
+      return "provider-details/" + institution.id;
+    } else {
+      return "institution-details/" + institution.id;
     }
+  };
 
-    setCurrentType(type: string) {
-        this.currentType = type;
+  shareList() {
+    if (this.currentType != "all") {
+      this.shareObj.href = "http://localhost:4200/institution-list/providerType/" + this.currentType;
     }
+    this.socialService.facebookSharing(this.shareObj);
+  }
 
-    isProvider(institution: AccountInstitutionListModel): boolean {
-        return institution.accountType === 'PROVIDER';
+  getAgesArray(n: number): Array<number> {
+    return Array(n);
+  }
+
+  setCurrentType(type: string) {
+    this.currentType = type;
+  }
+
+  isProvider(institution: AccountInstitutionListModel): boolean {
+    return institution.accountType === 'PROVIDER';
+  }
+
+  hasProviders(institution: AccountInstitutionListModel): boolean {
+    return institution.providers?.length > 0 && institution.accountType != 'PROVIDER';
+  }
+
+  setRange = (range: number): void => {
+    if (range) {
+      this.locationRange.range = range;
+      this.accountInstitutionService.getAccountsByRange(this.locationRange).subscribe(
+        value => this.institutionList = value,
+        error => console.warn(error)
+      );
     }
+  };
 
-    hasProviders(institution: AccountInstitutionListModel): boolean {
-        return institution.providers?.length > 0 && institution.accountType != 'PROVIDER';
+  setCurrentPosition = (locationRange: LocationRangeModel): void => {
+    this.locationRange = locationRange;
+  };
+
+  reset = (): void => {
+    this.searchText = "";
+    this.currentType = "all";
+    this.age = 0;
+    this.range = 5;
+    this.getInstitutions();
+  };
+
+  setAge = (age: number): void => {
+    if (age) {
+      this.accountService.getProviderAccountsByAgeRange(age).subscribe(
+        value => this.institutionList = value,
+        error => console.warn(error),
+        () => this.showWindows = false
+      );
     }
+  };
 
-    setRange = (range: number): void => {
-        if (range) {
-            this.locationRange.range = range;
-            this.accountInstitutionService.getAccountsByRange(this.locationRange).subscribe(
-                value => this.institutionList = value,
-                error => console.warn(error)
-            );
-        }
-    };
+  private getProviderType = () => {
+    this.institutionService.getProviderTypes().subscribe(
+      institutionTypeList => this.institutionTypeList = institutionTypeList,
+      error => console.warn(error)
+    );
+  };
 
-    setCurrentPosition = (locationRange: LocationRangeModel): void => {
-        this.locationRange = locationRange;
-    };
+  private getInstitutions = () => {
+    this.accountInstitutionService.getAllAccountConnections().subscribe(
+      institutionList => this.institutionList = institutionList,
+      error => console.warn(error),
+      () => this.showWindows = false
+    );
+  };
 
-    reset = (): void => {
-        this.getInstitutions();
-    };
-
-    setAge = (age: number): void => {
-        if (age) {
-            this.accountService.getProviderAccountsByAgeRange(age).subscribe(
-                value => this.institutionList = value,
-                error => console.warn(error),
-                () => this.showWindows = false
-            );
-        }
-    }
-
-    private getProviderType = () => {
-        this.institutionService.getProviderTypes().subscribe(
-            institutionTypeList => this.institutionTypeList = institutionTypeList,
-            error => console.warn(error)
-        );
-    };
-
-    private getInstitutions = () => {
-        this.accountInstitutionService.getAllAccountConnections().subscribe(
-            institutionList => this.institutionList = institutionList,
-            error => console.warn(error),
-            () => this.showWindows = false
-        );
-    };
-
-    private getProvidersByType = (type: string) => {
-        this.accountService.getProvidersByType(type).subscribe(
-            institutionList => this.institutionList = institutionList,
-            error => console.warn(error),
-            () => this.showWindows = false
-        );
-    };
+  private getProvidersByType = (type: string) => {
+    this.accountService.getProvidersByType(type).subscribe(
+      institutionList => this.institutionList = institutionList,
+      error => console.warn(error),
+      () => this.showWindows = false
+    );
+  };
 }
