@@ -1,6 +1,7 @@
 package com.progmasters.mars.account_institution.connector;
 
 import com.google.maps.errors.NotFoundException;
+import com.google.maps.model.Distance;
 import com.google.maps.model.DistanceMatrix;
 import com.google.maps.model.Duration;
 import com.google.maps.model.TravelMode;
@@ -124,26 +125,26 @@ public class AccountInstitutionService {
         List<TravelMode> travelModeList = List.of(TravelMode.DRIVING, TravelMode.WALKING, TravelMode.TRANSIT);
         for (TravelMode travelMode : travelModeList) {
             DistanceMatrix matrix = mapService.calculateDistanceByGivenTravelMode(originLng, originLat, destination, travelMode);
-            log.info("Matrix 0. sora: " + matrix.rows[0].toString());
-            if (matrix.rows[0] != null) {
-                log.info("Matrix 0. sor 0. elem:    " + matrix.rows[0].elements[0].toString());
-            }
-            Long distance = matrix.rows[0].elements[0].distance.inMeters;
+            Distance rawDistance = matrix.rows[0].elements[0].distance;
             Duration duration = matrix.rows[0].elements[0].duration;
-            switch (travelMode) {
-                case TRANSIT:
-                    distanceData.setDistanceByTransit(distance / M_TO_KM);
-                    distanceData.setTravelTimeByTransit(duration);
-                    break;
-                case DRIVING:
-                    distanceData.setDistanceByDriving(distance / M_TO_KM);
-                    distanceData.setTravelTimeByDriving(duration);
-                    break;
-                case WALKING:
-                    distanceData.setDistanceByWalking(distance / M_TO_KM);
-                    distanceData.setTravelTimeByWalking(duration);
-                    break;
+            if (rawDistance != null && duration != null) {
+                Long distance = rawDistance.inMeters;
+                switch (travelMode) {
+                    case TRANSIT:
+                        distanceData.setDistanceByTransit(distance / M_TO_KM);
+                        distanceData.setTravelTimeByTransit(duration);
+                        break;
+                    case DRIVING:
+                        distanceData.setDistanceByDriving(distance / M_TO_KM);
+                        distanceData.setTravelTimeByDriving(duration);
+                        break;
+                    case WALKING:
+                        distanceData.setDistanceByWalking(distance / M_TO_KM);
+                        distanceData.setTravelTimeByWalking(duration);
+                        break;
+                }
             }
+
         }
         return distanceData;
     }
