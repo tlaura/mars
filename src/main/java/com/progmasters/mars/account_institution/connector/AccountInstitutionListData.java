@@ -113,7 +113,7 @@ public class AccountInstitutionListData {
         }
     }
 
-    public void setDistanceData(DistanceData distanceData) {
-        this.distanceData = distanceData;
+    public void setAccountType(String accountType) {
+        this.accountType = accountType;
     }
 }

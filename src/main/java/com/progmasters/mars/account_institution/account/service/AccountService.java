@@ -1,5 +1,6 @@
 package com.progmasters.mars.account_institution.account.service;
 
+import com.progmasters.mars.account_institution.account.AccountType;
 import com.progmasters.mars.account_institution.account.confirmationtoken.ConfirmationToken;
 import com.progmasters.mars.account_institution.account.confirmationtoken.ConfirmationTokenRepository;
 import com.progmasters.mars.account_institution.account.domain.ProviderAccount;
@@ -78,7 +79,10 @@ public class AccountService {
     }
 
     public List<AccountInstitutionListData> findProvidersByAgeRange(Integer age) {
-        return providerAccountRepository.findProviderAccountsByAgeRange(age).stream().map(AccountInstitutionListData::new).collect(Collectors.toList());
+
+        List<AccountInstitutionListData> listByAgeRange = providerAccountRepository.findProviderAccountsByAgeRange(age).stream().map(AccountInstitutionListData::new).collect(Collectors.toList());
+        listByAgeRange.forEach(accountInstitutionListData -> accountInstitutionListData.setAccountType(AccountType.PROVIDER.toString()));
+        return listByAgeRange;
     }
 
     public ProviderUserDetails getProviderAccountByEmail(String loggedInUserEmail) {
