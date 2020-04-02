@@ -110,7 +110,6 @@ public class AccountInstitutionService {
             if (account.getZipcode() != null && account.getCity() != null && account.getAddress() != null) {
                 String destination = account.getZipcode() + " " + account.getCity() + " " + account.getAddress();
                 DistanceData distanceData = getDistance(originLng, originLat, destination);
-                log.info(distanceData.getDistanceByDriving().toString());
                 if (distanceData.getDistanceByDriving() < maxDistance || distanceData.getDistanceByTransit() < maxDistance || distanceData.getDistanceByWalking() < maxDistance) {
                     accountsWithingRange.add(account);
                 }
