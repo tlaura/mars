@@ -4,6 +4,9 @@ html * {
   font-family: 'Ubuntu', sans-serif;
 }
 
+small {
+  font-size: 90% !important;
+}
 
 .tomato-background-div {
   background-color: rgb(255, 72, 0);
