@@ -40,7 +40,6 @@ public class ChatService {
         }
         Message message = new Message(messageData.getText());
         message.setContact(connectionByUsers);
-
         messageRepository.save(message);
     }
 
@@ -69,12 +68,16 @@ public class ChatService {
         Contact connection = contactRepository.findConnectionByUsers(fromEmail, toEmail);
         String fromName = connection.getFromAccount().getName();
         String toName = connection.getToAccount().getName();
-        for (Message message : connection.getMessages()) {
+        List<Message> messages = connection.getMessages();
+        for (int i = 0; i < 3; i++) {
+            Message message = messages.get(i);
             MessageData messageData = new MessageData(fromName, fromEmail, toName, toEmail, message.getDate(), message.getText());
             chatHistory.add(messageData);
         }
+//        for (Message message : connection.getMessages()) {
+//            MessageData messageData = new MessageData(fromName, fromEmail, toName, toEmail, message.getDate(), message.getText());
+//            chatHistory.add(messageData);
+//        }
         return chatHistory;
     }
-
-
 }
