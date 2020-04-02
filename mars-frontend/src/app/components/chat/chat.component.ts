@@ -98,6 +98,7 @@ export class ChatComponent implements OnInit {
       this.isCustomSocketOpened = true;
       this.stompClient.subscribe('/topic/' + this.from.email, (message) => {
         this.handleResult(message);
+        console.log('New message');
         this.fetchContacts(this.from);
       });
     }
@@ -129,10 +130,10 @@ export class ChatComponent implements OnInit {
   private fetchContacts(from: User) {
     this.contactsService.fetchContacts(from.email).subscribe(
       (contacts: Contact[]) => {
-        this.contacts = contacts;
         if (contacts.length > this.contacts.length) {
           this.isSmall = false;
         }
+        this.contacts = contacts;
         console.log('Contacts listed.')
       },
       (error) => console.log(error)

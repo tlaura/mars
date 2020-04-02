@@ -36,6 +36,7 @@
 .chat-lg {
   height: auto;
   max-height: 90vh;
+  overflow-y: scroll;
 }
 
 .chat-sm {
