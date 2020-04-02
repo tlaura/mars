@@ -21,7 +21,7 @@
       <div *ngIf="!isSmall" class="contacts-list">
         <div *ngFor="let contact of contacts, let index=index, let last = last, let first = first" class="contact">
           <hr *ngIf="first" class="my-2 first-hr"/>
-          <i [ngClass]="contact.online? 'circle-online': 'circle-offline'"
+          <i [ngClass]="unreadMessages[index]? 'circle-online': 'circle-offline'"
              class="fas fa-circle pl-2"></i>
           <label (click)="openMessageWindow(index)"
                  class="white-label pl-2 label-btn">

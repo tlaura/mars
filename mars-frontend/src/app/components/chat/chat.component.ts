@@ -24,6 +24,7 @@ export class ChatComponent implements OnInit {
   isSmall: boolean = true;
   contacts: Contact[] = [];
   messages: Message[] = [];
+  unreadMessages: boolean[] = [];
   isMessageWindowOpen: boolean = false;
   private serverUrl = environment.BASE_URL + '/api';
   private stompClient;
@@ -62,9 +63,12 @@ export class ChatComponent implements OnInit {
   }
 
   openMessageWindow(contactId: number) {
+    this.messages = [];
     this.isMessageWindowOpen = true;
     this.to = this.contacts[contactId];
     this.messages = this.fetchMessages(this.from, this.to);
+    this.unreadMessages[contactId] = false;
+    debugger;
   }
 
   fetchMessages(from: User, to: Contact): Message[] {
@@ -78,6 +82,7 @@ export class ChatComponent implements OnInit {
 
   closeMessageWindow() {
     this.isMessageWindowOpen = false;
+    this.messages = [];
   }
 
   sendMessage(message: string) {
@@ -108,8 +113,12 @@ export class ChatComponent implements OnInit {
   handleResult(message) {
     if (message.body) {
       let messageResult: Message = JSON.parse(message.body);
-      this.messages.push(messageResult);
-      this.scrollDown();
+      //tőle kapom vagy én küldöm neki...
+      if ((messageResult.fromEmail == this.to.email && messageResult.toEmail == this.from.email) ||
+        (messageResult.fromEmail == this.from.email && messageResult.toEmail == this.to.email)) {
+        this.messages.push(messageResult);
+        this.scrollDown();
+      }
     }
   }
 
@@ -134,6 +143,7 @@ export class ChatComponent implements OnInit {
       (contacts: Contact[]) => {
         if (contacts.length > this.contacts.length) {
           this.isSmall = false;
+          this.markUnreadMessages(contacts);
         }
         this.contacts = contacts;
         console.log('Contacts listed.')
@@ -142,6 +152,12 @@ export class ChatComponent implements OnInit {
     )
   }
 
+  private markUnreadMessages(contacts: Contact[]) {
+    contacts.filter(contact => !this.contacts.includes(contact))
+      .forEach(() => this.unreadMessages.push(true))
+  }
+
+
   scrollDown() {
     //TODO: scroll down when fetch complete?
     setTimeout(() => {
@@ -149,4 +165,5 @@ export class ChatComponent implements OnInit {
       element.scrollTop = element.scrollHeight;
     }, 100)
   }
+
 }
