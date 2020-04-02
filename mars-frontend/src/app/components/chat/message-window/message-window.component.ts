@@ -21,20 +21,13 @@ export class MessageWindowComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.scrollDown();
+
   }
 
   sendMessage() {
     this.messageEmitter.emit(this.message);
     this.message = '';
-    this.scrollDown();
   }
 
-  scrollDown() {
-    //TODO: scroll down when fetch complete?
-    setTimeout(() => {
-      const element = document.getElementById("messages");
-      element.scrollTop = element.scrollHeight;
-    }, 100)
-  }
+
 }

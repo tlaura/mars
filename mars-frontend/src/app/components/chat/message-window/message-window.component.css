@@ -15,6 +15,11 @@
 .all-message-div {
   overflow-y: scroll;
   max-height: 25vh;
+  -ms-overflow-style: none;
+}
+
+.all-message-div::-webkit-scrollbar {
+  display: none;
 }
 
 .message-to-me-align {

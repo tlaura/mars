@@ -70,7 +70,8 @@ export class ChatComponent implements OnInit {
   fetchMessages(from: User, to: Contact): Message[] {
     this.contactsService.fetchMessages(from.email, to.email).subscribe(
       (messages: Message[]) => this.messages = messages,
-      (error) => console.log(error)
+      (error) => console.log(error),
+      () => this.scrollDown()
     );
     return null;
   }
@@ -108,6 +109,7 @@ export class ChatComponent implements OnInit {
     if (message.body) {
       let messageResult: Message = JSON.parse(message.body);
       this.messages.push(messageResult);
+      this.scrollDown();
     }
   }
 
@@ -138,5 +140,13 @@ export class ChatComponent implements OnInit {
       },
       (error) => console.log(error)
     )
+  }
+
+  scrollDown() {
+    //TODO: scroll down when fetch complete?
+    setTimeout(() => {
+      const element = document.getElementById("messages");
+      element.scrollTop = element.scrollHeight;
+    }, 100)
   }
 }

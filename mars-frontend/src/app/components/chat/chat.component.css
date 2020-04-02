@@ -37,6 +37,11 @@
   height: auto;
   max-height: 90vh;
   overflow-y: scroll;
+  -ms-overflow-style: none;
+}
+
+.chat-lg::-webkit-scrollbar {
+  display: none;
 }
 
 .chat-sm {
