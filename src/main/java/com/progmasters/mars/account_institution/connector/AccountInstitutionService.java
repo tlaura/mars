@@ -123,9 +123,9 @@ public class AccountInstitutionService {
         List<TravelMode> travelModeList = List.of(TravelMode.DRIVING, TravelMode.WALKING, TravelMode.TRANSIT);
         for (TravelMode travelMode : travelModeList) {
             DistanceMatrix matrix = mapService.calculateDistanceByGivenTravelMode(originLng, originLat, destination, travelMode);
-            log.info(matrix.rows[0].elements[0].toString());
+        //    log.info(matrix.rows[0].elements[0].toString());
             boolean matrixFound = matrix.rows[0].elements[0].toString().equals("ZERO_RESULTS");
-            log.info("" + matrixFound);
+            //    log.info("" + matrixFound);
             if (!matrixFound) {
                 Duration duration = matrix.rows[0].elements[0].duration;
                 Long distance = matrix.rows[0].elements[0].distance.inMeters;
@@ -144,9 +144,12 @@ public class AccountInstitutionService {
                         break;
                 }
             }
-
         }
-        return distanceData;
+        if (distanceData.getDistanceByWalking() != null || distanceData.getDistanceByTransit() != null || distanceData.getDistanceByDriving() != null) {
+            return distanceData;
+        } else {
+            throw new RuntimeException("Distance calculation cannot be done");
+        }
     }
 
     public void evaluateInstitution(Long id, Boolean accepted) throws NotFoundException {
