@@ -19,14 +19,6 @@ public class MessageData {
 
     private String toEmail;
 
-    private String proposingName;
-
-    private String proposingEmail;
-
-    private String recieverName;
-
-    private String recieverEmail;
-
     //   @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime date;
 
@@ -40,14 +32,5 @@ public class MessageData {
         this.toName = recieverName;
         this.toEmail = recieverEmail;
         this.text = text;
-    }
-
-    public MessageData(String text, String proposingName, String proposingEmail, String recieverName, String recieverEmail, LocalDateTime date) {
-        this.text = text;
-        this.proposingName = proposingName;
-        this.proposingEmail = proposingEmail;
-        this.recieverName = recieverName;
-        this.recieverEmail = recieverEmail;
-        this.date = date;
     }
 }
