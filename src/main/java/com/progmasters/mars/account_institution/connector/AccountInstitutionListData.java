@@ -105,7 +105,7 @@ public class AccountInstitutionListData {
         this.longitude = providerAccount.getLongitude();
 
         List<AccountInstitutionConnector> accountConnectors = providerAccount.getAccountInstitutionConnectors();
-        if (!accountConnectors.isEmpty()) {
+        if (accountConnectors != null && !accountConnectors.isEmpty()) {
             this.institutions = accountConnectors.stream().map(AccountInstitutionConnector::getInstitution).map(InstitutionDetailsData::new).collect(Collectors.toList());
             this.accountType = AccountType.PROVIDER_WITH_INSTITUTION.toString();
         } else {

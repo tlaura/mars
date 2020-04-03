@@ -253,7 +253,6 @@ public class AccountService {
 
     private void updateUserDetails(User user, UserDetailsData userDetailsData) {
         user.setName(userDetailsData.getName());
-        user.setEmail(userDetailsData.getEmail());
         user.setPhone(userDetailsData.getPhone());
         user.setZipcode(userDetailsData.getZipcode());
         user.setCity(userDetailsData.getCity());
