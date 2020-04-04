@@ -115,15 +115,19 @@ public class AccountInstitutionService {
         if (account.getZipcode() != null && account.getCity() != null && account.getAddress() != null) {
             String destination = account.getZipcode() + " " + account.getCity() + " " + account.getAddress();
             List<TravelMode> travelModes = List.of(TravelMode.DRIVING, TravelMode.WALKING, TravelMode.TRANSIT);
-            List<CompletableFuture<Boolean>> isWithinRangeList = travelModes.stream().map(travelMode -> getDistanceByTravelMode(originLng, originLat, destination, travelMode).thenApply(distanceData -> distanceData.getDistance() < maxDistance)).collect(Collectors.toList());
-            return isWithinRangeList.stream().anyMatch(CompletableFuture::join);
+            try {
+                List<CompletableFuture<Boolean>> isWithinRangeList = travelModes.stream().map(travelMode -> getDistanceByTravelMode(originLng, originLat, destination, travelMode).thenApply(distanceData -> distanceData.getDistance() < maxDistance)).collect(Collectors.toList());
+                return isWithinRangeList.stream().anyMatch(CompletableFuture::join);
+            } catch (DistanceCalculationException e) {
+                log.info("Distance could not be calculated by given parameters!");
+            }
         }
         return false;
     }
 
 
     @Async
-    CompletableFuture<DistanceData> getDistanceByTravelMode(Double originLng, Double originLat, String destination, TravelMode travelMode) {
+    CompletableFuture<DistanceData> getDistanceByTravelMode(Double originLng, Double originLat, String destination, TravelMode travelMode) throws DistanceCalculationException {
         return mapService.calculateDistanceByGivenTravelModeConcurrently(originLng, originLat, destination, travelMode).thenApply(matrix -> createDistanceData(matrix, travelMode));
     }
 
