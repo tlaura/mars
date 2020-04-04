@@ -1,8 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {InstitutionDetailModel} from "../../../models/institutionDetail.model";
+import {InstitutionDetailModel} from "../../../account-institution/institution/models/institutionDetail.model";
 import {ActivatedRoute, Router} from "@angular/router";
-import {InstitutionService} from "../../../services/institution.service";
-import {OpeningHoursService} from "../../../services/opening-hours.service";
+import {InstitutionService} from "../../../account-institution/institution/services/institution.service";
+import {OpeningHoursService} from "../../../account-institution/institution/services/opening-hours.service";
 
 @Component({
   selector: 'app-institution-details',

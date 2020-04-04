@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
-import {AuthenticationService} from "../../../services/auth/authentication.service";
+import {AuthenticationService} from "../../../auth/services/authentication.service";
 import decode from 'jwt-decode';
-import {AccountService} from "../../../services/account.service";
+import {AccountService} from "../../../account-institution/account/services/account.service";
 
 @Component({
   selector: 'app-confirm-deletion',

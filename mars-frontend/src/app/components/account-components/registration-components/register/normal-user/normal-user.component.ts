@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {AccountService} from "../../../../../services/account.service";
+import {AccountService} from "../../../../../account-institution/account/services/account.service";
 import {Router} from "@angular/router";
-import {validationHandler} from "../../../../../utils/validationHandler";
-import {NormalAccountRegisterModel} from "../../../../../models/normalAccountRegisterModel";
+import {validationHandler} from "../../../../../utils/validators/validationHandler";
+import {NormalAccountRegisterModel} from "../../../../../account-institution/account/models/normalAccountRegisterModel";
 
 @Component({
   selector: 'app-normal-user',

@@ -1,12 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
-import {InstitutionTypeModel} from "../../../../../models/InstitutionType.model";
-import {AccountService} from "../../../../../services/account.service";
+import {InstitutionTypeModel} from "../../../../../account-institution/institution/models/InstitutionType.model";
+import {AccountService} from "../../../../../account-institution/account/services/account.service";
 import {Router} from "@angular/router";
-import {InstitutionService} from "../../../../../services/institution.service";
+import {InstitutionService} from "../../../../../account-institution/institution/services/institution.service";
 import {validatorBounds} from "../../../../../../environments/validatorBounds";
-import {ProviderAccountRegisterModel} from "../../../../../models/providerAccountRegisterModel";
-import {validationHandler} from "../../../../../utils/validationHandler";
+import {ProviderAccountRegisterModel} from "../../../../../account-institution/account/models/providerAccountRegisterModel";
+import {validationHandler} from "../../../../../utils/validators/validationHandler";
 
 @Component({
   selector: 'app-provider-user',

@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import {validatorBounds} from "../../../../environments/validatorBounds";
-import {AuthenticationService} from "../../../services/auth/authentication.service";
+import {AuthenticationService} from "../../../auth/services/authentication.service";
 import {first} from "rxjs/operators";
 
 

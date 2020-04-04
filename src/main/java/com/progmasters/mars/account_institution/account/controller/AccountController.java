@@ -42,7 +42,7 @@ public class AccountController {
 
     @GetMapping("/providerDetails/{id}")
     public ResponseEntity<ProviderUserDetails> getProviderUserDetail(@PathVariable Long id) {
-        log.info("User details is requested by id:\t" + id);
+        log.info("UserModel details is requested by id:\t" + id);
         ProviderUserDetails foundUserDetails = accountService.getUserDetailsById(id);
 
         return new ResponseEntity<>(foundUserDetails, HttpStatus.OK);

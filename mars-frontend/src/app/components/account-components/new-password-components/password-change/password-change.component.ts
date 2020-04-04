@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {validatorBounds} from "../../../../../environments/validatorBounds";
-import {matchingPasswords} from "../../../../utils/password.validator";
+import {matchingPasswords} from "../../../../utils/validators/password.validator";
 import {Router} from "@angular/router";
-import {AccountService} from "../../../../services/account.service";
-import {PasswordChangeDetailsModel} from "../../../../models/passwordChangeDetails.model";
-import {AuthenticationService} from "../../../../services/auth/authentication.service";
+import {AccountService} from "../../../../account-institution/account/services/account.service";
+import {PasswordChangeDetailsModel} from "../../../../account-institution/account/models/passwordChangeDetails.model";
+import {AuthenticationService} from "../../../../auth/services/authentication.service";
 import decode from 'jwt-decode';
 
 @Component({

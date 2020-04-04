@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {InstitutionListModel} from "../../../models/institutionList.model";
-import {InstitutionService} from "../../../services/institution.service";
+import {InstitutionListModel} from "../../../account-institution/institution/models/institutionList.model";
+import {InstitutionService} from "../../../account-institution/institution/services/institution.service";
 
 @Component({
   selector: 'app-evaluate-list',

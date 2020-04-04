@@ -1,13 +1,13 @@
 import {Component, OnInit} from '@angular/core';
-import {Contact} from "../../models/chat/contact";
-import {Message} from "../../models/chat/message";
-import {AuthenticationService} from "../../services/auth/authentication.service";
-import {SocketService} from "../../services/chat/socket.service";
+import {ContactModel} from "../../chat/models/contact.model";
+import {MessageModel} from "../../chat/models/message.model";
+import {AuthenticationService} from "../../auth/services/authentication.service";
+import {SocketService} from "../../chat/services/socket.service";
 import {environment} from "../../../environments/environment";
-import {User} from "../../models/chat/user";
+import {UserModel} from "../../chat/models/user.model";
 import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
-import {ContactsService} from "../../services/chat/contacts.service";
+import {ContactsService} from "../../chat/services/contacts.service";
 
 @Component({
   selector: 'app-chat',
@@ -18,12 +18,12 @@ export class ChatComponent implements OnInit {
 
   isLoaded: boolean = false;
   isCustomSocketOpened = false;
-  from: User;
-  to: Contact;
+  from: UserModel;
+  to: ContactModel;
 
   isSmall: boolean = true;
-  contacts: Contact[] = [];
-  messages: Message[] = [];
+  contacts: ContactModel[] = [];
+  messages: MessageModel[] = [];
   unreadMessages: boolean[] = [];
   isMessageWindowOpen: boolean = false;
   private serverUrl = environment.BASE_URL + '/api';
@@ -70,9 +70,9 @@ export class ChatComponent implements OnInit {
     this.messages = this.fetchMessages(this.from, this.to);
   }
 
-  fetchMessages(from: User, to: Contact): Message[] {
+  fetchMessages(from: UserModel, to: ContactModel): MessageModel[] {
     this.contactsService.fetchMessages(from.email, to.email).subscribe(
-      (messages: Message[]) => this.messages = messages,
+      (messages: MessageModel[]) => this.messages = messages,
       (error) => console.log(error),
       () => this.scrollDown()
     );
@@ -86,7 +86,7 @@ export class ChatComponent implements OnInit {
 
   sendMessage(message: string) {
     if (message) {
-      let payload: Message = {
+      let payload: MessageModel = {
         fromName: this.from.name,
         fromEmail: this.from.email,
         toName: this.to.name,
@@ -111,7 +111,7 @@ export class ChatComponent implements OnInit {
 
   handleResult(message) {
     if (message.body) {
-      let messageResult: Message = JSON.parse(message.body);
+      let messageResult: MessageModel = JSON.parse(message.body);
       this.fetchContacts(this.from);
       if ((messageResult.fromEmail == this.to.email && messageResult.toEmail == this.from.email) ||
         (messageResult.fromEmail == this.from.email && messageResult.toEmail == this.to.email)) {
@@ -142,9 +142,9 @@ export class ChatComponent implements OnInit {
     });
   }
 
-  private fetchContacts(from: User) {
+  private fetchContacts(from: UserModel) {
     this.contactsService.fetchContacts(from.email).subscribe(
-      (contacts: Contact[]) => {
+      (contacts: ContactModel[]) => {
         if (contacts.length > this.contacts.length) {
           this.isSmall = false;
           this.markUnreadMessages(contacts);
@@ -156,7 +156,7 @@ export class ChatComponent implements OnInit {
     )
   }
 
-  private markUnreadMessages(contacts: Contact[]) {
+  private markUnreadMessages(contacts: ContactModel[]) {
     contacts.filter(contact => !this.contacts.includes(contact))
       .forEach(() => this.unreadMessages.push(true))
   }

@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
-import {InstitutionService} from "../../../services/institution.service";
-import {validationHandler} from "../../../utils/validationHandler";
-import {Institution} from "../../../models/institution";
+import {InstitutionService} from "../../../account-institution/institution/services/institution.service";
+import {validationHandler} from "../../../utils/validators/validationHandler";
+import {Institution} from "../../../account-institution/institution/models/institution";
 
 @Component({
   selector: 'app-institution-form',

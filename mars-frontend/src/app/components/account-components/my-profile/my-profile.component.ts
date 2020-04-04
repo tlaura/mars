@@ -1,14 +1,14 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {ProviderUserProfileDetailsModel} from "../../../models/providerUserProfileDetails.model";
-import {AccountService} from "../../../services/account.service";
+import {ProviderUserProfileDetailsModel} from "../../../account-institution/account/models/providerUserProfileDetails.model";
+import {AccountService} from "../../../account-institution/account/services/account.service";
 import {FormControl, Validators} from "@angular/forms";
 import {validatorBounds} from "../../../../environments/validatorBounds";
-import {InstitutionTypeModel} from "../../../models/InstitutionType.model";
-import {InstitutionService} from "../../../services/institution.service";
+import {InstitutionTypeModel} from "../../../account-institution/institution/models/InstitutionType.model";
+import {InstitutionService} from "../../../account-institution/institution/services/institution.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {AuthenticationService} from "../../../services/auth/authentication.service";
+import {AuthenticationService} from "../../../auth/services/authentication.service";
 import decode from 'jwt-decode';
-import {UserDetailsModel} from "../../../models/userDetails.model";
+import {UserDetailsModel} from "../../../account-institution/account/models/userDetails.model";
 
 @Component({
   selector: 'app-my-profile',

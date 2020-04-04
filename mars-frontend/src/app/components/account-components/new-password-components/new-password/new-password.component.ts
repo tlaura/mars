@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup} from "@angular/forms";
 import {Router} from "@angular/router";
-import {MailService} from "../../../../services/mail.service";
+import {MailService} from "../../../../mail/services/mail.service";
 
 @Component({
   selector: 'app-new-password',

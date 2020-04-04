@@ -1,14 +1,14 @@
 import {Component, OnInit} from '@angular/core';
-import {InstitutionService} from "../../../services/institution.service";
+import {InstitutionService} from "../../../account-institution/institution/services/institution.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {InstitutionTypeModel} from "../../../models/InstitutionType.model";
+import {InstitutionTypeModel} from "../../../account-institution/institution/models/InstitutionType.model";
 import {institutionListIndex} from "../../../../environments/institutionListIndex.prod";
-import {AccountService} from "../../../services/account.service";
+import {AccountService} from "../../../account-institution/account/services/account.service";
 import {SocialService} from "ngx-social-button";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {AccountInstitutionConnectorService} from "../../../services/account-institution-connector.service";
-import {AccountInstitutionListModel} from "../../../models/accountInstitutionList.model";
-import {LocationRangeModel} from "../../../models/locationRange.model";
+import {AccountInstitutionConnectorService} from "../../../account-institution/services/account-institution-connector.service";
+import {AccountInstitutionListModel} from "../../../account-institution/models/accountInstitutionList.model";
+import {LocationRangeModel} from "../../../account-institution/models/locationRange.model";
 
 @Component({
   selector: 'app-institution-list',

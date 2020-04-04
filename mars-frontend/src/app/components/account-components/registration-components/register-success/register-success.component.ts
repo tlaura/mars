@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
-import {MailService} from "../../../../services/mail.service";
+import {MailService} from "../../../../mail/services/mail.service";
 import {FormControl, FormGroup} from "@angular/forms";
 
 @Component({

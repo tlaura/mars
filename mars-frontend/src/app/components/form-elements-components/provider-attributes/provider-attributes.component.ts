@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {InstitutionTypeModel} from "../../../models/InstitutionType.model";
+import {InstitutionTypeModel} from "../../../account-institution/institution/models/InstitutionType.model";
 
 @Component({
   selector: 'app-provider-attributes',

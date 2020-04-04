@@ -21,8 +21,8 @@ import {TermsComponent} from "./components/terms/terms.component";
 import {PasswordChangeComponent} from "./components/account-components/new-password-components/password-change/password-change.component";
 import {PasswordChangeSuccessComponent} from "./components/account-components/new-password-components/password-change-success/password-change-success.component";
 import {EvaluateListComponent} from "./components/institution-components/evaluate-list/evaluate-list.component";
-import {AuthGuard} from "./guards/auth/auth.guard";
-import {RoleGuard} from "./guards/auth/role.guard";
+import {AuthGuard} from "./auth/guards/auth.guard";
+import {RoleGuard} from "./auth/guards/role.guard";
 import {ConfirmDeletionComponent} from "./components/account-components/confirm-deletion/confirm-deletion.component";
 import {DeletionSuccessComponent} from "./components/account-components/deletion-success/deletion-success.component";
 

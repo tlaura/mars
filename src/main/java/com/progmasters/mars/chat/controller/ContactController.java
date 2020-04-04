@@ -15,7 +15,11 @@ import java.util.List;
 @RequestMapping("/api/contacts")
 public class ContactController {
 
-    private final ChatService chatService;
+    private ChatService chatService;
+
+    public ChatService getChatService() {
+        return chatService;
+    }
 
     @Autowired
     public ContactController(ChatService chatService) {

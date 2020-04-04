@@ -1,12 +1,12 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {institutionListIndex} from "../../../environments/institutionListIndex.prod";
 import {MapsAPILoader} from "@agm/core";
-import {InstitutionService} from "../../services/institution.service";
-import {InstitutionDetailModel} from "../../models/institutionDetail.model";
-import {AccountService} from "../../services/account.service";
-import {ProviderUserDetails} from "../../models/providerUserDetails";
-import {AccountInstitutionListModel} from "../../models/accountInstitutionList.model";
-import {LocationRangeModel} from "../../models/locationRange.model";
+import {InstitutionService} from "../../account-institution/institution/services/institution.service";
+import {InstitutionDetailModel} from "../../account-institution/institution/models/institutionDetail.model";
+import {AccountService} from "../../account-institution/account/services/account.service";
+import {ProviderUserDetails} from "../../account-institution/account/models/providerUserDetails";
+import {AccountInstitutionListModel} from "../../account-institution/models/accountInstitutionList.model";
+import {LocationRangeModel} from "../../account-institution/models/locationRange.model";
 
 
 @Component({
@@ -233,7 +233,6 @@ export class MapComponent implements OnInit {
       this.getProviderDetails(institution.id);
     } else {
       this.getInstitutionDetail(institution.id);
-
     }
   };
 

@@ -23,12 +23,16 @@ public class ChatService {
 
     private final MessageRepository messageRepository;
     private final ContactRepository contactRepository;
-    private final AccountService accountService;
+    private AccountService accountService;
 
     @Autowired
     public ChatService(MessageRepository messageRepository, ContactRepository contactRepository, AccountService accountService) {
         this.messageRepository = messageRepository;
         this.contactRepository = contactRepository;
+        this.accountService = accountService;
+    }
+
+    public void setAccountService(AccountService accountService) {
         this.accountService = accountService;
     }
 

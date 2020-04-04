@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Message} from "../../../models/chat/message";
-import {User} from "../../../models/chat/user";
+import {MessageModel} from "../../../chat/models/message.model";
+import {UserModel} from "../../../chat/models/user.model";
 
 @Component({
   selector: 'app-message-window',
@@ -10,9 +10,9 @@ import {User} from "../../../models/chat/user";
 export class MessageWindowComponent implements OnInit {
 
   @Input()
-  messages: Message[] = [];
+  messages: MessageModel[] = [];
   @Input()
-  currentUser: User;
+  currentUser: UserModel;
   @Output()
   messageEmitter: EventEmitter<string> = new EventEmitter<string>();
   message: string;

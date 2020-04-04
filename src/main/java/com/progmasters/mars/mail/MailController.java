@@ -26,7 +26,7 @@ public class MailController {
     @GetMapping("confirmation/{token}")
     public ResponseEntity<Void> succeedRegister(@PathVariable String token) {
         accountService.confirmUserToken(token);
-        log.info("Token Confirmation is requested!");
+        log.info("TokenModel Confirmation is requested!");
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

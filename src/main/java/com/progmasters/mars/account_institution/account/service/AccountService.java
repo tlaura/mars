@@ -192,7 +192,7 @@ public class AccountService {
     public boolean updatePasswordOfLoggedInUser(PasswordChangeDetails passwordChangeDetails) {
         boolean isChangeConfirmed = false;
 
-        User user = userRepository.findByEmail(passwordChangeDetails.getEmail()).orElseThrow(() -> new EntityNotFoundException("User not found by given email: " + passwordChangeDetails.getEmail()));
+        User user = userRepository.findByEmail(passwordChangeDetails.getEmail()).orElseThrow(() -> new EntityNotFoundException("UserModel not found by given email: " + passwordChangeDetails.getEmail()));
 
         String givenOldPassword = passwordChangeDetails.getOldPassword();
         String oldPassword = user.getPassword();

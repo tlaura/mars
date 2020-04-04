@@ -1,9 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
-import {AccountService} from "../../services/account.service";
-import {ProviderUserDetails} from "../../models/providerUserDetails";
-import {ContactsService} from "../../services/chat/contacts.service";
-import {AuthenticationService} from "../../services/auth/authentication.service";
+import {AccountService} from "../../account-institution/account/services/account.service";
+import {ProviderUserDetails} from "../../account-institution/account/models/providerUserDetails";
+import {ContactsService} from "../../chat/services/contacts.service";
+import {AuthenticationService} from "../../auth/services/authentication.service";
 
 @Component({
   selector: 'app-provider-details',
@@ -52,7 +52,7 @@ export class ProviderDetailsComponent implements OnInit {
 
   addContact(email: string) {
     this.contactsService.addContact(email).subscribe(
-      () => console.log('Contact added.'),
+      () => console.log('ContactModel added.'),
       (error) => console.log(error),
       () => this.contactsService.contactSubject.next('New contact added.')
     )

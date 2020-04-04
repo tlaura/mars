@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {MailService} from "../../services/mail.service";
-import {EmailModel} from "../../models/email.model";
+import {MailService} from "../../mail/services/mail.service";
+import {EmailModel} from "../../mail/models/email.model";
 
 @Component({
   selector: 'app-send-mail',
