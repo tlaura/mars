@@ -8,9 +8,11 @@ import com.google.maps.errors.NotFoundException;
 import com.google.maps.model.*;
 import com.progmasters.mars.map.dto.GeoLocationData;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.util.concurrent.CompletableFuture;
 
 @Component
 @Slf4j
@@ -39,7 +41,9 @@ public class MapService {
         return new GeoLocationData(longitude, latitude);
     }
 
-    public DistanceMatrix calculateDistanceByGivenTravelMode(Double originLng, Double originLat, String destination, TravelMode travelMode) {
+    @Async
+    public CompletableFuture<DistanceMatrix> calculateDistanceByGivenTravelModeConcurrently(Double originLng, Double originLat, String destination, TravelMode travelMode) {
+        long start = System.currentTimeMillis();
         DistanceMatrix matrix = null;
         try {
             matrix = DistanceMatrixApi.newRequest(context).origins(new LatLng(originLat, originLng))
@@ -50,6 +54,8 @@ public class MapService {
         } catch (ApiException | InterruptedException | IOException e) {
             log.info(e.getMessage());
         }
-        return matrix;
+        long end = System.currentTimeMillis();
+        log.info("Distance matrix got in: " + (end - start) + " ms on thread: " + Thread.currentThread().getName());
+        return CompletableFuture.completedFuture(matrix);
     }
 }
