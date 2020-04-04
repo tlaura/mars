@@ -3,10 +3,10 @@ package com.progmasters.mars.account_institution.account.service;
 import com.progmasters.mars.account_institution.account.domain.ProviderAccount;
 import com.progmasters.mars.account_institution.account.domain.ProviderType;
 import com.progmasters.mars.account_institution.account.domain.User;
-import com.progmasters.mars.account_institution.account.dto.PasswordChangeDetails;
-import com.progmasters.mars.account_institution.account.dto.ProviderAccountCreationCommand;
-import com.progmasters.mars.account_institution.account.dto.ProviderUserDetails;
+import com.progmasters.mars.account_institution.account.dto.*;
+import com.progmasters.mars.account_institution.connector.AccountInstitutionListData;
 import com.progmasters.mars.account_institution.institution.dto.InstitutionCreationCommand;
+import com.progmasters.mars.chat.domain.LoginState;
 import com.progmasters.mars.mail.EmailService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -32,7 +32,6 @@ import static org.mockito.Mockito.mock;
 @AutoConfigureTestDatabase
 public class AccountServiceTest {
 
-    private ProviderAccountCreationCommand providerAccountCreationCommand;
 
     private ProviderAccount providerAccount;
 
@@ -44,7 +43,7 @@ public class AccountServiceTest {
 
     @BeforeEach
     public void init() {
-        this.providerAccountCreationCommand = createOneAccountCommand();
+        ProviderAccountCreationCommand providerAccountCreationCommand = createOneAccountCommand();
         emailService = mock(EmailService.class);
         doNothing().when(emailService).sendConfirmationEmail(any(User.class));
         this.accountService.setEmailService(emailService);
@@ -132,6 +131,35 @@ public class AccountServiceTest {
         assertTrue(providerAccount.getNewsletter());
     }
 
+    @Test
+    public void testSetLoginState() {
+        accountService.setLoginState("pecske92@gmail.com", LoginState.ONLINE);
+        User foundUser = accountService.findByEmail("pecske92@gmail.com");
+
+        assertSame(foundUser.getState(), LoginState.ONLINE);
+    }
+
+    @Test
+    public void testUpdateUser() {
+        UserDetailsData userDetailsData = createOneUserDetails();
+        UserCreationCommand userCreationCommand = createOneUserCommand();
+        accountService.save(userCreationCommand);
+        accountService.updateUser(userDetailsData, "peter.erdei92@gmail.com");
+
+        User found = accountService.findByEmail("peter.erdei92@gmail.com");
+
+        assertEquals("Pecske2", found.getName());
+        assertEquals("+36205851882", found.getPhone());
+    }
+
+    @Test
+    public void testFindProvidersByAgeRange_shouldReturnNotEmptyList() {
+        List<AccountInstitutionListData> ageRangeList = accountService.findProvidersByAgeRange(20);
+
+        assertFalse(ageRangeList.isEmpty());
+    }
+
+
     private ProviderUserDetails creatOneUserDetailsEdit() {
         String serviceName = "PecskeTestService2";
         String name = "Pecske2";
@@ -155,6 +183,11 @@ public class AccountServiceTest {
                 .types(types)
                 .newsletter(newsletter)
                 .build();
+    }
+
+    private UserCreationCommand createOneUserCommand() {
+        return new UserCreationCommand("Pecske", "Test123", "peter.erdei92@gmail.com",
+                "+36205851886", 1089, "Budapest", "Orczy út 43", false);
     }
 
     private ProviderAccountCreationCommand createOneAccountCommand() {
@@ -190,5 +223,24 @@ public class AccountServiceTest {
                 .newsletter(newsletter)
                 .build();
     }
+
+    private UserDetailsData createOneUserDetails() {
+        String name = "Pecske2";
+        String phone = "+36205851882";
+        Integer zipcode = 1089;
+        String city = "Budapest";
+        String address = "Orczy út 43";
+
+        return UserDetailsData.builder()
+                .name(name)
+                .phone(phone)
+                .zipcode(zipcode)
+                .city(city)
+                .address(address)
+                .build();
+
+
+    }
+
 
 }

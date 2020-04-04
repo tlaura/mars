@@ -3,13 +3,11 @@ package com.progmasters.mars.account_institution.account.dto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 
 @Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserCreationCommand {
@@ -36,4 +34,5 @@ public class UserCreationCommand {
     public void setPassword(String password) {
         this.password = password;
     }
+
 }
