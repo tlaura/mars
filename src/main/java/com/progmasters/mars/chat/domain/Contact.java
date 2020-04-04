@@ -20,11 +20,11 @@ public class Contact {
     @Column(name = "id")
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "user_email", referencedColumnName = "email")
     private User fromAccount;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "provider_email", referencedColumnName = "email")
     private User toAccount;
 

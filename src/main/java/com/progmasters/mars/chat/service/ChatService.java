@@ -23,7 +23,7 @@ public class ChatService {
 
     private final MessageRepository messageRepository;
     private final ContactRepository contactRepository;
-    private AccountService accountService;
+    private final AccountService accountService;
 
     @Autowired
     public ChatService(MessageRepository messageRepository, ContactRepository contactRepository, AccountService accountService) {
@@ -32,8 +32,8 @@ public class ChatService {
         this.accountService = accountService;
     }
 
-    public void setAccountService(AccountService accountService) {
-        this.accountService = accountService;
+    public AccountService getAccountService() {
+        return accountService;
     }
 
     public void saveMessage(MessageData messageData) {

@@ -15,7 +15,7 @@ import java.util.List;
 @RequestMapping("/api/contacts")
 public class ContactController {
 
-    private ChatService chatService;
+    private final ChatService chatService;
 
     public ChatService getChatService() {
         return chatService;
@@ -29,7 +29,6 @@ public class ContactController {
     @PostMapping
     public ResponseEntity<Void> saveContact(@RequestBody ContactCreationCommand contactCreationCommand) {
         chatService.saveContact(contactCreationCommand);
-
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 

@@ -1,15 +1,16 @@
 package com.progmasters.mars.chat.controller;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.progmasters.mars.account_institution.account.domain.User;
 import com.progmasters.mars.account_institution.account.dto.ProviderAccountCreationCommand;
 import com.progmasters.mars.account_institution.account.dto.UserCreationCommand;
-import com.progmasters.mars.account_institution.account.service.AccountService;
 import com.progmasters.mars.chat.dto.ContactCreationCommand;
+import com.progmasters.mars.chat.dto.ContactsData;
+import com.progmasters.mars.mail.EmailService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -17,9 +18,17 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.mockito.Mockito.doReturn;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.mock;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -36,16 +45,17 @@ public class ContactControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
 
-    @Mock
-    private AccountService accountService;
-
     @Autowired
     private MockMvc mockMvc;
 
+    @Mock
+    private EmailService emailService;
+
     @BeforeEach
-    public void init() {
-        accountService = Mockito.mock(AccountService.class);
-        contactController.getChatService().setAccountService(accountService);
+    public void init() throws Exception {
+        emailService = mock(EmailService.class);
+        doNothing().when(emailService).sendConfirmationEmail(any(User.class));
+        contactController.getChatService().getAccountService().setEmailService(emailService);
         UserCreationCommand pecskeTest =
                 ProviderAccountCreationCommand.builder()
                         .address("Orczy út 43")
@@ -56,6 +66,10 @@ public class ContactControllerTest {
                         .newsletter(false)
                         .password("ValarMorghulis7")
                         .phone("+36205851886")
+                        .ageGroupMin(0)
+                        .ageGroupMax(99)
+                        .providerServiceName("PecskeTestService")
+                        .types(new ArrayList<>())
                         .build();
         UserCreationCommand elzaTest =
                 ProviderAccountCreationCommand.builder()
@@ -67,9 +81,14 @@ public class ContactControllerTest {
                         .newsletter(false)
                         .password("ValarMorghulis7")
                         .phone("+36205851886")
+                        .ageGroupMin(0)
+                        .ageGroupMax(99)
+                        .providerServiceName("ElzaTestService")
+                        .types(new ArrayList<>())
                         .build();
-        doReturn(new User(pecskeTest)).when(accountService).findByEmail("pecske92@gmail.com");
-        doReturn(new User(elzaTest)).when(accountService).findByEmail("hudak.elza@gmail.com");
+        contactController.getChatService().getAccountService().save(pecskeTest);
+        contactController.getChatService().getAccountService().save(elzaTest);
+
     }
 
     @Test
@@ -81,6 +100,42 @@ public class ContactControllerTest {
                 .content(objectMapper.writeValueAsString(contactCreationCommand))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated());
+    }
+
+    @Test
+    public void saveContactTestMultipleContacts() throws Exception {
+        ContactCreationCommand contactCreationCommand =
+                new ContactCreationCommand("pecske92@gmail.com", "hudak.elza@gmail.com");
+
+        mockMvc.perform(post("/api/contacts")
+                .content(objectMapper.writeValueAsString(contactCreationCommand))
+                .contentType(MediaType.APPLICATION_JSON));
+
+
+        String testEmail = "hudak.elza@gmail.com";
+
+        MvcResult result =
+                mockMvc.perform(get("/api/contacts")
+                        .param("email", testEmail))
+                        .andExpect(status().isOk())
+                        .andReturn();
+
+// this uses a TypeReference to inform Jackson about the Lists's generic type
+        List<ContactsData> actual = objectMapper
+                .readValue(result
+                                .getResponse()
+                                .getContentAsString(),
+                        new TypeReference<List<ContactsData>>() {
+                        });
+
+        assertEquals(1, actual.size());
+
+    }
+
+    @Test
+    public void getContactsByEmailTest() throws Exception {
+
+
     }
 
 }
