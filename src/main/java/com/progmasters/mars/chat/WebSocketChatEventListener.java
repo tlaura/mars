@@ -33,7 +33,6 @@ public class WebSocketChatEventListener {
 
         String username = (String) headerAccessor.getSessionAttributes().get("username");
         if (username != null) {
-
             MessageData chatMessage = new MessageData();
             messagingTemplate.convertAndSend("/topic/public", chatMessage);
         }

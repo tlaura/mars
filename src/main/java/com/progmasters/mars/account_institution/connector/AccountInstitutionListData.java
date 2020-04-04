@@ -73,16 +73,20 @@ public class AccountInstitutionListData {
         this.description = institution.getDescription();
         this.longitude = institution.getLongitude();
         this.latitude = institution.getLatitude();
-        this.openingHours = institution.getOpeningHours().stream().map(OpeningHoursData::new).collect(Collectors.toList());
+        if (institution.getOpeningHours() != null) {
+            this.openingHours = institution.getOpeningHours().stream().map(OpeningHoursData::new).collect(Collectors.toList());
+        }
         this.website = institution.getWebsite();
         this.phone = institution.getPhone();
 
-        List<AccountInstitutionConnector> institutionConnectors = institution.getAccountInstitutionConnectors();
-        if (!institutionConnectors.isEmpty()) {
-            this.providers = institutionConnectors.stream().map(AccountInstitutionConnector::getProviderAccount).map(ProviderUserDetails::new).collect(Collectors.toList());
-            this.accountType = AccountType.INSTITUTION_WITH_PROVIDER.toString();
-        } else {
-            this.accountType = AccountType.INSTITUTION.toString();
+        if (institution.getAccountInstitutionConnectors() != null) {
+            List<AccountInstitutionConnector> institutionConnectors = institution.getAccountInstitutionConnectors();
+            if (!institutionConnectors.isEmpty()) {
+                this.providers = institutionConnectors.stream().map(AccountInstitutionConnector::getProviderAccount).map(ProviderUserDetails::new).collect(Collectors.toList());
+                this.accountType = AccountType.INSTITUTION_WITH_PROVIDER.toString();
+            } else {
+                this.accountType = AccountType.INSTITUTION.toString();
+            }
         }
 
     }

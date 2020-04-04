@@ -41,6 +41,14 @@ public class AccountInstitutionService {
     private final AccountInstitutionConnectorRepository accountInstitutionConnectorRepository;
     private final OpeningHoursService openingHoursService;
 
+    public ConfirmationInstitutionService getConfirmationInstitutionService() {
+        return confirmationInstitutionService;
+    }
+
+    public InstitutionService getInstitutionService() {
+        return institutionService;
+    }
+
     @Autowired
     public AccountInstitutionService(AccountService accountService,
                                      InstitutionService institutionService,
