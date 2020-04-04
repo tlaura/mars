@@ -116,7 +116,7 @@ public class AccountInstitutionService {
             String destination = account.getZipcode() + " " + account.getCity() + " " + account.getAddress();
             List<TravelMode> travelModes = List.of(TravelMode.DRIVING, TravelMode.WALKING, TravelMode.TRANSIT);
             try {
-                List<CompletableFuture<Boolean>> isWithinRangeList = travelModes.stream().map(travelMode -> getDistanceByTravelMode(originLng, originLat, destination, travelMode).thenApply(distanceData -> distanceData.getDistance() < maxDistance)).collect(Collectors.toList());
+                List<CompletableFuture<Boolean>> isWithinRangeList = travelModes.stream().map(travelMode -> getDistanceByTravelMode(originLng, originLat, destination, travelMode).thenApply(distanceData -> (distanceData != null) && (distanceData.getDistance() < maxDistance))).collect(Collectors.toList());
                 return isWithinRangeList.stream().anyMatch(CompletableFuture::join);
             } catch (DistanceCalculationException e) {
                 log.info("Distance could not be calculated by given parameters!");
@@ -137,9 +137,8 @@ public class AccountInstitutionService {
         if (rawDistance != null && duration != null) {
             Long distance = rawDistance.inMeters / M_TO_KM;
             return new DistanceData(travelMode, distance, duration);
-        } else {
-            throw new DistanceCalculationException("Distance calculation not found");
         }
+        return null;
     }
 
     public void evaluateInstitution(Long id, Boolean accepted) throws NotFoundException {
