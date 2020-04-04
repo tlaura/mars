@@ -1,6 +1,7 @@
 package com.progmasters.mars.account_institution.connector;
 
 import com.google.maps.errors.NotFoundException;
+import com.google.maps.model.Distance;
 import com.google.maps.model.DistanceMatrix;
 import com.google.maps.model.Duration;
 import com.google.maps.model.TravelMode;
@@ -20,11 +21,13 @@ import com.progmasters.mars.map.dto.DistanceData;
 import com.progmasters.mars.map.dto.GeoLocationData;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
 @Service
@@ -111,56 +114,39 @@ public class AccountInstitutionService {
 
     public List<AccountInstitutionListData> getListItemsByDistance(Double originLng, Double originLat, Long maxDistance) {
         List<AccountInstitutionListData> allAccounts = getAllListItems();
-        List<AccountInstitutionListData> accountsWithingRange = new ArrayList<>();
 
-        for (AccountInstitutionListData account : allAccounts) {
-            if (account.getZipcode() != null && account.getCity() != null && account.getAddress() != null) {
-                String destination = account.getZipcode() + " " + account.getCity() + " " + account.getAddress();
-                try {
-                    DistanceData distanceData = getDistance(originLng, originLat, destination);
-                    if (distanceData.getDistanceByDriving() < maxDistance || distanceData.getDistanceByTransit() < maxDistance || distanceData.getDistanceByWalking() < maxDistance) {
-                        accountsWithingRange.add(account);
-                    }
-                } catch (DistanceCalculationException e) {
-                    log.info(e.getMessage());
-                }
-            }
+        return allAccounts.stream().filter(account -> addAccountWithinRange(originLng, originLat, maxDistance, account)).collect(Collectors.toList());
 
-        }
-        return accountsWithingRange;
     }
 
-    private DistanceData getDistance(Double originLng, Double originLat, String destination) throws DistanceCalculationException {
-        DistanceData distanceData = new DistanceData();
-        List<TravelMode> travelModeList = List.of(TravelMode.DRIVING, TravelMode.WALKING, TravelMode.TRANSIT);
-        for (TravelMode travelMode : travelModeList) {
-            DistanceMatrix matrix = mapService.calculateDistanceByGivenTravelMode(originLng, originLat, destination, travelMode);
-            // log.info("element: " + matrix.rows[0].elements[0].toString());
-            //    log.info("" + matrixFound);
-            if (matrix.rows[0].elements[0].distance != null && matrix.rows[0].elements[0].duration != null) {
-                Duration duration = matrix.rows[0].elements[0].duration;
-                Long distance = matrix.rows[0].elements[0].distance.inMeters;
-                switch (travelMode) {
-                    case TRANSIT:
-                        distanceData.setDistanceByTransit(distance / M_TO_KM);
-                        distanceData.setTravelTimeByTransit(duration);
-                        break;
-                    case DRIVING:
-                        distanceData.setDistanceByDriving(distance / M_TO_KM);
-                        distanceData.setTravelTimeByDriving(duration);
-                        break;
-                    case WALKING:
-                        distanceData.setDistanceByWalking(distance / M_TO_KM);
-                        distanceData.setTravelTimeByWalking(duration);
-                        break;
-                }
+    private boolean addAccountWithinRange(Double originLng, Double originLat, Long maxDistance, AccountInstitutionListData account) {
+        if (account.getZipcode() != null && account.getCity() != null && account.getAddress() != null) {
+            String destination = account.getZipcode() + " " + account.getCity() + " " + account.getAddress();
+            List<TravelMode> travelModes = List.of(TravelMode.DRIVING, TravelMode.WALKING, TravelMode.TRANSIT);
+            try {
+                List<CompletableFuture<Boolean>> isWithinRangeList = travelModes.stream().map(travelMode -> getDistanceByTravelMode(originLng, originLat, destination, travelMode).thenApply(distanceData -> (distanceData != null) && (distanceData.getDistance() < maxDistance))).collect(Collectors.toList());
+                return isWithinRangeList.stream().anyMatch(CompletableFuture::join);
+            } catch (DistanceCalculationException e) {
+                log.info("Distance could not be calculated by given parameters!");
             }
         }
-        if (distanceData.getDistanceByWalking() != null || distanceData.getDistanceByTransit() != null || distanceData.getDistanceByDriving() != null) {
-            return distanceData;
-        } else {
-            throw new DistanceCalculationException("Distance calculation not found");
+        return false;
+    }
+
+
+    @Async
+    CompletableFuture<DistanceData> getDistanceByTravelMode(Double originLng, Double originLat, String destination, TravelMode travelMode) throws DistanceCalculationException {
+        return mapService.calculateDistanceByGivenTravelModeConcurrently(originLng, originLat, destination, travelMode).thenApply(matrix -> createDistanceData(matrix, travelMode));
+    }
+
+    private DistanceData createDistanceData(DistanceMatrix matrix, TravelMode travelMode) {
+        Distance rawDistance = matrix.rows[0].elements[0].distance;
+        Duration duration = matrix.rows[0].elements[0].duration;
+        if (rawDistance != null && duration != null) {
+            Long distance = rawDistance.inMeters / M_TO_KM;
+            return new DistanceData(travelMode, distance, duration);
         }
+        return null;
     }
 
     public void evaluateInstitution(Long id, Boolean accepted) throws NotFoundException {
