@@ -18,7 +18,9 @@ export class EmailComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.emailFormGroup.get('email').setValidators([Validators.required, Validators.pattern(this.EMAIL_REGEX)]);
+    this.emailFormGroup.get('email').setValidators([Validators.required,
+      Validators.pattern(this.EMAIL_REGEX),
+      Validators.maxLength(20)]);
   }
 
 }

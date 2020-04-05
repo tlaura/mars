@@ -1,9 +1,14 @@
 <form [formGroup]="emailFormGroup">
   <label for="email">Email cím*:</label>
-  <input class="form-control rounded-pill" formControlName="email" id="email" type="text">
+  <input class="form-control rounded-pill" formControlName="email" id="email" maxlength="30" ngModel type="text">
   <div *ngIf="emailFormGroup.get('email')?.errors?.pattern">
     <small class="text-danger-custom">
       Érvénytelen email cím!
+    </small>
+  </div>
+  <div *ngIf="emailFormGroup.get('email')?.errors?.maxLength">
+    <small class="text-danger-custom">
+      Túl hosszú email cím!
     </small>
   </div>
   <small *ngIf="emailFormGroup.get('email').errors?.serverError" class="text-danger-custom">
