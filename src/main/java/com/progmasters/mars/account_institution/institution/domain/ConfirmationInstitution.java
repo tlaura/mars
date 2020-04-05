@@ -6,10 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,7 +21,9 @@ public class ConfirmationInstitution extends TempInstitution {
     private List<OpeningHours> openingHours;
 
     @Column(name = "provider_email")
-    private String providerEmail;
+    @ElementCollection
+    private List<String> providerEmails;
+
 
     public ConfirmationInstitution(InstitutionCreationCommand institutionCreationCommand) {
         super.setName(institutionCreationCommand.getName());
@@ -35,6 +34,13 @@ public class ConfirmationInstitution extends TempInstitution {
         super.setDescription(institutionCreationCommand.getDescription());
         super.setPhone(institutionCreationCommand.getPhone());
         super.setWebsite(institutionCreationCommand.getWebsite());
-        this.openingHours = institutionCreationCommand.getOpeningHours().stream().map(OpeningHours::new).collect(Collectors.toList());
+        if (institutionCreationCommand.getOpeningHours() != null && !institutionCreationCommand.getOpeningHours().isEmpty()) {
+            this.openingHours = institutionCreationCommand.getOpeningHours().stream().map(OpeningHours::new).collect(Collectors.toList());
+        }
+    }
+
+    public ConfirmationInstitution(InstitutionCreationCommand institutionCreationCommand, String email) {
+        this(institutionCreationCommand);
+        providerEmails.add(email);
     }
 }

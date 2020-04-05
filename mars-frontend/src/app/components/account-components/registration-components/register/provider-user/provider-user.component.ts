@@ -7,6 +7,7 @@ import {InstitutionService} from "../../../../../account-institution/institution
 import {validatorBounds} from "../../../../../../environments/validatorBounds";
 import {ProviderAccountRegisterModel} from "../../../../../account-institution/account/models/providerAccountRegisterModel";
 import {validationHandler} from "../../../../../utils/validators/validationHandler";
+import {InstitutionListModel} from "../../../../../account-institution/institution/models/institutionList.model";
 
 @Component({
   selector: 'app-provider-user',
@@ -18,7 +19,9 @@ export class ProviderUserComponent implements OnInit {
   haveProviderCustomAddress: boolean = false;
   isPasswordValid: boolean = false;
   registerForm: FormGroup;
-  addressFormGroup: FormGroup;
+  institutionIndex: number = -1;
+  institutionSelected: boolean = false;
+  institutionModel: InstitutionListModel;
 
   allType: Array<InstitutionTypeModel> = [];
 
@@ -49,11 +52,17 @@ export class ProviderUserComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getProviderTypes();
+  //  this.getAllInstitutions();
+  }
+
+  getProviderTypes = (): void => {
     this.institutionService.getProviderTypes().subscribe(
       value => this.allType = value,
       error => console.warn(error)
-    )
-  }
+    );
+  };
+
 
   submit() {
     if (this.isPasswordValid) {
@@ -109,9 +118,6 @@ export class ProviderUserComponent implements OnInit {
 
   setIfPasswordIsValid = (isValid: boolean) => {
     this.isPasswordValid = isValid;
-  };
-
-  private loadTypes = (): void => {
   };
 
 }

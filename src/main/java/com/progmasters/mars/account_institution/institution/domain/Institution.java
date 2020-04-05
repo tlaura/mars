@@ -1,6 +1,6 @@
 package com.progmasters.mars.account_institution.institution.domain;
 
-import com.progmasters.mars.account_institution.connector.AccountInstitutionConnector;
+import com.progmasters.mars.account_institution.connector.domain.AccountInstitutionConnector;
 import com.progmasters.mars.account_institution.institution.dto.InstitutionCreationCommand;
 import com.progmasters.mars.account_institution.institution.openinghours.domain.OpeningHours;
 import com.progmasters.mars.map.dto.GeoLocationData;

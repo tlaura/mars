@@ -2,7 +2,7 @@ package com.progmasters.mars.mail;
 
 import com.progmasters.mars.account_institution.account.confirmationtoken.ConfirmationToken;
 import com.progmasters.mars.account_institution.account.service.AccountService;
-import com.progmasters.mars.account_institution.connector.AccountInstitutionService;
+import com.progmasters.mars.account_institution.connector.service.AccountInstitutionService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

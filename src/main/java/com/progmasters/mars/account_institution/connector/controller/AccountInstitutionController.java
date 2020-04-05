@@ -1,13 +1,13 @@
-package com.progmasters.mars.account_institution.connector;
+package com.progmasters.mars.account_institution.connector.controller;
 
+import com.progmasters.mars.account_institution.connector.dto.AccountInstitutionAttachData;
+import com.progmasters.mars.account_institution.connector.dto.AccountInstitutionListData;
+import com.progmasters.mars.account_institution.connector.service.AccountInstitutionService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -40,5 +40,12 @@ public class AccountInstitutionController {
         List<AccountInstitutionListData> accountsByRange = accountInstitutionService.getListItemsByDistance(originLng, originLat, maxDistance);
         log.info("List items by range requested");
         return new ResponseEntity<>(accountsByRange, HttpStatus.OK);
+    }
+
+    @PostMapping
+    public ResponseEntity<Void> attachInstitutionToProvicer(@RequestBody AccountInstitutionAttachData accountInstitutionAttachData) {
+        accountInstitutionService.attachInstitutionToProvider(accountInstitutionAttachData);
+
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 }

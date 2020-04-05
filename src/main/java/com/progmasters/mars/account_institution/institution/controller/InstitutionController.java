@@ -2,7 +2,7 @@ package com.progmasters.mars.account_institution.institution.controller;
 
 import com.google.maps.errors.NotFoundException;
 import com.progmasters.mars.account_institution.account.domain.ProviderType;
-import com.progmasters.mars.account_institution.connector.AccountInstitutionService;
+import com.progmasters.mars.account_institution.connector.service.AccountInstitutionService;
 import com.progmasters.mars.account_institution.institution.InstitutionValidator;
 import com.progmasters.mars.account_institution.institution.dto.*;
 import com.progmasters.mars.account_institution.institution.service.ConfirmationInstitutionService;
@@ -46,10 +46,9 @@ public class InstitutionController {
     }
 
     @GetMapping
-    public ResponseEntity<List<InstitutionListData>> institutions() {
-        //todo handle sorting
+    public ResponseEntity<List<InstitutionListData>> getAllInstitutions() {
 
-        List<InstitutionListData> institutionList = institutionService.getInstitutionList();
+        List<InstitutionListData> institutionList = institutionService.getAllInstitutions();
         log.info("Institution List is requested!");
         return new ResponseEntity<>(institutionList, HttpStatus.OK);
     }

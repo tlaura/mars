@@ -12,8 +12,8 @@ import com.progmasters.mars.account_institution.account.passwordtoken.PasswordTo
 import com.progmasters.mars.account_institution.account.repository.ProviderAccountRepository;
 import com.progmasters.mars.account_institution.account.repository.UserRepository;
 import com.progmasters.mars.account_institution.account.security.AuthenticatedUserDetails;
-import com.progmasters.mars.account_institution.connector.AccountInstitutionConnectorRepository;
-import com.progmasters.mars.account_institution.connector.AccountInstitutionListData;
+import com.progmasters.mars.account_institution.connector.dto.AccountInstitutionListData;
+import com.progmasters.mars.account_institution.connector.repository.AccountInstitutionConnectorRepository;
 import com.progmasters.mars.chat.domain.LoginState;
 import com.progmasters.mars.mail.EmailService;
 import org.springframework.security.crypto.bcrypt.BCrypt;

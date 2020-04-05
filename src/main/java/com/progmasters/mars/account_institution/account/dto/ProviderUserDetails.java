@@ -2,7 +2,7 @@ package com.progmasters.mars.account_institution.account.dto;
 
 import com.progmasters.mars.account_institution.account.domain.ProviderAccount;
 import com.progmasters.mars.account_institution.account.domain.ProviderType;
-import com.progmasters.mars.account_institution.connector.AccountInstitutionConnector;
+import com.progmasters.mars.account_institution.connector.domain.AccountInstitutionConnector;
 import com.progmasters.mars.account_institution.institution.dto.InstitutionListData;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

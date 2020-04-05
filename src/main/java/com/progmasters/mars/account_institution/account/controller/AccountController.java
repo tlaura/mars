@@ -7,8 +7,8 @@ import com.progmasters.mars.account_institution.account.dto.PasswordChangeDetail
 import com.progmasters.mars.account_institution.account.dto.ProviderAccountCreationCommand;
 import com.progmasters.mars.account_institution.account.dto.ProviderUserDetails;
 import com.progmasters.mars.account_institution.account.service.AccountService;
-import com.progmasters.mars.account_institution.connector.AccountInstitutionListData;
-import com.progmasters.mars.account_institution.connector.AccountInstitutionService;
+import com.progmasters.mars.account_institution.connector.dto.AccountInstitutionListData;
+import com.progmasters.mars.account_institution.connector.service.AccountInstitutionService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
