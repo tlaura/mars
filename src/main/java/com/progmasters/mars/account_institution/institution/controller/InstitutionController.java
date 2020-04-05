@@ -4,10 +4,7 @@ import com.google.maps.errors.NotFoundException;
 import com.progmasters.mars.account_institution.account.domain.ProviderType;
 import com.progmasters.mars.account_institution.connector.AccountInstitutionService;
 import com.progmasters.mars.account_institution.institution.InstitutionValidator;
-import com.progmasters.mars.account_institution.institution.dto.InstitutionCreationCommand;
-import com.progmasters.mars.account_institution.institution.dto.InstitutionDetailsData;
-import com.progmasters.mars.account_institution.institution.dto.InstitutionListData;
-import com.progmasters.mars.account_institution.institution.dto.InstitutionTypeData;
+import com.progmasters.mars.account_institution.institution.dto.*;
 import com.progmasters.mars.account_institution.institution.service.ConfirmationInstitutionService;
 import com.progmasters.mars.account_institution.institution.service.InstitutionService;
 import com.progmasters.mars.map.MapService;
@@ -108,5 +105,34 @@ public class InstitutionController {
         }
         log.info("Institution evaluation is requested by id:\t" + id + "\n Decision:\t" + accepted);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> signInstitutionForDelete(@PathVariable Long id, @RequestBody String cause) {
+
+        institutionService.signInstitutionToDelete(id, cause);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PutMapping("/reject/{id}")
+    public ResponseEntity<Void> rejectInstitutionDelete(@PathVariable Long id) {
+        institutionService.rejectInsitutionDeletion(id);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteInstitution(@PathVariable Long id) {
+        institutionService.deleteInstitution(id);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/institutionsToDelete")
+    public ResponseEntity<List<InstitutionDeleteListData>> getDeleteInstitutionList() {
+        List<InstitutionDeleteListData> institutionDeleteListData = institutionService.getInstitutionsToDelete();
+
+        return new ResponseEntity<>(institutionDeleteListData, HttpStatus.OK);
     }
 }

@@ -35,4 +35,7 @@ public interface InstitutionRepository extends JpaRepository<Institution, Long> 
     @Query("select i from Institution i join i.accountInstitutionConnectors ac join ac.providerAccount p join p.types t where t= :type")
     List<Institution> findInstitutionsByProviderType(@Param("type") ProviderType providerType);
 
+    @Query("select i from Institution i join i.institutionPetition p where p.deleteSign= true")
+    List<Institution> findInstitutionsSignedToDelete();
+
 }
