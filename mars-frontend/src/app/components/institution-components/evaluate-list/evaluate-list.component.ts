@@ -10,6 +10,7 @@ import {InstitutionService} from "../../../account-institution/institution/servi
 export class EvaluateListComponent implements OnInit {
 
   evaluationList: Array<InstitutionListModel>;
+  serverError: string;
 
   constructor(private institutionService: InstitutionService) {
   }
@@ -35,7 +36,10 @@ export class EvaluateListComponent implements OnInit {
 
   sendEvaluation = (accepted: boolean, id: number) => {
     this.institutionService.evalueateInstitution(accepted, id).subscribe(
-      () => this.getEvaluationList()
+      () => this.getEvaluationList(),
+      error => {
+        this.serverError = error.message;
+      }
     );
   }
 }

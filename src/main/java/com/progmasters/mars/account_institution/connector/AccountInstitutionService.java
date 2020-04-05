@@ -14,8 +14,10 @@ import com.progmasters.mars.account_institution.institution.domain.Institution;
 import com.progmasters.mars.account_institution.institution.dto.InstitutionCreationCommand;
 import com.progmasters.mars.account_institution.institution.openinghours.domain.OpeningHours;
 import com.progmasters.mars.account_institution.institution.openinghours.service.OpeningHoursService;
+import com.progmasters.mars.account_institution.institution.repository.InstitutionRepository;
 import com.progmasters.mars.account_institution.institution.service.ConfirmationInstitutionService;
 import com.progmasters.mars.account_institution.institution.service.InstitutionService;
+import com.progmasters.mars.exception.EmailAlreadyExistsException;
 import com.progmasters.mars.map.MapService;
 import com.progmasters.mars.map.dto.DistanceData;
 import com.progmasters.mars.map.dto.GeoLocationData;
@@ -44,6 +46,7 @@ public class AccountInstitutionService {
     private final MapService mapService;
     private final AccountInstitutionConnectorRepository accountInstitutionConnectorRepository;
     private final OpeningHoursService openingHoursService;
+    private final InstitutionRepository institutionRepository;
 
     public ConfirmationInstitutionService getConfirmationInstitutionService() {
         return confirmationInstitutionService;
@@ -58,13 +61,16 @@ public class AccountInstitutionService {
                                      InstitutionService institutionService,
                                      AccountInstitutionConnectorRepository accountInstitutionConnectorRepository,
                                      MapService mapService,
-                                     ConfirmationInstitutionService confirmationInstitutionService, OpeningHoursService openingHoursService) {
+                                     ConfirmationInstitutionService confirmationInstitutionService,
+                                     OpeningHoursService openingHoursService,
+                                     InstitutionRepository institutionRepository) {
         this.accountService = accountService;
         this.institutionService = institutionService;
         this.accountInstitutionConnectorRepository = accountInstitutionConnectorRepository;
         this.mapService = mapService;
         this.confirmationInstitutionService = confirmationInstitutionService;
         this.openingHoursService = openingHoursService;
+        this.institutionRepository = institutionRepository;
     }
 
     //todo read about spring boot exception handling
@@ -124,7 +130,6 @@ public class AccountInstitutionService {
                 return false;
             }
         }).collect(Collectors.toList());
-
     }
 
     @Async
@@ -156,6 +161,11 @@ public class AccountInstitutionService {
 
     public void evaluateInstitution(Long id, Boolean accepted) throws NotFoundException {
         ConfirmationInstitution confirmationInstitution = confirmationInstitutionService.findById(id);
+
+        if (!institutionRepository.findAllByEmail(confirmationInstitution.getEmail()).isEmpty()) {
+            throw new EmailAlreadyExistsException("Institution with the same email already exists.");
+        }
+
         if (accepted) {
             saveAccountInstitutionConnection(confirmationInstitution);
         } else {
@@ -167,7 +177,6 @@ public class AccountInstitutionService {
 
 
     private void saveAccountInstitutionConnection(ConfirmationInstitution confirmationInstitution) throws NotFoundException {
-
         Institution createdInstitution = new Institution(confirmationInstitution);
         confirmationInstitution.setOpeningHours(null);
         confirmationInstitutionService.delete(confirmationInstitution);
@@ -181,7 +190,6 @@ public class AccountInstitutionService {
 
 
     //todo revision
-
     public List<AccountInstitutionListData> getInstitutionsByAccountType(ProviderType providerType) {
         return institutionService.findInstitutionByProviderType(providerType).stream().map(AccountInstitutionListData::new).collect(Collectors.toList());
     }
