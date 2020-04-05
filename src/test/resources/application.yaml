@@ -54,3 +54,8 @@ regex:
 
 jwt:
   secret: marsjwtsupersecretkey
+
+executor:
+  corePoolSize: 10
+  maxPoolSize: 20
+  queueCapacity: 50

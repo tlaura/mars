@@ -28,6 +28,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
 @Service
@@ -107,28 +108,32 @@ public class AccountInstitutionService {
     public List<AccountInstitutionListData> getListItemsByDistance(Double originLng, Double originLat, Long maxDistance) {
         List<AccountInstitutionListData> allAccounts = getAllListItems();
 
-        return allAccounts.stream().filter(account -> addAccountWithinRange(originLng, originLat, maxDistance, account)).collect(Collectors.toList());
+        return allAccounts.stream().filter(account -> {
+            try {
+                return isAccountWithinRange(originLng, originLat, maxDistance, account).get();
+            } catch (InterruptedException | ExecutionException e) {
+                log.info(e.getMessage());
+                return false;
+            }
+        }).collect(Collectors.toList());
 
     }
 
-    private boolean addAccountWithinRange(Double originLng, Double originLat, Long maxDistance, AccountInstitutionListData account) {
+    @Async
+    CompletableFuture<Boolean> isAccountWithinRange(Double originLng, Double originLat, Long maxDistance, AccountInstitutionListData account) {
+        boolean withingrange = false;
         if (account.getZipcode() != null && account.getCity() != null && account.getAddress() != null) {
             String destination = account.getZipcode() + " " + account.getCity() + " " + account.getAddress();
             List<TravelMode> travelModes = List.of(TravelMode.DRIVING, TravelMode.WALKING, TravelMode.TRANSIT);
-            try {
-                List<CompletableFuture<Boolean>> isWithinRangeList = travelModes.stream().map(travelMode -> getDistanceByTravelMode(originLng, originLat, destination, travelMode).thenApply(distanceData -> (distanceData != null) && (distanceData.getDistance() < maxDistance))).collect(Collectors.toList());
-                return isWithinRangeList.stream().anyMatch(CompletableFuture::join);
-            } catch (DistanceCalculationException e) {
-                log.info("Distance could not be calculated by given parameters!");
-            }
+            List<CompletableFuture<Boolean>> isWithinRangeList = travelModes.stream().map(travelMode -> getDistanceByTravelMode(originLng, originLat, destination, travelMode).thenApplyAsync(distanceData -> (distanceData != null) && (distanceData.getDistance() < maxDistance))).collect(Collectors.toList());
+            withingrange = isWithinRangeList.stream().anyMatch(CompletableFuture::join);
         }
-        return false;
+        return CompletableFuture.completedFuture(withingrange);
     }
-
 
     @Async
     CompletableFuture<DistanceData> getDistanceByTravelMode(Double originLng, Double originLat, String destination, TravelMode travelMode) throws DistanceCalculationException {
-        return mapService.calculateDistanceByGivenTravelModeConcurrently(originLng, originLat, destination, travelMode).thenApply(matrix -> createDistanceData(matrix, travelMode));
+        return mapService.calculateDistanceByGivenTravelModeConcurrently(originLng, originLat, destination, travelMode).thenApplyAsync(matrix -> createDistanceData(matrix, travelMode));
     }
 
     private DistanceData createDistanceData(DistanceMatrix matrix, TravelMode travelMode) {
