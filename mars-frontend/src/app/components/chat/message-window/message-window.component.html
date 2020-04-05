@@ -1,4 +1,7 @@
-<div class="all-message-div" id="messages">
+<div (mouseleave)="isScrolled =false" (mousewheel)="isScrolled = true" class="all-message-div" id="messages">
+  <div *ngIf="isScrolled" class="jump-to-present-div rounded-pill py-0 px-2">
+    <label (click)="scrollDown()" class="custom-link small">Ugrás a legfrissebre</label>
+  </div>
   <div *ngFor="let message of messages, let index = index, let first = first">
     <div [ngClass]="currentUser.name==message.fromName? 'message-from-me-align':'message-to-me-align'">
       <div *ngIf="!(!first && message.fromName == messages[index-1].fromName)">
@@ -15,6 +18,7 @@
     </div>
   </div>
 </div>
+
 <hr/>
 <div class="message-send-div row mx-0 my-2">
   <input (keyup.enter)="sendMessage()" [(ngModel)]="message" class="form-control-sm col-sm-10 rounded-pill"

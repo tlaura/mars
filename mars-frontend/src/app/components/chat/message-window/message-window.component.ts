@@ -16,6 +16,7 @@ export class MessageWindowComponent implements OnInit {
   @Output()
   messageEmitter: EventEmitter<string> = new EventEmitter<string>();
   message: string;
+  isScrolled: boolean = false;
 
   constructor() {
   }
@@ -29,5 +30,11 @@ export class MessageWindowComponent implements OnInit {
     this.message = '';
   }
 
-
+  scrollDown() {
+    const element = document.getElementById("messages");
+    if (element) {
+      element.scrollTop = element.scrollHeight;
+    }
+    this.isScrolled = false;
+  }
 }

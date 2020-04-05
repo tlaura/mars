@@ -79,6 +79,7 @@ small {
 }
 
 .custom-link {
+  cursor: pointer;
   display: inline-block;
   font-size: 80%;
   font-weight: 400;
