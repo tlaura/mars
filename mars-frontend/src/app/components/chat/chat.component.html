@@ -26,6 +26,9 @@
           <label (click)="openMessageWindow(index)"
                  class="white-label pl-2 label-btn">
             {{contact.name}}</label>
+          <button (click)="closeContact(contact)" class=" delete-icon transparent-btn">
+            <i class="fas fa-sm fa-times"></i>
+          </button>
           <hr *ngIf="!last" class="my-2"/>
         </div>
       </div>

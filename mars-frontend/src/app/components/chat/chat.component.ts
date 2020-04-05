@@ -172,4 +172,7 @@ export class ChatComponent implements OnInit {
     }, 100)
   }
 
+  closeContact(contact: ContactModel) {
+    this.contacts = this.contacts.filter(element => element != contact);
+  }
 }

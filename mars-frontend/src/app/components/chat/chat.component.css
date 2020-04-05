@@ -59,3 +59,15 @@
 .circle-offline {
   color: lightsteelblue;
 }
+
+.delete-icon {
+  position: absolute;
+  right: 20px;
+  cursor: pointer;
+  color: white;
+  opacity: 0.5;
+}
+
+.delete-icon:hover {
+  opacity: 0.8;
+}
