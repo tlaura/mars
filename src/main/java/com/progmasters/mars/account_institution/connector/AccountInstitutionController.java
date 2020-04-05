@@ -18,6 +18,10 @@ public class AccountInstitutionController {
 
     private final AccountInstitutionService accountInstitutionService;
 
+    public AccountInstitutionService getAccountInstitutionService() {
+        return accountInstitutionService;
+    }
+
     @Autowired
     public AccountInstitutionController(AccountInstitutionService accountInstitutionService) {
         this.accountInstitutionService = accountInstitutionService;

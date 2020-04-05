@@ -7,6 +7,7 @@ import com.progmasters.mars.account_institution.account.dto.ProviderAccountCreat
 import com.progmasters.mars.account_institution.account.dto.UserCreationCommand;
 import com.progmasters.mars.chat.dto.ContactCreationCommand;
 import com.progmasters.mars.chat.dto.ContactsData;
+import com.progmasters.mars.chat.dto.MessageData;
 import com.progmasters.mars.mail.EmailService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -51,8 +52,10 @@ public class ContactControllerTest {
     @Mock
     private EmailService emailService;
 
+    ContactCreationCommand contactCreationCommand;
+
     @BeforeEach
-    public void init() throws Exception {
+    public void init() {
         emailService = mock(EmailService.class);
         doNothing().when(emailService).sendConfirmationEmail(any(User.class));
         contactController.getChatService().getAccountService().setEmailService(emailService);
@@ -88,14 +91,13 @@ public class ContactControllerTest {
                         .build();
         contactController.getChatService().getAccountService().save(pecskeTest);
         contactController.getChatService().getAccountService().save(elzaTest);
+        contactCreationCommand =
+                new ContactCreationCommand("pecske92@gmail.com", "hudak.elza@gmail.com");
 
     }
 
     @Test
     public void saveContactTest() throws Exception {
-        ContactCreationCommand contactCreationCommand =
-                new ContactCreationCommand("pecske92@gmail.com", "hudak.elza@gmail.com");
-
         mockMvc.perform(post("/api/contacts")
                 .content(objectMapper.writeValueAsString(contactCreationCommand))
                 .contentType(MediaType.APPLICATION_JSON))
@@ -103,16 +105,15 @@ public class ContactControllerTest {
     }
 
     @Test
-    public void saveContactTestMultipleContacts() throws Exception {
-        ContactCreationCommand contactCreationCommand =
-                new ContactCreationCommand("pecske92@gmail.com", "hudak.elza@gmail.com");
-
+    public void saveContactTestCantSaveMultipleContacts() throws Exception {
+        mockMvc.perform(post("/api/contacts")
+                .content(objectMapper.writeValueAsString(contactCreationCommand))
+                .contentType(MediaType.APPLICATION_JSON));
         mockMvc.perform(post("/api/contacts")
                 .content(objectMapper.writeValueAsString(contactCreationCommand))
                 .contentType(MediaType.APPLICATION_JSON));
 
-
-        String testEmail = "hudak.elza@gmail.com";
+        String testEmail = "pecske92@gmail.com";
 
         MvcResult result =
                 mockMvc.perform(get("/api/contacts")
@@ -133,9 +134,31 @@ public class ContactControllerTest {
     }
 
     @Test
-    public void getContactsByEmailTest() throws Exception {
+    public void getChatHistoryTestEmpty() throws Exception {
+        mockMvc.perform(post("/api/contacts")
+                .content(objectMapper.writeValueAsString(contactCreationCommand))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated());
 
+        String pecskeEmail = "pecske92@gmail.com";
+        String elzaEmail = "hudak.elza@gmail.com";
 
+        MvcResult result =
+                mockMvc.perform(get("/api/contacts/history")
+                        .param("fromEmail", pecskeEmail)
+                        .param("toEmail", elzaEmail))
+                        .andExpect(status().isOk())
+                        .andReturn();
+
+// this uses a TypeReference to inform Jackson about the Lists's generic type
+        List<MessageData> actual = objectMapper
+                .readValue(result
+                                .getResponse()
+                                .getContentAsString(),
+                        new TypeReference<List<MessageData>>() {
+                        });
+
+        assertEquals(0, actual.size());
     }
 
 }

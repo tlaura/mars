@@ -26,7 +26,6 @@ public class AccountInstitutionServiceTest {
     public void init() {
         InstitutionCreationCommand institutionCreationCommand = buildOneInstitutionCommand();
 
-
     }
 
     private InstitutionCreationCommand buildOneInstitutionCommand() {
