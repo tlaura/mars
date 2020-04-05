@@ -61,10 +61,23 @@ export class InstitutionComponent implements OnInit {
     let index: number = event.target.value;
     if (index != -1) {
       this.selectedInstitution = true;
-      this.institutionForm.disable();
       this.institutionModel = this.institutionList[index];
+
+      this.institutionForm.get('zipcode').setValue(this.institutionModel.zipcode);
+      this.institutionForm.get('city').setValue(this.institutionModel.city);
+      this.institutionForm.get('address').setValue(this.institutionModel.address);
+      this.institutionForm.get('name').setValue(this.institutionModel.name);
+      this.institutionForm.get('email').setValue(this.institutionModel.email);
+      this.institutionForm.get('phone').setValue(this.institutionModel.phone);
+      this.institutionForm.get('website').setValue(this.institutionModel.website);
+      this.institutionForm.get('description').setValue(this.institutionModel.description);
+
+      this.institutionForm.disable();
+      this.institutionForm.clearValidators();
+      this.institutionForm.updateValueAndValidity();
     } else {
       this.institutionForm.enable();
+      this.institutionForm.updateValueAndValidity();
       this.selectedInstitution = false;
     }
   };
