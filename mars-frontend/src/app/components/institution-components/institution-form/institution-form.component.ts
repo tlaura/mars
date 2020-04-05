@@ -29,8 +29,8 @@ export class InstitutionFormComponent implements OnInit {
       'description': new FormControl('',
         [Validators.required, Validators.minLength(30), Validators.maxLength(200)]),
 
-      'openingHours': new FormArray([])
-    })
+      'openingHours': new FormArray([]),
+    });
   }
 
   ngOnInit() {

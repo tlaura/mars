@@ -7,6 +7,7 @@ import {InstitutionService} from "../../../../../account-institution/institution
 import {validatorBounds} from "../../../../../../environments/validatorBounds";
 import {ProviderAccountRegisterModel} from "../../../../../account-institution/account/models/providerAccountRegisterModel";
 import {validationHandler} from "../../../../../utils/validators/validationHandler";
+import {InstitutionListModel} from "../../../../../account-institution/institution/models/institutionList.model";
 
 @Component({
   selector: 'app-provider-user',
@@ -18,7 +19,10 @@ export class ProviderUserComponent implements OnInit {
   haveProviderCustomAddress: boolean = false;
   isPasswordValid: boolean = false;
   registerForm: FormGroup;
-  addressFormGroup: FormGroup;
+  institutionList: Array<InstitutionListModel>;
+  institutionIndex: number = -1;
+  institutionSelected: boolean = false;
+  institutionModel: InstitutionListModel;
 
   allType: Array<InstitutionTypeModel> = [];
 
@@ -49,11 +53,23 @@ export class ProviderUserComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getProviderTypes();
+    this.getAllInstitutions();
+  }
+
+  getProviderTypes = (): void => {
     this.institutionService.getProviderTypes().subscribe(
       value => this.allType = value,
       error => console.warn(error)
-    )
-  }
+    );
+  };
+
+  getAllInstitutions = (): void => {
+    this.institutionService.getAllInstitutions().subscribe(
+      value => this.institutionList = value,
+      error => console.warn(error)
+    );
+  };
 
   submit() {
     if (this.isPasswordValid) {
@@ -111,7 +127,15 @@ export class ProviderUserComponent implements OnInit {
     this.isPasswordValid = isValid;
   };
 
-  private loadTypes = (): void => {
-  };
 
+  fillFields = (event): void => {
+    let index: number = event.target.value;
+    if (index !== -1) {
+      this.institutionSelected = true;
+      this.institutionModel = this.institutionList[index];
+    } else {
+      this.institutionSelected = false;
+    }
+
+  };
 }

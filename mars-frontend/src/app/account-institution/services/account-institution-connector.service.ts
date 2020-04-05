@@ -22,4 +22,6 @@ export class AccountInstitutionConnectorService {
   getAccountsByRange = (locationRange: LocationRangeModel): Observable<Array<AccountInstitutionListModel>> => {
     return this.http.get<Array<AccountInstitutionListModel>>(this.BASE_URL + "listByRange?range=" + locationRange.range + "&lng=" + locationRange.longitude + "&lat=" + locationRange.latitude);
   }
+
+
 }

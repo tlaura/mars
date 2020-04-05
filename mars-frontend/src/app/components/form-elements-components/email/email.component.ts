@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {FormGroup, Validators} from "@angular/forms";
 import {validatorBounds} from "../../../../environments/validatorBounds";
+import {InstitutionListModel} from "../../../account-institution/institution/models/institutionList.model";
 
 @Component({
   selector: 'app-email',
@@ -13,6 +14,11 @@ export class EmailComponent implements OnInit {
   @Input()
   emailFormGroup: FormGroup = new FormGroup({});
 
+  @Input()
+  selectedInstitution: boolean;
+
+  @Input()
+  institutionModel: InstitutionListModel;
 
   constructor() {
   }

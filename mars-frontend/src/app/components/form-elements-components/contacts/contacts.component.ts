@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {FormGroup, Validators} from "@angular/forms";
 import {validatorBounds} from "../../../../environments/validatorBounds";
+import {InstitutionListModel} from "../../../account-institution/institution/models/institutionList.model";
 
 @Component({
   selector: 'app-contacts',
@@ -12,6 +13,12 @@ export class ContactsComponent implements OnInit {
   private WEBSITE_REGEX = validatorBounds.websiteRegex;
 
   @Input() contactsFormGroup: FormGroup = new FormGroup({});
+
+  @Input()
+  selectedInstitution: boolean;
+
+  @Input()
+  institutionModel: InstitutionListModel;
 
   constructor() {
   }
