@@ -43,16 +43,17 @@ export class ChatComponent implements OnInit {
         } else {
           this.fetchContacts(this.from);
           this.initializeWebSocketConnection();
+          this.contactsService.contactSubject.subscribe(
+            () => {
+              this.fetchContacts(this.from);
+              this.isSmall = false;
+            },
+            (error) => console.warn(error)
+          );
         }
       }
     );
-    this.contactsService.contactSubject.subscribe(
-      () => {
-        this.fetchContacts(this.from);
-        this.isSmall = false;
-      },
-      (error) => console.log(error)
-    )
+
   }
 
   changeDisplay() {

@@ -1,5 +1,5 @@
 <div class="tomato-background-div">
-  <h5 *ngIf="!evaluationList.length">Jelenleg nincsenek jóváhagyásra váró intézmények!</h5>
+  <h5 *ngIf="!evaluationList?.length">Jelenleg nincsenek jóváhagyásra váró intézmények!</h5>
   <div *ngFor="let institution of evaluationList">
     <div class="white-block-on-tomato-div col-md-8 offset-md-2 p-sm-0 mb-3">
       <div class="row mx-0 p-sm-1 p-md-2 p-lg-3">
