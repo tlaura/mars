@@ -17,7 +17,8 @@
 </div>
 <hr/>
 <div class="message-send-div row mx-0 my-2">
-  <input (keyup.enter)="sendMessage()" [(ngModel)]="message" class="form-control-sm col-sm-10 rounded-pill">
+  <input (keyup.enter)="sendMessage()" [(ngModel)]="message" class="form-control-sm col-sm-10 rounded-pill"
+         maxlength="1000" ngModel>
   <button (click)="sendMessage()" class="col-sm-2 btn btn-primary submit rounded-circle"
           type="submit">
     <i class="send-icon fas fa-paper-plane"></i></button>

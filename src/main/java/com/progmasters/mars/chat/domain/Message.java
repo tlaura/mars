@@ -26,7 +26,7 @@ public class Message {
     @Column(name = "message_sent_time")
     private LocalDateTime date = LocalDateTime.now();
 
-    @Column(name = "text")
+    @Column(name = "text", columnDefinition = "TEXT")
     private String text;
 
     @Column(name = "proposing_name")
