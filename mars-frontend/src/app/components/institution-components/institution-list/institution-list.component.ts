@@ -21,13 +21,13 @@ export class InstitutionListComponent implements OnInit {
   institutionTypeList: Array<InstitutionTypeModel>;
   page: number = institutionListIndex.startPageIndex;
   size: number = institutionListIndex.numberOfItemPerPage;
-  institutionType: FormControl;
+ // institutionType: FormControl;
   showWindows: boolean;
   ageRangeGroup: FormGroup;
   range: number = 5;
   age: number = 0;
   searchText: string;
-  currentType: string;
+  currentType: string = 'all';
 
   locationRange: LocationRangeModel;
 
@@ -46,7 +46,7 @@ export class InstitutionListComponent implements OnInit {
               private socialService: SocialService,
               private accountInstitutionService: AccountInstitutionConnectorService,
               private formBuilder: FormBuilder) {
-    this.institutionType = new FormControl('all');
+    //  this.institutionType = new FormControl('all');
     this.ageRangeGroup = formBuilder.group({
         age: new FormControl(0, Validators.required)
       }
@@ -61,18 +61,8 @@ export class InstitutionListComponent implements OnInit {
   };
 
   ngOnInit() {
-    this.activatedRoute.paramMap.subscribe(
-      param => {
-        const filterType: string = param.get('filterType');
-        if (filterType) {
-          this.institutionType.setValue(filterType);
-        } else {
-          this.getInstitutions();
-        }
-      },
-    );
+    this.getInstitutions();
     this.getProviderType();
-
   }
 
   narrowByType = (type: string) => {
