@@ -36,6 +36,8 @@ public class InstitutionValidatorService {
             errors.rejectValue("email", "email.mustGive");
         } else if (!institution.getEmail().matches(email)) {
             errors.rejectValue("email", "email.invalidFormat");
+        } else if (!institutionRepository.findAllByEmail(institution.getEmail()).isEmpty()) {
+            errors.rejectValue("email", "email.mustBeUnique");
         }
         if (institution.getDescription() == null) {
             errors.rejectValue("description", "description.mustGive");

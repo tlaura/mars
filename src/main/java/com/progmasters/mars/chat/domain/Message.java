@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 @Entity
 @Table(name = "message")
@@ -24,7 +24,7 @@ public class Message {
     private Contact contact;
 
     @Column(name = "message_sent_time")
-    private LocalDateTime date = LocalDateTime.now();
+    private ZonedDateTime date = ZonedDateTime.now();
 
     @Column(name = "text", columnDefinition = "TEXT")
     private String text;
