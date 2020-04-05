@@ -76,6 +76,16 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(body, status);
     }
 
+    @ExceptionHandler(EmailAlreadyExistsException.class)
+    public ResponseEntity<ApiError> handleEmailExistsException(EmailAlreadyExistsException ex) {
+        logger.error("Email already exists: ", ex);
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+
+        ApiError body = new ApiError("EMAIL_EXISTS_ERROR", "Institution with the same email already exists.", ex.getLocalizedMessage());
+
+        return new ResponseEntity<>(body, status);
+    }
+
     @ExceptionHandler(Throwable.class)
     public ResponseEntity<ApiError> defaultErrorHandler(Throwable t) {
         logger.error("An unexpected error occurred: ", t);
