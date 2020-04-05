@@ -46,10 +46,9 @@ public class InstitutionController {
     }
 
     @GetMapping
-    public ResponseEntity<List<InstitutionListData>> institutions() {
-        //todo handle sorting
+    public ResponseEntity<List<InstitutionListData>> getAllInstitutions() {
 
-        List<InstitutionListData> institutionList = institutionService.getInstitutionList();
+        List<InstitutionListData> institutionList = institutionService.getAllInstitutions();
         log.info("Institution List is requested!");
         return new ResponseEntity<>(institutionList, HttpStatus.OK);
     }

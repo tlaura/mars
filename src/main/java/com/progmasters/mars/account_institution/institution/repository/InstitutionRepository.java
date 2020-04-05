@@ -38,4 +38,5 @@ public interface InstitutionRepository extends JpaRepository<Institution, Long> 
     @Query("select i from Institution i join i.institutionPetition p where p.deleteSign= true")
     List<Institution> findInstitutionsSignedToDelete();
 
+
 }

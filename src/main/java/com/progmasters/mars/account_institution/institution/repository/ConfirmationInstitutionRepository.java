@@ -13,4 +13,7 @@ public interface ConfirmationInstitutionRepository extends JpaRepository<Confirm
 
     @Query("select i from ConfirmationInstitution i where i.name= :name")
     List<ConfirmationInstitution> findAllByName(@Param("name") String name);
+
+    @Query("select i from ConfirmationInstitution i where i.name= :name")
+    ConfirmationInstitution findByName(@Param("name") String name);
 }

@@ -25,6 +25,8 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -74,10 +76,19 @@ public class AccountInstitutionService {
         List<InstitutionCreationCommand> institutions = providerAccountCreationCommand.getInstitutions();
         if (!institutions.isEmpty()) {
             for (InstitutionCreationCommand institutionCreationCommand : institutions) {
+                @NotBlank @NotEmpty String institutionName = institutionCreationCommand.getName();
+                Institution institution = institutionService.findByName(institutionName);
+                ConfirmationInstitution confirmationInstitution = institutionService.findConfirmationInstitutionByName(institutionName);
+                if (institution != null || confirmationInstitution != null) {
+
+                } else {
+
+                }
                 confirmationInstitutionService.save(institutionCreationCommand, providerAccountCreationCommand.getEmail());
             }
         }
     }
+
 
     private void saveProviderLocation(ProviderAccountCreationCommand providerAccountCreationCommand, ProviderAccount savedAccount) throws NotFoundException {
         if (providerAccountCreationCommand.getZipcode() != null && providerAccountCreationCommand.getCity() != null && providerAccountCreationCommand.getAddress() != null) {
@@ -165,23 +176,22 @@ public class AccountInstitutionService {
         }
     }
 
-
     private void saveAccountInstitutionConnection(ConfirmationInstitution confirmationInstitution) throws NotFoundException {
 
         Institution createdInstitution = new Institution(confirmationInstitution);
         confirmationInstitution.setOpeningHours(null);
         confirmationInstitutionService.delete(confirmationInstitution);
         Institution savedInstitution = institutionService.saveInstitution(createdInstitution);
-        if (confirmationInstitution.getProviderEmail() != null) {
-            ProviderAccount savedAccount = (ProviderAccount) accountService.findByEmail(confirmationInstitution.getProviderEmail());
-            AccountInstitutionConnector accountInstitutionConnector = new AccountInstitutionConnector(savedAccount, savedInstitution);
-            accountInstitutionConnectorRepository.save(accountInstitutionConnector);
+        List<String> emailList = confirmationInstitution.getProviderEmail();
+        if (emailList != null && !emailList.isEmpty()) {
+            emailList.stream()
+                    .map(s -> (ProviderAccount) accountService.findByEmail(s))
+                    .map(user -> new AccountInstitutionConnector(user, savedInstitution))
+                    .forEach(accountInstitutionConnectorRepository::save);
         }
     }
 
-
     //todo revision
-
     public List<AccountInstitutionListData> getInstitutionsByAccountType(ProviderType providerType) {
         return institutionService.findInstitutionByProviderType(providerType).stream().map(AccountInstitutionListData::new).collect(Collectors.toList());
     }
