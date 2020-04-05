@@ -19,7 +19,6 @@ export class ProviderUserComponent implements OnInit {
   haveProviderCustomAddress: boolean = false;
   isPasswordValid: boolean = false;
   registerForm: FormGroup;
-  institutionList: Array<InstitutionListModel>;
   institutionIndex: number = -1;
   institutionSelected: boolean = false;
   institutionModel: InstitutionListModel;
@@ -54,7 +53,7 @@ export class ProviderUserComponent implements OnInit {
 
   ngOnInit() {
     this.getProviderTypes();
-    this.getAllInstitutions();
+  //  this.getAllInstitutions();
   }
 
   getProviderTypes = (): void => {
@@ -64,12 +63,6 @@ export class ProviderUserComponent implements OnInit {
     );
   };
 
-  getAllInstitutions = (): void => {
-    this.institutionService.getAllInstitutions().subscribe(
-      value => this.institutionList = value,
-      error => console.warn(error)
-    );
-  };
 
   submit() {
     if (this.isPasswordValid) {
@@ -127,15 +120,4 @@ export class ProviderUserComponent implements OnInit {
     this.isPasswordValid = isValid;
   };
 
-
-  fillFields = (event): void => {
-    let index: number = event.target.value;
-    if (index !== -1) {
-      this.institutionSelected = true;
-      this.institutionModel = this.institutionList[index];
-    } else {
-      this.institutionSelected = false;
-    }
-
-  };
 }

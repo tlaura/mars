@@ -49,16 +49,7 @@
   <div *ngFor="let array of getInstitutions().controls;let i = index;"
        class="row m-0 blue-block-on-white-div my-md-4 p-md-1 p-lg-3">
 
-    <select (change)="fillFields($event)"
-            class="form-control-sm rounded-pill col-md-3 col-lg-2"
-            id="institution-type"
-            name="institution-type">
-      <option selected value="-1">----------</option>
-      <option *ngFor="let institution of institutionList; let i = index"
-              value="{{i}}">{{institution.name}}</option>
-    </select>
-    <app-institution [institutionForm]="array" [institutionModel]="institutionModel"
-                     [selectedInstitution]="institutionSelected">
+    <app-institution [institutionForm]="array">
     </app-institution>
 
 

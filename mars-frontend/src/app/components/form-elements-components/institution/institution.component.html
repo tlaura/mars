@@ -12,11 +12,20 @@
     <div class="col-sm-12 col-md-6 px-0">
 
 
+      <select (change)="fillFields($event)"
+              class="form-control-sm rounded-pill col-md-3 col-lg-2"
+              id="institution-type"
+              name="institution-type">
+        <option selected value="-1">----------</option>
+        <option *ngFor="let institution of institutionList; let institutionI = index"
+                value="{{institutionI}}">{{institution.name}}</option>
+      </select>
+
       <app-contacts [contactsFormGroup]="institutionForm" [institutionModel]="institutionModel"
       >
       </app-contacts>
 
-      <app-address [addressFormGroup]="institutionForm"
+      <app-address [addressFormGroup]="institutionForm" [institutionModel]="institutionModel"
       >
       </app-address>
       <div class="form-group col-sm-12 col-md-12">
@@ -42,7 +51,7 @@
       <div class="form-group col-sm-12 col-md-12">
         <label>Nyitvatartás:</label>
 
-        <button (click)="addNewOpeningHours()" *ngIf="getOpeningHours().length<=7"
+        <button (click)="addNewOpeningHours()" *ngIf="getOpeningHours().length<=7" [disabled]="selectedInstitution"
                 class="btn rounded-pill btn-light btn-sm mx-sm-1 mx-sm-2">
           Nyitvatartási idő hozzáadása
         </button>

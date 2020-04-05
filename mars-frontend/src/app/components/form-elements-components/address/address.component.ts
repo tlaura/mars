@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {FormGroup, Validators} from "@angular/forms";
 import {validatorBounds} from "../../../../environments/validatorBounds";
+import {InstitutionListModel} from "../../../account-institution/institution/models/institutionList.model";
 
 @Component({
   selector: 'app-address',
@@ -12,6 +13,9 @@ export class AddressComponent implements OnInit {
   private ZIPCODE_MAX = validatorBounds.zipcodeMax;
 
   @Input() addressFormGroup: FormGroup = new FormGroup({});
+
+  @Input()
+  institutionModel: InstitutionListModel;
 
   constructor() {
   }
