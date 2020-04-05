@@ -79,12 +79,14 @@ public class AccountInstitutionService {
                 @NotBlank @NotEmpty String institutionName = institutionCreationCommand.getName();
                 Institution institution = institutionService.findByName(institutionName);
                 ConfirmationInstitution confirmationInstitution = institutionService.findConfirmationInstitutionByName(institutionName);
-                if (institution != null || confirmationInstitution != null) {
-
+                if (institution != null) {
+                    AccountInstitutionConnector connection = new AccountInstitutionConnector(savedAccount, institution);
+                    accountInstitutionConnectorRepository.save(connection);
+                } else if (confirmationInstitution != null) {
+                    confirmationInstitutionService.attachEmailToInstitution(confirmationInstitution, providerAccountCreationCommand.getEmail());
                 } else {
-
+                    confirmationInstitutionService.save(institutionCreationCommand, providerAccountCreationCommand.getEmail());
                 }
-                confirmationInstitutionService.save(institutionCreationCommand, providerAccountCreationCommand.getEmail());
             }
         }
     }
@@ -182,7 +184,7 @@ public class AccountInstitutionService {
         confirmationInstitution.setOpeningHours(null);
         confirmationInstitutionService.delete(confirmationInstitution);
         Institution savedInstitution = institutionService.saveInstitution(createdInstitution);
-        List<String> emailList = confirmationInstitution.getProviderEmail();
+        List<String> emailList = confirmationInstitution.getProviderEmails();
         if (emailList != null && !emailList.isEmpty()) {
             emailList.stream()
                     .map(s -> (ProviderAccount) accountService.findByEmail(s))

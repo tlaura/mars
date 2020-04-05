@@ -22,7 +22,7 @@ public class ConfirmationInstitution extends TempInstitution {
 
     @Column(name = "provider_email")
     @ElementCollection
-    private List<String> providerEmail;
+    private List<String> providerEmails;
 
 
     public ConfirmationInstitution(InstitutionCreationCommand institutionCreationCommand) {
@@ -34,6 +34,13 @@ public class ConfirmationInstitution extends TempInstitution {
         super.setDescription(institutionCreationCommand.getDescription());
         super.setPhone(institutionCreationCommand.getPhone());
         super.setWebsite(institutionCreationCommand.getWebsite());
-        this.openingHours = institutionCreationCommand.getOpeningHours().stream().map(OpeningHours::new).collect(Collectors.toList());
+        if (institutionCreationCommand.getOpeningHours() != null && !institutionCreationCommand.getOpeningHours().isEmpty()) {
+            this.openingHours = institutionCreationCommand.getOpeningHours().stream().map(OpeningHours::new).collect(Collectors.toList());
+        }
+    }
+
+    public ConfirmationInstitution(InstitutionCreationCommand institutionCreationCommand, String email) {
+        this(institutionCreationCommand);
+        providerEmails.add(email);
     }
 }
