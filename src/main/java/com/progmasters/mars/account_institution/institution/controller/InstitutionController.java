@@ -108,14 +108,14 @@ public class InstitutionController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> signInstitutionForDelete(@PathVariable Long id, @RequestBody String cause) {
+    public ResponseEntity<Void> signInstitutionToDelete(@PathVariable Long id, @RequestBody String cause) {
 
         institutionService.signInstitutionToDelete(id, cause);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PutMapping("/reject/{id}")
+    @GetMapping("/reject/{id}")
     public ResponseEntity<Void> rejectInstitutionDelete(@PathVariable Long id) {
         institutionService.rejectInsitutionDeletion(id);
 

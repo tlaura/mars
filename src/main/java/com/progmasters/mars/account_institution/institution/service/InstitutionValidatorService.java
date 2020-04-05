@@ -1,6 +1,7 @@
 package com.progmasters.mars.account_institution.institution.service;
 
 import com.progmasters.mars.account_institution.institution.dto.InstitutionCreationCommand;
+import com.progmasters.mars.account_institution.institution.repository.ConfirmationInstitutionRepository;
 import com.progmasters.mars.account_institution.institution.repository.InstitutionRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -15,9 +16,11 @@ public class InstitutionValidatorService {
     private String phone;
 
     private InstitutionRepository institutionRepository;
+    private ConfirmationInstitutionRepository confirmationInstitutionRepository;
 
-    public InstitutionValidatorService(InstitutionRepository institutionRepository) {
+    public InstitutionValidatorService(InstitutionRepository institutionRepository, ConfirmationInstitutionRepository confirmationInstitutionRepository) {
         this.institutionRepository = institutionRepository;
+        this.confirmationInstitutionRepository = confirmationInstitutionRepository;
     }
 
     public void validateFields(InstitutionCreationCommand institution, Errors errors) {
@@ -44,6 +47,6 @@ public class InstitutionValidatorService {
     }
 
     public boolean nameIsTaken(String name) {
-        return !institutionRepository.findAllByName(name).isEmpty();
+        return (!institutionRepository.findAllByName(name).isEmpty() || !confirmationInstitutionRepository.findAllByName(name).isEmpty());
     }
 }

@@ -27,6 +27,9 @@
           <a *ngIf="isAdmin" class="dropdown-item" routerLink="evaluate-list"
              routerLinkActive="active">Intézmények
             elbírálása</a>
+          <a *ngIf="isAdmin" class="dropdown-item" routerLink="institution-delete-list"
+             routerLinkActive="active">Törlésre javasolt
+            intézmények</a>
         </div>
       </li>
     </ul>
@@ -37,8 +40,8 @@
           Bejelentkezés</a>
       </li>
       <li *ngIf="isUserLoggedIn && !isAdmin" class="nav-item font-weight-lighter mx-3"><a class="nav-link"
-                                                                              routerLink="my-profile"
-                                                                              routerLinkActive="active">
+                                                                                          routerLink="my-profile"
+                                                                                          routerLinkActive="active">
         {{currentUser.name}} profilja</a>
       </li>
       <li *ngIf="isUserLoggedIn" class="nav-item font-weight-lighter mx-3">

@@ -1,0 +1,23 @@
+<div class="tomato-background-div">
+  <h5 *ngIf="!deleteList?.length">Jelenleg nincs törlésre javasolt intézmény!</h5>
+  <div *ngFor="let deleteItem of deleteList">
+    <div class="white-block-on-tomato-div col-md-8 offset-md-2 p-sm-0 mb-3">
+      <div class="row mx-0 p-sm-1 p-md-2 p-lg-3">
+        <div class="col-sm-12"><label class="font-weight-bold">{{deleteItem?.institutionListData?.name}}</label></div>
+        <div class="decor-div-blue col-sm-12"></div>
+        <div *ngIf="deleteItem?.institutionListData?.website" class="col-sm-12"><label
+          class="small">{{deleteItem?.institutionListData?.website}}</label></div>
+        <div class="col-sm-12"><label class="small">{{deleteItem?.institutionListData?.phone}}</label></div>
+        <div class="col-sm-12"><label class="small">{{deleteItem?.institutionListData?.email}}</label></div>
+        <div class="col-sm-12 col-md-12"><label>{{deleteItem?.institutionListData?.zipcode}}
+          , {{deleteItem?.institutionListData?.city}}
+          , {{deleteItem?.institutionListData?.address}}</label></div>
+        <div class="col-sm-12"><label class="text-break">{{deleteItem?.institutionListData?.description}}</label></div>
+        <button (click)="delete(deleteItem?.institutionListData?.id)" class="btn rounded-circle yes-btn"><i
+          class="fas fa-lg fa-check-circle"></i></button>
+        <button (click)="reject(deleteItem?.institutionListData?.id)" class="btn rounded-circle no-btn"><i
+          class="fas fa-lg fa-times-circle"></i></button>
+      </div>
+    </div>
+  </div>
+</div>

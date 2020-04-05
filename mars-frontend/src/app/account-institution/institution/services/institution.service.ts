@@ -6,6 +6,7 @@ import {InstitutionDetailModel} from "../models/institutionDetail.model";
 import {environment} from "../../../../environments/environment";
 import {Institution} from "../models/institution";
 import {InstitutionListModel} from "../models/institutionList.model";
+import {InstitutionDeleteListModel} from "../models/institutionDeleteList.model";
 
 @Injectable({
   providedIn: 'root'
@@ -40,5 +41,21 @@ export class InstitutionService {
 
   evalueateInstitution = (accepted: boolean, id: number): Observable<any> => {
     return this.http.get(this.BASE_URL + "evaluate/" + id + "?accepted=" + accepted);
+  };
+
+  signInstitutionToDelete = (id: number, cause: string): Observable<any> => {
+    return this.http.put(this.BASE_URL + id, cause);
+  };
+
+  rejectInstitutionDelete = (id: number): Observable<any> => {
+    return this.http.get(this.BASE_URL + "reject/" + id);
+  };
+
+  deleteInstitution = (id: number): Observable<any> => {
+    return this.http.delete(this.BASE_URL + id);
+  };
+
+  getDeleteInstitutionList = (): Observable<Array<InstitutionDeleteListModel>> => {
+    return this.http.get<Array<InstitutionDeleteListModel>>(this.BASE_URL + "institutionsToDelete");
   };
 }

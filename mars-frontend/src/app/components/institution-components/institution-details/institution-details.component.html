@@ -5,7 +5,7 @@
 
     <div class="row mx-sm-0 my-sm-0">
       <i class="icon-tomato fas fa-map-marker-alt"></i><h5
-      class="tomato-head mx-sm-2">{{institution.zipcode}} {{institution.city}} {{institution.address}}</h5>
+      class="tomato-head mx-sm-2">{{institution?.zipcode}} {{institution?.city}} {{institution?.address}}</h5>
     </div>
 
     <p>{{institution?.description}}</p>
@@ -15,19 +15,19 @@
         <h6 class="tomato-head mb-1">Elérhetőségek:</h6>
         <div class="col-sm-12">
           <div class="row-mx-0">
-            <i class="fas fa-at icon-tomato"></i><label class="mx-sm-2 small">{{institution.email}}</label>
+            <i class="fas fa-at icon-tomato"></i><label class="mx-sm-2 small">{{institution?.email}}</label>
           </div>
 
           <div class="row-mx-0">
             <i class="fas fa-lg fa-mobile-alt icon-tomato"></i><label
-            class="mx-sm-2 small">{{institution.phone}}</label>
+            class="mx-sm-2 small">{{institution?.phone}}</label>
           </div>
 
 
           <div class="row mx-0">
-            <i *ngIf="institution.website" class="fas fa-globe-europe icon-tomato"></i>
-            <a [href]="'http://' + institution.website" class="mx-sm-2 small custom-link"
-               target="_blank">{{institution.website}}</a>
+            <i *ngIf="institution?.website" class="fas fa-globe-europe icon-tomato"></i>
+            <a [href]="'http://' + institution?.website" class="mx-sm-2 small custom-link"
+               target="_blank">{{institution?.website}}</a>
           </div>
         </div>
       </div>
@@ -43,17 +43,27 @@
     </div>
 
 
-    <div class="form-group mt-sm-2">
-      <button (click)="openMailSend()" class="btn btn-primary submit rounded-pill">Email küldés</button>
+    <div class="form-group col-sm-6 col-lg-8">
+      <label class="small" for="text">Törlés indoklása:</label>
+      <textarea [(ngModel)]="cause" class="form-control" id="text" name="text"
+                rows="6"></textarea>
+
+      <div class="form-group mt-sm-2">
+        <button (click)="signInstitutionToDelete()" class="btn btn-primary submit rounded-pill">Törlés javaslása
+        </button>
+      </div>
+
+      <div class="form-group mt-sm-2">
+        <button (click)="openMailSend()" class="btn btn-primary submit rounded-pill">Email küldés</button>
+      </div>
+
+      <app-send-mail (sent)="openMailSend()" *ngIf="mailSender" [toEmail]="institution?.email"></app-send-mail>
+      <!--  <div class="col-md-2">-->
+      <!--    <facebook-share-button [share]="shareObj"></facebook-share-button>-->
+      <!--  </div>-->
+
+      <button (click)="backToInstitutionList()" *ngIf="!isInInfoBox" class="btn btn-primary submit rounded-pill">Vissza
+      </button>
     </div>
-
-    <app-send-mail (sent)="openMailSend()" *ngIf="mailSender" [toEmail]="institution?.email"></app-send-mail>
-    <!--  <div class="col-md-2">-->
-    <!--    <facebook-share-button [share]="shareObj"></facebook-share-button>-->
-    <!--  </div>-->
-
-    <button (click)="backToInstitutionList()" *ngIf="!isInInfoBox" class="btn btn-primary submit rounded-pill">Vissza
-    </button>
   </div>
-</div>
 
