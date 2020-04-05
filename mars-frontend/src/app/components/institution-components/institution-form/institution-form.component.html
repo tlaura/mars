@@ -5,6 +5,9 @@
       <form (ngSubmit)="submit()" [formGroup]="institutionForm">
         <app-institution [institutionForm]="institutionForm">
         </app-institution>
+        <small *ngIf="institutionForm.get('name').errors?.serverError" class="text-danger-custom">
+          Ez a név már foglalt!
+        </small>
         <button [disabled]="!institutionForm.valid" class="btn btn-primary submit rounded-pill">Mentés</button>
       </form>
     </div>

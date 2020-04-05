@@ -14,6 +14,7 @@ export class InstitutionDetailsComponent implements OnInit {
   @Input() institution: InstitutionDetailModel;
   @Input() mailSender: boolean = false;
   @Input() isInInfoBox: boolean = false;
+  cause: string = "";
   shareUrl: string;
   shareObj = {
     //localhost-ra nem működik, elvileg élesben igen?!?!?
@@ -60,4 +61,8 @@ export class InstitutionDetailsComponent implements OnInit {
   backToInstitutionList() {
     this.router.navigate(['institution-list'])
   }
+
+  signInstitutionToDelete = (): void => {
+    this.institutionService.signInstitutionToDelete(this.institution.id, this.cause).subscribe();
+  };
 }

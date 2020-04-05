@@ -43,7 +43,9 @@ export class InstitutionFormComponent implements OnInit {
     this.institutionService.saveInstitution(formData)
       .subscribe(
         () => this.router.navigate(["institution-list"]),
-        error => validationHandler(error, this.institutionForm),
+        error => {
+          validationHandler(error, this.institutionForm);
+        }
       );
 
   }

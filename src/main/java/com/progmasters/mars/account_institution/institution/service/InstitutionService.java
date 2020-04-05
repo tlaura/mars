@@ -4,8 +4,11 @@ import com.google.maps.errors.NotFoundException;
 import com.progmasters.mars.account_institution.account.domain.ProviderAccount;
 import com.progmasters.mars.account_institution.account.domain.ProviderType;
 import com.progmasters.mars.account_institution.institution.domain.Institution;
+import com.progmasters.mars.account_institution.institution.domain.InstitutionPetition;
+import com.progmasters.mars.account_institution.institution.dto.InstitutionDeleteListData;
 import com.progmasters.mars.account_institution.institution.dto.InstitutionDetailsData;
 import com.progmasters.mars.account_institution.institution.dto.InstitutionListData;
+import com.progmasters.mars.account_institution.institution.repository.InstitutionPetitionRepository;
 import com.progmasters.mars.account_institution.institution.repository.InstitutionRepository;
 import com.progmasters.mars.map.MapService;
 import com.progmasters.mars.map.dto.GeoLocationData;
@@ -26,11 +29,13 @@ import java.util.stream.Collectors;
 public class InstitutionService {
 
     private final InstitutionRepository institutionRepository;
+    private final InstitutionPetitionRepository institutionPetitionRepository;
     private final MapService mapService;
 
     @Autowired
-    public InstitutionService(InstitutionRepository institutionRepository, MapService mapService) {
+    public InstitutionService(InstitutionRepository institutionRepository, InstitutionPetitionRepository institutionPetitionRepository, MapService mapService) {
         this.institutionRepository = institutionRepository;
+        this.institutionPetitionRepository = institutionPetitionRepository;
         this.mapService = mapService;
     }
 
@@ -110,6 +115,37 @@ public class InstitutionService {
 
     public Institution findByName(String name) {
         return institutionRepository.findByName(name).orElseThrow(() -> new EntityNotFoundException("no such entity found with given name"));
+    }
+
+    public void signInstitutionToDelete(Long id, String cause) {
+        Institution institution = findById(id);
+        InstitutionPetition institutionPetition;
+        if (institution.getInstitutionPetition() != null) {
+            institutionPetition = institutionPetitionRepository.findByInstituion(institution);
+            Integer requests = institutionPetition.getNumberOfRequest();
+            institutionPetition.setNumberOfRequest(++requests);
+            institutionPetition.getCauses().add(cause);
+        } else {
+            institutionPetition = new InstitutionPetition(cause);
+        }
+        institutionPetition.setInstitution(institution);
+        institutionPetitionRepository.save(institutionPetition);
+    }
+
+
+    public void deleteInstitution(Long id) {
+        institutionRepository.deleteById(id);
+    }
+
+    public void rejectInsitutionDeletion(Long id) {
+        Institution institution = findById(id);
+        InstitutionPetition petition = institutionPetitionRepository.findByInstituion(institution);
+        petition.setDeleteSign(false);
+        institutionPetitionRepository.save(petition);
+    }
+
+    public List<InstitutionDeleteListData> getInstitutionsToDelete() {
+        return institutionRepository.findInstitutionsSignedToDelete().stream().map(InstitutionDeleteListData::new).collect(Collectors.toList());
     }
 
 }

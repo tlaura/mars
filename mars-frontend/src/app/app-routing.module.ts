@@ -25,6 +25,7 @@ import {AuthGuard} from "./auth/guards/auth.guard";
 import {RoleGuard} from "./auth/guards/role.guard";
 import {ConfirmDeletionComponent} from "./components/account-components/confirm-deletion/confirm-deletion.component";
 import {DeletionSuccessComponent} from "./components/account-components/deletion-success/deletion-success.component";
+import {InstitutionDeleteListComponent} from "./components/institution-components/institution-delete-list/institution-delete-list.component";
 
 
 const routes: Routes = [
@@ -70,7 +71,15 @@ const routes: Routes = [
     }
   },
   {path: "my-profile/confirm-deletion", component: ConfirmDeletionComponent},
-  {path: "deletion-success", component: DeletionSuccessComponent}
+  {path: "deletion-success", component: DeletionSuccessComponent},
+  {
+    path: "institution-delete-list",
+    component: InstitutionDeleteListComponent,
+    canActivate: [RoleGuard],
+    data: {
+      expectedRole: 'ROLE_ADMIN'
+    }
+  },
 ];
 
 @NgModule({

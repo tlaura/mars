@@ -55,8 +55,10 @@
                 <a [href]="details(institution)"
                    [ngClass]="isProvider(institution) ?
                    'custom-link-provider' :
-                    'custom-link'"
-                   class="font-weight-bold text-uppercase">{{institution.name}}</a>
+                    'custom-link-institution'"
+                   class="font-weight-bold custom-link">
+                  <span *ngIf="institution.providerServiceName">{{institution.providerServiceName}} | </span>
+                  {{institution.name}}</a>
                 <div *ngIf="hasProviders(institution)" class="mx-2 pb-2">
                   <i class="fas fa-user icon-blue"></i>
                 </div>

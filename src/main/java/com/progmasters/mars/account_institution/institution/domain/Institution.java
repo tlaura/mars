@@ -9,6 +9,7 @@ import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.util.List;
 
@@ -27,6 +28,10 @@ public class Institution extends TempInstitution {
 
     @OneToMany(mappedBy = "institution")
     private List<AccountInstitutionConnector> accountInstitutionConnectors;
+
+    @OneToOne(mappedBy = "institution")
+    InstitutionPetition institutionPetition;
+
 
     public Institution(InstitutionCreationCommand institutionCreationCommand) {
         super.setName(institutionCreationCommand.getName());
