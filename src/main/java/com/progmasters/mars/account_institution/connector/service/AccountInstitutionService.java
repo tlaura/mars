@@ -1,4 +1,4 @@
-package com.progmasters.mars.account_institution.connector;
+package com.progmasters.mars.account_institution.connector.service;
 
 import com.google.maps.errors.NotFoundException;
 import com.google.maps.model.Distance;
@@ -9,6 +9,11 @@ import com.progmasters.mars.account_institution.account.domain.ProviderAccount;
 import com.progmasters.mars.account_institution.account.domain.ProviderType;
 import com.progmasters.mars.account_institution.account.dto.ProviderAccountCreationCommand;
 import com.progmasters.mars.account_institution.account.service.AccountService;
+import com.progmasters.mars.account_institution.connector.DistanceCalculationException;
+import com.progmasters.mars.account_institution.connector.domain.AccountInstitutionConnector;
+import com.progmasters.mars.account_institution.connector.dto.AccountInstitutionAttachData;
+import com.progmasters.mars.account_institution.connector.dto.AccountInstitutionListData;
+import com.progmasters.mars.account_institution.connector.repository.AccountInstitutionConnectorRepository;
 import com.progmasters.mars.account_institution.institution.domain.ConfirmationInstitution;
 import com.progmasters.mars.account_institution.institution.domain.Institution;
 import com.progmasters.mars.account_institution.institution.dto.InstitutionCreationCommand;
@@ -69,7 +74,6 @@ public class AccountInstitutionService {
         this.openingHoursService = openingHoursService;
     }
 
-    //todo read about spring boot exception handling
     public void save(ProviderAccountCreationCommand providerAccountCreationCommand) throws NotFoundException {
         ProviderAccount savedAccount = (ProviderAccount) accountService.save(providerAccountCreationCommand);
         saveProviderLocation(providerAccountCreationCommand, savedAccount);
@@ -91,7 +95,6 @@ public class AccountInstitutionService {
         }
     }
 
-
     private void saveProviderLocation(ProviderAccountCreationCommand providerAccountCreationCommand, ProviderAccount savedAccount) throws NotFoundException {
         if (providerAccountCreationCommand.getZipcode() != null && providerAccountCreationCommand.getCity() != null && providerAccountCreationCommand.getAddress() != null) {
             String address = providerAccountCreationCommand.getZipcode() + " " + providerAccountCreationCommand.getCity() + " " + providerAccountCreationCommand.getAddress();
@@ -100,7 +103,6 @@ public class AccountInstitutionService {
             savedAccount.setLatitude(geoLocationData.getLatitude());
         }
     }
-
 
     public void detachInstitutionFromAccount(String email, Long institutionId) {
         ProviderAccount foundAccount = (ProviderAccount) accountService.findByEmail(email);
@@ -196,5 +198,16 @@ public class AccountInstitutionService {
     //todo revision
     public List<AccountInstitutionListData> getInstitutionsByAccountType(ProviderType providerType) {
         return institutionService.findInstitutionByProviderType(providerType).stream().map(AccountInstitutionListData::new).collect(Collectors.toList());
+    }
+
+    public void attachInstitutionToProvider(AccountInstitutionAttachData accountInstitutionAttachData) {
+        ProviderAccount providerAccount = (ProviderAccount) accountService.findByEmail(accountInstitutionAttachData.getProviderEmail());
+        Institution institution = institutionService.findById(accountInstitutionAttachData.getInstitutionId());
+
+        AccountInstitutionConnector connection = accountInstitutionConnectorRepository.findByAccounts(providerAccount, institution);
+        if (connection == null) {
+            AccountInstitutionConnector accountInstitutionConnector = new AccountInstitutionConnector(providerAccount, institution);
+            accountInstitutionConnectorRepository.save(accountInstitutionConnector);
+        }
     }
 }

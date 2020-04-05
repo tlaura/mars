@@ -4,7 +4,7 @@ import com.progmasters.mars.account_institution.account.domain.ProviderAccount;
 import com.progmasters.mars.account_institution.account.domain.ProviderType;
 import com.progmasters.mars.account_institution.account.domain.User;
 import com.progmasters.mars.account_institution.account.dto.*;
-import com.progmasters.mars.account_institution.connector.AccountInstitutionListData;
+import com.progmasters.mars.account_institution.connector.dto.AccountInstitutionListData;
 import com.progmasters.mars.account_institution.institution.dto.InstitutionCreationCommand;
 import com.progmasters.mars.chat.domain.LoginState;
 import com.progmasters.mars.mail.EmailService;

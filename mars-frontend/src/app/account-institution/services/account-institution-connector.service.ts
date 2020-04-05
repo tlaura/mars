@@ -4,6 +4,7 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {AccountInstitutionListModel} from "../models/accountInstitutionList.model";
 import {LocationRangeModel} from "../models/locationRange.model";
+import {AttachInstitutionModel} from "../models/attachInstitution.model";
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +22,10 @@ export class AccountInstitutionConnectorService {
 
   getAccountsByRange = (locationRange: LocationRangeModel): Observable<Array<AccountInstitutionListModel>> => {
     return this.http.get<Array<AccountInstitutionListModel>>(this.BASE_URL + "listByRange?range=" + locationRange.range + "&lng=" + locationRange.longitude + "&lat=" + locationRange.latitude);
+  };
+
+  attachInsitutionToProvider = (attachInstitutionModel: AttachInstitutionModel): Observable<any> => {
+    return this.http.post(this.BASE_URL, attachInstitutionModel);
   }
 
 

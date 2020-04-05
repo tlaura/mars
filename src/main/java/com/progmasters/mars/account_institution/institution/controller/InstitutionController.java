@@ -2,7 +2,7 @@ package com.progmasters.mars.account_institution.institution.controller;
 
 import com.google.maps.errors.NotFoundException;
 import com.progmasters.mars.account_institution.account.domain.ProviderType;
-import com.progmasters.mars.account_institution.connector.AccountInstitutionService;
+import com.progmasters.mars.account_institution.connector.service.AccountInstitutionService;
 import com.progmasters.mars.account_institution.institution.InstitutionValidator;
 import com.progmasters.mars.account_institution.institution.dto.*;
 import com.progmasters.mars.account_institution.institution.service.ConfirmationInstitutionService;

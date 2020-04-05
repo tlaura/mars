@@ -1,5 +1,6 @@
 package com.progmasters.mars.account_institution.connector;
 
+import com.progmasters.mars.account_institution.connector.service.AccountInstitutionService;
 import com.progmasters.mars.account_institution.institution.dto.InstitutionCreationCommand;
 import com.progmasters.mars.account_institution.institution.openinghours.dto.OpeningHoursCreationCommand;
 import org.junit.jupiter.api.BeforeEach;
