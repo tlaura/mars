@@ -37,8 +37,5 @@ export class EvaluateListComponent implements OnInit {
     this.institutionService.evalueateInstitution(accepted, id).subscribe(
       () => this.getEvaluationList()
     );
-
   }
-
-
 }
