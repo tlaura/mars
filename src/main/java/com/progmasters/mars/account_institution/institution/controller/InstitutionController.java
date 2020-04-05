@@ -74,7 +74,6 @@ public class InstitutionController {
 
     @PostMapping
     public ResponseEntity<Void> createInstitution(@RequestBody @Valid InstitutionCreationCommand institutionCreationCommand) {
-
         confirmationInstitutionService.save(institutionCreationCommand);
         log.info("Institution creation is requested!");
         return new ResponseEntity<>(HttpStatus.CREATED);

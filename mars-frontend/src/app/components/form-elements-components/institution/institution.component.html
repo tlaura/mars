@@ -13,7 +13,6 @@
       <app-contacts [contactsFormGroup]="institutionForm"
       >
       </app-contacts>
-
       <app-address [addressFormGroup]="institutionForm"
       >
       </app-address>
@@ -53,7 +52,8 @@
           </app-opening-hours>
         </div>
         <div class="col-sm-1 p-0 align-content-center">
-          <button (click)="removeOpeningHours(i)"
+
+        <button (click)="removeOpeningHours(i)"
                   class="btn rounded-pill">
             <i class="fa fa-trash fa-lg delete-white"></i>
           </button>

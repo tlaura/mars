@@ -72,7 +72,8 @@ small {
   outline: 0;
 }
 
-.custom-link {
+.custom-link-institution {
+  text-transform: uppercase;
   cursor: pointer;
   color: rgb(255, 72, 0);
 }
@@ -91,6 +92,14 @@ small {
 .custom-link-provider {
   cursor: pointer;
   color: rgb(32, 167, 209);
+}
+
+.custom-link-provider a {
+  text-transform: none !important;
+}
+
+.custom-link-provider span {
+  text-transform: uppercase;
 }
 
 .white-label {

@@ -17,8 +17,7 @@ export class InstitutionService {
   constructor(private http: HttpClient) {
   }
 
-  //TODO: new model
-  saveInstitution = (formData: Institution) => {
+  saveInstitution = (formData: Institution): Observable<any> => {
     return this.http.post(this.BASE_URL, formData);
   };
 
