@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 @Getter
 @NoArgsConstructor
@@ -19,14 +19,14 @@ public class MessageData {
 
     private String toEmail;
 
-    //   @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
-    private LocalDateTime date;
+    //    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+    private ZonedDateTime date;
 
     private String text;
 
     private String loginState;
 
-    public MessageData(String text, String proposingName, String proposingEmail, String recieverName, String recieverEmail, LocalDateTime localDateTime) {
+    public MessageData(String text, String proposingName, String proposingEmail, String recieverName, String recieverEmail, ZonedDateTime localDateTime) {
         this.fromName = proposingName;
         this.fromEmail = proposingEmail;
         this.toName = recieverName;
