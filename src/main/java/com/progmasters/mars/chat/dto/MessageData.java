@@ -33,5 +33,6 @@ public class MessageData {
         this.toEmail = recieverEmail;
         this.text = text;
         this.date = localDateTime;
+//        this.loginState = state.name();
     }
 }

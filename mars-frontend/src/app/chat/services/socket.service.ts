@@ -19,6 +19,4 @@ export class SocketService {
         return data;
       }))
   }
-
-
 }

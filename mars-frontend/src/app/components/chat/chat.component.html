@@ -23,6 +23,8 @@
           <hr *ngIf="first" class="my-2 first-hr"/>
           <i [ngClass]="unreadMessages[index]? 'circle-online': 'circle-offline'"
              class="fas fa-circle pl-2"></i>
+          <!--          <i [ngClass]="contact.online? 'circle-online': 'circle-offline'"-->
+          <!--             class="fas fa-circle pl-2"></i>-->
           <label (click)="openMessageWindow(index)"
                  class="white-label pl-2 label-btn">
             {{contact.name}}</label>
