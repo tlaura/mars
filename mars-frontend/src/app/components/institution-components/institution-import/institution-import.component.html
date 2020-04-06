@@ -19,8 +19,10 @@
                  for="file">{{importForm.get('file').value.name}}</label>
         </div>
         <div class="form-group">
-          <button (click)="import()" [disabled]="!importForm.valid"
-                  class="btn btn-primary submit rounded-pill mt-2">Importálás
+          <button (click)="import()" [disabled]="!importForm.valid || loading"
+                  class="btn btn-primary submit rounded-pill mt-2">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+            Importálás
           </button>
         </div>
       </form>

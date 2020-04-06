@@ -10,6 +10,7 @@ import {InstitutionService} from "../../../account-institution/institution/servi
 })
 export class InstitutionImportComponent implements OnInit {
 
+  loading = false;
   importForm: FormGroup;
 
   constructor(private institutionService: InstitutionService, private router: Router) {
@@ -25,6 +26,7 @@ export class InstitutionImportComponent implements OnInit {
   import = (): void => {
     let importData: any = new FormData();
     importData.append("file", this.importForm.get('file').value);
+    this.loading = true;
     this.institutionService.import(importData).subscribe(
       () => {
         this.router.navigate(['institution-import-complete']);
@@ -32,7 +34,10 @@ export class InstitutionImportComponent implements OnInit {
       error => {
         console.warn(error);
       },
-      () => console.log('Sikeres importálás.')
+      () => {
+        console.log('Sikeres importálás.');
+        this.loading = false;
+      }
     )
   };
 

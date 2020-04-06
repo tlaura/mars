@@ -8,7 +8,10 @@
         <small *ngIf="institutionForm.get('name').errors?.serverError" class="text-danger-custom">
           Ez a név már foglalt!
         </small>
-        <button [disabled]="!institutionForm.valid" class="btn btn-primary submit rounded-pill">Mentés</button>
+        <button [disabled]="!institutionForm.valid || loading" class="btn btn-primary submit rounded-pill">
+          <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+          Mentés
+        </button>
       </form>
     </div>
   </div>
