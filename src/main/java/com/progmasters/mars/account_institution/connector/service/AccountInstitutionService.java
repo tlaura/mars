@@ -84,7 +84,7 @@ public class AccountInstitutionService {
         ProviderAccount savedAccount = (ProviderAccount) accountService.save(providerAccountCreationCommand);
         saveProviderLocation(providerAccountCreationCommand, savedAccount);
         List<InstitutionCreationCommand> institutions = providerAccountCreationCommand.getInstitutions();
-        if (!institutions.isEmpty()) {
+        if (institutions != null && !institutions.isEmpty()) {
             for (InstitutionCreationCommand institutionCreationCommand : institutions) {
                 @NotBlank @NotEmpty String institutionName = institutionCreationCommand.getName();
                 Institution institution = institutionService.findByName(institutionName);
