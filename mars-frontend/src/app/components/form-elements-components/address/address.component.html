@@ -8,6 +8,7 @@
              oninput="if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
              maxlength="4"
              [value]="institutionModel?.zipcode"
+             [readOnly]="selectedInstitution"
              type="number">
     </div>
 
@@ -17,6 +18,7 @@
              formControlName="city"
              id="city"
              [value]="institutionModel?.city"
+             [readOnly]="selectedInstitution"
              type="text">
     </div>
 
@@ -33,6 +35,7 @@
              formControlName="address"
              id="address"
              [value]="institutionModel?.address"
+             [readOnly]="selectedInstitution"
              type="text">
 
       <small class="text-danger-custom">

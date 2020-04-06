@@ -84,7 +84,7 @@ public class AccountInstitutionService {
         ProviderAccount savedAccount = (ProviderAccount) accountService.save(providerAccountCreationCommand);
         saveProviderLocation(providerAccountCreationCommand, savedAccount);
         List<InstitutionCreationCommand> institutions = providerAccountCreationCommand.getInstitutions();
-        if (!institutions.isEmpty()) {
+        if (institutions != null && !institutions.isEmpty()) {
             for (InstitutionCreationCommand institutionCreationCommand : institutions) {
                 @NotBlank @NotEmpty String institutionName = institutionCreationCommand.getName();
                 Institution institution = institutionService.findByName(institutionName);
@@ -154,7 +154,9 @@ public class AccountInstitutionService {
         if (account.getZipcode() != null && account.getCity() != null && account.getAddress() != null) {
             String destination = account.getZipcode() + " " + account.getCity() + " " + account.getAddress();
             List<TravelMode> travelModes = List.of(TravelMode.DRIVING, TravelMode.WALKING, TravelMode.TRANSIT);
-            List<CompletableFuture<Boolean>> isWithinRangeList = travelModes.stream().map(travelMode -> getDistanceByTravelMode(originLng, originLat, destination, travelMode).thenApplyAsync(distanceData -> (distanceData != null) && (distanceData.getDistance() < maxDistance))).collect(Collectors.toList());
+            List<CompletableFuture<Boolean>> isWithinRangeList = travelModes.stream()
+                    .map(travelMode -> getDistanceByTravelMode(originLng, originLat, destination, travelMode)
+                            .thenApplyAsync(distanceData -> (distanceData != null) && (distanceData.getDistance() < maxDistance))).collect(Collectors.toList());
             withinRange = isWithinRangeList.stream().anyMatch(CompletableFuture::join);
         }
         return CompletableFuture.completedFuture(withinRange);

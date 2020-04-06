@@ -25,6 +25,7 @@ public class WebSocketChatEventListener {
     public void handleWebSocketConnectListener(SessionConnectedEvent event) {
         StompHeaderAccessor sha = StompHeaderAccessor.wrap(event.getMessage());
         log.info("Received a new web socket connection");
+
     }
 
     @EventListener
