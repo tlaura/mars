@@ -1,7 +1,6 @@
 package com.progmasters.mars.account_institution.account.service;
 
 import com.progmasters.mars.account_institution.account.dto.ProviderAccountCreationCommand;
-import com.progmasters.mars.account_institution.account.repository.ProviderAccountRepository;
 import com.progmasters.mars.account_institution.account.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -18,11 +17,9 @@ public class ProviderAccountValidatorService {
     @Value("${regex.validator.phone}")
     private String phone;
 
-    private ProviderAccountRepository providerAccountRepository;
     private UserRepository userRepository;
 
-    public ProviderAccountValidatorService(ProviderAccountRepository providerAccountRepository, UserRepository userRepository) {
-        this.providerAccountRepository = providerAccountRepository;
+    public ProviderAccountValidatorService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 

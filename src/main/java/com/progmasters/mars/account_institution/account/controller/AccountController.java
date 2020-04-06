@@ -36,9 +36,10 @@ public class AccountController {
     }
 
     @InitBinder("providerAccountCreationCommand")
-    protected void initBinder(WebDataBinder binder) {
+    protected void providerBinder(WebDataBinder binder) {
         binder.addValidators(providerAccountValidator);
     }
+
 
     @GetMapping("/providerDetails/{id}")
     public ResponseEntity<ProviderUserDetails> getProviderUserDetail(@PathVariable Long id) {

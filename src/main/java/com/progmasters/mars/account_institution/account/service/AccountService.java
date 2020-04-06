@@ -107,7 +107,7 @@ public class AccountService {
     }
 
     public User findByEmail(String email) {
-        return userRepository.findByEmail(email).orElseThrow(() -> new EntityNotFoundException("No account found by given email:\t" + email));
+        return userRepository.findOptionalUserByEmail(email).orElseThrow(() -> new EntityNotFoundException("No account found by given email:\t" + email));
     }
 
     List<ProviderAccount> findAllAccounts() {
@@ -173,7 +173,7 @@ public class AccountService {
     }
 
     public void setNewPassword(String email) {
-        User user = userRepository.findByEmail(email).orElseThrow(() -> new EntityNotFoundException("No account found by given email:\t" + email));
+        User user = userRepository.findOptionalUserByEmail(email).orElseThrow(() -> new EntityNotFoundException("No account found by given email:\t" + email));
         emailService.sendPasswordEmail(user);
     }
 
@@ -192,7 +192,7 @@ public class AccountService {
     public boolean updatePasswordOfLoggedInUser(PasswordChangeDetails passwordChangeDetails) {
         boolean isChangeConfirmed = false;
 
-        User user = userRepository.findByEmail(passwordChangeDetails.getEmail()).orElseThrow(() -> new EntityNotFoundException("UserModel not found by given email: " + passwordChangeDetails.getEmail()));
+        User user = userRepository.findOptionalUserByEmail(passwordChangeDetails.getEmail()).orElseThrow(() -> new EntityNotFoundException("UserModel not found by given email: " + passwordChangeDetails.getEmail()));
 
         String givenOldPassword = passwordChangeDetails.getOldPassword();
         String oldPassword = user.getPassword();
@@ -218,7 +218,7 @@ public class AccountService {
             providerAccountRepository.delete(providerAccount);
             isDeleted = true;
         } else {
-            Optional<User> optionalUser = userRepository.findByEmail(loggedInUser);
+            Optional<User> optionalUser = userRepository.findOptionalUserByEmail(loggedInUser);
             if (optionalUser.isPresent()) {
                 User user = optionalUser.get();
                 userRepository.delete(user);

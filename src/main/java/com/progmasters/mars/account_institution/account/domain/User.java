@@ -1,5 +1,6 @@
 package com.progmasters.mars.account_institution.account.domain;
 
+import com.progmasters.mars.account_institution.account.confirmationtoken.ConfirmationToken;
 import com.progmasters.mars.account_institution.account.dto.UserCreationCommand;
 import com.progmasters.mars.chat.domain.Contact;
 import com.progmasters.mars.chat.domain.LoginState;
@@ -67,6 +68,9 @@ public class User implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(name = "state")
     private LoginState state;
+
+    @OneToOne(mappedBy = "user")
+    private ConfirmationToken confirmationToken;
 
     public User(UserCreationCommand userCreationCommand) {
         this.name = userCreationCommand.getName();

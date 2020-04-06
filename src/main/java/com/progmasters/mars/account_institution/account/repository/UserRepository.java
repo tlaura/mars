@@ -12,7 +12,7 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    Optional<User> findByEmail(String email);
+    Optional<User> findOptionalUserByEmail(String email);
 
     List<User> findAllByEmail(String email);
 
@@ -24,4 +24,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query("select u from User u join u.fromAccount fromA join fromA.toAccount toA where u.email= :fromEmail and toA.email= :toEmail")
     List<User> findIfExistByEmail(@Param("fromEmail") String fromEmail, @Param("toEmail") String toEmail);
+
+    @Query("select u from User u where u.email= :email")
+    User findUserByEmail(@Param("email") String email);
 }
