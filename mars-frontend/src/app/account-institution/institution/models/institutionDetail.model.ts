@@ -1,4 +1,5 @@
 import {OpeningHoursModel} from "./openingHours.model";
+import {ProviderUserShortDetailsModel} from "../../account/models/providerUserShortDetails.model";
 
 export interface InstitutionDetailModel {
   id: number,
@@ -13,4 +14,5 @@ export interface InstitutionDetailModel {
   website: string,
   phone: string,
   openingHours: Array<OpeningHoursModel>
+  providers: Array<ProviderUserShortDetailsModel>
 }

@@ -16,6 +16,7 @@ export class InstitutionDetailsComponent implements OnInit {
   @Input() isInInfoBox: boolean = false;
   cause: string = "";
   shareUrl: string;
+  isDeleteBoardOpen: boolean = false;
   shareObj = {
     //localhost-ra nem működik, elvileg élesben igen?!?!?
     href: this.shareUrl,
@@ -65,4 +66,8 @@ export class InstitutionDetailsComponent implements OnInit {
   signInstitutionToDelete = (): void => {
     this.institutionService.signInstitutionToDelete(this.institution.id, this.cause).subscribe();
   };
+
+  showDelete() {
+    this.isDeleteBoardOpen = !this.isDeleteBoardOpen;
+  }
 }

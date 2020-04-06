@@ -1,6 +1,6 @@
 import {InstitutionDetailModel} from "../institution/models/institutionDetail.model";
 import {OpeningHoursModel} from "../institution/models/openingHours.model";
-import {ProviderUserDetails} from "../account/models/providerUserDetails";
+import {ProviderUserDetailsModel} from "../account/models/providerUserDetails.model";
 
 export interface AccountInstitutionListModel {
   accountType: string,
@@ -19,7 +19,7 @@ export interface AccountInstitutionListModel {
   longitude: number,
   institutions: Array<InstitutionDetailModel>,
   openingHours: Array<OpeningHoursModel>,
-  providers: Array<ProviderUserDetails>,
+  providers: Array<ProviderUserDetailsModel>,
   website,
 
 }

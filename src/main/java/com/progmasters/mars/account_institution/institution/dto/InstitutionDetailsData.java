@@ -1,5 +1,7 @@
 package com.progmasters.mars.account_institution.institution.dto;
 
+import com.progmasters.mars.account_institution.account.dto.ProviderUserShortDetailsData;
+import com.progmasters.mars.account_institution.connector.domain.AccountInstitutionConnector;
 import com.progmasters.mars.account_institution.institution.domain.Institution;
 import com.progmasters.mars.account_institution.institution.openinghours.dto.OpeningHoursData;
 import lombok.Getter;
@@ -36,6 +38,8 @@ public class InstitutionDetailsData {
 
     private List<OpeningHoursData> openingHours;
 
+    private List<ProviderUserShortDetailsData> providers;
+
 
     public InstitutionDetailsData(Institution institution) {
         this.id = institution.getId();
@@ -51,6 +55,10 @@ public class InstitutionDetailsData {
         this.phone = institution.getPhone();
         if (institution.getOpeningHours() != null) {
             this.openingHours = institution.getOpeningHours().stream().map(OpeningHoursData::new).collect(Collectors.toList());
+        }
+        List<AccountInstitutionConnector> providerList = institution.getAccountInstitutionConnectors();
+        if (providerList != null && !providerList.isEmpty()) {
+            this.providers = providerList.stream().map(AccountInstitutionConnector::getProviderAccount).map(ProviderUserShortDetailsData::new).collect(Collectors.toList());
         }
     }
 

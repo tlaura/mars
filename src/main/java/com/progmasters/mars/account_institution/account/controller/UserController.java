@@ -1,5 +1,6 @@
 package com.progmasters.mars.account_institution.account.controller;
 
+import com.progmasters.mars.account_institution.account.UserValidator;
 import com.progmasters.mars.account_institution.account.dto.JwtAuthenticationResponse;
 import com.progmasters.mars.account_institution.account.dto.LoginRequest;
 import com.progmasters.mars.account_institution.account.dto.UserCreationCommand;
@@ -16,6 +17,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -30,11 +32,20 @@ public class UserController {
     private AuthenticationManager authenticationManager;
     private JwtTokenProvider jwtTokenProvider;
 
+    private final UserValidator userValidator;
+
+
     @Autowired
-    public UserController(AccountService accountService, AuthenticationManager authenticationManager, JwtTokenProvider jwtTokenProvider) {
+    public UserController(AccountService accountService, AuthenticationManager authenticationManager, JwtTokenProvider jwtTokenProvider, UserValidator userValidator) {
         this.accountService = accountService;
         this.authenticationManager = authenticationManager;
         this.jwtTokenProvider = jwtTokenProvider;
+        this.userValidator = userValidator;
+    }
+
+    @InitBinder("userCreationCommand")
+    protected void userBinder(WebDataBinder binder) {
+        binder.addValidators(userValidator);
     }
 
     @GetMapping("/login")
@@ -64,7 +75,13 @@ public class UserController {
         );
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtTokenProvider.generateToken(authentication);
-        return new ResponseEntity<>(new JwtAuthenticationResponse(jwt), HttpStatus.OK);
+        ResponseEntity<JwtAuthenticationResponse> responseEntity;
+        if (accountService.isUserConfirmed(loginRequest.getEmail())) {
+            responseEntity = new ResponseEntity<>(new JwtAuthenticationResponse(jwt), HttpStatus.OK);
+        } else {
+            responseEntity = new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+        return responseEntity;
     }
 
     @PostMapping

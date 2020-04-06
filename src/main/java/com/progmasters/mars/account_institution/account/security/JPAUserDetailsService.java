@@ -30,7 +30,7 @@ public class JPAUserDetailsService implements UserDetailsService {
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 //        com.progmasters.mars.domain.UserModel user = individualUserRepository.findByEmail(username);
-        User user = userRepository.findByEmail(username).orElseThrow(() -> new EntityNotFoundException("No account found"));
+        User user = userRepository.findOptionalUserByEmail(username).orElseThrow(() -> new EntityNotFoundException("No account found"));
 
         List<GrantedAuthority> authorities = AuthorityUtils
                 .createAuthorityList(user.getRole().toString());

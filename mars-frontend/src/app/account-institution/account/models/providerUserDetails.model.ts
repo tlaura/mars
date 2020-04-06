@@ -1,6 +1,6 @@
 import {InstitutionListModel} from "../../institution/models/institutionList.model";
 
-export interface ProviderUserDetails {
+export interface ProviderUserDetailsModel {
   id: number,
   providerServiceName: string,
   name: string,
