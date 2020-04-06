@@ -18,7 +18,7 @@ export class LoginFormComponent implements OnInit {
   returnUrl: string;
   loading = false;
   submitted = false;
-  error = '';
+  error = null;
   isPasswordVisible: boolean = false;
 
   constructor(private authenticationService: AuthenticationService, private route: ActivatedRoute, private formBuilder: FormBuilder, private router: Router) {
@@ -62,9 +62,12 @@ export class LoginFormComponent implements OnInit {
           this.router.navigate([this.returnUrl]);
         },
         error => {
-          this.error = error;
+          if (error != 'OK') {
+            this.error = "Kérjük, aktiváld a fiókod az email-ben kapott üzenet alapján!";
+          } else {
+            this.error = "Helytelen felhasználónév vagy jelszó!";
+          }
           this.loading = false;
-          this.showUnauthorizedMessage = true;
         });
 
   };

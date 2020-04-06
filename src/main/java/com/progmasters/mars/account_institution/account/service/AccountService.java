@@ -124,7 +124,7 @@ public class AccountService {
 
     public boolean isUserConfirmed(String email) {
         User user = findByEmail(email);
-        return confirmationTokenRepository.findByUser(user).orElseThrow(() -> new EntityNotFoundException("No account found by given email")).isConfirmed();
+       return (confirmationTokenRepository.findByUser(user) == null);
     }
 
     public List<ConfirmationToken> findAllConfirmationToken() {

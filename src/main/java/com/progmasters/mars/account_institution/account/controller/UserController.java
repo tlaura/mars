@@ -64,7 +64,13 @@ public class UserController {
         );
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtTokenProvider.generateToken(authentication);
-        return new ResponseEntity<>(new JwtAuthenticationResponse(jwt), HttpStatus.OK);
+        ResponseEntity<JwtAuthenticationResponse> responseEntity;
+        if (accountService.isUserConfirmed(loginRequest.getEmail())) {
+            responseEntity = new ResponseEntity<>(new JwtAuthenticationResponse(jwt), HttpStatus.OK);
+        } else {
+            responseEntity = new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+        return responseEntity;
     }
 
     @PostMapping
