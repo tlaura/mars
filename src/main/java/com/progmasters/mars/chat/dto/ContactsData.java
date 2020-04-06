@@ -2,6 +2,7 @@ package com.progmasters.mars.chat.dto;
 
 import com.progmasters.mars.account_institution.account.domain.ProviderAccount;
 import com.progmasters.mars.account_institution.account.domain.User;
+import com.progmasters.mars.chat.domain.LoginState;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -14,6 +15,8 @@ public class ContactsData {
 
     private String email;
 
+    private Boolean online;
+
     public ContactsData(User user) {
         if (user instanceof ProviderAccount) {
             ProviderAccount providerAccount = (ProviderAccount) user;
@@ -21,5 +24,6 @@ public class ContactsData {
         }
         this.name = user.getName();
         this.email = user.getEmail();
+        this.online = user.getState() == LoginState.ONLINE;
     }
 }

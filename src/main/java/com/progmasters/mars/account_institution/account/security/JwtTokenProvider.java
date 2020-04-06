@@ -45,7 +45,6 @@ public class JwtTokenProvider implements Serializable {
                 .setSigningKey(secret)
                 .parseClaimsJws(token)
                 .getBody();
-
         return claims.getSubject();
     }
 

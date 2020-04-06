@@ -106,7 +106,6 @@ public class ChatService {
                 )
                 .map(contact -> contact.getToAccount().getEmail())
                 .collect(Collectors.toList()));
-
         return activeContactEmails;
     }
 

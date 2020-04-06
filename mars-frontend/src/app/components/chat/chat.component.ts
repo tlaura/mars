@@ -139,6 +139,7 @@ export class ChatComponent implements OnInit {
     let that = this;
     this.stompClient.connect({}, function (frame) {
       that.isLoaded = true;
+
       that.openSocket()
     });
   }

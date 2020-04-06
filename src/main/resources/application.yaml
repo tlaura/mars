@@ -1,6 +1,4 @@
 spring:
-  #  main:
-  #    allow-bean-definition-overriding: true
   datasource:
     url: jdbc:mysql://localhost:3306/mars?serverTimezone=UTC&characterEncoding=utf8
     username: root
