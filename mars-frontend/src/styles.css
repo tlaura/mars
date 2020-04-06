@@ -75,10 +75,11 @@ small {
 .custom-link-institution {
   text-transform: uppercase;
   cursor: pointer;
-  color: rgb(255, 72, 0);
+  color: rgb(255, 72, 0) !important;
 }
 
 .custom-link {
+  color: rgb(255, 72, 0);
   cursor: pointer;
   display: inline-block;
   font-size: 80%;
@@ -92,7 +93,7 @@ small {
 
 .custom-link-provider {
   cursor: pointer;
-  color: rgb(32, 167, 209);
+  color: rgb(32, 167, 209) !important;
 }
 
 .custom-link-provider a {
@@ -253,12 +254,24 @@ select#types {
 }
 
 .decor-div-tomato {
-  background-color: rgba(255, 72, 0, 0.2);
+  background: rgba(255, 255, 255, 0.2);
+  background: -moz-linear-gradient(left, rgba(255, 255, 255, 0.2) 0%, rgba(255, 72, 0, 0.2) 50%, rgba(255, 255, 255, 0.2) 100%);
+  background: -webkit-linear-gradient(left, rgba(255, 255, 255, 0.2) 0%, rgba(255, 72, 0, 0.2) 50%, rgba(255, 255, 255, 0.2) 100%);
+  background: -o-linear-gradient(left, rgba(255, 255, 255, 0.2) 0%, rgba(255, 72, 0, 0.2) 50%, rgba(255, 255, 255, 0.2) 100%);
+  background: -ms-linear-gradient(left, rgba(255, 255, 255, 0.2) 0%, rgba(255, 72, 0, 0.2) 50%, rgba(255, 255, 255, 0.2) 100%);
+  background: linear-gradient(to right, rgba(255, 255, 255, 0.2) 0%, rgba(255, 72, 0, 0.2) 50%, rgba(255, 255, 255, 0.2) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#ffffff', GradientType=1);
   height: 0.5rem;
 }
 
 .decor-div-blue {
-  background-color: rgba(32, 167, 209, 0.2);
+  background: rgba(255, 255, 255, 0.2);
+  background: -moz-linear-gradient(left, rgba(255, 255, 255, 0.2) 0%, rgba(32, 168, 209, 0.2) 50%, rgba(255, 255, 255, 0.2) 100%);
+  background: -webkit-linear-gradient(left, rgba(255, 255, 255, 0.2) 0%, rgba(32, 168, 209, 0.2) 50%, rgba(255, 255, 255, 0.2) 100%);
+  background: -o-linear-gradient(left, rgba(255, 255, 255, 0.2) 0%, rgba(32, 168, 209, 0.2) 50%, rgba(255, 255, 255, 0.2) 100%);
+  background: -ms-linear-gradient(left, rgba(255, 255, 255, 0.2) 0%, rgba(32, 168, 209, 0.2) 50%, rgba(255, 255, 255, 0.2) 100%);
+  background: linear-gradient(to right, rgba(255, 255, 255, 0.2) 0%, rgba(32, 168, 209, 0.2) 50%, rgba(255, 255, 255, 0.2) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#ffffff', GradientType=1);
   height: 0.5rem;
 }
 

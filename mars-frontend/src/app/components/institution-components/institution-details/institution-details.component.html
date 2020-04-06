@@ -62,21 +62,25 @@
       </div>
     </div>
 
-
-    <div class="form-group mt-sm-2">
-      <button (click)="showDelete()" class="btn btn-primary submit rounded-pill">
-        <p *ngIf="isDeleteBoardOpen">Mégse</p>
-        <p *ngIf="!isDeleteBoardOpen">Intézmény jelentése</p>
-      </button>
-    </div>
-    <div class="form-group col-sm-6 col-lg-8">
-      <label *ngIf="isDeleteBoardOpen" class="small" for="text">Törlés indoklása:</label>
+    <div *ngIf="isDeleteBoardOpen" class="decor-div-tomato col-sm-12 mx-0"></div>
+    <label *ngIf="isDeleteBoardOpen" class="mt-2" for="text">Törlés indoklása:</label>
+    <div class="form-group col-sm-12 ">
       <textarea *ngIf="isDeleteBoardOpen" [(ngModel)]="cause" class="form-control" id="text" name="text"
-                rows="6"></textarea>
-      <div *ngIf="isDeleteBoardOpen" class="form-group mt-sm-2">
-        <button (click)="signInstitutionToDelete()" class="btn btn-primary submit rounded-pill">Törlés javaslása
-        </button>
+                rows="3"></textarea>
+      <div class="row mx-0">
+        <div *ngIf="isDeleteBoardOpen" class="form-group mt-sm-2 mr-sm-2">
+          <button (click)="signInstitutionToDelete()" class="btn btn-primary submit rounded-pill">Törlés javaslása
+          </button>
+        </div>
+        <div class="form-group mt-sm-2">
+          <button (click)="showDelete()" class="btn btn-primary submit rounded-pill">
+            <span *ngIf="isDeleteBoardOpen">Mégse</span>
+            <span *ngIf="!isDeleteBoardOpen">Intézmény jelentése</span>
+          </button>
+        </div>
       </div>
+
+      <div class="decor-div-tomato col-sm-12 mx-0"></div>
 
       <div class="form-group mt-sm-2">
         <button (click)="openMailSend()" class="btn btn-primary submit rounded-pill">Email küldés</button>
@@ -87,7 +91,8 @@
       <!--    <facebook-share-button [share]="shareObj"></facebook-share-button>-->
       <!--  </div>-->
 
-      <button (click)="backToInstitutionList()" *ngIf="!isInInfoBox" class="btn btn-primary submit rounded-pill">Vissza
+      <button (click)="backToInstitutionList()" *ngIf="!isInInfoBox"
+              class="btn btn-primary submit rounded-pill btn-back">Vissza
       </button>
     </div>
   </div>
