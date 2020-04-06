@@ -49,7 +49,9 @@
   <div *ngFor="let array of getInstitutions().controls;let i = index;"
        class="row m-0 blue-block-on-white-div my-md-4 p-md-1 p-lg-3">
 
-    <app-institution [institutionForm]="array">
+    <app-institution
+      [institutionForm]="array"
+      [selectable]="true">
     </app-institution>
 
 

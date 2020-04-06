@@ -10,16 +10,17 @@
 <form [formGroup]="institutionForm">
   <div class="row mx-0">
     <div class="col-sm-12 col-md-6 px-0">
+      <div *ngIf="selectable" class="form-group col-sm-12">
+        <select (change)="fillFields($event)"
+                class="form-control rounded-pill"
+                id="institution-type"
+                name="institution-type">
+          <option selected value="-1">Új intézmény</option>
+          <option *ngFor="let institution of institutionList; let institutionI = index"
+                  value="{{institutionI}}">{{institution.name}}</option>
+        </select>
+      </div>
 
-
-      <select (change)="fillFields($event)"
-              class="form-control-sm rounded-pill col-md-3 col-lg-2"
-              id="institution-type"
-              name="institution-type">
-        <option selected value="-1">----------</option>
-        <option *ngFor="let institution of institutionList; let institutionI = index"
-                value="{{institutionI}}">{{institution.name}}</option>
-      </select>
 
       <app-contacts [contactsFormGroup]="institutionForm" [institutionModel]="institutionModel"
       >

@@ -12,13 +12,14 @@ export class InstitutionComponent implements OnInit {
 
   @Input()
   institutionForm: FormGroup;
+  @Input()
+  selectable: boolean = false;
 
   selectedInstitution: boolean = false;
 
   institutionList: Array<InstitutionListModel>;
 
   institutionModel: InstitutionListModel;
-
 
   constructor(private institutionService: InstitutionService) {
     this.institutionForm = new FormGroup({});
