@@ -154,7 +154,9 @@ public class AccountInstitutionService {
         if (account.getZipcode() != null && account.getCity() != null && account.getAddress() != null) {
             String destination = account.getZipcode() + " " + account.getCity() + " " + account.getAddress();
             List<TravelMode> travelModes = List.of(TravelMode.DRIVING, TravelMode.WALKING, TravelMode.TRANSIT);
-            List<CompletableFuture<Boolean>> isWithinRangeList = travelModes.stream().map(travelMode -> getDistanceByTravelMode(originLng, originLat, destination, travelMode).thenApplyAsync(distanceData -> (distanceData != null) && (distanceData.getDistance() < maxDistance))).collect(Collectors.toList());
+            List<CompletableFuture<Boolean>> isWithinRangeList = travelModes.stream()
+                    .map(travelMode -> getDistanceByTravelMode(originLng, originLat, destination, travelMode)
+                            .thenApplyAsync(distanceData -> (distanceData != null) && (distanceData.getDistance() < maxDistance))).collect(Collectors.toList());
             withinRange = isWithinRangeList.stream().anyMatch(CompletableFuture::join);
         }
         return CompletableFuture.completedFuture(withinRange);
