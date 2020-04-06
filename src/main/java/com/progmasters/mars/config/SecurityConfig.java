@@ -37,15 +37,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private JPAUserDetailsService jpaUserDetailsService;
     private PasswordEncoder passwordEncoder;
     private JwtAuthenticationEntryPoint unauthorizedHandler;
+    private CustomLogoutHandler customLogoutHandler;
 
     @Autowired
     public SecurityConfig(JPAUserDetailsService jpaUserDetailsService,
                           PasswordEncoder passwordEncoder,
-                          JwtAuthenticationEntryPoint unauthorizedHandler) {
+                          JwtAuthenticationEntryPoint unauthorizedHandler,
+                          CustomLogoutHandler customLogoutHandler) {
         super();
         this.jpaUserDetailsService = jpaUserDetailsService;
         this.passwordEncoder = passwordEncoder;
         this.unauthorizedHandler = unauthorizedHandler;
+        this.customLogoutHandler = customLogoutHandler;
     }
 
     @Bean
@@ -97,7 +100,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
 //                .antMatchers("/api/*").hasRole("ADMIN")
                 .and()
-                .logout().logoutUrl("/api/user/logout").deleteCookies("JSESSIONID")
+                .logout()
+                .logoutUrl("/api/user/logout")
+                .logoutSuccessHandler(customLogoutHandler)
+                .deleteCookies("JSESSIONID")
                 .and().httpBasic()
         ;
         // @formatter:on
