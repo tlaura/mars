@@ -71,11 +71,13 @@ public class AccountService {
         return user;
     }
 
-    public void removeById(Long id) {
-        ProviderAccount account = findById(id);
-        account.setTypes(null);
-
-        providerAccountRepository.deleteById(id);
+    public void removeByEmail(String email) {
+        User account = findByEmail(email);
+        if (account instanceof ProviderAccount) {
+            ((ProviderAccount) account).setTypes(null);
+        }
+        userRepository.deleteByEmail(email);
+        //  providerAccountRepository.deleteByEmail(email);
     }
 
     public List<AccountInstitutionListData> findProvidersByAgeRange(Integer age) {

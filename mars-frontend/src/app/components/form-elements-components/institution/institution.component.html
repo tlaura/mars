@@ -22,10 +22,12 @@
       </div>
 
       <app-contacts [contactsFormGroup]="institutionForm" [institutionModel]="institutionModel"
+                    [selectedInstitution]="selectedInstitution"
       >
       </app-contacts>
 
-      <app-address [addressFormGroup]="institutionForm" [institutionModel]="institutionModel">
+      <app-address [addressFormGroup]="institutionForm" [institutionModel]="institutionModel"
+                   [selectedInstitution]="selectedInstitution">
       </app-address>
       <div class="form-group col-sm-12 col-md-12">
         <label>Rövid leírás*:</label>
@@ -33,6 +35,7 @@
           [value]="institutionModel?.description"
           formControlName="description"
           class="form-control"
+          [readOnly]="selectedInstitution"
           rows="2">
         </textarea>
         <div *ngIf="institutionForm.get('description').invalid && institutionForm.get('description').touched">

@@ -56,6 +56,6 @@ jwt:
   secret: marsjwtsupersecretkey
 
 executor:
-  corePoolSize: 10
-  maxPoolSize: 20
+  corePoolSize: 20
+  maxPoolSize: 40
   queueCapacity: 50

@@ -21,6 +21,7 @@ export class InstitutionComponent implements OnInit {
 
   institutionModel: InstitutionListModel;
 
+
   constructor(private institutionService: InstitutionService) {
     this.institutionForm = new FormGroup({});
 
@@ -73,11 +74,11 @@ export class InstitutionComponent implements OnInit {
       this.institutionForm.get('website').setValue(this.institutionModel.website);
       this.institutionForm.get('description').setValue(this.institutionModel.description);
 
-      this.institutionForm.disable();
+      //this.institutionForm.disable();
       this.institutionForm.clearValidators();
       this.institutionForm.updateValueAndValidity();
     } else {
-      this.institutionForm.enable();
+      // this.institutionForm.enable();
       this.institutionForm.updateValueAndValidity();
       this.selectedInstitution = false;
     }

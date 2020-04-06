@@ -7,6 +7,7 @@
         formControlName="name"
         id="name"
         [value]="institutionModel?.name"
+        [readOnly]="selectedInstitution"
         type="text">
       <div *ngIf="contactsFormGroup?.get('name').errors?.pattern">
         <small class="text-danger-custom">
@@ -30,6 +31,7 @@
         formControlName="phone"
         id="phone" placeholder="+36-XX-XXX-XXXX"
         [value]="institutionModel?.phone"
+        [readOnly]="selectedInstitution"
         type="text">
       <div *ngIf="contactsFormGroup?.get('phone').errors?.pattern">
         <small class="text-danger-custom">
@@ -45,6 +47,7 @@
         formControlName="website"
         id="website"
         [value]="institutionModel?.website"
+        [readOnly]="selectedInstitution"
         type="text">
       <div *ngIf="contactsFormGroup?.get('website').errors?.pattern">
         <small class="text-danger-custom">

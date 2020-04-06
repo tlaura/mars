@@ -2,6 +2,7 @@
   <label for="email">Email cím*:</label>
   <input
     [value]="institutionModel?.email"
+    [readOnly]="selectedInstitution"
     class="form-control rounded-pill"
     formControlName="email"
     id="email"

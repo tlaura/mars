@@ -64,6 +64,7 @@ export class ProviderUserComponent implements OnInit {
     if (this.isPasswordValid) {
       this.registerForm.markAllAsTouched();
       const formData: ProviderAccountRegisterModel = this.registerForm.value;
+
       this.accountService.saveProviderAccount(formData).subscribe(
         () => {
           this.router.navigate(['registration-complete']);
@@ -115,9 +116,4 @@ export class ProviderUserComponent implements OnInit {
   setIfPasswordIsValid = (isValid: boolean) => {
     this.isPasswordValid = isValid;
   };
-
-  test() {
-    console.log(this.registerForm);
-    console.log(this.registerForm.errors);
-  }
 }
