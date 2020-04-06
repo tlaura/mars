@@ -17,6 +17,7 @@ import com.progmasters.mars.map.dto.GeoLocationData;
 import com.progmasters.mars.util.ExcelFileLoader;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -29,6 +30,9 @@ import java.util.stream.Collectors;
 @Service
 @Transactional
 public class InstitutionService {
+
+    @Value("${regex.validator.email}")
+    private String email;
 
     private final InstitutionRepository institutionRepository;
     private final InstitutionPetitionRepository institutionPetitionRepository;
@@ -95,13 +99,21 @@ public class InstitutionService {
                 GeoLocationData geoLocationData = getGeoLocationByAddress(address);
                 Institution institution = new Institution(row, geoLocationData);
                 if (institutionRepository.findAllByName(institution.getName()).isEmpty()
-                        && institutionRepository.findAllByEmail(institution.getEmail()).isEmpty()) {
+                        && institutionRepository.findAllByEmail(institution.getEmail()).isEmpty()
+                        && isValidInstitution(institution)) {
                     institutionRepository.save(institution);
                 }
             }
         } catch (IOException | NotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    private boolean isValidInstitution(Institution institution) {
+        boolean isValid = institution.getZipcode() < 10000 && institution.getZipcode() > 999 &&
+                institution.getDescription().length() > 30 && institution.getDescription().length() < 200 &&
+                institution.getEmail().matches(email);
+        return isValid;
     }
 
     List<Institution> findAllInstitutions() {
