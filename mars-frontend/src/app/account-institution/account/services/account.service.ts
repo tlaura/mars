@@ -4,7 +4,7 @@ import {Observable} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {ProviderUserProfileDetailsModel} from "../models/providerUserProfileDetails.model";
 import {environment} from "../../../../environments/environment";
-import {ProviderUserDetails} from "../models/providerUserDetails";
+import {ProviderUserDetailsModel} from "../models/providerUserDetails.model";
 import {AccountInstitutionListModel} from "../../models/accountInstitutionList.model";
 import {PasswordChangeDetailsModel} from "../models/passwordChangeDetails.model";
 import {NormalAccountRegisterModel} from "../models/normalAccountRegisterModel";
@@ -40,8 +40,8 @@ export class AccountService {
     return this.http.delete(this.BASE_URL + '/providers/delete/' + loggedInUser + '/' + id);
   }
 
-  getProviderAccountDetails = (id: number): Observable<ProviderUserDetails> => {
-    return this.http.get<ProviderUserDetails>(this.BASE_URL + "/providers/providerDetails/" + id);
+  getProviderAccountDetails = (id: number): Observable<ProviderUserDetailsModel> => {
+    return this.http.get<ProviderUserDetailsModel>(this.BASE_URL + "/providers/providerDetails/" + id);
   };
 
   getProviderAccountsByAgeRange = (age: number): Observable<Array<AccountInstitutionListModel>> => {

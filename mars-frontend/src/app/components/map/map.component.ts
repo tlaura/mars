@@ -4,7 +4,7 @@ import {MapsAPILoader} from "@agm/core";
 import {InstitutionService} from "../../account-institution/institution/services/institution.service";
 import {InstitutionDetailModel} from "../../account-institution/institution/models/institutionDetail.model";
 import {AccountService} from "../../account-institution/account/services/account.service";
-import {ProviderUserDetails} from "../../account-institution/account/models/providerUserDetails";
+import {ProviderUserDetailsModel} from "../../account-institution/account/models/providerUserDetails.model";
 import {AccountInstitutionListModel} from "../../account-institution/models/accountInstitutionList.model";
 import {LocationRangeModel} from "../../account-institution/models/locationRange.model";
 
@@ -190,7 +190,7 @@ export class MapComponent implements OnInit {
   @Input()
   locations: Array<AccountInstitutionListModel>;
   institutionDetail: InstitutionDetailModel;
-  providerDetail: ProviderUserDetails;
+  providerDetail: ProviderUserDetailsModel;
   @Output()
   locationRangeEmitter: EventEmitter<LocationRangeModel> = new EventEmitter<LocationRangeModel>();
 

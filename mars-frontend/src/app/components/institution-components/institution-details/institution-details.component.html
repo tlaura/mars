@@ -38,17 +38,42 @@
         <div *ngFor="let openingHour of institution?.openingHours">{{openingHour.weekDay}}: {{openingHour.openingTime}}
           -{{openingHour.closingTime}}</div>
       </div>
-
-
+    </div>
+    <!--providers-->
+    <div>
+      <div *ngFor="let providerAccount of institution?.providers">
+        <div class="white-block-on-tomato-div col-md-8 offset-md-2 p-sm-0 mb-3">
+          <div class="row mx-0 p-sm-1 p-md-2 p-lg-3">
+            <div class="col-sm-12"><label class="font-weight-bold">Név: {{providerAccount?.name}}</label></div>
+            <div class="decor-div-blue col-sm-12"></div>
+            <!--            <div *ngIf="providerAccount.website" class="col-sm-12"><label class="small">{{providerAccount.website}}</label></div>-->
+            <div class="col-sm-12"><label class="small">Telefon: {{providerAccount?.phone}}</label></div>
+            <div class="col-sm-12"><label class="small">Email: {{providerAccount?.email}}</label></div>
+            <div class="col-sm-12"><label class="small">Korcsoport: {{providerAccount?.ageGroupMin}}
+              -{{providerAccount?.ageGroupMax}}</label></div>
+            <div *ngFor="let type of providerAccount.types">
+              <div class="col-sm-12"><label class="small">{{type}}</label></div>
+            </div>
+            <div *ngIf="providerAccount?.zipcode" class="col-sm-12 col-md-12"><label>{{providerAccount?.zipcode}}
+              , {{providerAccount?.city}}
+              , {{providerAccount?.address}}</label></div>
+          </div>
+        </div>
+      </div>
     </div>
 
 
+    <div class="form-group mt-sm-2">
+      <button (click)="showDelete()" class="btn btn-primary submit rounded-pill">
+        <p *ngIf="isDeleteBoardOpen">Mégse</p>
+        <p *ngIf="!isDeleteBoardOpen">Intézmény jelentése</p>
+      </button>
+    </div>
     <div class="form-group col-sm-6 col-lg-8">
-      <label class="small" for="text">Törlés indoklása:</label>
-      <textarea [(ngModel)]="cause" class="form-control" id="text" name="text"
+      <label *ngIf="isDeleteBoardOpen" class="small" for="text">Törlés indoklása:</label>
+      <textarea *ngIf="isDeleteBoardOpen" [(ngModel)]="cause" class="form-control" id="text" name="text"
                 rows="6"></textarea>
-
-      <div class="form-group mt-sm-2">
+      <div *ngIf="isDeleteBoardOpen" class="form-group mt-sm-2">
         <button (click)="signInstitutionToDelete()" class="btn btn-primary submit rounded-pill">Törlés javaslása
         </button>
       </div>

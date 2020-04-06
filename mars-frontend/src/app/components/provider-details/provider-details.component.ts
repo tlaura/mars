@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {AccountService} from "../../account-institution/account/services/account.service";
-import {ProviderUserDetails} from "../../account-institution/account/models/providerUserDetails";
+import {ProviderUserDetailsModel} from "../../account-institution/account/models/providerUserDetails.model";
 import {ContactsService} from "../../chat/services/contacts.service";
 import {AuthenticationService} from "../../auth/services/authentication.service";
 
@@ -14,7 +14,7 @@ export class ProviderDetailsComponent implements OnInit {
 
   @Input() mailSender: boolean = false;
   @Input() isInInfoBox: boolean = false;
-  @Input() providerUserDetail: ProviderUserDetails;
+  @Input() providerUserDetail: ProviderUserDetailsModel;
   isLoggedIn: boolean;
 
   constructor(private activatedRoute: ActivatedRoute, private accountService: AccountService,
