@@ -7,6 +7,7 @@
              id="zipcode"
              oninput="if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
              maxlength="4"
+             [value]="institutionModel?.zipcode"
              type="number">
     </div>
 
@@ -15,6 +16,7 @@
       <input class="form-control rounded-pill"
              formControlName="city"
              id="city"
+             [value]="institutionModel?.city"
              type="text">
     </div>
 
@@ -30,6 +32,7 @@
       <input class="form-control rounded-pill"
              formControlName="address"
              id="address"
+             [value]="institutionModel?.address"
              type="text">
 
       <small class="text-danger-custom">

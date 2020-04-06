@@ -3,11 +3,13 @@ package com.progmasters.mars.account_institution.institution.service;
 import com.google.maps.errors.NotFoundException;
 import com.progmasters.mars.account_institution.account.domain.ProviderAccount;
 import com.progmasters.mars.account_institution.account.domain.ProviderType;
+import com.progmasters.mars.account_institution.institution.domain.ConfirmationInstitution;
 import com.progmasters.mars.account_institution.institution.domain.Institution;
 import com.progmasters.mars.account_institution.institution.domain.InstitutionPetition;
 import com.progmasters.mars.account_institution.institution.dto.InstitutionDeleteListData;
 import com.progmasters.mars.account_institution.institution.dto.InstitutionDetailsData;
 import com.progmasters.mars.account_institution.institution.dto.InstitutionListData;
+import com.progmasters.mars.account_institution.institution.repository.ConfirmationInstitutionRepository;
 import com.progmasters.mars.account_institution.institution.repository.InstitutionPetitionRepository;
 import com.progmasters.mars.account_institution.institution.repository.InstitutionRepository;
 import com.progmasters.mars.map.MapService;
@@ -30,26 +32,19 @@ public class InstitutionService {
 
     private final InstitutionRepository institutionRepository;
     private final InstitutionPetitionRepository institutionPetitionRepository;
+    private final ConfirmationInstitutionRepository confirmationInstitutionRepository;
     private final MapService mapService;
 
     @Autowired
-    public InstitutionService(InstitutionRepository institutionRepository, InstitutionPetitionRepository institutionPetitionRepository, MapService mapService) {
+    public InstitutionService(InstitutionRepository institutionRepository, InstitutionPetitionRepository institutionPetitionRepository, ConfirmationInstitutionRepository confirmationInstitutionRepository, MapService mapService) {
         this.institutionRepository = institutionRepository;
         this.institutionPetitionRepository = institutionPetitionRepository;
+        this.confirmationInstitutionRepository = confirmationInstitutionRepository;
         this.mapService = mapService;
     }
 
-    public List<InstitutionListData> getInstitutionList() {
-        //TODO Látom a szándék megvan, ezt a Pageable-t ajánlott mihamarabb bevezetni,
-        // könnyű implementálni, és menő :)
-        // Van rá valahol példám ha érdekel :)
-
-        //      Pageable pageable= PageRequest.of(page,size);
-        //       return institutionRepository.findAll(pageable).stream().map(InstitutionListData::new).collect(Collectors.toList());
-        return institutionRepository.findAll()
-                .stream()
-                .map(InstitutionListData::new)
-                .collect(Collectors.toList());
+    public List<InstitutionListData> getAllInstitutions() {
+        return institutionRepository.findAll().stream().map(InstitutionListData::new).collect(Collectors.toList());
     }
 
 
@@ -146,6 +141,10 @@ public class InstitutionService {
 
     public List<InstitutionDeleteListData> getInstitutionsToDelete() {
         return institutionRepository.findInstitutionsSignedToDelete().stream().map(InstitutionDeleteListData::new).collect(Collectors.toList());
+    }
+
+    public ConfirmationInstitution findConfirmationInstitutionByName(String name) {
+        return confirmationInstitutionRepository.findByName(name);
     }
 
 }

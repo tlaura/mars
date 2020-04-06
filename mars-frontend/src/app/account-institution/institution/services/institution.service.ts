@@ -21,10 +21,13 @@ export class InstitutionService {
     return this.http.post(this.BASE_URL, formData);
   };
 
+  getAllInstitutions = (): Observable<Array<InstitutionListModel>> => {
+    return this.http.get<Array<InstitutionListModel>>(this.BASE_URL);
+  };
+
   getProviderTypes = (): Observable<Array<InstitutionTypeModel>> => {
     return this.http.get<Array<InstitutionTypeModel>>(this.BASE_URL + "institutionType");
   };
-
 
   getInstitutionDetail = (id: number): Observable<InstitutionDetailModel> => {
     return this.http.get<InstitutionDetailModel>(this.BASE_URL + id);

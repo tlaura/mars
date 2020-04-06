@@ -1,4 +1,4 @@
-package com.progmasters.mars.account_institution.connector;
+package com.progmasters.mars.account_institution.connector.service;
 
 import com.google.maps.errors.NotFoundException;
 import com.google.maps.model.Distance;
@@ -9,6 +9,11 @@ import com.progmasters.mars.account_institution.account.domain.ProviderAccount;
 import com.progmasters.mars.account_institution.account.domain.ProviderType;
 import com.progmasters.mars.account_institution.account.dto.ProviderAccountCreationCommand;
 import com.progmasters.mars.account_institution.account.service.AccountService;
+import com.progmasters.mars.account_institution.connector.DistanceCalculationException;
+import com.progmasters.mars.account_institution.connector.domain.AccountInstitutionConnector;
+import com.progmasters.mars.account_institution.connector.dto.AccountInstitutionAttachData;
+import com.progmasters.mars.account_institution.connector.dto.AccountInstitutionListData;
+import com.progmasters.mars.account_institution.connector.repository.AccountInstitutionConnectorRepository;
 import com.progmasters.mars.account_institution.institution.domain.ConfirmationInstitution;
 import com.progmasters.mars.account_institution.institution.domain.Institution;
 import com.progmasters.mars.account_institution.institution.dto.InstitutionCreationCommand;
@@ -27,6 +32,8 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -73,14 +80,23 @@ public class AccountInstitutionService {
         this.institutionRepository = institutionRepository;
     }
 
-    //todo read about spring boot exception handling
     public void save(ProviderAccountCreationCommand providerAccountCreationCommand) throws NotFoundException {
         ProviderAccount savedAccount = (ProviderAccount) accountService.save(providerAccountCreationCommand);
         saveProviderLocation(providerAccountCreationCommand, savedAccount);
         List<InstitutionCreationCommand> institutions = providerAccountCreationCommand.getInstitutions();
         if (!institutions.isEmpty()) {
             for (InstitutionCreationCommand institutionCreationCommand : institutions) {
-                confirmationInstitutionService.save(institutionCreationCommand, providerAccountCreationCommand.getEmail());
+                @NotBlank @NotEmpty String institutionName = institutionCreationCommand.getName();
+                Institution institution = institutionService.findByName(institutionName);
+                ConfirmationInstitution confirmationInstitution = institutionService.findConfirmationInstitutionByName(institutionName);
+                if (institution != null) {
+                    AccountInstitutionConnector connection = new AccountInstitutionConnector(savedAccount, institution);
+                    accountInstitutionConnectorRepository.save(connection);
+                } else if (confirmationInstitution != null) {
+                    confirmationInstitutionService.attachEmailToInstitution(confirmationInstitution, providerAccountCreationCommand.getEmail());
+                } else {
+                    confirmationInstitutionService.save(institutionCreationCommand, providerAccountCreationCommand.getEmail());
+                }
             }
         }
     }
@@ -93,7 +109,6 @@ public class AccountInstitutionService {
             savedAccount.setLatitude(geoLocationData.getLatitude());
         }
     }
-
 
     public void detachInstitutionFromAccount(String email, Long institutionId) {
         ProviderAccount foundAccount = (ProviderAccount) accountService.findByEmail(email);
@@ -175,22 +190,33 @@ public class AccountInstitutionService {
         }
     }
 
-
     private void saveAccountInstitutionConnection(ConfirmationInstitution confirmationInstitution) throws NotFoundException {
         Institution createdInstitution = new Institution(confirmationInstitution);
         confirmationInstitution.setOpeningHours(null);
         confirmationInstitutionService.delete(confirmationInstitution);
         Institution savedInstitution = institutionService.saveInstitution(createdInstitution);
-        if (confirmationInstitution.getProviderEmail() != null) {
-            ProviderAccount savedAccount = (ProviderAccount) accountService.findByEmail(confirmationInstitution.getProviderEmail());
-            AccountInstitutionConnector accountInstitutionConnector = new AccountInstitutionConnector(savedAccount, savedInstitution);
-            accountInstitutionConnectorRepository.save(accountInstitutionConnector);
+        List<String> emailList = confirmationInstitution.getProviderEmails();
+        if (emailList != null && !emailList.isEmpty()) {
+            emailList.stream()
+                    .map(s -> (ProviderAccount) accountService.findByEmail(s))
+                    .map(user -> new AccountInstitutionConnector(user, savedInstitution))
+                    .forEach(accountInstitutionConnectorRepository::save);
         }
     }
-
 
     //todo revision
     public List<AccountInstitutionListData> getInstitutionsByAccountType(ProviderType providerType) {
         return institutionService.findInstitutionByProviderType(providerType).stream().map(AccountInstitutionListData::new).collect(Collectors.toList());
+    }
+
+    public void attachInstitutionToProvider(AccountInstitutionAttachData accountInstitutionAttachData) {
+        ProviderAccount providerAccount = (ProviderAccount) accountService.findByEmail(accountInstitutionAttachData.getProviderEmail());
+        Institution institution = institutionService.findById(accountInstitutionAttachData.getInstitutionId());
+
+        AccountInstitutionConnector connection = accountInstitutionConnectorRepository.findByAccounts(providerAccount, institution);
+        if (connection == null) {
+            AccountInstitutionConnector accountInstitutionConnector = new AccountInstitutionConnector(providerAccount, institution);
+            accountInstitutionConnectorRepository.save(accountInstitutionConnector);
+        }
     }
 }

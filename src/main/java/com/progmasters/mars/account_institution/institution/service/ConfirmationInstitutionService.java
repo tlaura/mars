@@ -29,8 +29,12 @@ public class ConfirmationInstitutionService {
     }
 
     public void save(InstitutionCreationCommand institutionCreationCommand, String email) {
-        ConfirmationInstitution confirmationInstitution = new ConfirmationInstitution(institutionCreationCommand);
-        confirmationInstitution.setProviderEmail(email);
+        ConfirmationInstitution confirmationInstitution = new ConfirmationInstitution(institutionCreationCommand, email);
+        confirmationInstitutionRepository.save(confirmationInstitution);
+    }
+
+    public void attachEmailToInstitution(ConfirmationInstitution confirmationInstitution, String email) {
+        confirmationInstitution.getProviderEmails().add(email);
         confirmationInstitutionRepository.save(confirmationInstitution);
     }
 

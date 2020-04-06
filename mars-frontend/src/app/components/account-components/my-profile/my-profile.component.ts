@@ -9,6 +9,9 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {AuthenticationService} from "../../../auth/services/authentication.service";
 import decode from 'jwt-decode';
 import {UserDetailsModel} from "../../../account-institution/account/models/userDetails.model";
+import {InstitutionListModel} from "../../../account-institution/institution/models/institutionList.model";
+import {AccountInstitutionConnectorService} from "../../../account-institution/services/account-institution-connector.service";
+import {AttachInstitutionModel} from "../../../account-institution/models/attachInstitution.model";
 
 @Component({
   selector: 'app-my-profile',
@@ -23,6 +26,12 @@ export class MyProfileComponent implements OnInit {
   isProvider: boolean;
   loggedInUser;
   editMode = false;
+
+  selectedIndex: number = -1;
+  selectedInstitution: InstitutionListModel;
+  institutionList: Array<InstitutionListModel>;
+
+
   @Input() name: string;
   @Output() focusOut: EventEmitter<any> = new EventEmitter<any>();
 
@@ -36,12 +45,9 @@ export class MyProfileComponent implements OnInit {
               public providerService: AccountService,
               private institutionService: InstitutionService,
               private router: Router,
-              private activatedRoute: ActivatedRoute) {
+              private activatedRoute: ActivatedRoute,
+              private accountInstitutionConnectorService: AccountInstitutionConnectorService) {
   }
-
-  editModeChange = () => {
-    this.editMode = this.editMode === false;
-  };
 
   ngOnInit(): void {
     if (!this.authenticationService.currentTokenValue.token) {
@@ -49,51 +55,58 @@ export class MyProfileComponent implements OnInit {
     }
     const tokenPayload = decode(this.authenticationService.currentTokenValue.token);
     this.loggedInUser = tokenPayload.sub;
+    this.loadUser();
+    this.getAllInstitutions();
+  }
 
+  loadUser = (): void => {
     this.activatedRoute.paramMap.subscribe(
       () => {
         const role = this.authenticationService.getRole();
         if (role === 'ROLE_IND') {
-          this.isProvider = false;
-          this.providerService.getUserDetails(this.loggedInUser).subscribe(
-            userDetails => {
-              this.indUser = userDetails;
-              this.indUserCopy = Object.assign({}, userDetails);
-            },
-            error => console.warn(error),
-          );
+          this.getUserDetails();
         } else {
-          this.isProvider = true;
-          this.providerService.fetchProviderAccountDetails(this.loggedInUser).subscribe(
-            (providerDetails: ProviderUserProfileDetailsModel) => {
-              this.providerAccount = providerDetails;
-              this.accountCopy = Object.assign({}, providerDetails);
-            }, error => {
-              console.warn(error)
-            }, () => {
-              this.getAllProviderTypes();
-            }
-          );
+          this.getProviderAccountDetails();
         }
       }
     );
+  };
 
+  getUserDetails = (): void => {
+    this.isProvider = false;
+    this.providerService.getUserDetails(this.loggedInUser).subscribe(
+      userDetails => {
+        this.indUser = userDetails;
+        this.indUserCopy = Object.assign({}, userDetails);
+      },
+      error => console.warn(error),
+    );
+  };
 
-  }
+  getProviderAccountDetails = (): void => {
+    this.isProvider = true;
+    this.providerService.fetchProviderAccountDetails(this.loggedInUser).subscribe(
+      (providerDetails: ProviderUserProfileDetailsModel) => {
+        this.providerAccount = providerDetails;
+        this.accountCopy = Object.assign({}, providerDetails);
+      }, error => {
+        console.warn(error)
+      }, () => {
+        this.getAllProviderTypes();
+      }
+    );
+  };
+
+  getAllInstitutions = (): void => {
+    this.institutionService.getAllInstitutions().subscribe(
+      value => this.institutionList = value,
+      error => console.warn(error),
+    )
+  };
 
   saveChanges = () => {
-    // if(this.providerAccount.id == null) error
     if (this.isProvider) {
-      this.providerService.editProviderAccountDetails(this.providerAccount, this.providerAccount.id).subscribe(
-        () => {
-          if (this.editMode) {
-            this.editMode = false;
-            this.accountCopy = Object.assign({}, this.providerAccount);
-          }
-        }, error => {
-          console.log(error);
-        }
-      );
+      this.editProviderAccount();
     } else {
       this.providerService.updateUserDetails(this.indUser).subscribe(
         value => {
@@ -107,6 +120,30 @@ export class MyProfileComponent implements OnInit {
       );
     }
 
+  };
+
+  editProviderAccount = (): void => {
+    if (this.selectedIndex != -1) {
+      let attachInstitutionModel: AttachInstitutionModel = {
+        institutionId: this.institutionList[this.selectedIndex].id,
+        providerEmail: this.providerAccount.email,
+      };
+      this.accountInstitutionConnectorService.attachInsitutionToProvider(attachInstitutionModel).subscribe(
+        () => this.selectedIndex = -1,
+        error => console.warn(error)
+      );
+    }
+    this.providerService.editProviderAccountDetails(this.providerAccount, this.providerAccount.id).subscribe(
+      () => {
+        if (this.editMode) {
+          this.editMode = false;
+          this.getProviderAccountDetails();
+          //     this.accountCopy = Object.assign({}, this.providerAccount);
+        }
+      }, error => {
+        console.log(error);
+      }
+    );
   };
 
   private getAllProviderTypes = () => {
@@ -142,5 +179,9 @@ export class MyProfileComponent implements OnInit {
 
   confirmDeletion() {
     this.router.navigate(['my-profile/confirm-deletion']);
+  }
+
+  fillFields(index: number) {
+    this.selectedInstitution = this.institutionList[index];
   }
 }

@@ -1,9 +1,10 @@
-package com.progmasters.mars.account_institution.connector;
+package com.progmasters.mars.account_institution.connector.dto;
 
 import com.progmasters.mars.account_institution.account.AccountType;
 import com.progmasters.mars.account_institution.account.domain.ProviderAccount;
 import com.progmasters.mars.account_institution.account.domain.ProviderType;
 import com.progmasters.mars.account_institution.account.dto.ProviderUserDetails;
+import com.progmasters.mars.account_institution.connector.domain.AccountInstitutionConnector;
 import com.progmasters.mars.account_institution.institution.domain.Institution;
 import com.progmasters.mars.account_institution.institution.dto.InstitutionDetailsData;
 import com.progmasters.mars.account_institution.institution.openinghours.dto.OpeningHoursData;
