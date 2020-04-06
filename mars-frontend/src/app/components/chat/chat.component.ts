@@ -173,6 +173,10 @@ export class ChatComponent implements OnInit {
   }
 
   closeContact(contact: ContactModel) {
-    this.contacts = this.contacts.filter(element => element != contact);
+    this.closeMessageWindow();
+    this.contactsService.deleteContact(this.from.email, contact.email).subscribe(
+      () => this.contacts = this.contacts.filter(element => element != contact),
+      error => console.log(error),
+    );
   }
 }

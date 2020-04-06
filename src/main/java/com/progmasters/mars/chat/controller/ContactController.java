@@ -45,4 +45,11 @@ public class ContactController {
 
         return new ResponseEntity<>(chatHistory, HttpStatus.OK);
     }
+
+    @DeleteMapping("/deleteContact")
+    public ResponseEntity<Void> deleteContact(@RequestParam("fromEmail") String fromEmail, @RequestParam("toEmail") String toEmail) {
+        chatService.deleteContact(fromEmail, toEmail);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

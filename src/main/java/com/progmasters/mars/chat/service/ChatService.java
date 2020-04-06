@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -43,6 +44,8 @@ public class ChatService {
             accountService.setLoginState(messageData.getFromEmail(), loginState);
         }
         Message message = new Message(messageData.getText(), messageData.getFromName(), messageData.getFromEmail(), messageData.getToName(), messageData.getToEmail());
+        connectionByUsers.setFromAccountActive(true);
+        connectionByUsers.setToAccountActive(true);
         message.setContact(connectionByUsers);
         messageRepository.save(message);
     }
@@ -53,18 +56,58 @@ public class ChatService {
         List<Contact> multipleContacts = contactRepository.findMultipleContacts(fromUser, toUser);
         boolean isSelfMessaging = contactCreationCommand.getFromEmail().equalsIgnoreCase(contactCreationCommand.getToEmail());
         if (multipleContacts.isEmpty() && !isSelfMessaging) {
-            Contact contact = new Contact(fromUser, toUser);
+            Contact contact = new Contact(fromUser, toUser, true);
             contactRepository.save(contact);
+        } else if (multipleContacts.size() == 1 && !isSelfMessaging) {
+            setCurrentContactActive(fromUser, multipleContacts);
+        }
+    }
+
+    private void setCurrentContactActive(User fromUser, List<Contact> multipleContacts) {
+        Contact currentContact = multipleContacts.get(0);
+        if (currentContact.getFromAccount().equals(fromUser)) {
+            currentContact.setFromAccountActive(true);
+        } else {
+            currentContact.setToAccountActive(true);
         }
     }
 
     public List<ContactsData> getContactsByEmail(String email) {
         List<ContactsData> contactsDataList = new ArrayList<>();
 
-        accountService.getRecievingUsersByEmail(email).stream().map(ContactsData::new).forEach(contactsDataList::add);
-        accountService.getProposingUsersByEmail(email).stream().map(ContactsData::new).forEach(contactsDataList::add);
+        List<String> activeContactEmails = getActiveContactEmails(email);
+
+        accountService.getRecievingUsersByEmail(email).stream()
+                .filter(user -> activeContactEmails.contains(user.getEmail()))
+                .map(ContactsData::new)
+                .forEach(contactsDataList::add);
+        accountService.getProposingUsersByEmail(email).stream()
+                .filter(user -> activeContactEmails.contains(user.getEmail()))
+                .map(ContactsData::new)
+                .forEach(contactsDataList::add);
 
         return contactsDataList;
+    }
+
+    private List<String> getActiveContactEmails(String email) {
+        List<Contact> contacts = contactRepository.findContactsByEmail(email);
+        List<String> activeContactEmails = contacts.stream()
+                .filter(contact ->
+                        ((contact.getFromAccount().getEmail().equals(email) && contact.isFromAccountActive())
+                                || (contact.getToAccount().getEmail().equals(email) && contact.isToAccountActive()))
+                )
+                .map(contact -> contact.getFromAccount().getEmail())
+                .collect(Collectors.toList());
+
+        activeContactEmails.addAll(contacts.stream()
+                .filter(contact ->
+                        ((contact.getFromAccount().getEmail().equals(email) && contact.isFromAccountActive())
+                                || (contact.getToAccount().getEmail().equals(email) && contact.isToAccountActive()))
+                )
+                .map(contact -> contact.getToAccount().getEmail())
+                .collect(Collectors.toList()));
+
+        return activeContactEmails;
     }
 
     public List<MessageData> getChatHistory(String fromEmail, String toEmail) {
@@ -77,5 +120,15 @@ public class ChatService {
             }
         }
         return chatHistory;
+    }
+
+    public void deleteContact(String fromEmail, String toEmail) {
+        Contact contact = contactRepository.findConnectionByUsers(fromEmail, toEmail);
+        if (fromEmail.equals(contact.getFromAccount().getEmail())) {
+            contact.setFromAccountActive(false);
+        } else {
+            contact.setToAccountActive(false);
+        }
+        contactRepository.save(contact);
     }
 }

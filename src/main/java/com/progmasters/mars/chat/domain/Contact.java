@@ -31,8 +31,16 @@ public class Contact {
     @OneToMany(mappedBy = "contact")
     private List<Message> messages;
 
-    public Contact(User fromAccount, User toAccount) {
+
+    private boolean isFromAccountActive;
+    private boolean isToAccountActive;
+
+    public Contact(User fromAccount, User toAccount, boolean isFromAccountActive) {
         this.fromAccount = fromAccount;
         this.toAccount = toAccount;
+        this.isFromAccountActive = isFromAccountActive;
+        this.isToAccountActive = false;
     }
+
+
 }

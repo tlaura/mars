@@ -18,4 +18,6 @@ public interface ContactRepository extends JpaRepository<Contact, Long> {
     @Query("select c from Contact c where (c.fromAccount= :fromAccount or c.toAccount= :fromAccount) and (c.fromAccount= :toAccount or c.toAccount= :toAccount)")
     List<Contact> findMultipleContacts(@Param("fromAccount") User fromAccount, @Param("toAccount") User toAccount);
 
+    @Query("select c from Contact c where (c.fromAccount.email= :email or c.toAccount.email= :email)")
+    List<Contact> findContactsByEmail(@Param("email") String email);
 }

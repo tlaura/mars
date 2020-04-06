@@ -32,5 +32,9 @@ export class ContactsService {
 
   fetchMessages = (from: string, to: string): Observable<any> => {
     return this.http.get(this.BASE_URL + '/contacts/history?fromEmail=' + from + '&toEmail=' + to);
+  };
+
+  deleteContact = (from: string, to: string): Observable<any> => {
+    return this.http.delete(this.BASE_URL + '/contacts/deleteContact?fromEmail=' + from + '&toEmail=' + to);
   }
 }
