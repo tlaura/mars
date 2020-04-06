@@ -53,8 +53,13 @@ export class AuthenticationService {
   }
 
   logout() {
+    // let currentUser = this.getCurrentUser().email;
+    // return this.http.post<any>(BASE_URL + '/logout', {email: currentUser}).subscribe(
+    //   () => {
     localStorage.removeItem('token');
     this.currentTokenSubject.next(null);
+    // }
+    // )
   }
 
   isAdmin() {

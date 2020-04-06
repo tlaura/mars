@@ -239,25 +239,25 @@
 
           </div>
         </div>
+      </div>
 
-        <button (click)="saveChanges()" *ngIf="editMode && isProvider"
-                [disabled]="username.invalid || providerServiceName.invalid || phone.invalid || providerAccount.ageGroupMin < 0 ||providerAccount.ageGroupMax > 99"
-                class="submit btn btn-info rounded-pill"
-                type="submit">
-          Mentés
-        </button>
-        <button (click)="saveChanges()" *ngIf="editMode && !isProvider"
-                [disabled]="username.invalid ||phone.invalid"
-                class="submit btn btn-info rounded-pill"
-                type="submit">
-          Mentés
-        </button>
+      <button (click)="saveChanges()" *ngIf="editMode && isProvider"
+              [disabled]="username.invalid || providerServiceName.invalid || phone.invalid || providerAccount.ageGroupMin < 0 ||providerAccount.ageGroupMax > 99"
+              class="submit btn btn-info rounded-pill"
+              type="submit">
+        Mentés
+      </button>
+      <button (click)="saveChanges()" *ngIf="editMode && !isProvider"
+              [disabled]="username.invalid ||phone.invalid"
+              class="submit btn btn-info rounded-pill"
+              type="submit">
+        Mentés
+      </button>
 
-        <div *ngIf="editMode" class="delete-profile-div-container">
-          <button (click)="confirmDeletion()" class="delete-button btn float-right rounded-pill" type="button">Fiók
-            törlése
-          </button>
-        </div>
+      <div *ngIf="editMode" class="delete-profile-div-container">
+        <button (click)="confirmDeletion()" class="delete-button btn float-right rounded-pill" type="button">Fiók
+          törlése
+        </button>
       </div>
     </div>
   </div>
