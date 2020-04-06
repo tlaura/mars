@@ -64,7 +64,7 @@ public class AccountServiceTest {
     @Test
     public void testRemoveById_shouldReturnTrue() {
         ProviderAccount account = (ProviderAccount) accountService.findByEmail("pecske92@gmail.com");
-        accountService.removeById(account.getId());
+        accountService.removeByEmail(account.getEmail());
 
         assertTrue(accountService.findAllAccounts().isEmpty());
     }

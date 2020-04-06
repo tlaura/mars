@@ -37,12 +37,12 @@ public class ExpirationService {
         List<ConfirmationToken> confirmationTokens = accountService.findAllConfirmationToken();
         for (ConfirmationToken confirmationToken : confirmationTokens) {
 
-            boolean tokenExpired = confirmationToken.getDate().plusHours(MAX_ELAPSED_HOURS).isBefore(LocalDateTime.now());
+            boolean tokenExpired = confirmationToken.getDate().plusHours(0).isBefore(LocalDateTime.now());
             if (!confirmationToken.isConfirmed() && tokenExpired) {
+                String userEmail = confirmationToken.getUser().getEmail();
                 accountService.removeConfirmationToken(confirmationToken.getId());
-                Long userId = confirmationToken.getUser().getId();
-                     accountInstitutionService.deleteAccountById(userId);
-                log.info("Account ID removed from db:\t" + userId);
+                accountInstitutionService.deleteAccountByEmail(userEmail);
+                log.info("Account removed from db:\t" + userEmail);
             }
         }
     }

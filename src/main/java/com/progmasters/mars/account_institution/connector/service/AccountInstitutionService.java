@@ -7,6 +7,7 @@ import com.google.maps.model.Duration;
 import com.google.maps.model.TravelMode;
 import com.progmasters.mars.account_institution.account.domain.ProviderAccount;
 import com.progmasters.mars.account_institution.account.domain.ProviderType;
+import com.progmasters.mars.account_institution.account.domain.User;
 import com.progmasters.mars.account_institution.account.dto.ProviderAccountCreationCommand;
 import com.progmasters.mars.account_institution.account.service.AccountService;
 import com.progmasters.mars.account_institution.connector.DistanceCalculationException;
@@ -117,11 +118,13 @@ public class AccountInstitutionService {
         accountInstitutionConnectorRepository.removeConnection(foundAccount, foundInstitution);
     }
 
-    public void deleteAccountById(Long accountId) {
-        ProviderAccount foundAccount = accountService.findById(accountId);
-        List<Institution> institutions = institutionService.getInstitutionsByAccount(foundAccount);
-        institutions.forEach(institution -> accountInstitutionConnectorRepository.removeConnection(foundAccount, institution));
-        accountService.removeById(foundAccount.getId());
+    public void deleteAccountByEmail(String accountEmail) {
+        User foundAccount = accountService.findByEmail(accountEmail);
+        if (foundAccount instanceof ProviderAccount) {
+            List<Institution> institutions = institutionService.getInstitutionsByAccount((ProviderAccount) foundAccount);
+            institutions.forEach(institution -> accountInstitutionConnectorRepository.removeConnection((ProviderAccount) foundAccount, institution));
+        }
+        accountService.removeByEmail(foundAccount.getEmail());
     }
 
     public List<AccountInstitutionListData> getAllListItems() {
