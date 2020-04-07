@@ -36,19 +36,29 @@ public class AccountInstitutionController {
 //            List<AccountInstitutionListData> allAccounts = accountInstitutionService.getAllListItems().get();
 //            responseEntity = new ResponseEntity<>(allAccounts, HttpStatus.OK);
 //        } catch (InterruptedException | ExecutionException e) {
-//            e.printStackTrace();
-//            responseEntity = new ResponseEntity<>(HttpStatus.FORBIDDEN);
+//            log.info(e.getMessage());
+//            responseEntity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 //        }
+//        return responseEntity;
         return accountInstitutionService.getAllListItems().thenApplyAsync(ResponseEntity::ok);
     }
 
     @GetMapping("/listByRange")
     public CompletableFuture<ResponseEntity<List<AccountInstitutionListData>>> getListByRange(@RequestParam("range") Long maxDistance, @RequestParam("lng") Double originLng, @RequestParam("lat") Double originLat) {
 
-        //  List<AccountInstitutionListData> accountsByRange = accountInstitutionService.getListItemsByDistance(originLng, originLat, maxDistance);
         log.info("List items by range requested");
-        //  return new ResponseEntity<>(accountsByRange, HttpStatus.OK);
+
         return accountInstitutionService.getListItemsByDistance(originLng, originLat, maxDistance).thenApplyAsync(ResponseEntity::ok);
+
+//        CompletableFuture<List<AccountInstitutionListData>> filteredList = accountInstitutionService.getListItemsByDistance(originLng, originLat, maxDistance);
+//        ResponseEntity<List<AccountInstitutionListData>> responseEntity;
+//        try {
+//            return new ResponseEntity<>(filteredList.get(), HttpStatus.OK);
+//        } catch (InterruptedException | ExecutionException e) {
+//            log.info(e.getMessage());
+//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//        }
+
     }
 
     @PostMapping
