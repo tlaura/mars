@@ -20,4 +20,8 @@ export class ProviderListComponent implements OnInit {
     this.providers.forEach(() => this.isSmall.push(true))
   }
 
+  details = (providerAccount: ProviderUserShortDetailsModel): string => {
+    return "provider-details/" + providerAccount.id;
+  }
+
 }
