@@ -189,75 +189,125 @@
       </div>
 
       <div class="col-sm-12 col-md-6" style="padding: 30px 0">
-        <div *ngIf="editMode" style="padding: 30px 0">
-          <button (click)="changePassword()" class="edit-button rounded-pill btn-light">
-            Jelszó módosítása
-          </button>
-        </div>
-        <br>
-
         <label *ngIf="isProvider">Intézmények:</label>
         <div *ngIf="isProvider">
           <div *ngFor="let institution of providerAccount?.institutionList"
-               class="card bg-light m-4 block-on-white-div">
-            <div class="card-header">
-              {{institution?.name}}
+               class="blue-block-on-white-div col my-3">
+            <div class="col-sm-12 custom-card-header pt-2">
+              <label class="text-uppercase mb-0">
+                {{institution?.name}}
+              </label>
             </div>
-            <div class="card-body">
-              {{institution?.description}}<br>
-              <hr>
-              {{institution?.phone}}<br>
-              {{institution?.website}}<br>
-              {{institution?.email}}<br>
+            <div class="decor-div-white"></div>
+            <div *ngIf="institution.zipcode" class="row mx-sm-0 mt-sm-2 col-sm-12">
+              <i class="icon-white fas fa-map-marker-alt"></i><label
+              class="mx-sm-2">{{institution.zipcode}} {{institution.city}} {{institution.address}}</label>
+            </div>
+            <div class="card-body py-2">
+              <label class="small text-justify">
+                {{institution?.description}}<br>
+              </label>
+              <div class="row mx-0 mt-3 mb-0">
+                <i class="fas fa-at icon-white"></i><label class="mx-sm-2 small">{{institution.email}}</label>
+              </div>
+
+              <div class="row mx-0 my-0">
+                <i class="fas fa-lg fa-mobile-alt icon-white"></i><label
+                class="mx-sm-2 small">{{institution.phone}}</label>
+              </div>
+
+              <div class="row mx-0 my-0">
+                <i *ngIf="institution.website" class="fas fa-globe-europe icon-white"></i>
+                <a [href]="'http://' + institution.website" class="mx-sm-2 small custom-link custom-link-white"
+                   target="_blank">{{institution.website}}</a>
+              </div>
+
               <div class="button-flex">
-                <button (click)="deleteInstitution(institution.id)" *ngIf="editMode" class="rounded-pill">Törlés
+                <button (click)="deleteInstitution(institution.id)" *ngIf="editMode"
+                        class="btn btn-sm rounded-pill delete-button">Törlés
                 </button>
               </div>
             </div>
           </div>
 
-          <div *ngIf="editMode">
+          <div *ngIf="editMode" class="decor-div-blue mt-5"></div>
+          <div class="row mx-0 my-3">
+            <button (click)="addInstitutionMode=true" *ngIf="editMode"
+                    class="btn btn-primary submit rounded-pill">
+              További intézmények hozzáadása
+            </button>
+          </div>
+          <div *ngIf="addInstitutionMode">
             <select (change)="fillFields(selectedIndex)" [(ngModel)]="selectedIndex"
-                    class="form-control-sm rounded-pill col-md-3 col-lg-2"
+                    class="form-control rounded-pill"
                     id="institution-type"
                     name="institution-type">
               <option selected value="-1">----------</option>
               <option *ngFor="let institution of institutionList; let i = index"
                       value="{{i}}">{{institution.name}}</option>
             </select>
-            <div class="card-header">
-              {{selectedInstitution?.name}}
-            </div>
-            <div class="card-body">
-              {{selectedInstitution?.description}}<br>
-              <hr>
-              {{selectedInstitution?.phone}}<br>
-              {{selectedInstitution?.website}}<br>
-              {{selectedInstitution?.email}}<br>
-            </div>
 
+            <div *ngIf="selectedInstitution" class="blue-block-on-white-div my-3">
+              <div class="col-sm-12 custom-card-header pt-2">
+                <label class="text-uppercase mb-0">
+                  {{selectedInstitution?.name}}
+                </label>
+              </div>
+              <div class="decor-div-white"></div>
+              <div *ngIf="selectedInstitution?.zipcode" class="row mx-sm-0 mt-sm-2 col-sm-12">
+                <i class="icon-white fas fa-map-marker-alt"></i><label
+                class="mx-sm-2">{{selectedInstitution?.zipcode}} {{selectedInstitution?.city}} {{selectedInstitution?.address}}</label>
+              </div>
+              <div class="card-body py-2">
+                <label class="small text-justify">
+                  {{selectedInstitution?.description}}<br>
+                </label>
+                <div class="row mx-0 mt-3 mb-0">
+                  <i class="fas fa-at icon-white"></i><label
+                  class="mx-sm-2 small">{{selectedInstitution?.email}}</label>
+                </div>
 
+                <div class="row mx-0 my-0">
+                  <i class="fas fa-lg fa-mobile-alt icon-white"></i><label
+                  class="mx-sm-2 small">{{selectedInstitution?.phone}}</label>
+                </div>
+
+                <div *ngIf="selectedInstitution?.website" class="row mx-0 my-0">
+                  <i class="fas fa-globe-europe icon-white"></i>
+                  <a [href]="'http://' + selectedInstitution?.website"
+                     class="mx-sm-2 small custom-link custom-link-white"
+                     target="_blank">{{selectedInstitution?.website}}</a>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
-      <button (click)="saveChanges()" *ngIf="editMode && isProvider"
-              [disabled]="username.invalid || providerServiceName.invalid || phone.invalid || providerAccount.ageGroupMin < 0 ||providerAccount.ageGroupMax > 99"
-              class="submit btn btn-info rounded-pill"
-              type="submit">
-        Mentés
-      </button>
-      <button (click)="saveChanges()" *ngIf="editMode && !isProvider"
-              [disabled]="username.invalid ||phone.invalid"
-              class="submit btn btn-info rounded-pill"
-              type="submit">
-        Mentés
-      </button>
-
-      <div *ngIf="editMode" class="delete-profile-div-container">
-        <button (click)="confirmDeletion()" class="delete-button btn float-right rounded-pill" type="button">Fiók
-          törlése
+      <div class="row mx-0 mt-3">
+        <button (click)="saveChanges()" *ngIf="editMode && isProvider"
+                [disabled]="username.invalid || providerServiceName.invalid || phone.invalid || providerAccount.ageGroupMin < 0 ||providerAccount.ageGroupMax > 99"
+                class="submit btn btn-info rounded-pill"
+                type="submit">
+          Mentés
         </button>
+
+        <button (click)="saveChanges()" *ngIf="editMode && !isProvider"
+                [disabled]="username.invalid ||phone.invalid"
+                class="submit btn btn-info rounded-pill"
+                type="submit">
+          Mentés
+        </button>
+
+        <button (click)="changePassword()" class="mx-2 edit-button rounded-pill btn btn-primary submit">
+          Jelszó módosítása
+        </button>
+
+        <div *ngIf="editMode" class="delete-profile-div-container">
+          <button (click)="confirmDeletion()" class="delete-button btn rounded-pill" type="button">Fiók
+            törlése
+          </button>
+        </div>
       </div>
     </div>
   </div>

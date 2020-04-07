@@ -37,7 +37,15 @@
 
 .delete-button {
   background-color: rgb(255, 72, 0);
-  padding: 15px;
+  color: white;
+  position: absolute;
+  right: 1rem;
+  bottom: 1rem;
 }
 
-
+.custom-card-header {
+  border-top-right-radius: 2rem;
+  border-top-left-radius: 2rem;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}

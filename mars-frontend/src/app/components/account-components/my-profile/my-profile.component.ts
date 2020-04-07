@@ -104,23 +104,7 @@ export class MyProfileComponent implements OnInit {
     )
   };
 
-  saveChanges = () => {
-    if (this.isProvider) {
-      this.editProviderAccount();
-    } else {
-      this.providerService.updateUserDetails(this.indUser).subscribe(
-        value => {
-          if (this.editMode) {
-            this.editMode = false;
-            this.indUser = value;
-            this.indUserCopy = value;
-          }
-        },
-        error => console.warn(error)
-      );
-    }
-
-  };
+  addInstitutionMode: boolean = false;
 
   editProviderAccount = (): void => {
     if (this.selectedIndex != -1) {
@@ -153,10 +137,23 @@ export class MyProfileComponent implements OnInit {
     );
   };
 
-  cancelEdit = () => {
-    this.editMode = false;
-    this.providerAccount = Object.assign({}, this.accountCopy);
-    this.indUser = Object.assign({}, this.indUserCopy);
+  saveChanges = () => {
+    if (this.isProvider) {
+      this.addInstitutionMode = false;
+      this.editProviderAccount();
+    } else {
+      this.providerService.updateUserDetails(this.indUser).subscribe(
+        value => {
+          if (this.editMode) {
+            this.editMode = false;
+            this.indUser = value;
+            this.indUserCopy = value;
+          }
+        },
+        error => console.warn(error)
+      );
+    }
+
   };
 
   deleteInstitution = (id: number) => {
@@ -171,6 +168,13 @@ export class MyProfileComponent implements OnInit {
         console.log(error);
       }
     );
+  };
+
+  cancelEdit = () => {
+    this.editMode = false;
+    this.providerAccount = Object.assign({}, this.accountCopy);
+    this.indUser = Object.assign({}, this.indUserCopy);
+    this.addInstitutionMode = false;
   };
 
   changePassword() {
