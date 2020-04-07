@@ -24,8 +24,8 @@
           </div>
 
 
-          <div class="row mx-0">
-            <i *ngIf="institution?.website" class="fas fa-globe-europe icon-tomato"></i>
+          <div *ngIf="institution?.website" class="row mx-0">
+            <i class="fas fa-globe-europe icon-tomato"></i>
             <a [href]="'http://' + institution?.website" class="mx-sm-2 small custom-link"
                target="_blank">{{institution?.website}}</a>
           </div>
