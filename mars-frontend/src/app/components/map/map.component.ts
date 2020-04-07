@@ -193,6 +193,7 @@ export class MapComponent implements OnInit {
   providerDetail: ProviderUserDetailsModel;
   @Output()
   locationRangeEmitter: EventEmitter<LocationRangeModel> = new EventEmitter<LocationRangeModel>();
+  windowWidth = window.innerWidth;
 
   constructor(private mapsAPILoader: MapsAPILoader,
               private institutionService: InstitutionService,
