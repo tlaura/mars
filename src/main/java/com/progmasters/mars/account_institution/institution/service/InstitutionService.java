@@ -34,6 +34,18 @@ public class InstitutionService {
     @Value("${regex.validator.email}")
     private String email;
 
+    @Value("${institution.zipcode.max}")
+    private Integer maxZipcode;
+
+    @Value("${institution.zipcode.min}")
+    private Integer minZipcode;
+
+    @Value("${institution.description.min}")
+    private Integer descriptionMinLength;
+
+    @Value("${institution.description.max}")
+    private Integer descriptionMaxLength;
+
     private final InstitutionRepository institutionRepository;
     private final InstitutionPetitionRepository institutionPetitionRepository;
     private final ConfirmationInstitutionRepository confirmationInstitutionRepository;
@@ -110,8 +122,8 @@ public class InstitutionService {
     }
 
     private boolean isValidInstitution(Institution institution) {
-        boolean isValid = institution.getZipcode() < 10000 && institution.getZipcode() > 999 &&
-                institution.getDescription().length() > 30 && institution.getDescription().length() < 200 &&
+        boolean isValid = institution.getZipcode() < minZipcode && institution.getZipcode() > maxZipcode &&
+                institution.getDescription().length() > descriptionMinLength && institution.getDescription().length() < descriptionMaxLength &&
                 institution.getEmail().matches(email);
         return isValid;
     }

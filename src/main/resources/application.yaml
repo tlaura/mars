@@ -68,5 +68,13 @@ jwt:
 
 executor:
   corePoolSize: 20
-  maxPoolSize: 100
-  queueCapacity: 50
+  maxPoolSize: 200
+  queueCapacity: 500
+
+institution:
+  zipcode:
+    min: 999
+    max: 10000
+  description:
+    min: 30
+    max: 200
