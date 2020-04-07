@@ -76,18 +76,12 @@ public class InstitutionService {
         return institutionRepository.getInstitutionsByAccount(providerAccount);
     }
 
-    public List<Institution> findInstitutionsWithoutProvider() {
-        return institutionRepository.findInstitutionsWithoutProvider();
-    }
 
     @Async
     public CompletableFuture<List<Institution>> findInstitutionsWithoutProviderConcurrently() {
         return CompletableFuture.completedFuture(institutionRepository.findInstitutionsWithoutProvider());
     }
 
-    public List<Institution> findInstitutionsWithProvider() {
-        return institutionRepository.findInstitutionsWithProvider();
-    }
 
     @Async
     public CompletableFuture<List<Institution>> findInstitutionsWithProviderConcurrently() {
@@ -128,7 +122,6 @@ public class InstitutionService {
                 if (institutionRepository.findAllByName(institution.getName()).isEmpty()
                         && institutionRepository.findAllByEmail(institution.getEmail()).isEmpty()
                         && isValidInstitution(institution)) {
-                    //   institutionRepository.save(institution);
                     saveList.add(institution);
                 }
             }
@@ -145,10 +138,9 @@ public class InstitutionService {
 
 
     private boolean isValidInstitution(Institution institution) {
-        boolean isValid = institution.getZipcode() < minZipcode && institution.getZipcode() > maxZipcode &&
+        return institution.getZipcode() < minZipcode && institution.getZipcode() > maxZipcode &&
                 institution.getDescription().length() > descriptionMinLength && institution.getDescription().length() < descriptionMaxLength &&
                 institution.getEmail().matches(email);
-        return isValid;
     }
 
     List<Institution> findAllInstitutions() {
