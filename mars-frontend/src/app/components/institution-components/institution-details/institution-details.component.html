@@ -41,7 +41,7 @@
     </div>
     <!--providers-->
 
-    <h6 class="tomato-head mb-1 mt-3">Szolgáltatások:</h6>
+    <h6 *ngIf="institution?.providers" class="tomato-head mb-1 mt-3">Szolgáltatások:</h6>
     <div *ngIf="institution?.providers" class="provider-div col-md-8 offset-md-2 p-sm-0 mb-3">
       <app-provider-list *ngIf="institution?.providers"
                          [providers]="institution?.providers"
