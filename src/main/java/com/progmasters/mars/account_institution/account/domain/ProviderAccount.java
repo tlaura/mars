@@ -5,6 +5,8 @@ import com.progmasters.mars.account_institution.connector.domain.AccountInstitut
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -25,6 +27,7 @@ public class ProviderAccount extends User {
     @Column(name = "provider_service_name")
     private String providerServiceName;
 
+    @LazyCollection(LazyCollectionOption.FALSE)
     @Enumerated(EnumType.STRING)
     @ElementCollection
     @CollectionTable(name = "provider_account_type", joinColumns = @JoinColumn(name = "provider_account_id"))
@@ -44,6 +47,7 @@ public class ProviderAccount extends User {
     @Column(name = "longitude")
     private Double longitude;
 
+    @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(mappedBy = "providerAccount")
     private List<AccountInstitutionConnector> accountInstitutionConnectors;
 
