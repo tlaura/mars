@@ -18,6 +18,8 @@ public class UserDetailsData {
 
     private String email;
 
+    private String website;
+
     private String phone;
 
     private String role;
@@ -35,6 +37,7 @@ public class UserDetailsData {
         this.password = user.getPassword();
         this.email = user.getEmail();
         this.phone = user.getPhone();
+        this.website = user.getWebsite();
         this.role = user.getRole().toString();
         this.zipcode = user.getZipcode();
         this.city = user.getCity();

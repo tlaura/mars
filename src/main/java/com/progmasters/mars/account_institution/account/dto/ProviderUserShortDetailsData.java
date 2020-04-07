@@ -21,6 +21,7 @@ public class ProviderUserShortDetailsData {
     private String name;
     private String email;
     private String phone;
+    private String website;
     private Integer zipcode;
     private String city;
     private String address;
@@ -33,6 +34,7 @@ public class ProviderUserShortDetailsData {
         this.providerServiceName = providerAccount.getProviderServiceName();
         this.name = providerAccount.getName();
         this.email = providerAccount.getEmail();
+        this.website = providerAccount.getWebsite();
         this.phone = providerAccount.getPhone();
         this.zipcode = providerAccount.getZipcode();
         this.city = providerAccount.getCity();

@@ -56,6 +56,7 @@ public class ProviderAccount extends User {
         super.setAddress(providerAccountCreationCommand.getAddress());
         super.setEmail(providerAccountCreationCommand.getEmail());
         super.setPhone(providerAccountCreationCommand.getPhone());
+        super.setWebsite(providerAccountCreationCommand.getWebsite());
         this.ageGroupMin = providerAccountCreationCommand.getAgeGroupMin();
         this.ageGroupMax = providerAccountCreationCommand.getAgeGroupMax();
         this.types = providerAccountCreationCommand.getTypes().stream().map(ProviderType::getTypeByHungarianName).collect(Collectors.toList());

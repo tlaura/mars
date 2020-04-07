@@ -163,6 +163,7 @@ public class AccountService {
         providerAccount.setProviderServiceName(providerUserDetails.getProviderServiceName());
         providerAccount.setPhone(providerUserDetails.getPhone());
         providerAccount.setEmail(providerUserDetails.getEmail());
+        providerAccount.setWebsite(providerUserDetails.getWebsite());
         providerAccount.setZipcode(providerUserDetails.getZipcode());
         providerAccount.setCity(providerUserDetails.getCity());
         providerAccount.setAddress(providerUserDetails.getAddress());
@@ -256,6 +257,7 @@ public class AccountService {
     private void updateUserDetails(User user, UserDetailsData userDetailsData) {
         user.setName(userDetailsData.getName());
         user.setPhone(userDetailsData.getPhone());
+        user.setWebsite(userDetailsData.getWebsite());
         user.setZipcode(userDetailsData.getZipcode());
         user.setCity(userDetailsData.getCity());
         user.setAddress(userDetailsData.getAddress());

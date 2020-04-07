@@ -24,6 +24,8 @@ public class UserCreationCommand {
     @NotEmpty
     private String email;
 
+    private String website;
+
     private String phone;
     private Integer zipcode;
     private String city;

@@ -23,6 +23,7 @@ public class ProviderUserDetails {
     private String name;
     private String email;
     private String phone;
+    private String website;
     private Integer zipcode;
     private String city;
     private String address;
@@ -42,6 +43,7 @@ public class ProviderUserDetails {
         this.phone = providerAccount.getPhone();
         this.zipcode = providerAccount.getZipcode();
         this.city = providerAccount.getCity();
+        this.website = providerAccount.getWebsite();
         this.address = providerAccount.getAddress();
         this.ageGroupMin = providerAccount.getAgeGroupMin();
         this.ageGroupMax = providerAccount.getAgeGroupMax();

@@ -30,7 +30,6 @@ export class ChatComponent implements OnInit {
   private stompClient;
 
   constructor(private socketService: SocketService, private authenticationService: AuthenticationService, private contactsService: ContactsService) {
-
   }
 
   ngOnInit(): void {

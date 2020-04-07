@@ -89,6 +89,25 @@
         </div>
         <br>
 
+        <label>Website:</label>
+        <div *ngIf='!editMode' class="col-sm-9">
+          <p *ngIf="isProvider"> {{providerAccount?.website}} </p>
+          <p *ngIf="!isProvider"> {{indUser?.website}} </p>
+        </div>
+        <div class="form-group  col-sm-12 col-md-7">
+          <input
+            *ngIf='editMode && isProvider' [(ngModel)]='providerAccount.website' [formControl]="website"
+            class='text-dark form-control' name="website" type='text'>
+          <input
+            *ngIf='editMode && !isProvider' [(ngModel)]='indUser.website' [formControl]="website"
+            class='text-dark form-control' name="website" type='text'>
+          <small *ngIf="website.errors?.pattern && editMode"
+                 class="text-danger col-sm-12 col-md-12">
+            Érvénytelen weboldal!
+          </small>
+        </div>
+        <br>
+
         <label>Cím:</label>
         <div *ngIf='!editMode' class="row mx-0">
           <div class="col-sm-4">

@@ -53,6 +53,9 @@ public class User implements Serializable {
     @Column(name = "city")
     private String city;
 
+    @Column(name = "website")
+    private String website;
+
     @Column(name = "address")
     private String address;
 
@@ -76,6 +79,7 @@ public class User implements Serializable {
         this.name = userCreationCommand.getName();
         this.password = userCreationCommand.getPassword();
         this.email = userCreationCommand.getEmail();
+        this.website = userCreationCommand.getWebsite();
         this.phone = userCreationCommand.getPhone();
         this.role = Role.ROLE_IND;
         this.zipcode = userCreationCommand.getZipcode();

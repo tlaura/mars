@@ -47,22 +47,6 @@ public class UserController {
         binder.addValidators(userValidator);
     }
 
-//    @GetMapping("/login")
-//    public ResponseEntity<AuthenticatedUserDetails> getUserInfo() {
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        UserDetails user = (UserDetails) authentication.getPrincipal();
-//        log.info("Login is requested!");
-//
-//        AuthenticatedUserDetails authenticatedUserDetails = accountService.getAuthenticatedUserDetails(user.getUsername());
-//        ResponseEntity<AuthenticatedUserDetails> responseEntity;
-//        if (accountService.isUserConfirmed(authenticatedUserDetails.getEmail())) {
-//            responseEntity = new ResponseEntity<>(authenticatedUserDetails, HttpStatus.OK);
-//        } else {
-//            responseEntity = new ResponseEntity<>(HttpStatus.FORBIDDEN);
-//        }
-//        return responseEntity;
-//    }
-
     @PostMapping("/login")
     public ResponseEntity<JwtAuthenticationResponse> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
         log.info("Login requested");

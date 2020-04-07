@@ -38,6 +38,7 @@ export class MyProfileComponent implements OnInit {
   username = new FormControl('', Validators.required);
   providerServiceName = new FormControl('', Validators.required);
   phone = new FormControl('', [Validators.required, Validators.pattern(validatorBounds.phoneRegex)]);
+  website = new FormControl('', [Validators.required, Validators.pattern(validatorBounds.websiteRegex)]);
 
   allTypes: Array<InstitutionTypeModel> = [];
 

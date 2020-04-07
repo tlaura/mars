@@ -6,6 +6,7 @@ export interface ProviderUserProfileDetailsModel {
   providerServiceName: string;
   password: string;
   email: string;
+  website: string;
   phone: string;
   zipcode: number;
   city: string;

@@ -186,7 +186,7 @@ public class AccountServiceTest {
     }
 
     private UserCreationCommand createOneUserCommand() {
-        return new UserCreationCommand("Pecske", "Test123", "peter.erdei92@gmail.com",
+        return new UserCreationCommand("Pecske", "Test123", "peter.erdei92@gmail.com", "www.testing.com",
                 "+36205851886", 1089, "Budapest", "Orczy út 43", false);
     }
 

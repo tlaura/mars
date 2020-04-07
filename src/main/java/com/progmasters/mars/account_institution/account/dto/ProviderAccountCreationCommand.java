@@ -30,8 +30,8 @@ public class ProviderAccountCreationCommand extends UserCreationCommand {
     private List<InstitutionCreationCommand> institutions;
 
     @Builder
-    public ProviderAccountCreationCommand(@NotBlank @NotEmpty String name, @NotBlank @NotEmpty String password, @NotBlank @NotEmpty String email, String phone, Integer zipcode, String city, String address, Boolean newsletter, @NotBlank @NotEmpty String providerServiceName, @NotNull @Size(min = 1) List<String> types, Integer ageGroupMin, Integer ageGroupMax, List<InstitutionCreationCommand> institutions) {
-        super(name, password, email, phone, zipcode, city, address, newsletter);
+    public ProviderAccountCreationCommand(@NotBlank @NotEmpty String name, @NotBlank @NotEmpty String password, @NotBlank @NotEmpty String email, String website, String phone, Integer zipcode, String city, String address, Boolean newsletter, @NotBlank @NotEmpty String providerServiceName, @NotNull @Size(min = 1) List<String> types, Integer ageGroupMin, Integer ageGroupMax, List<InstitutionCreationCommand> institutions) {
+        super(name, password, email, website, phone, zipcode, city, address, newsletter);
         this.providerServiceName = providerServiceName;
         this.types = types;
         this.ageGroupMin = ageGroupMin;
