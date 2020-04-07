@@ -30,9 +30,9 @@ public class ExpirationService {
     //Every 3 days
     //@Scheduled(cron = "0 0 0 * * 1/3")
     //Every 3 minutes
-     @Scheduled(cron = "0 1/3 * * * *")
-     //Daily
-     // @Scheduled(cron = "0 0 0 * * *")
+    // @Scheduled(cron = "0 1/3 * * * *")
+    //Daily
+    @Scheduled(cron = "0 0 0 * * *")
     private void removeUnconfirmedUsers() {
         List<ConfirmationToken> confirmationTokens = accountService.findAllConfirmationToken();
         for (ConfirmationToken confirmationToken : confirmationTokens) {

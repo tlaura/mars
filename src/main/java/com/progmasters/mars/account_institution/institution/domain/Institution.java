@@ -6,6 +6,8 @@ import com.progmasters.mars.account_institution.institution.openinghours.domain.
 import com.progmasters.mars.map.dto.GeoLocationData;
 import com.progmasters.mars.util.ExcelFileLoader;
 import lombok.*;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
@@ -22,10 +24,11 @@ import java.util.List;
 @AllArgsConstructor
 public class Institution extends TempInstitution {
 
-
+    @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(mappedBy = "institution")
     private List<OpeningHours> openingHours;
 
+    @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(mappedBy = "institution")
     private List<AccountInstitutionConnector> accountInstitutionConnectors;
 

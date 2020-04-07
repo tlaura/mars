@@ -1,16 +1,11 @@
 package com.progmasters.mars.account_institution.connector.service;
 
 import com.google.maps.errors.NotFoundException;
-import com.google.maps.model.Distance;
-import com.google.maps.model.DistanceMatrix;
-import com.google.maps.model.Duration;
-import com.google.maps.model.TravelMode;
 import com.progmasters.mars.account_institution.account.domain.ProviderAccount;
 import com.progmasters.mars.account_institution.account.domain.ProviderType;
 import com.progmasters.mars.account_institution.account.domain.User;
 import com.progmasters.mars.account_institution.account.dto.ProviderAccountCreationCommand;
 import com.progmasters.mars.account_institution.account.service.AccountService;
-import com.progmasters.mars.account_institution.connector.DistanceCalculationException;
 import com.progmasters.mars.account_institution.connector.domain.AccountInstitutionConnector;
 import com.progmasters.mars.account_institution.connector.dto.AccountInstitutionAttachData;
 import com.progmasters.mars.account_institution.connector.dto.AccountInstitutionListData;
@@ -25,17 +20,16 @@ import com.progmasters.mars.account_institution.institution.service.Confirmation
 import com.progmasters.mars.account_institution.institution.service.InstitutionService;
 import com.progmasters.mars.exception.EmailAlreadyExistsException;
 import com.progmasters.mars.map.MapService;
-import com.progmasters.mars.map.dto.DistanceData;
 import com.progmasters.mars.map.dto.GeoLocationData;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
@@ -47,6 +41,8 @@ import java.util.stream.Collectors;
 public class AccountInstitutionService {
 
     private static final Integer M_TO_KM = 1000;
+    private static final Integer GOOGLE_MAX_DESTINATION_LIMIT_PER_QUERY = 25;
+
 
     private final AccountService accountService;
     private final InstitutionService institutionService;
@@ -127,57 +123,66 @@ public class AccountInstitutionService {
         accountService.removeByEmail(foundAccount.getEmail());
     }
 
-    public List<AccountInstitutionListData> getAllListItems() {
+    public CompletableFuture<List<AccountInstitutionListData>> getAllListItems() {
         List<AccountInstitutionListData> allAccounts = new ArrayList<>();
-        List<ProviderAccount> providerAccounts = accountService.findAllAccountsWithoutInstitution();
-        List<Institution> institutions = institutionService.findInstitutionsWithoutProvider();
-        List<Institution> institutionsWithAccount = institutionService.findInstitutionsWithProvider();
-        providerAccounts.stream().map(AccountInstitutionListData::new).forEach(allAccounts::add);
-        institutions.stream().map(AccountInstitutionListData::new).forEach(allAccounts::add);
-        institutionsWithAccount.stream().map(AccountInstitutionListData::new).forEach(allAccounts::add);
-        return allAccounts;
+        //   List<ProviderAccount> providerAccounts = accountService.findAllAccountsWithoutInstitution();
+        //   List<Institution> institutions = institutionService.findInstitutionsWithoutProvider();
+        //   List<Institution> institutionsWithAccount = institutionService.findInstitutionsWithProvider();
+
+
+        CompletableFuture<Void> futureProviders = accountService.findAllAccountsWithoutInstitutionConcurrently()
+                .thenAcceptAsync(providerAccounts -> providerAccounts
+                        .stream()
+                        .map(AccountInstitutionListData::new)
+                        .forEach(allAccounts::add));
+        CompletableFuture<Void> futureInstitutions = institutionService.findInstitutionsWithoutProviderConcurrently()
+                .thenAcceptAsync(institutions -> institutions
+                        .stream()
+                        .map(AccountInstitutionListData::new)
+                        .forEach(allAccounts::add));
+        CompletableFuture<Void> futureInstitutionsWithProviders = institutionService.findInstitutionsWithProviderConcurrently()
+                .thenAcceptAsync(institutions -> institutions
+                        .stream()
+                        .map(AccountInstitutionListData::new)
+                        .forEach(allAccounts::add));
+
+        CompletableFuture<Void> futureResult = CompletableFuture.allOf(futureProviders, futureInstitutions, futureInstitutionsWithProviders);
+
+        //   providerAccounts.stream().map(AccountInstitutionListData::new).forEach(allAccounts::add);
+        //    institutions.stream().map(AccountInstitutionListData::new).forEach(allAccounts::add);
+        //    institutionsWithAccount.stream().map(AccountInstitutionListData::new).forEach(allAccounts::add);
+        return futureResult.thenApplyAsync(aVoid -> allAccounts);
     }
 
-    public List<AccountInstitutionListData> getListItemsByDistance(Double originLng, Double originLat, Long maxDistance) {
-        List<AccountInstitutionListData> allAccounts = getAllListItems();
+    public CompletableFuture<List<AccountInstitutionListData>> getListItemsByDistance(Double originLng, Double originLat, Long maxDistance) {
 
-        return allAccounts.stream().filter(account -> {
-            try {
-                return isAccountWithinRange(originLng, originLat, maxDistance, account).get();
-            } catch (InterruptedException | ExecutionException e) {
-                log.info(e.getMessage());
-                return false;
-            }
-        }).collect(Collectors.toList());
+        return getAllListItems()
+                .thenApplyAsync(allAccounts -> getSubLists(allAccounts)
+                        .stream()
+                        .map(subList ->
+                                getAccountInstitutionListData(originLng, originLat, maxDistance, subList)
+                        )
+                        .flatMap(Collection::stream).collect(Collectors.toList()));
     }
 
-    @Async
-    CompletableFuture<Boolean> isAccountWithinRange(Double originLng, Double originLat, Long maxDistance, AccountInstitutionListData account) {
-        boolean withinRange = false;
-        if (account.getZipcode() != null && account.getCity() != null && account.getAddress() != null) {
-            String destination = account.getZipcode() + " " + account.getCity() + " " + account.getAddress();
-            List<TravelMode> travelModes = List.of(TravelMode.DRIVING, TravelMode.WALKING, TravelMode.TRANSIT);
-            List<CompletableFuture<Boolean>> isWithinRangeList = travelModes.stream()
-                    .map(travelMode -> getDistanceByTravelMode(originLng, originLat, destination, travelMode)
-                            .thenApplyAsync(distanceData -> (distanceData != null) && (distanceData.getDistance() < maxDistance))).collect(Collectors.toList());
-            withinRange = isWithinRangeList.stream().anyMatch(CompletableFuture::join);
+    private List<List<AccountInstitutionListData>> getSubLists(List<AccountInstitutionListData> allAccounts) {
+        List<List<AccountInstitutionListData>> listOfSublists = new ArrayList<>();
+        for (int i = 0; i < allAccounts.size(); i += GOOGLE_MAX_DESTINATION_LIMIT_PER_QUERY) {
+            int step = ((i + GOOGLE_MAX_DESTINATION_LIMIT_PER_QUERY) > allAccounts.size()) ? (allAccounts.size() - i) : GOOGLE_MAX_DESTINATION_LIMIT_PER_QUERY;
+            List<AccountInstitutionListData> subList = allAccounts.subList(i, i + step);
+            listOfSublists.add(subList);
         }
-        return CompletableFuture.completedFuture(withinRange);
+        return listOfSublists;
     }
 
-    @Async
-    CompletableFuture<DistanceData> getDistanceByTravelMode(Double originLng, Double originLat, String destination, TravelMode travelMode) throws DistanceCalculationException {
-        return mapService.calculateDistanceByGivenTravelModeConcurrently(originLng, originLat, destination, travelMode).thenApplyAsync(matrix -> createDistanceData(matrix, travelMode));
-    }
-
-    private DistanceData createDistanceData(DistanceMatrix matrix, TravelMode travelMode) {
-        Distance rawDistance = matrix.rows[0].elements[0].distance;
-        Duration duration = matrix.rows[0].elements[0].duration;
-        if (rawDistance != null && duration != null) {
-            Long distance = rawDistance.inMeters / M_TO_KM;
-            return new DistanceData(travelMode, distance, duration);
+    private List<AccountInstitutionListData> getAccountInstitutionListData(Double originLng, Double originLat, Long maxDistance, List<AccountInstitutionListData> subList) {
+        List<AccountInstitutionListData> result = new ArrayList<>();
+        try {
+            result = mapService.findAccountsWithinRange(originLng, originLat, subList, maxDistance).get();
+        } catch (InterruptedException | ExecutionException e) {
+            log.info(e.getMessage());
         }
-        return null;
+        return result;
     }
 
     public void evaluateInstitution(Long id, Boolean accepted) throws NotFoundException {

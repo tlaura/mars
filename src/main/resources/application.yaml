@@ -10,8 +10,8 @@ spring:
       ddl-auto: update
     properties:
       hibernate:
-        show_sql: true
-        format_sql: true
+        show_sql: false
+        format_sql: false
         dialect: org.hibernate.dialect.MySQL8Dialect
     generate-ddl: true
   http:
@@ -68,5 +68,13 @@ jwt:
 
 executor:
   corePoolSize: 20
-  maxPoolSize: 100
-  queueCapacity: 50
+  maxPoolSize: 200
+  queueCapacity: 500
+
+institution:
+  zipcode:
+    min: 999
+    max: 10000
+  description:
+    min: 30
+    max: 200
