@@ -15,6 +15,7 @@ export class NormalUserComponent implements OnInit {
   isPasswordValid: boolean = false;
   registerForm: FormGroup;
   addressFormGroup: FormGroup;
+  loading: boolean = false;
 
   constructor(private accountService: AccountService, private router: Router) {
   }
@@ -55,13 +56,15 @@ export class NormalUserComponent implements OnInit {
     if (this.isPasswordValid) {
       this.registerForm.markAllAsTouched();
       const formData: NormalAccountRegisterModel = this.registerForm.value;
+      this.loading = true;
       this.accountService.saveNormalAccount(formData).subscribe(
         () => {
           this.router.navigate(['registration-complete']);
         },
         error => {
           validationHandler(error, this.registerForm);
-        }
+        },
+        () => this.loading = false
       );
     }
   }

@@ -18,6 +18,7 @@ export class ProviderUserComponent implements OnInit {
   haveProviderCustomAddress: boolean = false;
   isPasswordValid: boolean = false;
   registerForm: FormGroup;
+  loading: boolean = false;
 
   allType: Array<InstitutionTypeModel> = [];
 
@@ -64,7 +65,7 @@ export class ProviderUserComponent implements OnInit {
     if (this.isPasswordValid) {
       this.registerForm.markAllAsTouched();
       const formData: ProviderAccountRegisterModel = this.registerForm.value;
-
+      this.loading = true;
       this.accountService.saveProviderAccount(formData).subscribe(
         () => {
           this.router.navigate(['registration-complete']);
@@ -73,7 +74,8 @@ export class ProviderUserComponent implements OnInit {
           validationHandler(error, this.registerForm);
           (this.registerForm.get('institutions') as FormArray)
             .controls.forEach((control) => validationHandler(error, (control as FormGroup)))
-        }
+        },
+        () => this.loading = false
       );
     }
   }

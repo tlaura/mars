@@ -12,6 +12,7 @@ import {Institution} from "../../../account-institution/institution/models/insti
 })
 export class InstitutionFormComponent implements OnInit {
 
+  loading: boolean = false;
   institutionForm: FormGroup;
 
   constructor(private institutionService: InstitutionService,
@@ -40,12 +41,14 @@ export class InstitutionFormComponent implements OnInit {
   //      const formData: ProviderAccountRegisterModel = this.registerForm.value;
   submit() {
     const formData: Institution = this.institutionForm.value;
+    this.loading = true;
     this.institutionService.saveInstitution(formData)
       .subscribe(
         () => this.router.navigate(["institution-list"]),
         error => {
           validationHandler(error, this.institutionForm);
-        }
+        },
+        () => this.loading = false
       );
 
   }
