@@ -30,14 +30,14 @@ public class ExpirationService {
     //Every 3 days
     //@Scheduled(cron = "0 0 0 * * 1/3")
     //Every 3 minutes
-    // @Scheduled(cron = "0 1/3 * * * *")
-    //Daily
-    @Scheduled(cron = "0 0 0 * * *")
+     @Scheduled(cron = "0 1/3 * * * *")
+     //Daily
+     // @Scheduled(cron = "0 0 0 * * *")
     private void removeUnconfirmedUsers() {
         List<ConfirmationToken> confirmationTokens = accountService.findAllConfirmationToken();
         for (ConfirmationToken confirmationToken : confirmationTokens) {
 
-            boolean tokenExpired = confirmationToken.getDate().plusHours(0).isBefore(LocalDateTime.now());
+            boolean tokenExpired = confirmationToken.getDate().plusHours(MAX_ELAPSED_HOURS).isBefore(LocalDateTime.now());
             if (!confirmationToken.isConfirmed() && tokenExpired) {
                 String userEmail = confirmationToken.getUser().getEmail();
                 accountService.removeConfirmationToken(confirmationToken.getId());
