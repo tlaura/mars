@@ -1,0 +1,31 @@
+<div *ngFor="let providerAccount of providers, let index=index" class="provider-div-list my-2">
+  <div (mouseleave)="isSmall[index] = true" (mouseover)="isSmall[index] = false" class="row mx-0 px-sm-3 py-sm-1">
+    <label class="font-weight-bold mb-0">
+      <i class="fas fa-user icon-blue mr-2"></i> {{providerAccount?.providerServiceName}} | {{providerAccount?.name}}
+    </label></div>
+  <div *ngIf="!isSmall[index]">
+    <div *ngIf="providerAccount.zipcode" class="row mx-sm-0 my-sm-0">
+      <i class="icon-blue fa-sm fas fa-map-marker-alt"></i><label
+      class="mx-sm-2">{{providerAccount.zipcode}} {{providerAccount.city}} {{providerAccount.address}}</label>
+    </div>
+    <div class="decor-div-white col-sm-12"></div>
+
+    <!--            <div *ngIf="providerAccount.website" class="col-sm-12 col-md-4"><label class="small">{{providerAccount.website}}</label></div>-->
+    <div class="col-sm-12"><i class="fas fa-sm fa-mobile-alt icon-blue"></i><label
+      class="mx-sm-2 small">{{providerAccount.phone}}</label></div>
+    <div class="col-sm-12"><i class="fas fa-sm fa-at icon-blue"></i><label
+      class="mx-sm-2 small">{{providerAccount.email}}</label></div>
+    <!--div *ngIf="providerAccount.website">
+      <i class="fas fa-globe-europe icon-tomato"></i>
+      <a [href]="'http://' + providerAccount.website" class="mx-sm-2 small custom-link"
+         target="_blank">{{providerAccount.website}}</a>
+    </div-->
+    <div class="col-sm-12"><label class="small">Korosztály: {{providerAccount?.ageGroupMin}}
+      -{{providerAccount?.ageGroupMax}}</label></div>
+    <div class="row mx-2">
+      <div *ngFor="let type of providerAccount.types; let last=last" class="mx-1">
+        <label class="small text-lowercase">{{type}}</label>
+      </div>
+    </div>
+  </div>
+</div>

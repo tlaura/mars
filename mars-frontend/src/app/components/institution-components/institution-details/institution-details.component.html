@@ -40,26 +40,13 @@
       </div>
     </div>
     <!--providers-->
-    <div>
-      <div *ngFor="let providerAccount of institution?.providers">
-        <div class="white-block-on-tomato-div col-md-8 offset-md-2 p-sm-0 mb-3">
-          <div class="row mx-0 p-sm-1 p-md-2 p-lg-3">
-            <div class="col-sm-12"><label class="font-weight-bold">Név: {{providerAccount?.name}}</label></div>
-            <div class="decor-div-blue col-sm-12"></div>
-            <!--            <div *ngIf="providerAccount.website" class="col-sm-12"><label class="small">{{providerAccount.website}}</label></div>-->
-            <div class="col-sm-12"><label class="small">Telefon: {{providerAccount?.phone}}</label></div>
-            <div class="col-sm-12"><label class="small">Email: {{providerAccount?.email}}</label></div>
-            <div class="col-sm-12"><label class="small">Korcsoport: {{providerAccount?.ageGroupMin}}
-              -{{providerAccount?.ageGroupMax}}</label></div>
-            <div *ngFor="let type of providerAccount.types">
-              <div class="col-sm-12"><label class="small">{{type}}</label></div>
-            </div>
-            <div *ngIf="providerAccount?.zipcode" class="col-sm-12 col-md-12"><label>{{providerAccount?.zipcode}}
-              , {{providerAccount?.city}}
-              , {{providerAccount?.address}}</label></div>
-          </div>
-        </div>
-      </div>
+
+    <h6 class="tomato-head mb-1 mt-3">Szolgáltatások:</h6>
+    <div *ngIf="institution?.providers" class="provider-div col-md-8 offset-md-2 p-sm-0 mb-3">
+      <app-provider-list *ngIf="institution?.providers"
+                         [providers]="institution?.providers"
+      >
+      </app-provider-list>
     </div>
 
     <div *ngIf="isDeleteBoardOpen" class="decor-div-tomato col-sm-12 mx-0"></div>

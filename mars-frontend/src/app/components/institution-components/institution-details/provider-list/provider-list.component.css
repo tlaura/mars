@@ -1,0 +1,7 @@
+.provider-div-list {
+  border: 1px solid rgba(32, 167, 209, 0.2);
+  border-top-right-radius: 2rem;
+  border-top-left-radius: 2rem;
+  border-bottom-right-radius: 2rem;
+  border-bottom-left-radius: 2rem;
+}
