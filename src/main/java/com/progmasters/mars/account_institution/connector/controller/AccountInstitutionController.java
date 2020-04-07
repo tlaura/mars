@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 @RestController
 @RequestMapping("/api/connectors")
@@ -28,18 +29,26 @@ public class AccountInstitutionController {
     }
 
     @GetMapping
-    public ResponseEntity<List<AccountInstitutionListData>> getAllListItems() {
+    public CompletableFuture<ResponseEntity<List<AccountInstitutionListData>>> getAllListItems() {
         log.info("List items requested");
-        List<AccountInstitutionListData> allListItems = accountInstitutionService.getAllListItems();
-        return new ResponseEntity<>(allListItems, HttpStatus.OK);
+//        ResponseEntity<List<AccountInstitutionListData>> responseEntity;
+//        try {
+//            List<AccountInstitutionListData> allAccounts = accountInstitutionService.getAllListItems().get();
+//            responseEntity = new ResponseEntity<>(allAccounts, HttpStatus.OK);
+//        } catch (InterruptedException | ExecutionException e) {
+//            e.printStackTrace();
+//            responseEntity = new ResponseEntity<>(HttpStatus.FORBIDDEN);
+//        }
+        return accountInstitutionService.getAllListItems().thenApplyAsync(ResponseEntity::ok);
     }
 
     @GetMapping("/listByRange")
-    public ResponseEntity<List<AccountInstitutionListData>> getListByRange(@RequestParam("range") Long maxDistance, @RequestParam("lng") Double originLng, @RequestParam("lat") Double originLat) {
+    public CompletableFuture<ResponseEntity<List<AccountInstitutionListData>>> getListByRange(@RequestParam("range") Long maxDistance, @RequestParam("lng") Double originLng, @RequestParam("lat") Double originLat) {
 
-        List<AccountInstitutionListData> accountsByRange = accountInstitutionService.getListItemsByDistance(originLng, originLat, maxDistance);
+        //  List<AccountInstitutionListData> accountsByRange = accountInstitutionService.getListItemsByDistance(originLng, originLat, maxDistance);
         log.info("List items by range requested");
-        return new ResponseEntity<>(accountsByRange, HttpStatus.OK);
+        //  return new ResponseEntity<>(accountsByRange, HttpStatus.OK);
+        return accountInstitutionService.getListItemsByDistance(originLng, originLat, maxDistance).thenApplyAsync(ResponseEntity::ok);
     }
 
     @PostMapping

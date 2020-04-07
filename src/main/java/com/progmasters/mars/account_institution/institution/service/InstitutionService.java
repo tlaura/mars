@@ -18,13 +18,17 @@ import com.progmasters.mars.util.ExcelFileLoader;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
 @Service
@@ -76,8 +80,18 @@ public class InstitutionService {
         return institutionRepository.findInstitutionsWithoutProvider();
     }
 
+    @Async
+    public CompletableFuture<List<Institution>> findInstitutionsWithoutProviderConcurrently() {
+        return CompletableFuture.completedFuture(institutionRepository.findInstitutionsWithoutProvider());
+    }
+
     public List<Institution> findInstitutionsWithProvider() {
         return institutionRepository.findInstitutionsWithProvider();
+    }
+
+    @Async
+    public CompletableFuture<List<Institution>> findInstitutionsWithProviderConcurrently() {
+        return CompletableFuture.completedFuture(institutionRepository.findInstitutionsWithProvider());
     }
 
 
@@ -106,6 +120,7 @@ public class InstitutionService {
         try {
             XSSFWorkbook workbook = new XSSFWorkbook(excelDataFile.getInputStream());
             List<ExcelFileLoader> rows = ExcelFileLoader.getRowList(workbook);
+            List<Institution> saveList = new ArrayList<>();
             for (ExcelFileLoader row : rows) {
                 String address = row.getZipcode() + " " + row.getCity() + " " + row.getAddress();
                 GeoLocationData geoLocationData = getGeoLocationByAddress(address);
@@ -113,13 +128,21 @@ public class InstitutionService {
                 if (institutionRepository.findAllByName(institution.getName()).isEmpty()
                         && institutionRepository.findAllByEmail(institution.getEmail()).isEmpty()
                         && isValidInstitution(institution)) {
-                    institutionRepository.save(institution);
+                    //   institutionRepository.save(institution);
+                    saveList.add(institution);
                 }
             }
-        } catch (IOException | NotFoundException e) {
+            saveInstitutionConcurrently(saveList).get();
+        } catch (IOException | NotFoundException | InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
     }
+
+    @Async
+    CompletableFuture<List<Institution>> saveInstitutionConcurrently(List<Institution> institutions) {
+        return CompletableFuture.completedFuture(institutionRepository.saveAll(institutions));
+    }
+
 
     private boolean isValidInstitution(Institution institution) {
         boolean isValid = institution.getZipcode() < minZipcode && institution.getZipcode() > maxZipcode &&
