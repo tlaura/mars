@@ -4,10 +4,13 @@
       <i class="fas fa-user icon-blue mr-2"></i> {{providerAccount?.providerServiceName}} | {{providerAccount?.name}}
     </label></div>
   <div *ngIf="!isSmall[index]">
-    <div *ngIf="providerAccount.zipcode" class="row mx-sm-0 my-sm-0">
-      <i class="icon-blue fa-sm fas fa-map-marker-alt"></i><label
-      class="mx-sm-2">{{providerAccount.zipcode}} {{providerAccount.city}} {{providerAccount.address}}</label>
+    <div class="col-sm-12">
+      <div *ngIf="providerAccount.zipcode" class="row mx-sm-0 my-sm-0">
+        <i class="icon-blue fa-sm fas fa-map-marker-alt"></i><label
+        class="mx-sm-2">{{providerAccount.zipcode}} {{providerAccount.city}} {{providerAccount.address}}</label>
+      </div>
     </div>
+
     <div class="decor-div-white col-sm-12"></div>
 
     <!--            <div *ngIf="providerAccount.website" class="col-sm-12 col-md-4"><label class="small">{{providerAccount.website}}</label></div>-->
