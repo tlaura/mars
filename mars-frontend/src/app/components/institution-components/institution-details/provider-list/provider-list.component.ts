@@ -10,6 +10,8 @@ export class ProviderListComponent implements OnInit {
 
   @Input()
   providers: ProviderUserShortDetailsModel[] = [];
+  @Input()
+  isInInfoBox: boolean = false;
   isSmall: boolean[] = [];
 
   constructor() {

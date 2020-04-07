@@ -13,7 +13,6 @@ export class InstitutionDetailsComponent implements OnInit {
 
   @Input() institution: InstitutionDetailModel;
   @Input() mailSender: boolean = false;
-  @Input() isInInfoBox: boolean = false;
   cause: string = "";
   shareUrl: string;
   isDeleteBoardOpen: boolean = false;
