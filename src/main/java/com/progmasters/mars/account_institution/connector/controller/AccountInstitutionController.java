@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,6 +29,7 @@ public class AccountInstitutionController {
         this.accountInstitutionService = accountInstitutionService;
     }
 
+    @Async
     @GetMapping
     public CompletableFuture<ResponseEntity<List<AccountInstitutionListData>>> getAllListItems() {
         log.info("List items requested");
@@ -43,6 +45,7 @@ public class AccountInstitutionController {
         return accountInstitutionService.getAllListItems().thenApplyAsync(ResponseEntity::ok);
     }
 
+    @Async
     @GetMapping("/listByRange")
     public CompletableFuture<ResponseEntity<List<AccountInstitutionListData>>> getListByRange(@RequestParam("range") Long maxDistance, @RequestParam("lng") Double originLng, @RequestParam("lat") Double originLat) {
 
