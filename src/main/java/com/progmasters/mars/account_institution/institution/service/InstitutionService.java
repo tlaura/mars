@@ -68,8 +68,18 @@ public class InstitutionService {
         return institutionRepository.findInstitutionsWithoutProvider();
     }
 
+    @Async
+    public CompletableFuture<List<Institution>> findInstitutionsWithoutProviderConcurrently() {
+        return CompletableFuture.completedFuture(institutionRepository.findInstitutionsWithoutProvider());
+    }
+
     public List<Institution> findInstitutionsWithProvider() {
         return institutionRepository.findInstitutionsWithProvider();
+    }
+
+    @Async
+    public CompletableFuture<List<Institution>> findInstitutionsWithProviderConcurrently() {
+        return CompletableFuture.completedFuture(institutionRepository.findInstitutionsWithProvider());
     }
 
 

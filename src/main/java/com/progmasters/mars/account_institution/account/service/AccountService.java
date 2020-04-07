@@ -11,11 +11,11 @@ import com.progmasters.mars.account_institution.account.passwordtoken.PasswordTo
 import com.progmasters.mars.account_institution.account.passwordtoken.PasswordTokenRepository;
 import com.progmasters.mars.account_institution.account.repository.ProviderAccountRepository;
 import com.progmasters.mars.account_institution.account.repository.UserRepository;
-import com.progmasters.mars.account_institution.account.security.AuthenticatedUserDetails;
 import com.progmasters.mars.account_institution.connector.dto.AccountInstitutionListData;
 import com.progmasters.mars.account_institution.connector.repository.AccountInstitutionConnectorRepository;
 import com.progmasters.mars.chat.domain.LoginState;
 import com.progmasters.mars.mail.EmailService;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -24,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
 @Service
@@ -120,13 +121,14 @@ public class AccountService {
         return providerAccountRepository.findProviderAccountWithoutInstitution();
     }
 
-    public List<ProviderAccount> findAllAccountsWithInstitution() {
-        return providerAccountRepository.findProviderAccountsWithInstitutions();
+    @Async
+    public CompletableFuture<List<ProviderAccount>> findAllAccountsWithoutInstitutionConcurrently() {
+        return CompletableFuture.completedFuture(providerAccountRepository.findProviderAccountWithoutInstitution());
     }
 
     public boolean isUserConfirmed(String email) {
         User user = findByEmail(email);
-       return (confirmationTokenRepository.findByUser(user) == null);
+        return (confirmationTokenRepository.findByUser(user) == null);
     }
 
     public List<ConfirmationToken> findAllConfirmationToken() {
@@ -135,10 +137,6 @@ public class AccountService {
 
     public void removeConfirmationToken(Long id) {
         confirmationTokenRepository.deleteById(id);
-    }
-
-    public AuthenticatedUserDetails getAuthenticatedUserDetails(String email) {
-        return new AuthenticatedUserDetails(findByEmail(email));
     }
 
     public void confirmUserToken(String token) {
@@ -237,7 +235,6 @@ public class AccountService {
     public List<User> getProposingUsersByEmail(String email) {
         return userRepository.findProposingUserByEmail(email);
     }
-
 
     public UserDetailsData getUserDetails(String email) {
 

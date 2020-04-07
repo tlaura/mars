@@ -121,4 +121,9 @@ public class AccountInstitutionListData {
     public void setAccountType(String accountType) {
         this.accountType = accountType;
     }
+
+    @Override
+    public String toString() {
+        return this.zipcode + " " + this.city + " " + this.address + "|";
+    }
 }
