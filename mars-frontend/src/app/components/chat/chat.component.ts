@@ -52,7 +52,6 @@ export class ChatComponent implements OnInit {
         }
       }
     );
-
   }
 
   changeDisplay() {
@@ -105,6 +104,8 @@ export class ChatComponent implements OnInit {
         this.handleResult(message);
         console.log('New message');
         this.fetchContacts(this.from);
+        // this.isMessageWindowOpen = true;
+        this.isSmall = false;
       });
     }
   }
@@ -138,7 +139,6 @@ export class ChatComponent implements OnInit {
     let that = this;
     this.stompClient.connect({}, function (frame) {
       that.isLoaded = true;
-
       that.openSocket()
     });
   }
@@ -161,7 +161,6 @@ export class ChatComponent implements OnInit {
     contacts.filter(contact => !this.contacts.includes(contact))
       .forEach(() => this.unreadMessages.push(true))
   }
-
 
   scrollDown() {
     setTimeout(() => {
