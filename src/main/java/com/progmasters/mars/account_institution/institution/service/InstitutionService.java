@@ -155,7 +155,7 @@ public class InstitutionService {
         Institution institution = findById(id);
         InstitutionPetition institutionPetition;
         if (institution.getInstitutionPetition() != null) {
-            institutionPetition = institutionPetitionRepository.findByInstituion(institution);
+            institutionPetition = findPetitionByInstitution(institution);
             Integer requests = institutionPetition.getNumberOfRequest();
             institutionPetition.setNumberOfRequest(++requests);
             institutionPetition.getCauses().add(cause);
@@ -166,14 +166,21 @@ public class InstitutionService {
         institutionPetitionRepository.save(institutionPetition);
     }
 
+    private InstitutionPetition findPetitionByInstitution(Institution institution) {
+        return institutionPetitionRepository.findByInstituion(institution).orElseThrow(() -> new EntityNotFoundException("no petition found by given institution:\t" + institution.getName()));
+    }
+
 
     public void deleteInstitution(Long id) {
+        Institution foundInstitution = findById(id);
+        InstitutionPetition foundPetition = findPetitionByInstitution(foundInstitution);
+        institutionPetitionRepository.delete(foundPetition);
         institutionRepository.deleteById(id);
     }
 
     public void rejectInsitutionDeletion(Long id) {
         Institution institution = findById(id);
-        InstitutionPetition petition = institutionPetitionRepository.findByInstituion(institution);
+        InstitutionPetition petition = findPetitionByInstitution(institution);
         petition.setDeleteSign(false);
         institutionPetitionRepository.save(petition);
     }

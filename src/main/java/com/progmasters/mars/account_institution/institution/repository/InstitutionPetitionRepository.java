@@ -7,10 +7,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface InstitutionPetitionRepository extends JpaRepository<InstitutionPetition, Long> {
 
     @Query("select i from InstitutionPetition i where i.institution= :institution")
-    InstitutionPetition findByInstituion(@Param("institution") Institution institution);
+    Optional<InstitutionPetition> findByInstituion(@Param("institution") Institution institution);
 
 }

@@ -48,12 +48,6 @@ export class InstitutionDetailsComponent implements OnInit {
     );
   };
 
-  // getOpeningHours = (id: number): void => {
-  //   this.openingHoursService.getOpeningHoursByInstitutionId(id).subscribe(
-  //     openingHours => this.openingHours = openingHours,
-  //     error => console.warn(error)
-  //   )
-  // };
 
   openMailSend = (): void => {
     this.mailSender = this.mailSender === false;
