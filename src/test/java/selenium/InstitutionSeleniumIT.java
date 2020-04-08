@@ -8,7 +8,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 public class InstitutionSeleniumIT {
 
@@ -53,12 +53,14 @@ public class InstitutionSeleniumIT {
         driver.findElement(By.cssSelector("body > app-root > div > app-login-form > div > div > div > form > button"))
                 .click();
 
+        Thread.sleep(1000);
         //Go to the list
         driver.get("http://localhost:4200/evaluate-list");
+        Thread.sleep(3000);
 
         //Find institution
         String expectedName = "Test Institution";
-        assertThrows(Throwable.class, () -> driver.findElement(By.xpath("//*[text()[contains(.,'" + expectedName + "')]]")));
+        assertDoesNotThrow(() -> driver.findElement(By.xpath("//*[text()[contains(.,'" + expectedName + "')]]")));
 
     }
 
