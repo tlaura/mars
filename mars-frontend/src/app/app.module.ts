@@ -56,6 +56,7 @@ import {MessageWindowComponent} from './components/chat/message-window/message-w
 import {InstitutionDeleteListComponent} from './components/institution-components/institution-delete-list/institution-delete-list.component';
 import {ProviderListComponent} from './components/institution-components/institution-details/provider-list/provider-list.component';
 import {InfoWindowComponent} from './components/map/info-window/info-window.component';
+import {AnalyticsComponent} from './components/analytics/analytics.component';
 
 export function getAuthServiceConfigs() {
   let config = new SocialServiceConfig()
@@ -114,6 +115,7 @@ export function getToken(): string {
     InstitutionDeleteListComponent,
     ProviderListComponent,
     InfoWindowComponent,
+    AnalyticsComponent,
   ],
   imports: [
     BrowserModule,

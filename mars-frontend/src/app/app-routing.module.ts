@@ -26,6 +26,7 @@ import {RoleGuard} from "./auth/guards/role.guard";
 import {ConfirmDeletionComponent} from "./components/account-components/confirm-deletion/confirm-deletion.component";
 import {DeletionSuccessComponent} from "./components/account-components/deletion-success/deletion-success.component";
 import {InstitutionDeleteListComponent} from "./components/institution-components/institution-delete-list/institution-delete-list.component";
+import {AnalyticsComponent} from "./components/analytics/analytics.component";
 
 
 const routes: Routes = [
@@ -70,6 +71,7 @@ const routes: Routes = [
       expectedRole: 'ROLE_ADMIN'
     }
   },
+  {path: "analytics/dashboard", component: AnalyticsComponent},
   {path: "my-profile/confirm-deletion", component: ConfirmDeletionComponent},
   {path: "deletion-success", component: DeletionSuccessComponent},
   {
