@@ -117,10 +117,6 @@ public class AccountService {
         return providerAccountRepository.findAll();
     }
 
-    public List<ProviderAccount> findAllAccountsWithoutInstitution() {
-        return providerAccountRepository.findProviderAccountWithoutInstitution();
-    }
-
     @Async
     public CompletableFuture<List<ProviderAccount>> findAllAccountsWithoutInstitutionConcurrently() {
         return CompletableFuture.completedFuture(providerAccountRepository.findProviderAccountWithoutInstitution());
@@ -188,6 +184,15 @@ public class AccountService {
         } else {
             userRepository.save(user);
         }
+    }
+
+    public List<PasswordToken> findAllPasswordTokens() {
+        return passwordTokenRepository.findAllPasswordTokens();
+    }
+
+    public void removePasswordToken(PasswordToken passwordToken) {
+        passwordToken.setUser(null);
+        passwordTokenRepository.delete(passwordToken);
     }
 
     public boolean updatePasswordOfLoggedInUser(PasswordChangeDetails passwordChangeDetails) {

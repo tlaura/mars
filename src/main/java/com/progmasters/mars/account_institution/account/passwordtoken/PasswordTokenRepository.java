@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface PasswordTokenRepository extends JpaRepository<PasswordToken, Long> {
@@ -14,4 +15,7 @@ public interface PasswordTokenRepository extends JpaRepository<PasswordToken, Lo
 
     @Query("select p from PasswordToken p where p.user= :user")
     Optional<PasswordToken> findByUser(@Param("user") ProviderAccount user);
+
+    @Query("select p from PasswordToken p")
+    List<PasswordToken> findAllPasswordTokens();
 }

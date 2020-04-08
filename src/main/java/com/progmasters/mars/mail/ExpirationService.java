@@ -1,6 +1,7 @@
 package com.progmasters.mars.mail;
 
 import com.progmasters.mars.account_institution.account.confirmationtoken.ConfirmationToken;
+import com.progmasters.mars.account_institution.account.passwordtoken.PasswordToken;
 import com.progmasters.mars.account_institution.account.service.AccountService;
 import com.progmasters.mars.account_institution.connector.service.AccountInstitutionService;
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +19,7 @@ public class ExpirationService {
 
     @Value("${email.elapsed-hours}")
     private Integer MAX_ELAPSED_HOURS;
+
     private final AccountInstitutionService accountInstitutionService;
     private final AccountService accountService;
 
@@ -35,6 +37,22 @@ public class ExpirationService {
     @Scheduled(cron = "0 0 0 * * *")
     private void removeUnconfirmedUsers() {
         List<ConfirmationToken> confirmationTokens = accountService.findAllConfirmationToken();
+        List<PasswordToken> passwordTokens = accountService.findAllPasswordTokens();
+        removeExpiredConfirmationTokens(confirmationTokens);
+        removeExpiredPasswordTokens(passwordTokens);
+    }
+
+    private void removeExpiredPasswordTokens(List<PasswordToken> passwordTokens) {
+        for (PasswordToken passwordToken : passwordTokens) {
+            boolean tokenExpired = passwordToken.getDate().plusHours(MAX_ELAPSED_HOURS).isBefore(LocalDateTime.now());
+            if (tokenExpired) {
+                accountService.removePasswordToken(passwordToken);
+                log.info("Passwordtoken removed from db");
+            }
+        }
+    }
+
+    private void removeExpiredConfirmationTokens(List<ConfirmationToken> confirmationTokens) {
         for (ConfirmationToken confirmationToken : confirmationTokens) {
 
             boolean tokenExpired = confirmationToken.getDate().plusHours(MAX_ELAPSED_HOURS).isBefore(LocalDateTime.now());
