@@ -26,6 +26,7 @@ public class Message {
     @Column(name = "message_sent_time")
     private ZonedDateTime date = ZonedDateTime.now();
 
+    @Lob
     @Column(name = "text", columnDefinition = "TEXT")
     private String text;
 
