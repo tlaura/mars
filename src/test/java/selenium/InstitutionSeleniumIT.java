@@ -48,8 +48,8 @@ public class InstitutionSeleniumIT {
         //Log in with admin for accept the request
         driver.findElement(By.cssSelector("#myNavbar > ul.navbar-nav.ml-auto.mt-2.mt-lg-0 > li > a"))
                 .click();
-        driver.findElement(By.cssSelector("#email")).sendKeys("emahideaki@gmail.com");
-        driver.findElement(By.cssSelector("#password")).sendKeys("elza123");
+        driver.findElement(By.cssSelector("#email")).sendKeys("callbackcats@gmail.com");
+        driver.findElement(By.cssSelector("#password")).sendKeys("Admin1234");
         driver.findElement(By.cssSelector("body > app-root > div > app-login-form > div > div > div > form > button"))
                 .click();
 
