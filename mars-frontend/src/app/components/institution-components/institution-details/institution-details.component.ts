@@ -58,7 +58,13 @@ export class InstitutionDetailsComponent implements OnInit {
   }
 
   signInstitutionToDelete = (): void => {
-    this.institutionService.signInstitutionToDelete(this.institution.id, this.cause).subscribe();
+    this.institutionService.signInstitutionToDelete(this.institution.id, this.cause).subscribe(
+      () => {
+        this.isDeleteBoardOpen = false;
+        this.cause = '';
+      },
+      error => console.warn(error)
+    );
   };
 
   showDelete() {
