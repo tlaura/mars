@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ProviderUserProfileDetailsModel} from "../../../account-institution/account/models/providerUserProfileDetails.model";
 import {AccountService} from "../../../account-institution/account/services/account.service";
 import {FormControl, Validators} from "@angular/forms";
@@ -30,10 +30,11 @@ export class MyProfileComponent implements OnInit {
   selectedIndex: number = -1;
   selectedInstitution: InstitutionListModel;
   institutionList: Array<InstitutionListModel>;
+  copyInstitutionList: Array<InstitutionListModel>;
 
 
-  @Input() name: string;
-  @Output() focusOut: EventEmitter<any> = new EventEmitter<any>();
+  // @Input() name: string;
+  // @Output() focusOut: EventEmitter<any> = new EventEmitter<any>();
 
   username = new FormControl('', Validators.required);
   providerServiceName = new FormControl('', Validators.required);
@@ -90,6 +91,7 @@ export class MyProfileComponent implements OnInit {
       (providerDetails: ProviderUserProfileDetailsModel) => {
         this.providerAccount = providerDetails;
         this.accountCopy = Object.assign({}, providerDetails);
+        this.copyInstitutionList = Object.assign({}, this.institutionList)
       }, error => {
         console.warn(error)
       }, () => {
@@ -100,8 +102,13 @@ export class MyProfileComponent implements OnInit {
 
   getAllInstitutions = (): void => {
     this.institutionService.getAllInstitutions().subscribe(
-      value => this.institutionList = value,
-      error => console.warn(error),
+      (value) => {
+        this.institutionList = value;
+        this.copyInstitutionList = Object.assign({}, this.institutionList);
+      },
+      (error) => {
+        console.warn(error);
+      },
     )
   };
 
@@ -115,7 +122,8 @@ export class MyProfileComponent implements OnInit {
       };
       this.accountInstitutionConnectorService.attachInsitutionToProvider(attachInstitutionModel).subscribe(
         () => this.selectedIndex = -1,
-        error => console.warn(error)
+        error => console.warn(error),
+        () => this.copyInstitutionList = Object.assign({}, this.institutionList)
       );
     }
     this.providerService.editProviderAccountDetails(this.providerAccount, this.providerAccount.id).subscribe(
@@ -176,6 +184,7 @@ export class MyProfileComponent implements OnInit {
     this.providerAccount = Object.assign({}, this.accountCopy);
     this.indUser = Object.assign({}, this.indUserCopy);
     this.addInstitutionMode = false;
+    this.institutionList = Object.assign({}, this.copyInstitutionList);
   };
 
   changePassword() {
