@@ -15,7 +15,13 @@
         <div class="col-sm-12"><label class="text-break">{{deleteItem?.institutionListData?.description}}</label></div>
         <label class="text-break"><u>Indoklás:</u></label>
         <div *ngFor="let cause of deleteItem.causes" class="col-sm-12">
-          <div class="col-sm-12 col-md-12"><label class="text-break">{{cause}}</label></div>
+          <div class="col-sm-12 col-md-12">
+            <label class="text-break">
+              <li>
+                {{cause}}
+              </li>
+            </label>
+          </div>
         </div>
         <button (click)="delete(deleteItem?.institutionListData?.id)" class="btn rounded-circle yes-btn"><i
           class="fas fa-lg fa-check-circle"></i></button>
