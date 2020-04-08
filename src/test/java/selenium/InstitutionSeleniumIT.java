@@ -10,13 +10,13 @@ import org.openqa.selenium.chrome.ChromeOptions;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class AddInstitutionViaFormTest {
+public class InstitutionSeleniumIT {
 
     private WebDriver driver;
 
     @BeforeEach
     public void startBrowser() {
-        ClassLoader loadTest = AddInstitutionViaFormTest.class.getClassLoader();
+        ClassLoader loadTest = InstitutionSeleniumIT.class.getClassLoader();
 
         Boolean isWindows = System.getProperty("os.name").toLowerCase().contains("win");
         if (isWindows) {
