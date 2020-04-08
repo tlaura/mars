@@ -138,9 +138,11 @@ public class InstitutionService {
 
 
     private boolean isValidInstitution(Institution institution) {
-        return institution.getZipcode() < minZipcode && institution.getZipcode() > maxZipcode &&
+        boolean isValid = institution.getZipcode() > minZipcode && institution.getZipcode() < maxZipcode &&
                 institution.getDescription().length() > descriptionMinLength && institution.getDescription().length() < descriptionMaxLength &&
                 institution.getEmail().matches(email);
+
+        return isValid;
     }
 
     List<Institution> findAllInstitutions() {
